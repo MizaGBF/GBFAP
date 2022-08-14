@@ -81,8 +81,8 @@ document.getElementById("AnimationPlayer").innerHTML = '\
             <label for="act-selection">Action</label><select id="act-selection" onchange="actionChange(this)"></select><br/>\
         </div>\
         <div>\
-            <span id="act-label">Current:</span><span id="act-name"> </span><br>\
-            <span id="act-label">Duration:</span><span id="act-duration"> </span>\
+            <span id="act-label">Current:</span><span id="act-name">Loading...</span><br>\
+            <span id="act-label">Duration:</span><span id="act-duration">???</span>\
         </div>\
     </div>';
 strSelection=null;
