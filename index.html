@@ -1,0 +1,58 @@
+<head>
+    <meta charset="utf-8"/>
+    <title>GBF Animation Player</title>
+    <meta name="title" content="GBF Animation Player">
+    <meta name="description" content="The GBF Animation Player Project">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mizagbf.github.io/GBFAP/">
+    <meta property="og:title" content="GBF Animation Player">
+    <meta property="og:description" content="The GBF Animation Player Project">
+    <meta property="og:image" content="https://mizagbf.github.io/GBFAP/assets/ui/card.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mizagbf.github.io/GBFAP/">
+    <meta property="twitter:title" content="GBF Animation Player">
+    <meta property="twitter:description" content="The GBF Animation Player Project">
+    <meta property="twitter:image" content="https://mizagbf.github.io/GBFAP/assets/ui/card.png">
+    <link rel="icon" type="image/png" href="assets/icon.png" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="require.js"></script>
+    <script src="anime.js"></script>
+</head>
+<body onload="playAnimation()">
+    <img id="titleheader" src="assets/ui/header.png">
+    <div id="version">v1.0</div>
+    <div id="result">
+        <div id="AnimationPlayer"></div>
+    </div>
+    <details>
+        <summary>Explanations</summary>
+        <h3 class="content">
+            <li>Improved version based on the chinese wiki animation viewer.</li>
+            <li>Loading can be slow, I apologize.</li>
+            <li>In some special cases, missing attack animations have been replaced with a default one.</li>
+            <li>If the animation is stuck, it likely crashed and you need to reload.</li>
+            <li>The character lists below are in reverse ID order.</li>
+            <li>If a character is missing, the page hasn't be updated yet.</li>
+        </h3>
+    </details>
+    <details onclick="displayCharacters(this, '304')">
+        <summary>SSR</summary>
+        <h3 class="result" id="areacharacters304">
+        </h3>
+    </details>
+    <details onclick="displayCharacters(this, '303')">
+        <summary>SR</summary>
+        <h3 class="result" id="areacharacters303">
+        </h3>
+    </details>
+    <details onclick="displayCharacters(this, '302')">
+        <summary>R</summary>
+        <h3 class="result" id="areacharacters302">
+        </h3>
+    </details>
+    <details onclick="displayCharacters(this, '371')">
+        <summary>Skins</summary>
+        <h3 class="result" id="areacharacters371">
+        </h3>
+    </details>
+</body>

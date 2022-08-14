@@ -1,0 +1,1 @@
+define(["view/content","lib/common"],(function(e){return e.extend({canvas:null,stage:null,exportRoot:null,initialize:function(){},error:function(){alert("Error")},removeEvent:function(){this.stage&&this.stage.removeAllEventListeners("tick")},removeCjs:function(){this.off(),this.undelegateEvents(),this.stopListening(),this.removeEvent()}})}));
