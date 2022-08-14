@@ -46,6 +46,7 @@ function get(url, callback, err_callback, id) {
 
 function successJSON(id)
 {
+    document.getElementById('temp').remove();
     result_area = document.getElementById('result');
     var img = document.createElement("img");
     var ref = document.createElement('a');
