@@ -45,7 +45,7 @@ class Updater():
             "3710042000": ('3040009000', ''), # cog skin
             "3710043000": ('3040003000', '') # birdman skin
         }
-        self.exclusion = ['3030114000']
+        self.exclusion = set(['3030114000'])
         self.loadIndex()
 
     def req(self, url, headers={}):
@@ -97,6 +97,7 @@ class Updater():
 
     def update(self, id):
         try:
+            if id in self.exclusion: return False
             if not self.download_assets:
                 try:
                     url_handle = self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01.jpg")
@@ -259,6 +260,7 @@ class Updater():
             a = data.find('"enemy_') + len('"enemy_')
             enemy_id = data[a:data.find('"', a)]
             fn = "enemy_" + enemy_id + ".js"
+            
             url_handle = self.req(self.manifestUri + "enemy_" + enemy_id + ".js")
             data = url_handle.read()
             url_handle.close()
@@ -266,6 +268,14 @@ class Updater():
                 f.write(data)
             self.processManifest(fn, data.decode('utf-8'))
             print("Enemy updated")
+            
+            url_handle = self.req(self.manifestUri + "phit_ax_0001.js")
+            data = url_handle.read()
+            url_handle.close()
+            with open("model/manifest/phit_ax_0001.js", "wb") as f:
+                f.write(data)
+            self.processManifest("phit_ax_0001.js", data.decode('utf-8'))
+            print("Dummy phit updated")
 
     def loadIndex(self):
         files = [f for f in os.listdir('json/') if os.path.isfile(os.path.join('json/', f))]
