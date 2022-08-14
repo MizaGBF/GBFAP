@@ -54,10 +54,14 @@ function successJSON(id)
     ref.appendChild(document.createTextNode("Assets"));
     result_area.insertBefore(ref, result_area.firstChild);
     
+    result_area.insertBefore(document.createElement('br'), result_area.firstChild);
+    
     ref = document.createElement('a');
     ref.setAttribute('href', "https://gbf.wiki/index.php?title=Special:Search&search=" + id);
     ref.appendChild(document.createTextNode("Wiki"));
     result_area.insertBefore(ref, result_area.firstChild);
+    
+    result_area.insertBefore(document.createElement('br'), result_area.firstChild);
     
     var img = document.createElement("img");
     result_area.insertBefore(img, result_area.firstChild);

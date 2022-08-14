@@ -82,14 +82,6 @@ h3 {
     font-size: 20px;
 }
 
-.skycompass {
-    max-width: 480px;
-    max-height: 400px;;
-    border: 2px solid #e0ffff;
-    border-radius: 10px;
-    border-style: solid;
-}
-
 .content {
     background-image: url(../assets/ui/text_top.png), url(../assets/ui/text_bottom.png), url(../assets/ui/text_middle.png);
     background-position: left top, left bottom, left center;
@@ -106,16 +98,20 @@ h3 {
 
 a:link {
     color: red;
+    font-size: 15px;
 }
 
 a:visited {
-    color: green;
+    color: pink;
+    font-size: 15px;
 }
 
 a:hover {
-    color: hotpink;
+    color: white;
+    font-size: 15px;
 }
 
 a:active {
-    color: blue;
+    color: yellow;
+    font-size: 15px;
 }
