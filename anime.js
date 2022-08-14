@@ -48,8 +48,18 @@ function successJSON(id)
 {
     document.getElementById('temp').remove();
     result_area = document.getElementById('result');
-    var img = document.createElement("img");
+    
     var ref = document.createElement('a');
+    ref.setAttribute('href', "https://mizagbf.github.io/GBFAL/search.html?id=" + id);
+    ref.appendChild(document.createTextNode("Assets"));
+    result_area.insertBefore(ref, result_area.firstChild);
+    
+    ref = document.createElement('a');
+    ref.setAttribute('href', "https://gbf.wiki/index.php?title=Special:Search&search=" + id);
+    ref.appendChild(document.createTextNode("Wiki"));
+    result_area.insertBefore(ref, result_area.firstChild);
+    
+    var img = document.createElement("img");
     result_area.insertBefore(img, result_area.firstChild);
     img.id  = "loading";
     img.onerror = function() {
@@ -62,6 +72,7 @@ function successJSON(id)
         this.id = "done"
     }
     img.src = "http://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
+    
     
     AnimeData = JSON.parse(this.response);
 
