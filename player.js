@@ -116,7 +116,7 @@ var actionChange = function (obj) {
 var versionChange = function (obj) {
     animeVersion = obj.options[obj.selectedIndex].value;
 
-    //verify if action exists // MODIF ?
+    //verify if action exists
     var actionLabel=document.getElementById("act-selection")
     var action = actionLabel.options[actionLabel.selectedIndex].value;
     var defaultAction = action
@@ -124,10 +124,10 @@ var versionChange = function (obj) {
         defaultAction="default"
     }
     
-    //modify list // MODIF ?
+    //modify list
     var actionlist = '<option value="default">Demo</option>'
     var actionUpdate= true
-    l = this.cjsViewList[animeVersion].getActionList(); // MODIF
+    l = this.cjsViewList[animeVersion].getActionList();
     for (action in l) {
         action=l[action]
         if (defaultAction==action){
@@ -143,7 +143,7 @@ var versionChange = function (obj) {
     }
     document.getElementById("act-selection").innerHTML = actionlist
 
-    //replace version // MODIF ?
+    //replace version
     for (var i = 0; i < versionList.length; i++) {
         var canvas = document.querySelector('.cjs-npc-demo-' + i)
         if (i == animeVersion) {

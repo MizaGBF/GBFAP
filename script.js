@@ -62,7 +62,8 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
                         document.getElementById("act-selection").innerHTML = actionlist
                     }
                 })
-            })
+            });
+            document.getElementById('temp').remove();
     }
     prepareCjs()
 })
