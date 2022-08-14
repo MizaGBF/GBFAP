@@ -46,6 +46,7 @@ function get(url, callback, err_callback, id) {
 
 function successJSON(id)
 {
+    document.getElementById('temp').remove();
     result_area = document.getElementById('result');
     var img = document.createElement("img");
     var ref = document.createElement('a');
@@ -72,6 +73,7 @@ function successJSON(id)
 
 function failJSON(id)
 {
+    document.getElementById('temp').remove();
     result_area = document.getElementById('result');
     result_area.appendChild(document.createTextNode("Error: Invalid ID"));
 }
@@ -113,6 +115,7 @@ function vtest(a)
 
 function vfail(a)
 {
+    document.getElementById('temp').remove();
     result_area = document.getElementById('result');
     result_area.appendChild(document.createTextNode("Error: Either the server is overloaded, GBF is in maintenance or another issue occured."));
 }
@@ -126,6 +129,7 @@ function startupCallback()
     }
     else
     {
+        document.getElementById('temp').remove();
         result_area = document.getElementById('result');
         result_area.appendChild(document.createTextNode("Error: Invalid ID or Character not found."));
     }
