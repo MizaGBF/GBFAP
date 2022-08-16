@@ -22,7 +22,7 @@ Additionaly, if you want to host the assets on your server:
 var Game = {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/VERSION/js',
     jsUri: corsProxy + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/VERSION/js',
-    imgUri: corsProxy + 'https://gbfcp.herokuapp.com/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
+    imgUri: corsProxy + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
     setting: {}
 };
 ```

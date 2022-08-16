@@ -3,7 +3,7 @@ var corsProxy = 'https://gbfcp.herokuapp.com/'
 var Game = {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/VERSION/js',
     jsUri: corsProxy + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/VERSION/js',
-    imgUri: corsProxy + 'https://gbfcp.herokuapp.com/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
+    imgUri: corsProxy + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
     setting: {}
 };
 
@@ -133,6 +133,8 @@ function vfail(a)
     document.getElementById('temp').remove();
     result_area = document.getElementById('result');
     result_area.appendChild(document.createTextNode("Error: Either the server is overloaded, GBF is in maintenance or another issue occured."));
+    result_area.appendChild(document.createElement('br'));
+    result_area.appendChild(document.createTextNode("Please try again later."));
 }
 
 function startupCallback()
