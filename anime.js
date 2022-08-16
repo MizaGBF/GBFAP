@@ -1,8 +1,8 @@
 var AnimeData = null;
 var corsProxy = 'https://gbfcp.herokuapp.com/'
 var Game = {
-    xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/VERSION/js',
-    jsUri: corsProxy + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/VERSION/js',
+    xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
+    jsUri: corsProxy + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     imgUri: corsProxy + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
     setting: {}
 };
@@ -17,12 +17,6 @@ endpoints = [
     "prd-game-a5-granbluefantasy.akamaized.net/"
 ];
 counter = 0;
-
-function applyV(version)
-{
-    Game.xjsUri = Game.xjsUri.replace("VERSION/", version)
-    Game.jsUri = Game.jsUri.replace("VERSION/", version)
-}
 
 function get(url, callback, err_callback, id) {
     var xhr = new XMLHttpRequest();
@@ -105,42 +99,7 @@ function playAnimation()
     {
         document.getElementById('result').remove();
     }
-    else if(Game.xjsUri.includes("VERSION") || Game.jsUri.includes("VERSION"))
-    {
-        get(corsProxy + "https://game.granbluefantasy.jp/", vtest, vfail, 0);
-    }
-    else
-    {
-        startupCallback()
-    }
-}
-
-function vtest(a)
-{
-    try
-    {
-        applyV(this.responseText.match(/Game\.version = \"(\d+)\";/)[1] + "/");
-        startupCallback();
-    }
-    catch (e)
-    {
-        if(this.responseText.toLowerCase().includes("maintenance"))
-        {
-            applyV("");
-            startupCallback();
-        }
-        else
-            vfail(a);
-    }
-}
-
-function vfail(a)
-{
-    document.getElementById('temp').remove();
-    result_area = document.getElementById('result');
-    result_area.appendChild(document.createTextNode("Error: Either the server is overloaded, GBF is in maintenance or another issue occured."));
-    result_area.appendChild(document.createElement('br'));
-    result_area.appendChild(document.createTextNode("Please try again later."));
+    startupCallback();
 }
 
 function startupCallback()
