@@ -20,8 +20,8 @@ counter = 0;
 
 function applyV(version)
 {
-    Game.xjsUri = Game.xjsUri.replace("VERSION", version)
-    Game.jsUri = Game.jsUri.replace("VERSION", version)
+    Game.xjsUri = Game.xjsUri.replace("VERSION/", version)
+    Game.jsUri = Game.jsUri.replace("VERSION/", version)
 }
 
 function get(url, callback, err_callback, id) {
@@ -119,12 +119,15 @@ function vtest(a)
 {
     try
     {
-        applyV(this.responseText.match(/Game\.version = \"(\d+)\";/)[1]);
+        applyV(this.responseText.match(/Game\.version = \"(\d+)\";/)[1] + "/");
         startupCallback();
     }
     catch (e)
     {
-        vfail(a)
+        if(this.responseText.toLowerCase.includes("maintenance"))
+            applyV("");
+        else
+            vfail(a);
     }
 }
 
