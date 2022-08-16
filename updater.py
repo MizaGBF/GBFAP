@@ -5,7 +5,6 @@ from threading import Lock
 import json
 import os
 import os.path
-import re
 import zlib
 import sys
 
@@ -15,13 +14,9 @@ class Updater():
         self.quality = ("/img/", "/js/")
         self.force_update = False
         self.download_assets = False
-        self.version = self.getGameVersion()
-        if self.version == None:
-            print("Can't retrieve the game version")
-            exit(0)
         
-        self.manifestUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/VERSION/js/model/manifest/".replace("VERSION/", self.version)
-        self.cjsUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/VERSION/js/cjs/".replace("VERSION/", self.version)
+        self.manifestUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/model/manifest/"
+        self.cjsUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/cjs/"
         self.imgUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/img"
         self.variations = [
             ("_01", "", "☆☆☆☆"),
@@ -50,17 +45,6 @@ class Updater():
 
     def req(self, url, headers={}):
         return request.urlopen(request.Request(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers=headers), timeout=50)
-
-    def getGameVersion(self):
-        vregex = re.compile("Game\.version = \"(\d+)\";")
-        handler = self.req('https://game.granbluefantasy.jp/', headers={'User-Agent':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36", 'Accept-Language':'en', 'Accept-Encoding':'gzip, deflate', 'Host':'game.granbluefantasy.jp', 'Connection':'keep-alive'})
-        try:
-            res = str(zlib.decompress(handler.read(), 16+zlib.MAX_WBITS))
-            handler.close()
-            return str(int(vregex.findall(res)[0])) + "/"
-        except:
-            if 'maintenance' in res.lower(): return ""
-            return None
 
     def run(self):
         max_thread = 10
