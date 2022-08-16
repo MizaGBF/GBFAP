@@ -35,7 +35,8 @@ var Game = {
     setting: {}
 };
 ```
-* for characters/skins another version ougi file, you need to add the subtitution in the `patches` variable of `updater.py`, around line 36.  
+Or edit the proxy (it's setup to be used only with my version).  
+* for characters/skins using another version ougi file, you need to add the subtitution in the `patches` variable of `updater.py`, around line 36.  
 Example: `"ID of Character without Ougi" : ("ID of the corresponding Character with Ougi", "_s2 if the corresponding Character file uses it, else nothing")`  
   
   
