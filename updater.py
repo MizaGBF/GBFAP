@@ -15,13 +15,13 @@ class Updater():
         self.quality = ("/img/", "/js/")
         self.force_update = False
         self.download_assets = False
-        self.version = str(self.getGameVersion())
-        if self.version == "None":
+        self.version = self.getGameVersion()
+        if self.version == None:
             print("Can't retrieve the game version")
             exit(0)
         
-        self.manifestUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/{}/js/model/manifest/".format(self.version)
-        self.cjsUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/{}/js/cjs/".format(self.version)
+        self.manifestUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/VERSION/js/model/manifest/".replace("VERSION/", self.version)
+        self.cjsUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/VERSION/js/cjs/".replace("VERSION/", self.version)
         self.imgUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/img"
         self.variations = [
             ("_01", "", "☆☆☆☆"),
@@ -55,10 +55,11 @@ class Updater():
         vregex = re.compile("Game\.version = \"(\d+)\";")
         handler = self.req('https://game.granbluefantasy.jp/', headers={'User-Agent':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36", 'Accept-Language':'en', 'Accept-Encoding':'gzip, deflate', 'Host':'game.granbluefantasy.jp', 'Connection':'keep-alive'})
         try:
-            res = zlib.decompress(handler.read(), 16+zlib.MAX_WBITS)
+            res = str(zlib.decompress(handler.read(), 16+zlib.MAX_WBITS))
             handler.close()
-            return int(vregex.findall(str(res))[0])
+            return str(int(vregex.findall(res)[0])) + "/"
         except:
+            if 'maintenance' in res.lower(): return ""
             return None
 
     def run(self):
@@ -83,7 +84,7 @@ class Updater():
         id = start
         while err[1] and err[0] < 20:
             f = file.format(str(id).zfill(3))
-            if self.force_update or id not in self.index:
+            if self.force_update or f not in self.index:
                 if not self.update(f):
                     with err[2]:
                         err[0] += 1
@@ -303,7 +304,6 @@ if __name__ == '__main__':
         u.enemyUpdate()
         u.run()
     elif '-index' in sys.argv:
-        u.loadIndex()
         u.saveIndex()
     elif len(sys.argv) >= 2 and sys.argv[1] == '-update':
         if len(sys.argv) == 2:
