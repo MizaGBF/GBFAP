@@ -125,7 +125,10 @@ function vtest(a)
     catch (e)
     {
         if(this.responseText.toLowerCase.includes("maintenance"))
+        {
             applyV("");
+            startupCallback();
+        }
         else
             vfail(a);
     }
