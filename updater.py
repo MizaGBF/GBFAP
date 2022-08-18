@@ -143,6 +143,8 @@ class Updater():
                     good_phits[v] = fn
                 except:
                     pass
+                    
+                    
             character_data['0'] = {'length': len(good_variations.keys())}
             character_data['1'] = {} 
             character_data['2'] = {"1": {"1": ""},"2": {"1": ""}}
@@ -170,6 +172,7 @@ class Updater():
                             break
                 if 'special' not in character_data['1'][str(i)] and id in self.patches:
                     character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":good_variations[keys[j]].replace('.js', '').replace('npc', 'nsp').replace(id, self.patches[id][0]) + self.patches[id][1] ,"fixed_pos_owner_bg":0,"full_screen":1}]}]
+                if 'special' not in character_data['1'][str(i)]: raise Exception("No special set")
                 if '_s2' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs'] or '_s3' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs']: character_data['1'][str(i)]['special'][0]['list'][0]['full_screen'] = 1
                 character_data['1'][str(i)]['cjs_pos'] = [{"y":0,"x":0}]
                 character_data['1'][str(i)]['special_pos'] = [[{"y":0,"x":0}]]
@@ -188,13 +191,14 @@ class Updater():
         data = json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src', '"src"').replace('type', '"type"').replace('id', '"id"'))
         for l in data:
             src = l['src'].split('?')[0]
+            if src == '/sp/cjs/nsp_3020005000_01_ef081.png': continue # R deliford base form fix
             url_handle = self.req(self.imgUri + src)
             data = url_handle.read()
             url_handle.close()
         
             with open("img/sp/cjs/" + src.split('/')[-1], "wb") as f:
                 f.write(data)
-
+        
         url_handle = self.req(self.cjsUri + filename)
         data = url_handle.read()
         url_handle.close()
