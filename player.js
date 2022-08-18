@@ -134,7 +134,7 @@ var versionChange = function (obj) {
     var actionLabel=document.getElementById("act-selection")
     var action = actionLabel.options[actionLabel.selectedIndex].value;
     var defaultAction = action
-    if (! action in action_index[animeVersion].action_label_list) {
+    if (!action in action_index[animeVersion].action_label_list) {
         defaultAction="default"
     }
     
@@ -169,4 +169,8 @@ var versionChange = function (obj) {
             canvas.style.setProperty('display', 'none');
         }
     };
+    
+    // header image
+    document.getElementById("character").src = "http://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + AnimeData[1][animeVersion]['cjs'][0].split('_').slice(1, 3).join('_') + ".jpg"
+    
 };
