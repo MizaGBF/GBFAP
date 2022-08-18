@@ -23,25 +23,15 @@ Those three options can be used together, and after `-update`.
   
 Additionaly, if you want to host the assets on your server:
 * add `-download` (and `-enemy` for the enemy files) to download all assets.  
-* go to `anime.js` and change:
+* go to `anime.js`, line 2, and change:
 ```javascript
-var Game = {
-    xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/VERSION/js',
-    jsUri: corsProxy + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/VERSION/js',
-    imgUri: corsProxy + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
-    setting: {}
-};
+var AnimeLocal = false;
 ```
 to
 ```javascript
-var Game = {
-    xjsUri: '',
-    jsUri: '',
-    imgUri: 'img',
-    setting: {}
-};
+var AnimeLocal = true;
 ```
-Or edit the proxy (it's setup to be used only with my version).  
+Or edit the proxy if you are planning to use one (the one used is setup for my version and won't work with another).  
 * for characters/skins using another version ougi file, you need to add the subtitution in the `patches` variable of `updater.py`, around line 36.  
 Example: `"ID of Character without Ougi" : ("ID of the corresponding Character with Ougi", "_s2 if the corresponding Character file uses it, else nothing")`  
   
