@@ -33,7 +33,7 @@ var bgName = [
     'Black',
     'Dummy',
     'Green'
-]Auld Lang Syne
+]
 
 if (AnimeData[2][1]) {
     var i=1
