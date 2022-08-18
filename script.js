@@ -55,9 +55,14 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
                     }
                     else{
                         l = b.getActionList();
-                        var actionlist = '<option value="default">Demo</option>'
+                        tl = [];
                         for (action in l) {
-                            actionlist = actionlist.concat('<option value=' + l[action] + '>' + b.translateAction(l[action]) + '</option>');
+                            tl[action] = b.translateAction(l[action]);
+                        }
+                        tl.sort();
+                        var actionlist = '<option value="default">Demo</option>'
+                        for (action in tl) {
+                            actionlist = actionlist.concat('<option value=' + l[action] + '>' + tl[action] + '</option>');
                         }
                         document.getElementById("act-selection").innerHTML = actionlist
                     }
