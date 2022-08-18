@@ -57,6 +57,3 @@ Along with:
 * anime.js  
 * player.js  
 * script.js  
-  
-# Known Issues  
-* [Lina Inverse](https://gbf.wiki/Lina) doesn't work (impossible to find her files and I can't find someone with the character) and has been excluded as a result.  

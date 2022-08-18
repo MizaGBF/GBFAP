@@ -40,7 +40,7 @@ class Updater():
             "3710042000": ('3040009000', ''), # cog skin
             "3710043000": ('3040003000', '') # birdman skin
         }
-        self.exclusion = set(['3030114000'])
+        self.exclusion = set()#set(['3030114000'])
         self.loadIndex()
 
     def req(self, url, headers={}):
@@ -100,6 +100,7 @@ class Updater():
             good_phits = {}
             good_nsp = {}
             found = False
+            mortal = {}
             for i in range(0, len(self.variations), 2):
                 for j in range(2):
                     try:
@@ -110,27 +111,42 @@ class Updater():
                         if self.download_assets:
                             with open("model/manifest/" + fn, "wb") as f:
                                 f.write(data)
-                        self.processManifest(fn, data.decode('utf-8'))
+                        ret = self.processManifest(fn, data.decode('utf-8'))
+                        if not ret[0]:
+                            url_handle = self.req(self.cjsUri + fn)
+                            data = url_handle.read().decode('utf-8')
+                            url_handle.close()
+                        else:
+                            data = ret[1].decode('utf-8')
+                        if self.variations[i+j] not in mortal:
+                            for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
+                                if m in data:
+                                    mortal[self.variations[i+j]] = m
+                                    break
                         found = True
                         good_variations[self.variations[i+j]] = fn
                     except:
                         break
             if not found: return False
             for v in good_variations:
+                found = False
                 for s in ["", "_s2", "_s3", "_0_s2", "_0_s3"]:
-                    try:
-                        fn = "nsp_{}{}{}.js".format(id, v[0], s)
-                        url_handle = self.req(self.manifestUri + fn)
-                        data = url_handle.read()
-                        url_handle.close()
-                        if self.download_assets:
-                            with open("model/manifest/" + fn, "wb") as f:
-                                f.write(data)
-                        self.processManifest(fn, data.decode('utf-8'))
-                        good_nsp[v] = fn
-                        break
-                    except:
-                        pass
+                    for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
+                        try:
+                            fn = "nsp_{}{}{}{}.js".format(id, v[0], s, m)
+                            url_handle = self.req(self.manifestUri + fn)
+                            data = url_handle.read()
+                            url_handle.close()
+                            if self.download_assets:
+                                with open("model/manifest/" + fn, "wb") as f:
+                                    f.write(data)
+                            self.processManifest(fn, data.decode('utf-8'))
+                            good_nsp[v] = fn
+                            found = True
+                            break
+                        except:
+                            pass
+                    if found: break
                 try:
                     fn = "phit_{}{}.js".format(id, v[1])
                     url_handle = self.req(self.manifestUri + fn)
@@ -144,7 +160,6 @@ class Updater():
                 except:
                     pass
                     
-                    
             character_data['0'] = {'length': len(good_variations.keys())}
             character_data['1'] = {} 
             character_data['2'] = {"1": {"1": ""},"2": {"1": ""}}
@@ -153,7 +168,7 @@ class Updater():
                 character_data['0'][str(i)] = keys[i][2]
                 character_data['1'][str(i)] = {}
                 character_data['1'][str(i)]['cjs'] = [good_variations[keys[i]].replace('.js', '')]
-                character_data['1'][str(i)]['action_label_list'] = ['ability', 'mortal_A', 'stbwait', 'short_attack', 'double', 'triple']
+                character_data['1'][str(i)]['action_label_list'] = ['ability', mortal[keys[i]], 'stbwait', 'short_attack', 'double', 'triple']
                 if keys[i] in good_phits:
                     character_data['1'][str(i)]['effect'] = [good_phits[keys[i]].replace('.js', '')]
                 else:
@@ -185,7 +200,7 @@ class Updater():
 
     def processManifest(self, filename, manifest):
         if not self.download_assets:
-            return
+            return (False, None)
         st = manifest.find('manifest:') + len('manifest:')
         ed = manifest.find(']', st) + 1
         data = json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src', '"src"').replace('type', '"type"').replace('id', '"id"'))
@@ -204,6 +219,7 @@ class Updater():
         url_handle.close()
         with open("cjs/" + filename, "wb") as f:
             f.write(data)
+        return (True, data)
 
     def retrieveAnimationlist(self, filename, cjs, animation_list):
         key = "mc_" + filename.split('.')[0] + "_"
