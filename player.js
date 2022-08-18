@@ -10,16 +10,30 @@ var stage={
 var bgList = [
     'event_82',
     'e027r_3',
+    'event_283',
+    'event_177',
+    'event_323',
+    'common_074',
+    'event_321',
+    'event_322',
     '0',
-    '1'
+    '1',
+    '2'
 ]
 
 var bgName = [
     'Trial',
     'Town',
+    'Beach',
+    'Auld Lang Syne',
+    'Lucilius',
+    'Cosmos',
+    'Alanaan',
+    'Nier',
     'Black',
-    'Dummy'
-]
+    'Dummy',
+    'Green'
+]Auld Lang Syne
 
 if (AnimeData[2][1]) {
     var i=1
