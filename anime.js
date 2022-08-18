@@ -77,7 +77,7 @@ function successJSON(id)
         if(result.childNodes.length <= 2) result.remove();
     }
     img.onload = function() {
-        this.id = "done"
+        this.id = "character"
     }
     img.src = "http://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
     
