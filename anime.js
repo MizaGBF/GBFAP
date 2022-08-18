@@ -1,4 +1,5 @@
 var AnimeData = null;
+var AnimeLocal = false;
 var corsProxy = 'https://gbfcp.herokuapp.com/'
 var Game = {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
@@ -6,6 +7,15 @@ var Game = {
     imgUri: corsProxy + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
     setting: {}
 };
+if(AnimeLocal)
+{
+    Game = {
+        xjsUri: '',
+        jsUri: '',
+        imgUri: 'img',
+        setting: {}
+    };
+}
 
 char_index = null;
 endpoints = [
