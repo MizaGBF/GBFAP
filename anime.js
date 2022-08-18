@@ -107,7 +107,7 @@ function startupCallback()
     var id = getParam();
     if(id != null && !isNaN(id) && id.length == 10 && (id.slice(0, 3) == "302" || id.slice(0, 3) == "303" || id.slice(0, 3) == "304" || id.slice(0, 3) == "371"))
     {
-        get("json/" + id + ".json", successJSON, failJSON, id);
+        get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
     }
     else
     {
@@ -160,6 +160,6 @@ function failDisplay(id)
 
 function displayCharacters(elem, key)
 {
-    if(!char_index) get("json/index.json", successDisplay, failDisplay, key);
+    if(!char_index) get("json/index.json?" + Date.now(), successDisplay, failDisplay, key);
     else successDisplay(key)
 }
