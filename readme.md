@@ -12,14 +12,14 @@ You need to use it to update the list (after a new character release).
 Possible (mutually exclusive) commands:  
 * `python updater.py` to simply update with new characters.  
 * `python updater.py -index` to update the index.json file.  
-* `python updater.py -update list_of_character_id` to do a manual update (Add the afford mentionned options after the list, if needed).  
+* `python updater.py -update list_of_character_id` to do a manual update.  
   
 Other options:
 * `python updater.py -force` to update all characters regardless of if they are already indexed.  
 * `python updater.py -download` to update all characters and download their assets (for a local use).  
 * `python updater.py -enemy` to update the enemy and dummy attack effect animation data (add `-download` to also get the effect).  
 
-Those three options can be used together and with `-update`.  
+Those three options can be used together, and after `-update`.  
   
 Additionaly, if you want to host the assets on your server:
 * add `-download` (and `-enemy` for the enemy files) to download all assets.  
