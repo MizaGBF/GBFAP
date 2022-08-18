@@ -49,7 +49,12 @@ class Updater():
     def run(self):
         max_thread = 10
         print("Updating Database...")
-        if self.force_update: print("Note: All characters will be updated")
+        if self.force_update:
+            print("Note: All characters will be updated")
+            s = input("Type quit to exit now:").lower()
+            if s == "quit":
+                print("Process aborted")
+                return
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread*4) as executor:
             futures = []
             err = [[0, True, Lock()], [0, True, Lock()], [0, True, Lock()], [0, True, Lock()]]
@@ -286,8 +291,7 @@ if __name__ == '__main__':
         u.download_assets = True
     if '-enemy' in sys.argv:
         u.enemyUpdate()
-        u.run()
-    elif '-index' in sys.argv:
+    if '-index' in sys.argv:
         u.saveIndex()
     elif len(sys.argv) >= 2 and sys.argv[1] == '-update':
         if len(sys.argv) == 2:

@@ -9,11 +9,17 @@ All the magic happens in the javascript.
 
 Beforehand, however, `updater.py` let you index existing characters and create data for them under the `json` folder.  
 You need to use it to update the list (after a new character release).  
-Possible commands:  
+Possible (mutually exclusive) commands:  
 * `python updater.py` to simply update with new characters.  
-* `python updater.py -force` to update all characters.  
 * `python updater.py -index` to update the index.json file.  
 * `python updater.py -update list_of_character_id` to do a manual update (Add the afford mentionned options after the list, if needed).  
+  
+Other options:
+* `python updater.py -force` to update all characters regardless of if they are already indexed.  
+* `python updater.py -download` to update all characters and download their assets (for a local use).  
+* `python updater.py -enemy` to update the enemy and dummy attack effect animation data (add `-download` to also get the effect).  
+
+Those three options can be used together and with `-update`.  
   
 Additionaly, if you want to host the assets on your server:
 * add `-download` (and `-enemy` for the enemy files) to download all assets.  
