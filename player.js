@@ -4,7 +4,7 @@ var action_list={};
 var dispatchStack = new Array;
 var animeVersion='0';
 var stage={
-    global:{}/* max-width:453px; */
+    global:{}
 };
 
 var bgList = [
@@ -171,6 +171,6 @@ var versionChange = function (obj) {
     };
     
     // header image
-    document.getElementById("character").src = "http://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + AnimeData[1][animeVersion]['cjs'][0].split('_').slice(1, 3).join('_') + ".jpg"
+    document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + AnimeData[1][animeVersion]['cjs'][0].split('_').slice(1, 3).join('_') + ".jpg"
     
 };

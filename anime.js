@@ -79,7 +79,7 @@ function successJSON(id)
     img.onload = function() {
         this.id = "character"
     }
-    img.src = "http://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
+    img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
     
     
     AnimeData = JSON.parse(this.response);
