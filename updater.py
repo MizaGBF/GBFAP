@@ -40,7 +40,7 @@ class Updater():
             "3710042000": ('3040009000', ''), # cog skin
             "3710043000": ('3040003000', '') # birdman skin
         }
-        self.exclusion = set()#set(['3030114000'])
+        self.exclusion = set([])
         self.loadIndex()
 
     def req(self, url, headers={}):
