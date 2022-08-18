@@ -255,6 +255,7 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     }
                 }
                 this.motionList=newList.concat(Array.from(newSet))
+                this.motionList.sort()
                 return this.motionList
             },
             translateAction: function(a) {
