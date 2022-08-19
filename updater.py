@@ -29,7 +29,7 @@ class Updater():
             ("_04_f1", "_f1", "6★ II")
         ]
         self.patches = { # tuple: substitute id, extra string
-            "3040232000": ('3040158000', ''), # s.alexiel,
+            "3040232000": ('3040158000', ''), # s.alexiel
             "3710019000": ('3040028000', ''), # zeta skin
             "3710020000": ('3040023000', ''), # lancelot skin
             "3710024000": ('3040023000', ''), # vira skin
@@ -57,17 +57,27 @@ class Updater():
                 return
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread*4) as executor:
             futures = []
-            err = [[0, True, Lock()], [0, True, Lock()], [0, True, Lock()], [0, True, Lock()]]
+            err = [[0, True, Lock(), 0], [0, True, Lock(), 0], [0, True, Lock(), 0], [0, True, Lock(), 0]]
             for i in range(max_thread):
                 futures.append(executor.submit(self.run_sub, i, max_thread, err[0], "3020{}000"))
                 futures.append(executor.submit(self.run_sub, i, max_thread, err[1], "3030{}000"))
                 futures.append(executor.submit(self.run_sub, i, max_thread, err[2], "3040{}000"))
                 futures.append(executor.submit(self.run_sub, i, max_thread, err[3], "3710{}000"))
+            finished = 0
             for future in concurrent.futures.as_completed(futures):
                 future.result()
+                finished += 1
+                if finished > 0 and finished % 10 == 0:
+                    print("Progress {:.1f}%".format((100*finished)/(4*max_thread)))
         print("Done")
-        self.loadIndex()
-        self.saveIndex()
+        if err[0][3] + err[1][3] + err[2][3] + err[3][3] > 0:
+            self.loadIndex()
+            self.saveIndex()
+            print("New additions:")
+            print(err[0][3], "R Characters")
+            print(err[1][3], "SR Characters")
+            print(err[2][3], "SSR Characters")
+            print(err[3][3], "Skins")
 
     def run_sub(self, start, step, err, file):
         id = start
@@ -83,6 +93,7 @@ class Updater():
                 else:
                     with err[2]:
                         err[0] = 0
+                        err[3] += 1
             id += step
 
     def update(self, id):
@@ -221,50 +232,28 @@ class Updater():
             f.write(data)
         return (True, data)
 
-    def retrieveAnimationlist(self, filename, cjs, animation_list):
-        key = "mc_" + filename.split('.')[0] + "_"
-        cur = cjs.find("mc_" + filename.split('.')[0] + "=function")
-        if cur == -1: cur = 0
-        while True:
-            a = cjs.find(key, cur)
-            if a == -1: break
-            a += len(key)
-            pos = [cjs.find('=', a), cjs.find('.', a), cjs.find(',', a)]
-            i = 0
-            while i < len(pos):
-                if pos[i] == -1: pos.pop(i)
-                else: i += 1
-            if len(pos) == 0: break
-            x = min(*pos)
-            cur = x + 1
-            if filename not in animation_list:
-                animation_list[filename] = []
-            if cjs[a:x] not in animation_list[filename]:
-                animation_list[filename].append(cjs[a:x])
-        # cleanup
-        base = ['ab_motion', 'down', 'short_attack', 'triple', 'double', 'hide', 'mortal_A', 'chara_in', 'chara_out', 'dead', 'damage', 'win', 'ability', 'attack', 'stbwait', 'setup', 'wait']
-        i = 0
-        while i < len(animation_list[filename]):
-            if animation_list[filename][i] in base: animation_list[filename].pop(i)
-            else: i+= 1
-        animation_list[filename].sort()
-        animation_list[filename] = ['ability', 'mortal_A', 'stbwait', 'short_attack', 'double', 'triple'] + animation_list[filename]
-
     def manualUpdate(self, ids):
-        print("Attempting to update", len(ids), "element(s)")
         max_thread = 40
+        counter = 0
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread) as executor:
             futures = []
             for id in ids:
                 if len(id) == 10:
                     futures.append(executor.submit(self.update, id))
+                    counter += 1
+            print("Attempting to update", counter, "element(s)")
+            counter = 0
             for future in concurrent.futures.as_completed(futures):
-                future.result()
+                if future.result(): counter += 1
         print("Done")
-        self.loadIndex()
-        self.saveIndex()
+        if counter > 0:
+            self.loadIndex()
+            self.saveIndex()
+            print(counter, "successfully processed ID")
 
     def enemyUpdate(self):
+        tmp = self.download_assets
+        self.download_assets = True
         with open("view/cjs_npc_demo.js", mode="r", encoding="utf-8") as f:
             data = f.read()
             a = data.find('"enemy_') + len('"enemy_')
@@ -286,6 +275,7 @@ class Updater():
                 f.write(data)
             self.processManifest("phit_ax_0001.js", data.decode('utf-8'))
             print("Dummy phit updated")
+        self.download_assets = tmp
 
     def loadIndex(self):
         files = [f for f in os.listdir('json/') if os.path.isfile(os.path.join('json/', f))]

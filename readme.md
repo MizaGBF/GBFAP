@@ -3,40 +3,65 @@ Web page to play GBF animations.
 Click [Here](https://mizagbf.github.io/GBFAP) to access it.  
 Based and modified from the chinese wiki player.  
   
-# Hosting your own  
-The project is a simple HTML page.  
-All the magic happens in the javascript.  
-
-Beforehand, however, `updater.py` let you index existing characters and create data for them under the `json` folder.  
-You need to use it to update the list (after a new character release).  
-Possible (mutually exclusive) commands:  
-* `python updater.py` to simply update with new characters.  
-* `python updater.py -index` to update the index.json file.  
-* `python updater.py -update list_of_character_id` to do a manual update.  
+# Setup  
+Two possible setups:  
   
-Other options:
-* `python updater.py -force` to update all characters regardless of if they are already indexed.  
-* `python updater.py -download` to update all characters and download their assets (for a local use).  
-* `python updater.py -enemy` to update the enemy and dummy attack effect animation data (add `-download` to also get the effect).  
-
-Those three options can be used together, and after `-update`.  
+### You want to host the assets  
+1. Copy this repo.  
+2. Run `python updater.py -force -download -enemy` to download all the assets and new characters (The script will ask you to confirm).  
+3. Change line 2 of `anime.js`: From `var AnimeLocal = false;` to `var AnimeLocal = true;`  
   
-Additionaly, if you want to host the assets on your server:
-* add `-download` (and `-enemy` for the enemy files) to download all assets.  
-* go to `anime.js`, line 2, and change:
-```javascript
-var AnimeLocal = false;
-```
-to
-```javascript
-var AnimeLocal = true;
-```
-Or edit the proxy if you are planning to use one (the one used is setup for my version and won't work with another).  
-* for characters/skins using another version ougi file, you need to add the subtitution in the `patches` variable of `updater.py`, around line 36.  
-Example: `"ID of Character without Ougi" : ("ID of the corresponding Character with Ougi", "_s2 if the corresponding Character file uses it, else nothing")`  
+You can now host the project in the way you prefer.  
+To later add new characters, simply do `python updater.py -download`.  
   
+### You DON'T want to host the assets  
+1. Copy this repo.  
+2. Run `python updater.py -force` to build a clean character index (The script will ask you to confirm).  
+3. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF.  
+4. Change line 3 of `anime.js` with the address of your proxy.  
+  
+You can now host the project in the way you prefer.  
+To later add new characters, simply do `python updater.py`.  
+  
+# The updater  
+`updater.py` scours the GBF asset servers to build an index of playable character, along with the data needed for their respective demos.  
+It's currently compatible with all characters (R, SR, SSR, Skins) released up to today.  
+The resulting data will be in the `json` folder.  
+  
+There are three main possible command lines:
+* `python updater.py` to simply retrieve unindexed characters.  
+* `python updater.py -index` to simply rebuild the index.json file.  
+* `python updater.py -update list_of_character_id` to manually fetch the specified characters.  
+  
+You can then append the following options for more control:
+* `-force` will force a character indexation and, as a result, rebuild its JSON data (No need to use with `-update`).  
+* `-download` will download and save the character assets in their respective folders.  
+* `-enemy` will download the data and assets needed for the demo enemy and the dummy attack effect.  
+  
+# Character Uncap  
+If a character gets an uncap, simply do:  
+`python updater.py -update THE_CHARACTER_ID`  
+Add `-download` if you want/need to download its new assets.  
+  
+# Exceptions  
+Some skins (and rarely some seasonal characters) reuse the Charge Attack of another version.  
+As there is no way to programmatically find it, at least currently, you'll have to set those exceptions manually in `updater.py`.  
+First, you'll likely get a `No special set` error for those characters.  
+Next, find out the ID of the Character that it's supposed to borrow the files from and open `update.py` and look for `self.patches` around line 31.  
+Simply add a new line in the list (don't forget the comma in the previous one) such as it looks that way:
+`"ID_CHARA_WITHOUT_OUGI" : ('ID_BORROWED_FROM', '')`.  
+Example:
+`"3040232000": ('3040158000', '')`.  
+Summer Alexiel (3040232000) is using Grand Alexiel (3040158000) Charge Attack files.  
+The second unused value (`''`) is, in the future, if a character/skin ends up borrowing a CA with a weird naming convention, such as a full screen Charge Attack.  
+Those have an extra `_s2` or `_s3` in their file names, and will need to be specified at that location.
   
 # Additional Notes  
+Downloaded assets are saved in the following folders:  
+* Manifests in model/manifest/
+* CJS in cjs/
+* Sheets in img/sp/cjs/
+  
 The following files are modified/customized from what GBF uses:  
 * model/cjs-loader.js  
 * view/cjs_npc_demo.js  
@@ -47,3 +72,5 @@ Along with:
 * anime.js  
 * player.js  
 * script.js  
+  
+And possibly more that I forgot.  
