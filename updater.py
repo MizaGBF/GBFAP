@@ -28,17 +28,297 @@ class Updater():
             ("_04", "", "6★"),
             ("_04_f1", "_f1", "6★ II")
         ]
-        self.patches = { # tuple: substitute id, extra string
-            "3040232000": ('3040158000', ''), # s.alexiel
-            "3710019000": ('3040028000', ''), # zeta skin
-            "3710020000": ('3040023000', ''), # lancelot skin
-            "3710024000": ('3040023000', ''), # vira skin
-            "3710025000": ('3040057000', ''), # vampy skin
-            "3710026000": ('3040050000', ''), # percival skin
-            "3710033000": ('3040040000', ''), # jannu skin
-            "3710034000": ('3040013000', ''), # seruel skin
-            "3710042000": ('3040009000', ''), # cog skin
-            "3710043000": ('3040003000', '') # birdman skin
+        self.patches = { # tuple: substitute ougi id, extra string, substitute atk file
+            "3020000000": ("", "", "phit_ax_0001"),
+            "3020001000": ("", "", "phit_sw_0003"),
+            "3020002000": ("", "", "phit_ax_0004"),
+            "3020004000": ("", "", "phit_ax_0001"),
+            "3020005000": ("", "", "phit_sp_0002"),
+            "3020006000": ("", "", "phit_sw_0003"),
+            "3020007000": ("", "", "phit_sw_0003"),
+            "3020008000": ("", "", "phit_wa_0001"),
+            "3020009000": ("", "", "phit_me_0004"),
+            "3020010000": ("", "", "phit_sw_0006"),
+            "3020011000": ("", "", "phit_wa_0004"),
+            "3020012000": ("", "", "phit_sp_0003"),
+            "3020013000": ("", "", "phit_kn_0003"),
+            "3020014000": ("", "", "phit_gu_0002"),
+            "3020015000": ("", "", "phit_kn_0006"),
+            "3020016000": ("", "", "phit_gu_0001"),
+            "3020017000": ("", "", "phit_kn_0006"),
+            "3020018000": ("", "", "phit_sw_0005"),
+            "3020019000": ("", "", "phit_sw_0004"),
+            "3020020000": ("", "", "phit_me_0005"),
+            "3020021000": ("", "", "phit_wa_0001"),
+            "3020022000": ("", "", "phit_kn_0003"),
+            "3020023000": ("", "", "phit_gu_0001"),
+            "3020024000": ("", "", "phit_ax_0005"),
+            "3020025000": ("", "", "phit_ax_0001"),
+            "3020026000": ("", "", "phit_kn_0004"),
+            "3020027000": ("", "", "phit_sw_0003"),
+            "3020028000": ("", "", "phit_kn_0003"),
+            "3020030000": ("", "", "phit_kn_0002"),
+            "3020031000": ("", "", "phit_kn_0006"),
+            "3020033000": ("", "", "phit_me_0003"),
+            "3020034000": ("", "", "phit_gu_0001"),
+            "3020036000": ("", "", "phit_gu_0001"),
+            "3020037000": ("", "", "phit_me_0003"),
+            "3020038000": ("", "", "phit_me_0001"),
+            "3020039000": ("", "", "phit_wa_0005"),
+            "3020040000": ("", "", "phit_sp_0002"),
+            "3020041000": ("", "", "phit_kn_0006"),
+            "3020045000": ("", "", "phit_kn_0004"),
+            "3020046000": ("", "", "phit_ax_0001"),
+            "3020048000": ("", "", "phit_sw_0002"),
+            "3020049000": ("", "", "phit_bw_0001"),
+            "3020050000": ("", "", "phit_0000000000"),
+            "3020051000": ("", "", "phit_me_0003"),
+            "3020052000": ("", "", "phit_me_0001_silent"),
+            "3020053000": ("", "", "phit_sw_0002"),
+            "3020054000": ("", "", "phit_kn_0005"),
+            "3020056000": ("", "", "phit_sw_0004"),
+            "3020057000": ("", "", "phit_sp_0001"),
+            "3020058000": ("", "", "phit_sw_0003"),
+            "3020059000": ("", "b", "phit_me_0004"),
+            "3020060000": ("", "", "phit_me_0001"),
+            "3020061000": ("", "", "phit_wa_0006"),
+            "3020062000": ("", "", "phit_me_0002"),
+            "3020063000": ("", "", "phit_kn_0001"),
+            "3020064000": ("", "", "phit_sw_0003"),
+            "3020070000": ("", "", "phit_me_0002"),
+            "3030000000": ("", "", "phit_sp_0015"),
+            "3030001000": ("", "", "phit_sw_0012"),
+            "3030002000": ("", "", "phit_wa_0012"),
+            "3030003000": ("", "", "phit_wa_0011"),
+            "3030004000": ("", "", "phit_sw_0014"),
+            "3030009000": ("", "", "phit_sw_0013"),
+            "3030010000": ("", "", "phit_kn_0014"),
+            "3030011000": ("", "", "phit_ax_0011"),
+            "3030012000": ("", "", "phit_sw_0012"),
+            "3030013000": ("", "", "phit_me_0013"),
+            "3030014000": ("", "", "phit_sp_0012"),
+            "3030015000": ("", "", "phit_me_0011"),
+            "3030016000": ("", "", "phit_gu_0011"),
+            "3030018000": ("", "", "phit_bw_0014"),
+            "3030019000": ("", "", "phit_sw_0016"),
+            "3030020000": ("", "", "phit_me_0013"),
+            "3030024000": ("", "", "phit_bw_0014"),
+            "3030026000": ("", "", "phit_mc_0014"),
+            "3030027000": ("", "", "phit_kn_0011"),
+            "3030028000": ("", "", "phit_sp_0012"),
+            "3030029000": ("", "", "phit_sw_0012"),
+            "3030030000": ("", "", "phit_gu_0011"),
+            "3030031000": ("", "", "phit_sw_0014"),
+            "3030032000": ("", "", "phit_3030101000"),
+            "3030033000": ("", "", "phit_sw_0016"),
+            "3030034000": ("", "", "phit_wa_0011"),
+            "3030035000": ("", "", "phit_bw_0014"),
+            "3030036000": ("", "", "phit_wa_0015"),
+            "3030037000": ("", "", "phit_sw_0013"),
+            "3030038000": ("", "", "phit_sw_0013"),
+            "3030039000": ("", "", "phit_wa_0015"),
+            "3030040000": ("", "", "phit_sw_0015"),
+            "3030041000": ("", "", "phit_sw_0012"),
+            "3030042000": ("", "", "phit_sw_0016"),
+            "3030043000": ("", "", "phit_mc_0014"),
+            "3030044000": ("", "", "phit_bw_0014"),
+            "3030045000": ("", "", "phit_sp_0013"),
+            "3030046000": ("", "", "phit_sw_0011"),
+            "3030047000": ("", "", "phit_sp_0012"),
+            "3030048000": ("", "", "phit_gu_0013"),
+            "3030049000": ("", "", "phit_sw_0015"),
+            "3030050000": ("", "", "phit_wa_0015"),
+            "3030053000": ("", "", "phit_sw_0015"),
+            "3030054000": ("", "", "phit_3710177000"),
+            "3030055000": ("", "", "phit_me_0013"),
+            "3030056000": ("", "", "phit_sw_0013"),
+            "3030057000": ("", "", "phit_me_0013"),
+            "3030058000": ("", "", "phit_wa_0011"),
+            "3030059000": ("", "", "phit_ax_0016"),
+            "3030062000": ("", "", "phit_sw_0011"),
+            "3030063000": ("", "", "phit_gu_0011"),
+            "3030064000": ("", "", "phit_bw_0012"),
+            "3030066000": ("", "", "phit_wa_0014"),
+            "3030067000": ("", "", "phit_bw_0014"),
+            "3030068000": ("", "", "phit_gu_0011"),
+            "3030072000": ("", "", "phit_sw_0014"),
+            "3030075000": ("", "", "phit_mc_0015"),
+            "3030077000": ("", "", "phit_sw_0012"),
+            "3030081000": ("", "", "phit_kt_0026"),
+            "3030082000": ("", "", "phit_me_0025"),
+            "3030084000": ("", "", "phit_kn_0016"),
+            "3030085000": ("", "", "phit_gu_0013"),
+            "3030090000": ("", "", "phit_wa_0016"),
+            "3030092000": ("", "", "phit_wa_0016"),
+            "3030093000": ("", "", "phit_3030093006"),
+            "3030096000": ("", "", "phit_sp_0011"),
+            "3030097000": ("", "", "phit_sw_0011"),
+            "3030100000": ("", "", "phit_wa_0014"),
+            "3030102000": ("", "", "phit_wa_0013"),
+            "3030103000": ("", "", "phit_sw_0013"),
+            "3030106000": ("", "", "phit_wa_0013"),
+            "3030107000": ("", "", "phit_sp_0012"),
+            "3030108000": ("", "", "phit_3040023000"),
+            "3030109000": ("", "", "phit_me_0015"),
+            "3030110000": ("", "", "phit_sp_0011"),
+            "3030112000": ("", "", "phit_gu_0013"),
+            "3030113000": ("", "", "phit_bw_0011"),
+            "3030116000": ("", "", "phit_ax_0015"),
+            "3030117000": ("", "", "phit_me_0015"),
+            "3030118000": ("", "", "phit_kt_0014"),
+            "3030119000": ("", "", "phit_ax_0011"),
+            "3030121000": ("", "", "phit_sw_0013"),
+            "3030122000": ("", "", "phit_me_0013"),
+            "3030123000": ("", "", "phit_kn_0012"),
+            "3030127000": ("", "", "phit_me_0011"),
+            "3030128000": ("", "", "phit_ax_0014"),
+            "3030129000": ("", "", "phit_sw_0016"),
+            "3030133000": ("", "", "phit_sp_0013"),
+            "3030134000": ("", "", "phit_kn_0013"),
+            "3030139000": ("", "", "phit_ax_0013"),
+            "3030140000": ("", "", "phit_wa_0015"),
+            "3030147000": ("", "", "phit_me_0013"),
+            "3030149000": ("", "", "phit_mc_0013"),
+            "3030151000": ("", "", "phit_3030022000"),
+            "3030154000": ("", "", "phit_gu_0021_silent"),
+            "3030155000": ("", "", "phit_gu_0011_silent"),
+            "3030157000": ("", "", "phit_sw_0003"),
+            "3030158000": ("", "", "phit_3020065000"),
+            "3030159000": ("", "", "phit_gu_0013"),
+            "3030161000": ("", "", "phit_wa_0011"),
+            "3030163000": ("", "", "phit_3040070000"),
+            "3030165000": ("", "", "phit_3040007000"),
+            "3030168000": ("", "", "phit_3040050000"),
+            "3030169000": ("", "", "phit_me_0014"),
+            "3030170000": ("", "", "phit_3040071000"),
+            "3030175000": ("", "", "phit_sw_0013"),
+            "3030176000": ("", "", "phit_sw_0012"),
+            "3030178000": ("", "", "phit_kt_0013"),
+            "3030179000": ("", "", "phit_bw_0014"),
+            "3030181000": ("", "", "phit_gu_0014"),
+            "3030182000": ("", "", "phit_3040098000"),
+            "3030183000": ("", "", "phit_kn_0015"),
+            "3030184000": ("", "", "phit_kt_0013"),
+            "3030185000": ("", "", "phit_gu_0016"),
+            "3030186000": ("", "", "phit_me_0012_silent"),
+            "3030187000": ("", "", "phit_bw_0011"),
+            "3030191000": ("", "", "phit_sw_0014"),
+            "3030195000": ("", "", "phit_sw_0015"),
+            "3030199000": ("", "", "phit_3040084000"),
+            "3030200000": ("", "", "phit_sw_0011"),
+            "3030201000": ("", "", "phit_3040052000"),
+            "3030202000": ("", "", "phit_me_0004"),
+            "3030203000": ("", "", "phit_3030083000"),
+            "3030206000": ("", "", "phit_kt_0013"),
+            "3030221000": ("", "", "phit_3040057000"),
+            "3030223000": ("", "", "phit_3040006000"),
+            "3030225000": ("", "", "phit_3040024000"),
+            "3030230000": ("", "", "phit_gu_0001"),
+            "3030233000": ("", "", "phit_3040078000"),
+            "3030239000": ("", "", "phit_gu_0015"),
+            "3030246000": ("", "", "phit_3040145000"),
+            "3030250000": ("", "", "phit_ax_0013"),
+            "3030268000": ("", "", "phit_bw_0011"),
+            "3030272000": ("", "", "phit_3040191000"),
+            "3030273000": ("", "", "phit_3030262000"),
+            "3040014000": ("", "", "phit_3040004000"),
+            "3040053000": ("", "", "phit_3040043000"),
+            "3040056000": ("", "", "phit_3040028000"),
+            "3040073000": ("", "", "phit_3030101000"),
+            "3040090000": ("", "", "phit_3040050000"),
+            "3040091000": ("", "", "phit_3040060000"),
+            "3040110000": ("", "", "phit_3040070000"),
+            "3040126000": ("", "b", "phit_3040100000"),
+            "3040127000": ("", "", "phit_3040081000"),
+            "3040128000": ("", "", "phit_3040025000"),
+            "3040136000": ("", "", "phit_3040055000"),
+            "3040151000": ("", "", "phit_3040123000"),
+            "3040154000": ("", "", "phit_sw_0015"),
+            "3040176000": ("", "", "phit_3040068000"),
+            "3040177000": ("", "", "phit_3040148000"),
+            "3040210000": ("", "", "phit_3040138000"),
+            "3040224000": ("", "", "phit_3040153000"),
+            "3040232000": ("3040158000", "", "phit_3040158000"),
+            "3710001000": ("", "", "phit_3040054000_03"),
+            "3710002000": ("", "", "phit_3030008000_03"),
+            "3710003000": ("", "", "phit_3040065000_03"),
+            "3710004000": ("", "", "phit_3040227000"),
+            "3710005000": ("", "", "phit_3030253000"),
+            "3710006000": ("", "", "phit_3040027000"),
+            "3710007000": ("", "", "phit_3040141000"),
+            "3710008000": ("", "", "phit_3040143000"),
+            "3710009000": ("", "", "phit_3040237000"),
+            "3710010000": ("", "", "phit_3040237000"),
+            "3710011000": ("", "", "phit_3040209000"),
+            "3710012000": ("", "", "phit_3040209000"),
+            "3710013000": ("", "", "phit_3040141000"),
+            "3710014000": ("", "", "phit_3040255000"),
+            "3710017000": ("", "", "phit_3040013000"),
+            "3710018000": ("", "", "phit_3040071000_03"),
+            "3710019000": ("3040028000", "", "phit_3040028000"),
+            "3710020000": ("3040023000", "", "phit_3040023000"),
+            "3710021000": ("", "", "phit_3040227000"),
+            "3710022000": ("", "", "phit_3040083000"),
+            "3710023000": ("", "", "phit_3040077000_03"),
+            "3710024000": ("3030019000", "", "phit_3040141000"),
+            "3710025000": ("3040057000", "", "phit_3040057000"),
+            "3710026000": ("3040050000", "", "phit_3040050000"),
+            "3710030000": ("", "", "phit_3040050000"),
+            "3710031000": ("", "", "phit_3040237000"),
+            "3710032000": ("", "", "phit_3040023000"),
+            "3710033000": ("3040040000", "", "phit_3040040000"),
+            "3710034000": ("3040013000", "", "phit_3040013000"),
+            "3710035000": ("", "", "phit_3040054000_03"),
+            "3710036000": ("", "", "phit_3040141000"),
+            "3710037000": ("", "", "phit_3040077000_03"),
+            "3710038000": ("", "", "phit_3040068000_03"),
+            "3710039000": ("", "", "phit_3040101000"),
+            "3710040000": ("", "", "phit_3040117000"),
+            "3710042000": ("3040009000", "", "phit_3040009000"),
+            "3710043000": ("3040003000", "", "phit_3040003000"),
+            "3710045000": ("", "", "phit_3040209000"),
+            "3710046000": ("", "", "phit_3040257000"),
+            "3710047000": ("", "", "phit_3040054000_03"),
+            "3710048000": ("", "", "phit_3040092000"),
+            "3710050000": ("", "", "phit_3030008000_03"),
+            "3710052000": ("", "", "phit_3040077000_03"),
+            "3710053000": ("", "", "phit_3040068000_03"),
+            "3710054000": ("", "", "phit_3040055000"),
+            "3710055000": ("", "", "phit_3040055000"),
+            "3710058000": ("", "", "phit_3040120000"),
+            "3710060000": ("", "", "phit_3040140000"),
+            "3710061000": ("", "", "phit_3030231000"),
+            "3710062000": ("", "", "phit_3040010000"),
+            "3710063000": ("", "", "phit_3040001000_03"),
+            "3710064000": ("", "", "phit_3040060000_03"),
+            "3710067000": ("", "", "phit_3040120000"),
+            "3710068000": ("", "", "phit_3040035000"),
+            "3710069000": ("", "", "phit_3030235000"),
+            "3710070000": ("", "", "phit_3040172000_03"),
+            "3710071000": ("", "", "phit_3040147000_03"),
+            "3710072000": ("", "", "phit_3040031000"),
+            "3710074000": ("", "", "phit_3040036000"),
+            "3710076000": ("", "", "phit_3040159000"),
+            "3710078000": ("", "", "phit_3040098000"),
+            "3710080000": ("", "", "phit_3040030000"),
+            "3710081000": ("", "", "phit_3040070000"),
+            "3710082000": ("", "", "phit_3040147000"),
+            "3710083000": ("", "", "phit_3040098000"),
+            "3710087000": ("", "", "phit_3040187000_02"),
+            "3710088000": ("", "", "phit_3040153000"),
+            "3710089000": ("", "", "phit_3840153000"),
+            "3710092000": ("", "", "phit_3040098000"),
+            "3710097000": ("", "", "phit_3030196000"),
+            "3710105000": ("", "", "phit_3040098000"),
+            "3710106000": ("", "", "phit_3040033000"),
+            "3710107000": ("", "", "phit_3040039000"),
+            "3710112000": ("", "", "phit_1040612000"),
+            "3710117000": ("", "", "phit_3030172000_03"),
+            "3710125000": ("", "", "phit_3040196000"),
+            "3710130000": ("", "", "phit_3040192000"),
+            "3710134000": ("", "", "phit_3040155000"),
+            "3710139000": ("", "", "phit_3040098000"),
+            "3710167000": ("", "", "phit_3040331000")
         }
         self.exclusion = set([])
         self.loadIndex()
@@ -98,83 +378,71 @@ class Updater():
 
     def update(self, id):
         try:
-            if id in self.exclusion: return False
-            if not self.download_assets:
+            if id in self.exclusion: return False # not used
+            if not self.download_assets: # don't check anything if this asset isn't found
                 try:
                     url_handle = self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01.jpg")
                     url_handle.read()
                     url_handle.close()
                 except:
                     return False
+            # containers
             character_data = {}
             good_variations = {}
             good_phits = {}
             good_nsp = {}
             found = False
             mortal = {}
+            # npc file check
             for i in range(0, len(self.variations), 2):
                 for j in range(2):
                     try:
-                        fn = "npc_{}{}.js".format(id, self.variations[i+j][0])
-                        url_handle = self.req(self.manifestUri + fn)
-                        data = url_handle.read()
-                        url_handle.close()
-                        if self.download_assets:
-                            with open("model/manifest/" + fn, "wb") as f:
-                                f.write(data)
-                        ret = self.processManifest(fn, data.decode('utf-8'))
+                        fn = "npc_{}{}".format(id, self.variations[i+j][0])
+                        ret = self.getJS(fn)
                         if not ret[0]:
-                            url_handle = self.req(self.cjsUri + fn)
+                            url_handle = self.req(self.cjsUri + fn + ".js")
                             data = url_handle.read().decode('utf-8')
                             url_handle.close()
                         else:
                             data = ret[1].decode('utf-8')
-                        if self.variations[i+j] not in mortal:
+                        if self.variations[i+j] not in mortal: # for characters such as lina
                             for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
                                 if m in data:
                                     mortal[self.variations[i+j]] = m
                                     break
                         found = True
-                        good_variations[self.variations[i+j]] = fn
+                        good_variations[self.variations[i+j]] = fn + ".js"
                     except:
                         break
-            if not found: return False
+            if not found: return False # no npc found, we quit
             for v in good_variations:
                 found = False
+                # ougi check
                 for s in ["", "_s2", "_s3", "_0_s2", "_0_s3"]:
                     for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
                         try:
-                            fn = "nsp_{}{}{}{}.js".format(id, v[0], s, m)
-                            url_handle = self.req(self.manifestUri + fn)
-                            data = url_handle.read()
-                            url_handle.close()
-                            if self.download_assets:
-                                with open("model/manifest/" + fn, "wb") as f:
-                                    f.write(data)
-                            self.processManifest(fn, data.decode('utf-8'))
-                            good_nsp[v] = fn
+                            fn = "nsp_{}{}{}{}".format(id, v[0], s, m)
+                            self.getJS(fn)
+                            good_nsp[v] = fn + ".js"
                             found = True
                             break
                         except:
                             pass
                     if found: break
+                # attack check
                 try:
-                    fn = "phit_{}{}.js".format(id, v[1])
-                    url_handle = self.req(self.manifestUri + fn)
-                    data = url_handle.read()
-                    url_handle.close()
-                    if self.download_assets:
-                        with open("model/manifest/" + fn, "wb") as f:
-                            f.write(data)
-                    self.processManifest(fn, data.decode('utf-8'))
-                    good_phits[v] = fn
+                    fn = "phit_{}{}".format(id, v[1])
+                    self.getJS(fn)
+                    good_phits[v] = fn + ".js"
                 except:
                     pass
-                    
+            
+            # building the character data
             character_data['0'] = {'length': len(good_variations.keys())}
             character_data['1'] = {} 
             character_data['2'] = {"1": {"1": ""},"2": {"1": ""}}
             keys = list(good_variations.keys())
+            # for each version
             for i in range(len(keys)):
                 character_data['0'][str(i)] = keys[i][2]
                 character_data['1'][str(i)] = {}
@@ -182,24 +450,35 @@ class Updater():
                 character_data['1'][str(i)]['action_label_list'] = ['ability', mortal[keys[i]], 'stbwait', 'short_attack', 'double', 'triple']
                 if keys[i] in good_phits:
                     character_data['1'][str(i)]['effect'] = [good_phits[keys[i]].replace('.js', '')]
-                else:
+                else: # if no phit, try to use inferior uncap ones
                     for j in range(i-1, -1, -1):
                         if keys[i][1] == keys[j][1] and good_variations[keys[j]] in good_phits:
                             character_data['1'][str(i)]['effect'] = [good_phits[keys[j]].replace('.js', '')]
                             break
+                # if no attack/phit AT ALL
                 if 'effect' not in character_data['1'][str(i)]:
-                    character_data['1'][str(i)]['effect'] = ['phit_ax_0001']
+                    if id in self.patches: # apply patch if existing
+                        character_data['1'][str(i)]['effect'] = [self.patches[id][2]]
+                        self.getJS(character_data['1'][str(i)]['effect'][0])
+                    else: # put default
+                        character_data['1'][str(i)]['effect'] = ['phit_ax_0001']
+                # if no ougi/nsp
                 if keys[i] in good_nsp:
                     character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":good_nsp[keys[i]].replace('.js', ''),"fixed_pos_owner_bg":0,"full_screen":0}]}]
-                else:
+                else: # try to use inferior uncap one
                     for j in range(i-1, -1, -1):
                         if keys[j] in good_nsp:
                             character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":good_nsp[keys[j]].replace('.js', ''),"fixed_pos_owner_bg":0,"full_screen":1}]}]
                             break
-                if 'special' not in character_data['1'][str(i)] and id in self.patches:
+                # if no special AT ALL
+                if 'special' not in character_data['1'][str(i)] and id in self.patches: # apply patch if existing
                     character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":good_variations[keys[j]].replace('.js', '').replace('npc', 'nsp').replace(id, self.patches[id][0]) + self.patches[id][1] ,"fixed_pos_owner_bg":0,"full_screen":1}]}]
+                    self.getJS(character_data['1'][str(i)]['special'][0]['list'][0]['cjs'])
+                # raise error if still no special
                 if 'special' not in character_data['1'][str(i)]: raise Exception("No special set")
-                if '_s2' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs'] or '_s3' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs']: character_data['1'][str(i)]['special'][0]['list'][0]['full_screen'] = 1
+                # update full screen mode
+                if '_s2' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs'] or '_s3' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs']:
+                    character_data['1'][str(i)]['special'][0]['list'][0]['full_screen'] = 1
                 character_data['1'][str(i)]['cjs_pos'] = [{"y":0,"x":0}]
                 character_data['1'][str(i)]['special_pos'] = [[{"y":0,"x":0}]]
             with open("json/" + str(id) + ".json", 'w') as outfile:
@@ -251,6 +530,21 @@ class Updater():
             self.saveIndex()
             print(counter, "successfully processed ID")
 
+    def getJS(self, js):
+        url_handle = self.req(self.manifestUri + js + ".js")
+        data = url_handle.read()
+        url_handle.close()
+        if self.download_assets:
+            with open("model/manifest/" + js + ".js", "wb") as f:
+                f.write(data)
+        return self.processManifest(js + ".js", data.decode('utf-8'))
+
+    def phitUpdate(self, phit):
+        try:
+            self.getJS(phit)
+        except Exception as e:
+            print("Error for", phit, ":", e)
+
     def enemyUpdate(self):
         tmp = self.download_assets
         self.download_assets = True
@@ -258,23 +552,18 @@ class Updater():
             data = f.read()
             a = data.find('"enemy_') + len('"enemy_')
             enemy_id = data[a:data.find('"', a)]
-            fn = "enemy_" + enemy_id + ".js"
+            fn = "enemy_" + enemy_id
             
-            url_handle = self.req(self.manifestUri + "enemy_" + enemy_id + ".js")
-            data = url_handle.read()
-            url_handle.close()
-            with open("model/manifest/" + fn, "wb") as f:
-                f.write(data)
-            self.processManifest(fn, data.decode('utf-8'))
+            self.getJS(fn)
             print("Enemy updated")
             
-            url_handle = self.req(self.manifestUri + "phit_ax_0001.js")
-            data = url_handle.read()
-            url_handle.close()
-            with open("model/manifest/phit_ax_0001.js", "wb") as f:
-                f.write(data)
-            self.processManifest("phit_ax_0001.js", data.decode('utf-8'))
-            print("Dummy phit updated")
+            with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
+                futures = []            
+                for phit in ['phit_ax_0001', 'phit_sw_0003', 'phit_ax_0004', 'phit_sp_0002', 'phit_wa_0001', 'phit_me_0004', 'phit_sw_0006', 'phit_wa_0004', 'phit_sp_0003', 'phit_kn_0003', 'phit_gu_0002', 'phit_kn_0006', 'phit_gu_0001', 'phit_sw_0005', 'phit_sw_0004', 'phit_me_0005', 'phit_ax_0005', 'phit_kn_0004', 'phit_kn_0002', 'phit_me_0003', 'phit_me_0001', 'phit_wa_0005', 'phit_sw_0002', 'phit_bw_0001', 'phit_0000000000', 'phit_me_0001_silent', 'phit_kn_0005', 'phit_sp_0001', 'phit_wa_0006', 'phit_me_0002', 'phit_kn_0001', 'phit_sp_0015', 'phit_sw_0012', 'phit_wa_0012', 'phit_wa_0011', 'phit_sw_0014', 'phit_sw_0013', 'phit_kn_0014', 'phit_ax_0011', 'phit_me_0013', 'phit_sp_0012', 'phit_me_0011', 'phit_gu_0011', 'phit_bw_0014', 'phit_sw_0016', 'phit_mc_0014', 'phit_kn_0011', 'phit_wa_0015', 'phit_sw_0015', 'phit_sp_0013', 'phit_sw_0011', 'phit_gu_0013', 'phit_ax_0016', 'phit_bw_0012', 'phit_wa_0014', 'phit_mc_0015', 'phit_kt_0026', 'phit_me_0025', 'phit_kn_0016', 'phit_wa_0016', 'phit_sp_0011', 'phit_wa_0013', 'phit_me_0015', 'phit_bw_0011', 'phit_ax_0015', 'phit_kt_0014', 'phit_kn_0012', 'phit_ax_0014', 'phit_kn_0013', 'phit_ax_0013', 'phit_mc_0013', 'phit_gu_0021_silent', 'phit_gu_0011_silent', 'phit_me_0014', 'phit_kt_0013', 'phit_gu_0014', 'phit_kn_0015', 'phit_gu_0016', 'phit_me_0012_silent', 'phit_gu_0015', 'phit_3840153000', 'phit_1040612000']:
+                    futures.append(executor.submit(self.phitUpdate, phit))
+                for future in concurrent.futures.as_completed(futures):
+                    future.result()
+            print("Phit files updated")
         self.download_assets = tmp
 
     def loadIndex(self):

@@ -25,7 +25,7 @@ To later add new characters, simply do `python updater.py`.
   
 # The updater  
 `updater.py` scours the GBF asset servers to build an index of playable character, along with the data needed for their respective demos.  
-It's currently compatible with all characters (R, SR, SSR, Skins) released up to today.  
+It's currently compatible with almost characters (R, SR, SSR, Skins) released up to today (see below for exceptions and how to fix those).  
 The resulting data will be in the `json` folder.  
   
 There are three main possible command lines:
@@ -44,17 +44,21 @@ If a character gets an uncap, simply do:
 Add `-download` if you want/need to download its new assets.  
   
 # Exceptions  
-Some skins (and rarely some seasonal characters) reuse the Charge Attack of another version.  
+Some skins (and rarely some seasonal characters) reuse the Charge Attack or Attack effect of another version.  
 As there is no way to programmatically find it, at least currently, you'll have to set those exceptions manually in `updater.py`.  
-First, you'll likely get a `No special set` error for those characters.  
-Next, find out the ID of the Character that it's supposed to borrow the files from and open `update.py` and look for `self.patches` around line 31.  
+First, you'll likely get a `No special set` error for characters without corresponding charge attack.  
+Second, characters without corresponding attack effect will use a default one.  
+To fix any of those two issues, find out the ID of the Character that it's supposed to borrow the files from and open `update.py` and look for `self.patches` around line 31.  
 Simply add a new line in the list (don't forget the comma in the previous one) such as it looks that way:
-`"ID_CHARA_WITHOUT_OUGI" : ('ID_BORROWED_FROM', '')`.  
-Example:
-`"3040232000": ('3040158000', '')`.  
+`"ID_CHARA_WITHOUT_OUGI" : ("ID_OUGI_BORROWED_FROM", "", "")`.  
+Example:  
+`"3040232000": ("3040158000", "", "")`.  
 Summer Alexiel (3040232000) is using Grand Alexiel (3040158000) Charge Attack files.  
-The second unused value (`''`) is, in the future, if a character/skin ends up borrowing a CA with a weird naming convention, such as a full screen Charge Attack.  
-Those have an extra `_s2` or `_s3` in their file names, and will need to be specified at that location.
+The second value (`''`) is, in the future, if a character/skin ends up borrowing a CA with a weird naming convention, such as a full screen Charge Attack.  
+Those have an extra `_s2` or `_s3` in their file names, and will need to be specified at that location.  
+The third value (`''`) is for the matching attack effect.  
+Just look at the full list in `updater.py` for more examples.  
+Once the change is done, run `updater.py` again for the concerned characters.  
   
 # Additional Notes  
 Downloaded assets are saved in the following folders:  
