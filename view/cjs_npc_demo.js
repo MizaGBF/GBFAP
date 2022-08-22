@@ -5,15 +5,15 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
     var windowSize = 453;
     canvasSize /= 2;
     var posFix = canvasSize - canvasSize / realSize * windowSize
-        , d = {     //角色偏移
+        , d = {     //offset 1
             x: 140 + canvasSize,
             y: 60 + canvasSize
         }
-        , e = {     //木桩偏移
+        , e = {     //offset 2
             x: -140 + canvasSize,
             y: 95 + canvasSize
         }
-        , f = {     //背景偏移
+        , f = {     //bg offset
             x: 50 + posFix,
             y: 50 + posFix
         }
@@ -30,7 +30,7 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
             width: 276,
             height: 0
         }
-        , n = .86
+        , n = .86 // scaling
         , o = {
             BG: 0,
             ENEMY: 1,
@@ -285,6 +285,9 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case 'dead': return "Dead";
                     case 'damage': return "Damaged";
                     case 'win': return "Win";
+                    case 'win_1': return "Win Alt. 1";
+                    case 'win_2': return "Win Alt. 2";
+                    case 'win_3': return "Win Alt. 3";
                     case 'ability': return "C.A. Charged";
                     case 'attack': return "Attack";
                     case 'attack_2': return "Attack (Spe)";
@@ -447,8 +450,6 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case q.MORTAL_K_1:
                     case q.MORTAL_K_2:
                         z = !0;
-                        //var D = e(this.cjsNameMortal) || null;
-                        //var E = D ? q["MORTAL_" + D] : b;
                         var E = b;
                         this.currentIndex = b[b.length-1].charCodeAt()-65
                         if (this.currentIndex >= this.cjsMortalList.length){
