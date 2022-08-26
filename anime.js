@@ -1,6 +1,6 @@
 var AnimeData = null;
 var AnimeLocal = false;
-var corsProxy = 'https://gbfcp.herokuapp.com/'
+var corsProxy = 'https://gbfcp.onrender.com/'
 var Game = {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     jsUri: corsProxy + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
