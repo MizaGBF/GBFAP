@@ -7,10 +7,13 @@ import os
 import os.path
 import zlib
 import sys
+import queue
 
 class Updater():
     def __init__(self):
+        self.running = False
         self.index = set()
+        self.queue = queue.Queue()
         self.quality = ("/img/", "/js/")
         self.force_update = False
         self.download_assets = False
@@ -19,16 +22,14 @@ class Updater():
         self.cjsUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/cjs/"
         self.imgUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/img"
         self.variations = [
-            ("_01", "", "☆☆☆☆"),
-            ("_01_f1", "_f1", "☆☆☆☆ II"),
-            ("_02", "", "★★★★"),
-            ("_02_f1", "_f1", "★★★★ II"),
-            ("_03", "", "5★"),
-            ("_03_f1", "_f1", "5★ II"),
-            ("_04", "", "6★"),
-            ("_04_f1", "_f1", "6★ II"),
-            ("_01_st2", "", "Style 1"),
-            ("_01_f1_st2", "_f1", "Style 1 II")
+            ("_01{}", "", "☆☆☆☆"),
+            ("_01{}_f1", "_f1", "☆☆☆☆ II"),
+            ("_02{}", "", "★★★★"),
+            ("_02{}_f1", "_f1", "★★★★ II"),
+            ("_03{}", "", "5★"),
+            ("_03{}_f1", "_f1", "5★ II"),
+            ("_04{}", "", "6★"),
+            ("_04{}_f1", "_f1", "6★ II")
         ]
         self.patches = { # tuple: substitute ougi id, extra string, substitute atk file
             "3020000000": ("", "", "phit_ax_0001"),
@@ -337,10 +338,12 @@ class Updater():
             if s == "quit":
                 print("Process aborted")
                 return
-        with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread*4) as executor:
+        self.running = True
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread*5) as executor:
             futures = []
             err = [[0, True, Lock(), 0], [0, True, Lock(), 0], [0, True, Lock(), 0], [0, True, Lock(), 0]]
             for i in range(max_thread):
+                futures.append(executor.submit(self.styleProcessing))
                 futures.append(executor.submit(self.run_sub, i, max_thread, err[0], "3020{}000"))
                 futures.append(executor.submit(self.run_sub, i, max_thread, err[1], "3030{}000"))
                 futures.append(executor.submit(self.run_sub, i, max_thread, err[2], "3040{}000"))
@@ -349,8 +352,14 @@ class Updater():
             for future in concurrent.futures.as_completed(futures):
                 future.result()
                 finished += 1
-                if finished > 0 and finished % 10 == 0:
+                if finished == max_thread*4:
+                    self.running = False
+                    print("Progress 100%")
+                elif finished > max_thread*4:
+                    pass
+                elif finished > 0 and finished % 10 == 0:
                     print("Progress {:.1f}%".format((100*finished)/(4*max_thread)))
+        self.running = False
         print("Done")
         if err[0][3] + err[1][3] + err[2][3] + err[3][3] > 0:
             self.loadIndex()
@@ -363,10 +372,10 @@ class Updater():
 
     def run_sub(self, start, step, err, file):
         id = start
-        while err[1] and err[0] < 20:
+        while err[1] and err[0] < 20 and self.running:
             f = file.format(str(id).zfill(3))
             if self.force_update or f not in self.index:
-                if not self.update(f):
+                if not self.update(f, ""):
                     with err[2]:
                         err[0] += 1
                         if err[0] >= 20:
@@ -378,12 +387,12 @@ class Updater():
                         err[3] += 1
             id += step
 
-    def update(self, id):
+    def update(self, id, style):
         try:
             if id in self.exclusion: return False # not used
             if not self.download_assets: # don't check anything if this asset isn't found
                 try:
-                    url_handle = self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01.jpg")
+                    url_handle = self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg")
                     url_handle.read()
                     url_handle.close()
                 except:
@@ -399,7 +408,7 @@ class Updater():
             for i in range(0, len(self.variations), 2):
                 for j in range(2):
                     try:
-                        fn = "npc_{}{}".format(id, self.variations[i+j][0])
+                        fn = "npc_{}{}".format(id, self.variations[i+j][0].format(style))
                         ret = self.getJS(fn)
                         if not ret[0]:
                             url_handle = self.req(self.cjsUri + fn + ".js")
@@ -417,13 +426,15 @@ class Updater():
                     except:
                         break
             if not found: return False # no npc found, we quit
+            if not id.startswith("371") and style == "":
+                self.queue.put((id, ["_st2"])) # style check
             for v in good_variations:
                 found = False
                 # ougi check
                 for s in ["", "_s2", "_s3", "_0_s2", "_0_s3"]:
                     for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
                         try:
-                            fn = "nsp_{}{}{}{}".format(id, v[0], s, m)
+                            fn = "nsp_{}{}{}{}".format(id, v[0].format(style), s, m)
                             self.getJS(fn)
                             good_nsp[v] = fn + ".js"
                             found = True
@@ -440,10 +451,10 @@ class Updater():
                     pass
             
             # building the character data
-            character_data['0'] = {'length': len(good_variations.keys())}
+            keys = list(good_variations.keys())
+            character_data['0'] = {'length': len(keys)}
             character_data['1'] = {} 
             character_data['2'] = {"1": {"1": ""},"2": {"1": ""}}
-            keys = list(good_variations.keys())
             # for each version
             for i in range(len(keys)):
                 character_data['0'][str(i)] = keys[i][2]
@@ -483,7 +494,7 @@ class Updater():
                     character_data['1'][str(i)]['special'][0]['list'][0]['full_screen'] = 1
                 character_data['1'][str(i)]['cjs_pos'] = [{"y":0,"x":0}]
                 character_data['1'][str(i)]['special_pos'] = [[{"y":0,"x":0}]]
-            with open("json/" + str(id) + ".json", 'w') as outfile:
+            with open("json/" + id + style + ".json", 'w') as outfile:
                 json.dump(character_data, outfile)
             return True
         except Exception as e:
@@ -513,19 +524,39 @@ class Updater():
             f.write(data)
         return (True, data)
 
+    def styleProcessing(self):
+        count = 0
+        while self.running:
+            try:
+                id, styles = self.queue.get(block=True, timeout=0.1)
+            except:
+                continue
+            for s in styles:
+                if self.update(id, s):
+                    count += 1
+        return count
+
     def manualUpdate(self, ids):
         max_thread = 40
         counter = 0
-        with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread) as executor:
-            futures = []
+        tcounter = 0
+        self.running = True
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread+2) as executor:
+            futures = [executor.submit(self.styleProcessing), executor.submit(self.styleProcessing)]
             for id in ids:
                 if len(id) == 10:
-                    futures.append(executor.submit(self.update, id))
-                    counter += 1
-            print("Attempting to update", counter, "element(s)")
-            counter = 0
+                    futures.append(executor.submit(self.update, id, ""))
+                    tcounter += 1
+            print("Attempting to update", tcounter, "element(s)")
+            tfinished = 0
             for future in concurrent.futures.as_completed(futures):
-                if future.result(): counter += 1
+                tfinished += 1
+                if tfinished >= tcounter:
+                    self.running = False
+                r = future.result()
+                if isinstance(r, int): counter += r
+                elif r: counter += 1
+        self.running = False
         print("Done")
         if counter > 0:
             self.loadIndex()
