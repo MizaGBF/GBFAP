@@ -79,8 +79,11 @@ function successJSON(id)
     img.onload = function() {
         this.id = "character"
     }
-    img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
-    
+    var el = id.split("_");
+    if(el.length == 1)
+        img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
+    else
+        img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
     
     AnimeData = JSON.parse(this.response);
 
