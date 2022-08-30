@@ -115,15 +115,19 @@ function playAnimation()
 function startupCallback()
 {
     var id = getParam();
-    if(id != null && !isNaN(id) && id.length == 10 && (id.slice(0, 3) == "302" || id.slice(0, 3) == "303" || id.slice(0, 3) == "304" || id.slice(0, 3) == "371"))
+    if(id != null)
     {
-        get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
-    }
-    else
-    {
-        document.getElementById('temp').remove();
-        result_area = document.getElementById('result');
-        result_area.appendChild(document.createTextNode("Error: Invalid ID or Character not found."));
+        var el = id.split("_");
+        if(!isNaN(el[0]) && el[0].length == 10 && (el[0].slice(0, 3) == "302" || el[0].slice(0, 3) == "303" || el[0].slice(0, 3) == "304" || el[0].slice(0, 3) == "371"))
+        {
+            get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
+        }
+        else
+        {
+            document.getElementById('temp').remove();
+            result_area = document.getElementById('result');
+            result_area.appendChild(document.createTextNode("Error: Invalid ID or Character not found."));
+        }
     }
 }
 
