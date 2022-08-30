@@ -158,7 +158,14 @@ function successDisplay(key)
     var node = document.getElementById('areacharacters'+key);
     for(let id of char_index)
     {
-        if(id.startsWith(key)) addImage(node, "sp/assets/npc/m/" + id + "_01.jpg", id);
+        if(id.startsWith(key))
+        {
+            var el = id.split("_");
+            if(el.length == 1)
+                addImage(node, "sp/assets/npc/m/" + id + "_01.jpg", id);
+            else
+                addImage(node, "sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg", id);
+        }
     }
 }
 
