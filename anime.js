@@ -1,6 +1,6 @@
 var AnimeData = null;
 var AnimeLocal = false;
-var corsProxy = 'https://gbfcp.onrender.com/'
+var corsProxy = 'https://gbfcp2.onrender.com/'
 var Game = {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     jsUri: corsProxy + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
@@ -54,7 +54,7 @@ function successJSON(id)
     result_area = document.getElementById('result');
     
     var ref = document.createElement('a');
-    ref.setAttribute('href', "https://mizagbf.github.io/GBFAL/search.html?id=" + id);
+    ref.setAttribute('href', "https://mizagbf.github.io/GBFAL/search.html?id=" + id.split("_")[0]);
     ref.appendChild(document.createTextNode("Assets"));
     result_area.insertBefore(ref, result_area.firstChild);
     
