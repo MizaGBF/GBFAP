@@ -45,7 +45,7 @@ function get(url, callback, err_callback, id) {
         }
     };
     xhr.open("GET", url, true);
-    xhr.timeout = 10000;
+    xhr.timeout = 60000;
     xhr.send(null);
 }
 
@@ -99,6 +99,22 @@ function successJSON(id)
 
 function failJSON(id)
 {
+    if(!AnimeDebug)
+    {
+        var d = getDebug();
+        if(!AnimeLocal && d != null) // testing only
+        {
+            AnimeDebug = true;
+            Game = {
+                xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
+                jsUri: corsProxy + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
+                imgUri: corsProxy + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
+                setting: {}
+            }
+            get(corsProxy + d + "/json/" + id + ".json", successJSON, failJSON, id);
+            return;
+        }
+    }
     document.getElementById('temp').remove();
     result_area = document.getElementById('result');
     result_area.appendChild(document.createTextNode("Error: Invalid ID"));
@@ -133,22 +149,7 @@ function startupCallback()
         var el = id.split("_");
         if(!isNaN(el[0]) && el[0].length == 10 && (el[0].slice(0, 3) == "302" || el[0].slice(0, 3) == "303" || el[0].slice(0, 3) == "304" || el[0].slice(0, 3) == "371"))
         {
-            var d = getDebug();
-            if(!AnimeLocal && d != null) // testing only
-            {
-                AnimeDebug = true;
-                Game = {
-                    xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
-                    jsUri: corsProxy + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
-                    imgUri: corsProxy + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
-                    setting: {}
-                }
-                get(corsProxy + d + "/json/" + id + ".json", successJSON, failJSON, id);
-            }
-            else
-            {
-                get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
-            }
+            get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
         }
         else
         {
