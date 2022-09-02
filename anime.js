@@ -1,5 +1,6 @@
 var AnimeData = null;
 var AnimeLocal = false;
+var AnimeDebug = false;
 var corsProxy = 'https://gbfcp2.onrender.com/'
 var Game = {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
@@ -67,23 +68,26 @@ function successJSON(id)
     
     result_area.insertBefore(document.createElement('br'), result_area.firstChild);
     
-    var img = document.createElement("img");
-    result_area.insertBefore(img, result_area.firstChild);
-    img.id  = "loading";
-    img.onerror = function() {
-        var result = this.parentNode.parentNode;
-        this.parentNode.remove();
-        this.remove();
-        if(result.childNodes.length <= 2) result.remove();
+    if(!AnimeDebug)
+    {
+        var img = document.createElement("img");
+        result_area.insertBefore(img, result_area.firstChild);
+        img.id  = "loading";
+        img.onerror = function() {
+            var result = this.parentNode.parentNode;
+            this.parentNode.remove();
+            this.remove();
+            if(result.childNodes.length <= 2) result.remove();
+        }
+        img.onload = function() {
+            this.id = "character"
+        }
+        var el = id.split("_");
+        if(el.length == 1)
+            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
+        else
+            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
     }
-    img.onload = function() {
-        this.id = "character"
-    }
-    var el = id.split("_");
-    if(el.length == 1)
-        img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
-    else
-        img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
     
     AnimeData = JSON.parse(this.response);
 
@@ -132,13 +136,14 @@ function startupCallback()
             var d = getDebug();
             if(!AnimeLocal && d != null) // testing only
             {
+                AnimeDebug = true;
                 Game = {
                     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
                     jsUri: corsProxy + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
                     imgUri: corsProxy + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
                     setting: {}
                 }
-                get(corsProxy + d + "/json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
+                get(corsProxy + d + "/json/" + id + ".json", successJSON, failJSON, id);
             }
             else
             {
@@ -161,11 +166,11 @@ function getEndpoint()
     return e;
 }
 
-function addImage(node, path, id)
+function addImage(node, path, id, d = null)
 {
     var img = document.createElement("img");
     var ref = document.createElement('a');
-    ref.setAttribute('href', "?id=" + id);
+    ref.setAttribute('href', "?id=" + id + (d ? d : ""));
     node.appendChild(ref);
     ref.appendChild(img);
     img.id  = "loading";
@@ -183,15 +188,18 @@ function successDisplay(key)
 {
     if(!char_index) char_index = JSON.parse(this.response);
     var node = document.getElementById('areacharacters'+key);
+    var d = getDebug();
+    if(d != null)
+        d = "&debug=" + d;
     for(let id of char_index)
     {
         if(id.startsWith(key))
         {
             var el = id.split("_");
             if(el.length == 1)
-                addImage(node, "sp/assets/npc/m/" + id + "_01.jpg", id);
+                addImage(node, "sp/assets/npc/m/" + id + "_01.jpg", id, d);
             else
-                addImage(node, "sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg", id);
+                addImage(node, "sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg", id, d);
         }
     }
 }
