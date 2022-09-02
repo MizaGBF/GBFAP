@@ -106,6 +106,12 @@ function getParam()
     return params.get("id");
 }
 
+function getDebug()
+{
+    var params = new URLSearchParams(window.location.search);
+    return params.get("debug");
+}
+
 function playAnimation()
 {
     if(getParam() == null)
@@ -123,7 +129,21 @@ function startupCallback()
         var el = id.split("_");
         if(!isNaN(el[0]) && el[0].length == 10 && (el[0].slice(0, 3) == "302" || el[0].slice(0, 3) == "303" || el[0].slice(0, 3) == "304" || el[0].slice(0, 3) == "371"))
         {
-            get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
+            var d = getDebug();
+            if(!AnimeLocal && d != null) // testing only
+            {
+                Game = {
+                    xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
+                    jsUri: corsProxy + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
+                    imgUri: corsProxy + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
+                    setting: {}
+                }
+                get(corsProxy + d + "/json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
+            }
+            else
+            {
+                get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
+            }
         }
         else
         {
