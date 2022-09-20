@@ -110,7 +110,7 @@ function failJSON(id)
 {
     if(!AnimeDebug)
     {
-        var d = getDebug();
+        let d = getDebug();
         if(!AnimeLocal && d != null) // testing only
         {
             AnimeDebug = true;
@@ -131,13 +131,13 @@ function failJSON(id)
 
 function getParam()
 {
-    var params = new URLSearchParams(window.location.search);
+    let params = new URLSearchParams(window.location.search);
     return params.get("id");
 }
 
 function getDebug()
 {
-    var params = new URLSearchParams(window.location.search);
+    let params = new URLSearchParams(window.location.search);
     return params.get("debug");
 }
 
@@ -152,10 +152,10 @@ function playAnimation()
 
 function startupCallback()
 {
-    var id = getParam();
+    let id = getParam();
     if(id != null)
     {
-        var el = id.split("_");
+        let el = id.split("_");
         if(!isNaN(el[0]) && el[0].length == 10 && (el[0].slice(0, 3) == "302" || el[0].slice(0, 3) == "303" || el[0].slice(0, 3) == "304" || el[0].slice(0, 3) == "371"))
         {
             get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
@@ -171,15 +171,15 @@ function startupCallback()
 
 function getEndpoint()
 {
-    var e = endpoints[counter];
+    let e = endpoints[counter];
     counter = (counter + 1) % endpoints.length;
     return e;
 }
 
 function addImage(node, path, id, d = null)
 {
-    var img = document.createElement("img");
-    var ref = document.createElement('a');
+    let img = document.createElement("img");
+    let ref = document.createElement('a');
     ref.setAttribute('href', "?id=" + id + (d ? d : ""));
     node.appendChild(ref);
     ref.appendChild(img);
@@ -197,8 +197,8 @@ function addImage(node, path, id, d = null)
 function successDisplay(key)
 {
     if(!char_index) char_index = JSON.parse(this.response);
-    var node = document.getElementById('areacharacters'+key);
-    var d = getDebug();
+    let node = document.getElementById('areacharacters'+key);
+    let d = getDebug();
     if(d != null)
         d = "&debug=" + d;
     for(let id of char_index)
@@ -216,7 +216,7 @@ function successDisplay(key)
 
 function failDisplay(id)
 {
-    var node = document.getElementById('areacharacters');  
+    let node = document.getElementById('areacharacters');  
     result_area.appendChild(document.createTextNode("Failed to load character list"));
 }
 
