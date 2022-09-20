@@ -68,7 +68,7 @@ function successJSON(id)
     
     result_area.insertBefore(document.createElement('br'), result_area.firstChild);
     
-    let tip = document.createElement('div');
+    let tip = document.createElement('h3');
     let li = document.createElement('li');
     li.innerHTML = "Loading can take time if the player hasn't been used recently, be patient!";
     tip.appendChild(li);
