@@ -54,7 +54,7 @@ function successJSON(id)
     document.getElementById('temp').remove();
     result_area = document.getElementById('result');
     
-    var ref = document.createElement('a');
+    let ref = document.createElement('a');
     ref.setAttribute('href', "https://mizagbf.github.io/GBFAL/search.html?id=" + id.split("_")[0]);
     ref.appendChild(document.createTextNode("Assets"));
     result_area.insertBefore(ref, result_area.firstChild);
@@ -68,13 +68,22 @@ function successJSON(id)
     
     result_area.insertBefore(document.createElement('br'), result_area.firstChild);
     
+    let tip = document.createElement('div');
+    let li = document.createElement('li');
+    li.innerHTML = "Loading can take time if the player hasn't been used recently, be patient!";
+    tip.appendChild(li);
+    li = document.createElement('li');
+    li.innerHTML = "On PC, CTRL + Moousewheel lets you zoom in and out.";
+    tip.appendChild(li);
+    result_area.appendChild(tip);
+    
     if(!AnimeDebug)
     {
-        var img = document.createElement("img");
+        let img = document.createElement("img");
         result_area.insertBefore(img, result_area.firstChild);
         img.id  = "loading";
         img.onerror = function() {
-            var result = this.parentNode.parentNode;
+            let result = this.parentNode.parentNode;
             this.parentNode.remove();
             this.remove();
             if(result.childNodes.length <= 2) result.remove();
@@ -82,7 +91,7 @@ function successJSON(id)
         img.onload = function() {
             this.id = "character"
         }
-        var el = id.split("_");
+        let el = id.split("_");
         if(el.length == 1)
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
         else
