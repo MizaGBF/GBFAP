@@ -18,9 +18,9 @@ class Updater():
         self.force_update = False
         self.download_assets = False
         
-        self.manifestUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/model/manifest/"
-        self.cjsUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/cjs/"
-        self.imgUri = "http://prd-game-a-granbluefantasy.akamaized.net/assets_en/img"
+        self.manifestUri = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/model/manifest/"
+        self.cjsUri = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/cjs/"
+        self.imgUri = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img"
         self.variations = [
             ("_01{}", "", "☆☆☆☆"),
             ("_01{}_f1", "_f1", "☆☆☆☆ II"),
