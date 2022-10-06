@@ -1,4 +1,4 @@
-from urllib import request
+import httpx
 import json
 import concurrent.futures
 from threading import Lock
@@ -11,6 +11,7 @@ import queue
 
 class Updater():
     def __init__(self):
+        self.client = httpx.Client(http2=True)
         self.running = False
         self.index = set()
         self.queue = queue.Queue()
@@ -327,7 +328,9 @@ class Updater():
         self.loadIndex()
 
     def req(self, url, headers={}):
-        return request.urlopen(request.Request(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers=headers), timeout=50)
+        response = self.client.get(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers=headers, timeout=50)
+        if response.status_code != 200: raise Exception()
+        return response.content
 
     def run(self):
         max_thread = 10
@@ -392,9 +395,7 @@ class Updater():
             if id in self.exclusion: return False # not used
             if not self.download_assets: # don't check anything if this asset isn't found
                 try:
-                    url_handle = self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg")
-                    url_handle.read()
-                    url_handle.close()
+                    self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg")
                 except:
                     return False
             # containers
@@ -411,9 +412,7 @@ class Updater():
                         fn = "npc_{}{}".format(id, self.variations[i+j][0].format(style))
                         ret = self.getJS(fn)
                         if not ret[0]:
-                            url_handle = self.req(self.cjsUri + fn + ".js")
-                            data = url_handle.read().decode('utf-8')
-                            url_handle.close()
+                            data = self.req(self.cjsUri + fn + ".js").decode('utf-8')
                         else:
                             data = ret[1].decode('utf-8')
                         if self.variations[i+j] not in mortal: # for characters such as lina
@@ -506,20 +505,16 @@ class Updater():
             return (False, None)
         st = manifest.find('manifest:') + len('manifest:')
         ed = manifest.find(']', st) + 1
-        data = json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src', '"src"').replace('type', '"type"').replace('id', '"id"'))
+        data = json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src:', '"src":').replace('type:', '"type":').replace('id:', '"id":'))
         for l in data:
             src = l['src'].split('?')[0]
             if src == '/sp/cjs/nsp_3020005000_01_ef081.png': continue # R deliford base form fix
-            url_handle = self.req(self.imgUri + src)
-            data = url_handle.read()
-            url_handle.close()
+            data = self.req(self.imgUri + src)
         
             with open("img/sp/cjs/" + src.split('/')[-1], "wb") as f:
                 f.write(data)
         
-        url_handle = self.req(self.cjsUri + filename)
-        data = url_handle.read()
-        url_handle.close()
+        data = self.req(self.cjsUri + filename)
         with open("cjs/" + filename, "wb") as f:
             f.write(data)
         return (True, data)
@@ -564,9 +559,7 @@ class Updater():
             print(counter, "successfully processed ID")
 
     def getJS(self, js):
-        url_handle = self.req(self.manifestUri + js + ".js")
-        data = url_handle.read()
-        url_handle.close()
+        data = self.req(self.manifestUri + js + ".js")
         if self.download_assets:
             with open("model/manifest/" + js + ".js", "wb") as f:
                 f.write(data)
