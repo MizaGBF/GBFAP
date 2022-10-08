@@ -458,13 +458,13 @@ class Updater():
                 character_data['1'][str(i)]['special_pos'] = [[{"y":0,"x":0}]]
             with open("json/" + id + ".json", 'w') as outfile:
                 json.dump(character_data, outfile)
+            return True
         except Exception as e:
             print("Error", e, "for id", id)
             return False
 
     def update(self, id, style):
         try:
-            if id.startswith('10'): return self.update_weapon(id)
             if id in self.exclusion: return False # not used
             if not self.download_assets: # don't check anything if this asset isn't found
                 try:
@@ -669,7 +669,7 @@ class Updater():
         files = [f for f in os.listdir('json/') if os.path.isfile(os.path.join('json/', f))]
         known = []
         for f in files:
-            if f.startswith("371") or f.startswith("304") or f.startswith("303") or f.startswith("302") or f.startswith("104"):
+            if f.startswith("371") or f.startswith("304") or f.startswith("303") or f.startswith("302"):
                 known.append(f.split('.')[0])
         self.index = set(known)
 

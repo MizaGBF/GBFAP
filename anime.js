@@ -92,17 +92,10 @@ function successJSON(id)
             this.id = "character"
         }
         let el = id.split("_");
-        if(id.startsWith("10"))
-        {
-            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
-        }
+        if(el.length == 1)
+            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
         else
-        {
-            if(el.length == 1)
-                img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
-            else
-                img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
-        }
+            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
     }
     
     AnimeData = JSON.parse(this.response);
@@ -163,7 +156,7 @@ function startupCallback()
     if(id != null)
     {
         let el = id.split("_");
-        if(!isNaN(el[0]) && el[0].length == 10 && (el[0].slice(0, 3) == "302" || el[0].slice(0, 3) == "303" || el[0].slice(0, 3) == "304" || el[0].slice(0, 3) == "371" || el[0].slice(0, 3) == "104"))
+        if(!isNaN(el[0]) && el[0].length == 10 && (el[0].slice(0, 3) == "302" || el[0].slice(0, 3) == "303" || el[0].slice(0, 3) == "304" || el[0].slice(0, 3) == "371"))
         {
             get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
         }

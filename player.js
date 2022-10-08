@@ -175,7 +175,6 @@ var versionChange = function (obj) {
     {
         var id = AnimeData[1][animeVersion]['cjs'][0];
         id = id.split('_').slice(1, (id.includes("_st") ? 4 : 3)).join('_');
-        if(!id.startsWith('10'))
-            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + ".jpg"
+        document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + ".jpg"
     }
 };
