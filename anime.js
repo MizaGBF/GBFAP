@@ -163,7 +163,7 @@ function startupCallback()
     if(id != null)
     {
         let el = id.split("_");
-        if(!isNaN(el[0]) && el[0].length == 10 && (el[0].slice(0, 3) == "302" || el[0].slice(0, 3) == "303" || el[0].slice(0, 3) == "304" || el[0].slice(0, 3) == "371") || el[0].slice(0, 3) == "104"))
+        if(!isNaN(el[0]) && el[0].length == 10 && (el[0].slice(0, 3) == "302" || el[0].slice(0, 3) == "303" || el[0].slice(0, 3) == "304" || el[0].slice(0, 3) == "371" || el[0].slice(0, 3) == "104"))
         {
             get("json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
         }
