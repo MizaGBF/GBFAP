@@ -342,15 +342,16 @@ class Updater():
                 print("Process aborted")
                 return
         self.running = True
-        with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread*5) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
             futures = []
-            err = [[0, True, Lock(), 0], [0, True, Lock(), 0], [0, True, Lock(), 0], [0, True, Lock(), 0]]
+            possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000", "10400{}00", "10401{}00", "10402{}00", "10403{}00", "10404{}00", "10405{}00", "10406{}00", "10407{}00", "10408{}00", "10409{}00"]
+            err = []
+            for p in possibles:
+                err.append([0, True, Lock(), 0])
             for i in range(max_thread):
                 futures.append(executor.submit(self.styleProcessing))
-                futures.append(executor.submit(self.run_sub, i, max_thread, err[0], "3020{}000"))
-                futures.append(executor.submit(self.run_sub, i, max_thread, err[1], "3030{}000"))
-                futures.append(executor.submit(self.run_sub, i, max_thread, err[2], "3040{}000"))
-                futures.append(executor.submit(self.run_sub, i, max_thread, err[3], "3710{}000"))
+                for j in range(len(possibles)):
+                    futures.append(executor.submit(self.run_sub, i, max_thread, err[j], possibles[j]))
             finished = 0
             for future in concurrent.futures.as_completed(futures):
                 future.result()
@@ -364,7 +365,10 @@ class Updater():
                     print("Progress {:.1f}%".format((100*finished)/(4*max_thread)))
         self.running = False
         print("Done")
-        if err[0][3] + err[1][3] + err[2][3] + err[3][3] > 0:
+        sum_res = 0
+        for e in err:
+            sum_res += e[3]
+        if sum_res > 0:
             self.loadIndex()
             self.saveIndex()
             print("New additions:")
@@ -372,13 +376,23 @@ class Updater():
             print(err[1][3], "SR Characters")
             print(err[2][3], "SSR Characters")
             print(err[3][3], "Skins")
+            print(err[4][3], "Swords")
+            print(err[5][3], "Daggers")
+            print(err[6][3], "Spears")
+            print(err[7][3], "Axes")
+            print(err[8][3], "Staves")
+            print(err[9][3], "Guns")
+            print(err[10][3], "Melees")
+            print(err[11][3], "Bows")
+            print(err[12][3], "Harps")
+            print(err[13][3], "Katanas")
 
     def run_sub(self, start, step, err, file):
         id = start
         while err[1] and err[0] < 20 and self.running:
             f = file.format(str(id).zfill(3))
             if self.force_update or f not in self.index:
-                if not self.update(f, ""):
+                if not self.update(f):
                     with err[2]:
                         err[0] += 1
                         if err[0] >= 20:
@@ -390,8 +404,67 @@ class Updater():
                         err[3] += 1
             id += step
 
+    def update_weapon(self, id):
+        try:
+            if id in self.exclusion: return False # not used
+            if not self.download_assets: # don't check anything if this asset isn't found
+                try:
+                    self.req(self.imgUri + "/sp/assets/weapon/m/" + id + ".jpg")
+                except:
+                    return False
+            # containers
+            possible_class = [
+                "bsk_sw_{}_01", # sword
+                "gzk_kn_{}_01", # dagger
+                "aps_sp_{}_01", # spear
+                "lmb_ax_{}_01", # axe
+                "wrk_wa_{}_01", # staff
+                "kks_gu_{}_01", # gun
+                "rsr_me_{}_01", # melee
+                "rbn_bw_{}_01", # bow
+                "els_mc_{}_01", # harp
+                "kng_kt_{}_01" # katana
+            ]
+            mc_cjs = possible_class[(int(id) // 100000) % 10]
+            sp = None
+            phit = None
+            for fn in ["phit_{}".format(id), "sp_{}".format(id), "sp_{}_0".format(id), "sp_{}_0_s2".format(id), "sp_{}_s2".format(id)]:
+                try:
+                    self.getJS(fn)
+                    if fn.startswith('phit'):
+                        phit = fn
+                    elif fn.startswith('sp'):
+                        sp = fn
+                        break
+                except:
+                    pass
+            if sp is None and phit is None:
+                return False
+            character_data = {}
+            character_data['0'] = {'length': 2}
+            # for each version
+            for i in range(2):
+                character_data[str(i+1)] = {} 
+                character_data['0'][str(i)] = 'Gran' if i == 0 else 'Djeeta'
+                character_data['1'][str(i)] = {}
+                character_data['1'][str(i)]['cjs'] = [mc_cjs.format(i)]
+                character_data['1'][str(i)]['action_label_list'] = ['ability', 'mortal_A', 'stbwait', 'short_attack', 'double', 'triple']
+                character_data['1'][str(i)]['effect'] = [phit.replace('_0_', '_{}_').format(i) if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])]
+                character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":(sp.replace('_0_', '_{}_').format(i) if sp is not None else 'sp_sw_01410001'),"fixed_pos_owner_bg":0,"full_screen":0}]}]
+                # update full screen mode
+                if '_s2' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs'] or '_s3' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs']:
+                    character_data['1'][str(i)]['special'][0]['list'][0]['full_screen'] = 1
+                character_data['1'][str(i)]['cjs_pos'] = [{"y":0,"x":0}]
+                character_data['1'][str(i)]['special_pos'] = [[{"y":0,"x":0}]]
+            with open("json/" + id + ".json", 'w') as outfile:
+                json.dump(character_data, outfile)
+        except Exception as e:
+            print("Error", e, "for id", id)
+            return False
+
     def update(self, id, style):
         try:
+            if id.startswith('10'): return self.update_weapon(id)
             if id in self.exclusion: return False # not used
             if not self.download_assets: # don't check anything if this asset isn't found
                 try:
@@ -596,7 +669,7 @@ class Updater():
         files = [f for f in os.listdir('json/') if os.path.isfile(os.path.join('json/', f))]
         known = []
         for f in files:
-            if f.startswith("371") or f.startswith("304") or f.startswith("303") or f.startswith("302"):
+            if f.startswith("371") or f.startswith("304") or f.startswith("303") or f.startswith("302") or f.startswith("104"):
                 known.append(f.split('.')[0])
         self.index = set(known)
 
