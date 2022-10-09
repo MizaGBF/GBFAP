@@ -344,7 +344,7 @@ class Updater():
         self.running = True
         with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
             futures = []
-            possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000", "10400{}00", "10401{}00", "10402{}00", "10403{}00", "10404{}00", "10405{}00", "10406{}00", "10407{}00", "10408{}00", "10409{}00"]
+            possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000"]
             err = []
             for p in possibles:
                 err.append([0, True, Lock(), 0])
@@ -376,16 +376,6 @@ class Updater():
             print(err[1][3], "SR Characters")
             print(err[2][3], "SSR Characters")
             print(err[3][3], "Skins")
-            print(err[4][3], "Swords")
-            print(err[5][3], "Daggers")
-            print(err[6][3], "Spears")
-            print(err[7][3], "Axes")
-            print(err[8][3], "Staves")
-            print(err[9][3], "Guns")
-            print(err[10][3], "Melees")
-            print(err[11][3], "Bows")
-            print(err[12][3], "Harps")
-            print(err[13][3], "Katanas")
 
     def run_sub(self, start, step, err, file):
         id = start
