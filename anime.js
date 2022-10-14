@@ -120,7 +120,7 @@ function failJSON(id)
                 imgUri: corsProxy + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
                 setting: {}
             }
-            get(corsProxy + d + "/json/" + id + ".json", successJSON, failJSON, id);
+            get(corsProxy + d + "/json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
             return;
         }
     }
