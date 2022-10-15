@@ -11,7 +11,8 @@ import queue
 
 class Updater():
     def __init__(self):
-        self.client = httpx.Client(http2=True)
+        limits = httpx.Limits(max_keepalive_connections=100, max_connections=100, keepalive_expiry=10)
+        self.client = httpx.Client(http2=True, limits=limits)
         self.running = False
         self.index = set()
         self.queue = queue.Queue()
@@ -328,7 +329,7 @@ class Updater():
         self.loadIndex()
 
     def req(self, url, headers={}):
-        response = self.client.get(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers=headers, timeout=50)
+        response = self.client.get(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers={'connection':'keep-alive'} |headers, timeout=50)
         if response.status_code != 200: raise Exception()
         return response.content
 
