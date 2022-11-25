@@ -70,7 +70,10 @@ function successJSON(id)
     
     let tip = document.createElement('h3');
     let li = document.createElement('li');
-    li.innerHTML = "Loading can take time if the player hasn't been used recently, be patient!";
+    li.innerHTML = "Loading can take time if the player hasn't been used recently.";
+    tip.appendChild(li);
+    li = document.createElement('li');
+    li.innerHTML = "Please reload the page if it takes longer than one minute";
     tip.appendChild(li);
     li = document.createElement('li');
     li.innerHTML = "On PC, CTRL + Moousewheel lets you zoom in and out.";
