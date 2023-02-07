@@ -16,6 +16,9 @@ var bgList = [
     'common_074',
     'event_321',
     'event_322',
+    'common_045',
+    'event_386',
+    'common_067',
     '0',
     '1',
     '2'
@@ -30,6 +33,9 @@ var bgName = [
     'Cosmos',
     'Alanaan',
     'Nier',
+    'Grimnir',
+    'Vikala',
+    'Fediel',
     'Black',
     'Dummy',
     'Green'
