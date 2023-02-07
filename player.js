@@ -19,6 +19,7 @@ var bgList = [
     'common_045',
     'event_386',
     'common_067',
+    'event_460',
     '0',
     '1',
     '2'
@@ -36,6 +37,7 @@ var bgName = [
     'Grimnir',
     'Vikala',
     'Fediel',
+    'Masquerade',
     'Black',
     'Dummy',
     'Green'
