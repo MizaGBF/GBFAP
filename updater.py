@@ -2,10 +2,8 @@ import httpx
 import json
 import concurrent.futures
 from threading import Lock
-import json
 import os
 import os.path
-import zlib
 import sys
 import queue
 
@@ -640,12 +638,16 @@ class Updater():
         self.download_assets = True
         with open("view/cjs_npc_demo.js", mode="r", encoding="utf-8") as f:
             data = f.read()
-            a = data.find('"enemy_') + len('"enemy_')
-            enemy_id = data[a:data.find('"', a)]
-            fn = "enemy_" + enemy_id
-            
-            self.getJS(fn)
-            print("Enemy updated")
+            a = 0
+            while True:
+                a = data.find('"enemy_', a)
+                if a == -1: break
+                a += len('"enemy_')
+                enemy_id = data[a:data.find('"', a)]
+                fn = "enemy_" + enemy_id
+                
+                self.getJS(fn)
+            print("Enemies updated")
             
             with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
                 futures = []
