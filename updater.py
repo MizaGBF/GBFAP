@@ -648,7 +648,7 @@ class Updater():
             print("Enemy updated")
             
             with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
-                futures = []            
+                futures = []
                 for phit in ['phit_ax_0001', 'phit_sw_0003', 'phit_ax_0004', 'phit_sp_0002', 'phit_wa_0001', 'phit_me_0004', 'phit_sw_0006', 'phit_wa_0004', 'phit_sp_0003', 'phit_kn_0003', 'phit_gu_0002', 'phit_kn_0006', 'phit_gu_0001', 'phit_sw_0005', 'phit_sw_0004', 'phit_me_0005', 'phit_ax_0005', 'phit_kn_0004', 'phit_kn_0002', 'phit_me_0003', 'phit_me_0001', 'phit_wa_0005', 'phit_sw_0002', 'phit_bw_0001', 'phit_0000000000', 'phit_me_0001_silent', 'phit_kn_0005', 'phit_sp_0001', 'phit_wa_0006', 'phit_me_0002', 'phit_kn_0001', 'phit_sp_0015', 'phit_sw_0012', 'phit_wa_0012', 'phit_wa_0011', 'phit_sw_0014', 'phit_sw_0013', 'phit_kn_0014', 'phit_ax_0011', 'phit_me_0013', 'phit_sp_0012', 'phit_me_0011', 'phit_gu_0011', 'phit_bw_0014', 'phit_sw_0016', 'phit_mc_0014', 'phit_kn_0011', 'phit_wa_0015', 'phit_sw_0015', 'phit_sp_0013', 'phit_sw_0011', 'phit_gu_0013', 'phit_ax_0016', 'phit_bw_0012', 'phit_wa_0014', 'phit_mc_0015', 'phit_kt_0026', 'phit_me_0025', 'phit_kn_0016', 'phit_wa_0016', 'phit_sp_0011', 'phit_wa_0013', 'phit_me_0015', 'phit_bw_0011', 'phit_ax_0015', 'phit_kt_0014', 'phit_kn_0012', 'phit_ax_0014', 'phit_kn_0013', 'phit_ax_0013', 'phit_mc_0013', 'phit_gu_0021_silent', 'phit_gu_0011_silent', 'phit_me_0014', 'phit_kt_0013', 'phit_gu_0014', 'phit_kn_0015', 'phit_gu_0016', 'phit_me_0012_silent', 'phit_gu_0015', 'phit_3840153000', 'phit_1040612000']:
                     futures.append(executor.submit(self.phitUpdate, phit))
                 for future in concurrent.futures.as_completed(futures):
