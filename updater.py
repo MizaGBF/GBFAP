@@ -469,23 +469,27 @@ class Updater():
             mortal = {}
             # npc file check
             for i in range(0, len(self.variations), 2):
-                for j in range(2):
-                    try:
-                        fn = "npc_{}{}".format(id, self.variations[i+j][0].format(style))
-                        ret = self.getJS(fn)
-                        if not ret[0]:
-                            data = self.req(self.cjsUri + fn + ".js").decode('utf-8')
-                        else:
-                            data = ret[1].decode('utf-8')
-                        if self.variations[i+j] not in mortal: # for characters such as lina
-                            for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
-                                if m in data:
-                                    mortal[self.variations[i+j]] = m
-                                    break
-                        found = True
-                        good_variations[self.variations[i+j]] = fn + ".js"
-                    except:
-                        break
+                fcheck = False
+                for ftype in ["", "_s2"]:
+                    for j in range(2):
+                        try:
+                            fn = "npc_{}{}{}".format(id, self.variations[i+j][0].format(style), ftype)
+                            ret = self.getJS(fn)
+                            if not ret[0]:
+                                data = self.req(self.cjsUri + fn + ".js").decode('utf-8')
+                            else:
+                                data = ret[1].decode('utf-8')
+                            if self.variations[i+j] not in mortal: # for characters such as lina
+                                for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
+                                    if m in data:
+                                        mortal[self.variations[i+j]] = m
+                                        break
+                            found = True
+                            good_variations[self.variations[i+j]] = fn + ".js"
+                            fcheck = True
+                        except:
+                            break
+                    if fcheck: break
             if not found: return False # no npc found, we quit
             if not id.startswith("371") and style == "":
                 self.queue.put((id, ["_st2"])) # style check
