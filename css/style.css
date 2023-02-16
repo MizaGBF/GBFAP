@@ -12,6 +12,18 @@ body {
     text-align: center;
 }
 
+footer {
+    font-family: sans-serif;
+    font-size: 30px;
+    text-align:center;
+    background: #000000b0;
+    border-color: #000000;
+    border-radius: 10px;
+    border-style: solid;
+    width:150px;
+    margin:auto;
+}
+
 label {
     width: 200px;
     display: inline-block;
@@ -43,9 +55,9 @@ summary {
 }
 
 #act-name, #act-duration, #act-label {
-  width: 200px;
+    width: 200px;
     font-size: 20px;
-  display: inline-block;
+    display: inline-block;
 }
 
 #titleheader {
