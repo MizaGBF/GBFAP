@@ -20,20 +20,27 @@
 </head>
 <body onload="playAnimation()">
     <img id="titleheader" src="assets/ui/header.png">
-    <div id="version">v1.9</div>
+    <div id="version">v1.10</div>
     <div id="result">
         <img src="assets/ui/loading.gif" id="temp">
         <div id="AnimationPlayer"></div>
+        <ul class="tips">
+            <li>Loading can take time if the player hasn't been used recently.</li>
+            <li>Please reload the page if it takes longer than one minute.</li>
+            <li>On PC, CTRL + Moousewheel lets you zoom in and out.</li>
+        </ul>
     </div>
     <details>
         <summary>Explanations</summary>
         <h3 class="content">
-            <li>Improved version based on the chinese wiki animation viewer.</li>
-            <li>Loading can be slow, I apologize.</li>
-            <li>In some special cases, missing attack animations have been replaced with a default one.</li>
-            <li>If the animation is stuck, it likely crashed and you need to reload.</li>
-            <li>The character lists below are in reverse ID order.</li>
-            <li>If a character is missing, the page hasn't be updated yet.</li>
+            <ul>
+                <li>Improved version based on the chinese wiki animation viewer.</li>
+                <li>Loading can be slow, I apologize.</li>
+                <li>In some special cases, missing attack animations have been replaced with a default one.</li>
+                <li>If the animation is stuck, it likely crashed and you need to reload.</li>
+                <li>The character lists below are in reverse ID order.</li>
+                <li>If a character is missing, the page hasn't be updated yet.</li>
+            </ul>
         </h3>
     </details>
     <details onclick="displayCharacters(this, '304')">

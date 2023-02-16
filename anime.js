@@ -1,6 +1,6 @@
 var AnimeData = null;
-var AnimeLocal = false;
-var AnimeDebug = false;
+var AnimeLocal = false; // to use locally
+var AnimeDebug = false; // debug only, ignore it
 var corsProxy = 'https://gbfcp2.onrender.com/'
 var Game = {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
@@ -51,9 +51,46 @@ function get(url, callback, err_callback, id) {
 
 function successJSON(id)
 {
+    AnimeData = JSON.parse(this.response);
+    get(Game.jsUri + "model/manifest/enemy_6204152.js", successLoading, failLoading, id);
+}
+
+function failJSON(id)
+{
+    if(!AnimeDebug)
+    {
+        let d = getDebug();
+        if(!AnimeLocal && d != null) // testing only
+        {
+            AnimeDebug = true;
+            Game = {
+                xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
+                jsUri: corsProxy + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
+                imgUri: corsProxy + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
+                setting: {}
+            }
+            get(corsProxy + d + "/json/" + id + ".json?" + Date.now(), successJSON, failDebug, id);
+            return;
+        }
+    }
     document.getElementById('temp').remove();
     result_area = document.getElementById('result');
-    
+    removeChilds(result_area);
+    result_area.appendChild(document.createTextNode("Error: Invalid ID"));
+}
+
+function failDebug(id)
+{
+    document.getElementById('temp').remove();
+    result_area = document.getElementById('result');
+    removeChilds(result_area);
+    result_area.appendChild(document.createTextNode("Error: Invalid ID"));
+}
+
+function successLoading(id)
+{
+    document.getElementById('temp').remove();
+    result_area = document.getElementById('result');
     let ref = document.createElement('a');
     ref.setAttribute('href', "https://mizagbf.github.io/GBFAL/?id=" + id.split("_")[0]);
     ref.appendChild(document.createTextNode("Assets"));
@@ -67,18 +104,6 @@ function successJSON(id)
     result_area.insertBefore(ref, result_area.firstChild);
     
     result_area.insertBefore(document.createElement('br'), result_area.firstChild);
-    
-    let tip = document.createElement('h3');
-    let li = document.createElement('li');
-    li.innerHTML = "Loading can take time if the player hasn't been used recently.";
-    tip.appendChild(li);
-    li = document.createElement('li');
-    li.innerHTML = "Please reload the page if it takes longer than one minute";
-    tip.appendChild(li);
-    li = document.createElement('li');
-    li.innerHTML = "On PC, CTRL + Moousewheel lets you zoom in and out.";
-    tip.appendChild(li);
-    result_area.appendChild(tip);
     
     if(!AnimeDebug)
     {
@@ -100,8 +125,6 @@ function successJSON(id)
         else
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
     }
-    
-    AnimeData = JSON.parse(this.response);
 
     require(["createjs"], function (b) {
         window.createjs = b
@@ -109,27 +132,21 @@ function successJSON(id)
     require(['player','lib/common', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader'])
 }
 
-function failJSON(id)
+function failLoading(id)
 {
-    if(!AnimeDebug)
-    {
-        let d = getDebug();
-        if(!AnimeLocal && d != null) // testing only
-        {
-            AnimeDebug = true;
-            Game = {
-                xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
-                jsUri: corsProxy + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
-                imgUri: corsProxy + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
-                setting: {}
-            }
-            get(corsProxy + d + "/json/" + id + ".json?" + Date.now(), successJSON, failJSON, id);
-            return;
-        }
-    }
     document.getElementById('temp').remove();
     result_area = document.getElementById('result');
-    result_area.appendChild(document.createTextNode("Error: Invalid ID"));
+    removeChilds(result_area);
+    result_area.appendChild(document.createTextNode("Error: Couldn't load the ID, please reload the page"));
+}
+
+function removeChilds(element)
+{
+    let child = element.lastElementChild; 
+    while (child) {
+        element.removeChild(child);
+        child = element.lastElementChild;
+    }
 }
 
 function getParam()
