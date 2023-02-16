@@ -52,7 +52,7 @@ function get(url, callback, err_callback, id) {
 function successJSON(id)
 {
     AnimeData = JSON.parse(this.response);
-    get(Game.jsUri + "model/manifest/enemy_6204152.js", successLoading, failLoading, id);
+    get(Game.jsUri + "/model/manifest/enemy_6204152.js", successLoading, failLoading, id);
 }
 
 function failJSON(id)
