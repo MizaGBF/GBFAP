@@ -12,7 +12,7 @@ body {
     text-align: center;
 }
 
-footer {
+footer, #header {
     font-family: sans-serif;
     font-size: 15px;
     text-align:center;
@@ -22,6 +22,10 @@ footer {
     border-style: solid;
     width:150px;
     margin:auto;
+}
+
+#header {
+    color: white;
 }
 
 label {
