@@ -171,7 +171,7 @@ function getDebug()
 // entry point, called on page loading
 function playAnimation()
 {
-    get("json/changelog.json?" + Date.now(), initChangelog, function(a){}, null);
+    get("json/changelog.json?" + Date.now(), initChangelog, initChangelog, null);
     if(getParam() == null)
     {
         document.getElementById('result').remove();
@@ -204,7 +204,6 @@ function initChangelog(unusued)
     }catch{
         document.getElementById('timestamp').innerHTML = "";
     }
-    initFollowup();
 }
 
 // return an asset endpoint
