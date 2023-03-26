@@ -458,7 +458,7 @@ class Updater():
             print("Error", e, "for id", id)
             return False
 
-    def update(self, id, style):
+    def update(self, id, style=""):
         try:
             if id in self.exclusion: return False # not used
             if not self.download_assets: # don't check anything if this asset isn't found
