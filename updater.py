@@ -6,6 +6,7 @@ import os
 import os.path
 import sys
 import queue
+from datetime import datetime, timezone
 
 class Updater():
     def __init__(self):
@@ -326,10 +327,15 @@ class Updater():
         self.exclusion = set([])
         self.loadIndex()
 
-    def req(self, url, headers={}):
-        response = self.client.get(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers={'connection':'keep-alive'} |headers, timeout=50)
-        if response.status_code != 200: raise Exception()
-        return response.content
+    def req(self, url, headers={}, head=False):
+        if head:
+            response = self.client.head(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers={'connection':'keep-alive'} |headers, timeout=50)
+            if response.status_code != 200: raise Exception()
+            return True
+        else:
+            response = self.client.get(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers={'connection':'keep-alive'} |headers, timeout=50)
+            if response.status_code != 200: raise Exception()
+            return response.content
 
     def run(self):
         max_thread = 10
@@ -457,7 +463,7 @@ class Updater():
             if id in self.exclusion: return False # not used
             if not self.download_assets: # don't check anything if this asset isn't found
                 try:
-                    self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg")
+                    self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg", head=True)
                 except:
                     return False
             # containers
@@ -677,6 +683,9 @@ class Updater():
             i.reverse()
             json.dump(i, outfile)
         print("Index updated")
+        with open('json/changelog.json', mode='w', encoding='utf-8') as outfile:
+            json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000)}, outfile)
+        print("changelog.json updated")
 
 if __name__ == '__main__':
     u = Updater()

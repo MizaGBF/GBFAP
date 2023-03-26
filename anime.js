@@ -171,6 +171,7 @@ function getDebug()
 // entry point, called on page loading
 function playAnimation()
 {
+    get("json/changelog.json?" + Date.now(), initChangelog, function(a){}, null);
     if(getParam() == null)
     {
         document.getElementById('result').remove();
@@ -190,6 +191,20 @@ function playAnimation()
             result_area.appendChild(document.createTextNode("Error: Invalid ID or Character not found."));
         }
     }
+}
+
+// set the last update time
+function initChangelog(unusued)
+{
+    try{
+        let json = JSON.parse(this.response);
+        let date = (new Date(json['timestamp'])).toISOString();
+        document.getElementById('timestamp').innerHTML += " " + date.split('T')[0] + " " + date.split('T')[1].split(':').slice(0, 2).join(':') + " UTC";
+        timestamp = json['timestamp'];
+    }catch{
+        document.getElementById('timestamp').innerHTML = "";
+    }
+    initFollowup();
 }
 
 // return an asset endpoint
