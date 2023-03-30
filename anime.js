@@ -200,7 +200,6 @@ function initChangelog(unusued)
         let json = JSON.parse(this.response);
         let date = (new Date(json['timestamp'])).toISOString();
         document.getElementById('timestamp').innerHTML += " " + date.split('T')[0] + " " + date.split('T')[1].split(':').slice(0, 2).join(':') + " UTC";
-        timestamp = json['timestamp'];
     }catch{
         document.getElementById('timestamp').innerHTML = "";
     }
