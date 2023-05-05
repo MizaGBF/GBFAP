@@ -18,6 +18,7 @@ class Updater():
         self.quality = ("/img/", "/js/")
         self.force_update = False
         self.download_assets = False
+        self.debug_mode = False
         
         self.manifestUri = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/model/manifest/"
         self.cjsUri = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/cjs/"
@@ -578,7 +579,7 @@ class Updater():
                 try:
                     self.req(self.imgUri + "/sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg")
                 except:
-                    return False
+                    if not self.debug_mode: return False
             colors = []
             for i in ["01", "02", "03", "04", "05", "80", ]:
                 try:
@@ -682,7 +683,7 @@ class Updater():
                 try:
                     self.req(self.imgUri + "/sp/assets/weapon/m/" + id + ".jpg")
                 except:
-                    return False
+                    if not self.debug_mode: return False
             # containers
             mc_cjs = self.possible_class[(int(id) // 100000) % 10]
             sp = None
@@ -737,7 +738,7 @@ class Updater():
                 try:
                     self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg", head=True)
                 except:
-                    return False
+                    if not self.debug_mode: return False
             # containers
             character_data = {}
             good_variations = {}
@@ -925,7 +926,7 @@ class Updater():
         except Exception as e:
             pass
 
-    def enemyUpdate(self):
+    def initFiles(self):
         tmp = self.download_assets
         self.download_assets = True
         with open("view/cjs_npc_demo.js", mode="r", encoding="utf-8") as f:
@@ -980,22 +981,42 @@ class Updater():
             json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000)}, outfile)
         print("changelog.json updated")
 
-if __name__ == '__main__':
-    u = Updater()
-    if '-force' in sys.argv:
-        u.force_update = True
-    if '-download' in sys.argv:
-        u.download_assets = True
-    if '-enemy' in sys.argv:
-        u.enemyUpdate()
-    if '-index' in sys.argv:
-        u.loadIndex()
-        u.saveIndex()
-    elif len(sys.argv) >= 2 and sys.argv[1] == '-update':
-        if len(sys.argv) == 2:
-            print("Add IDs to update after '-update'")
-            print("Example 'updater.py -update 3040000000 3040001000'")
+    def start(self, args):
+        self.force_update = ('-force' in args)
+        self.download_assets = ('-download' in args)
+        self.debug_mode = ('-debug' in args)
+        if '-init' in args:
+            self.initFiles()
+        if '-update' in args:
+            self.manualUpdate(args['-update'])
+        elif '-index' in args:
+            self.saveIndex()
         else:
-            u.manualUpdate(sys.argv[2:])
-    else:
-        u.run()
+            self.run()
+
+if __name__ == '__main__':
+    args = {}
+    expected_args = ["-force", "-download", "-init", "-index", "-update", "-debug"]
+    update_flag = False
+    for i in range(1, len(sys.argv)):
+        if update_flag:
+            if sys.argv[i] in expected_args:
+                if sys.argv[i] in args:
+                    print(sys.argv[i], "parameter already set")
+                    exit(0)
+                args[sys.argv[i]] = []
+                update_flag = False
+            else:
+                args["-update"].append(sys.argv[i])
+        else:
+            if sys.argv[i] in expected_args:
+                if sys.argv[i] in args:
+                    print(sys.argv[i], "parameter already set")
+                    exit(0)
+                args[sys.argv[i]] = []
+                if sys.argv[i] == '-update':
+                    update_flag = True
+            else:
+                print("Unknown parameter", sys.argv[i])
+                exit(0)
+    Updater().start(args)
