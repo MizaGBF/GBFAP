@@ -275,6 +275,7 @@ function failDisplay(id)
 // function to load and display the index
 function displayIndexed(elem, key)
 {
+    elem.removeAttribute("onclick");
     if(!char_index) get("json/index.json?" + Date.now(), successDisplay, failDisplay, key);
     else successDisplay(key)
 }
@@ -299,6 +300,7 @@ function successDisplayMC(unused)
 // function to load and display the index (MC side)
 function displayMC(elem)
 {
+    elem.removeAttribute("onclick");
     if(!char_index) get("json/index.json?" + Date.now(), successDisplayMC, failDisplay, null);
     else successDisplayMC(null)
 }
