@@ -14,8 +14,7 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
                 return cjsloader.manifest(a)
             }))
         // mc only fix
-        let phit = false;
-        let melee = mc_id.includes("_me_");
+        let melee = AnimeData[1][0]["cjs"][0].includes("_me_");
         if(is_mc && mc_wpn) // set wpn
         {
             for(let e of c)
@@ -27,11 +26,10 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
                 }
                 else
                 {
-                    if(e.id == "weapon2a") e.src = "img/sp/cjs/" + mc_wpn + ".png"
-                    else if(e.id == "weapon2b") e.src = "img/sp/cjs/" + mc_wpn + ".png"
-                    else if(e.id == "weapon") e.src = "img/sp/cjs/" + mc_wpn + ".png"
+                    if(e.id == "weapon") e.src = "img/sp/cjs/" + mc_wpn + ".png"
                 }
             }
+            console.log(c);
         }
         // end
         return (function () {}),

@@ -623,8 +623,9 @@ class Updater():
                 if self.download_assets: # download asset
                     for fn in ["", "_1", "_2"]:
                         try:
-                            data = self.req(self.imgUri + "/sp/cjs/" + id + fn + ".png")
-                            with open("img/sp/cjs/" + id + fn + ".png", "wb") as f:
+                            print(self.imgUri + "/sp/cjs/" + wid + fn + ".png")
+                            data = self.req(self.imgUri + "/sp/cjs/" + wid + fn + ".png")
+                            with open("img/sp/cjs/" + wid + fn + ".png", "wb") as f:
                                 f.write(data)
                         except:
                             pass
