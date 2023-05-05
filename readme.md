@@ -60,6 +60,10 @@ The third value (`''`) is for the matching attack effect.
 Just look at the full list in `updater.py` for more examples.  
 Once the change is done, run `updater.py` again for the concerned characters.  
   
+# Weapons and Main Characters  
+Weapon IDs and Main Character classes and outfits are also supported.  
+For the later, the ID needs to be hardcoded in the script, but weapons work like characters otherwise.  
+  
 # Additional Notes  
 Downloaded assets are saved in the following folders:  
 * Manifests in model/manifest/
