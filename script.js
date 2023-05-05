@@ -25,7 +25,12 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
                     if(e.id == "weapon_l") e.src = "img/sp/cjs/" + mc_wpn + "_1.png"
                     else if(e.id == "weapon_r") e.src = "img/sp/cjs/" + mc_wpn + "_2.png"
                 }
-                else if(e.id == "weapon") e.src = "img/sp/cjs/" + mc_wpn + ".png"
+                else
+                {
+                    if(e.id == "weapon2a") e.src = "img/sp/cjs/" + mc_wpn + ".png"
+                    else if(e.id == "weapon2b") e.src = "img/sp/cjs/" + mc_wpn + ".png"
+                    else if(e.id == "weapon") e.src = "img/sp/cjs/" + mc_wpn + ".png"
+                }
             }
         }
         // end
