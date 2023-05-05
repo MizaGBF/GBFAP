@@ -58,6 +58,14 @@ summary {
     text-shadow: #000000 1px 0 10px;
 }
 
+.subdetails {
+    background: #00000040;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    margin:auto;
+}
+
 #act-name, #act-duration, #act-label {
     width: 200px;
     font-size: 20px;

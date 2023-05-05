@@ -243,6 +243,7 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                 var len=this.cjsNpc['name'].length
                 for (action in this.cjsNpc['children'][0]){
                     actionStr=action.toString()
+                    if(is_mc && actionStr.includes("mortal") && ((mc_wpn == null && !actionStr.endsWith('_mortal_B')) || (mc_wpn != null && ["_1", "_2"].includes(actionStr.slice(-2))))) continue; // hack to disable some ougi options on mc
                     if (actionStr.substring(0,len)==this.cjsNpc['name']){
                         newSet.add(actionStr.substring(len+1))
                         i++
@@ -272,17 +273,40 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case 'double': return "Attack 2";
                     case 'triple': return "Attack 3";
                     case 'quadruple': return "Attack 4";
+                    case 'charge': return "Charged";
                     case 'mortal_A': return "Charge Attack";
+                    case 'mortal_A_1': return "Charge Attack A";
+                    case 'mortal_A_2': return "Charge Attack B";
                     case 'mortal_B': return "Charge Attack 2";
+                    case 'mortal_B_1': return "Charge Attack 2 A";
+                    case 'mortal_B_2': return "Charge Attack 2 B";
                     case 'mortal_C': return "Charge Attack 3";
+                    case 'mortal_C_1': return "Charge Attack 3 A";
+                    case 'mortal_C_2': return "Charge Attack 3 B";
                     case 'mortal_D': return "Charge Attack 4";
+                    case 'mortal_D_1': return "Charge Attack 4 A";
+                    case 'mortal_D_2': return "Charge Attack 4 B";
                     case 'mortal_E': return "Charge Attack 5";
+                    case 'mortal_E_1': return "Charge Attack 5 A";
+                    case 'mortal_E_2': return "Charge Attack 5 B";
                     case 'mortal_F': return "Charge Attack 6";
+                    case 'mortal_F_1': return "Charge Attack 6 A";
+                    case 'mortal_F_2': return "Charge Attack 6 B";
                     case 'mortal_G': return "Charge Attack 7";
+                    case 'mortal_G_1': return "Charge Attack 7 A";
+                    case 'mortal_G_2': return "Charge Attack 7 B";
                     case 'mortal_H': return "Charge Attack 8";
+                    case 'mortal_H_1': return "Charge Attack 8 A";
+                    case 'mortal_H_2': return "Charge Attack 8 B";
                     case 'mortal_I': return "Charge Attack 9";
+                    case 'mortal_I_1': return "Charge Attack 9 A";
+                    case 'mortal_I_2': return "Charge Attack 9 B";
                     case 'mortal_J': return "Charge Attack 10";
+                    case 'mortal_J_1': return "Charge Attack 10 A";
+                    case 'mortal_J_2': return "Charge Attack 10 B";
                     case 'mortal_K': return "Charge Attack 11";
+                    case 'mortal_K_1': return "Charge Attack 11 A";
+                    case 'mortal_K_2': return "Charge Attack 11 B";
                     case 'chara_in': return "Fade in";
                     case 'chara_out': return "Fade out";
                     case 'dead': return "Dead";
@@ -302,6 +326,7 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case 'wait': return "Idle";
                     case 'change_1': return "Change Form 1";
                     case 'change_2': return "Change Form 2";
+                    case 'summon': return "Summoning";
                     default: return a;
                 };
             },
@@ -345,6 +370,23 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                         B.cjsMortal.scaleX *= n,
                         B.cjsMortal.scaleY *= n,
                         B.cjsMortal[a].gotoAndPlay("special")
+                        console.log(B.getAnimDuration(B.cjsMortal[a][a+"_special"]));
+                }
+                function d_sp(a) { // custom version of d() above, for weapons
+                    B.cjsMortal = new lib[a],
+                        B.stage.addChild(B.cjsMortal),
+                        B.isFullScreenMortal ? (B.cjsMortal.x = f.x,
+                            B.cjsMortal.y = f.y) : B.isFixedPosOwnerBG ? (B.cjsMortal.x = f.x,
+                                B.cjsMortal.y = f.y,
+                                B.stage.setChildIndex(B.cjsMortal, o.CHARACTER)) : (B.cjsMortal.x = B.cjsEnemy.x,
+                                    B.cjsMortal.y = B.cjsEnemy.y + k,
+                                    B.stage.setChildIndex(B.cjsMortal, o.CHARACTER)),
+                        B.cjsMortal.x += B.cjsMortalPos.x,
+                        B.cjsMortal.y += B.cjsMortalPos.y,
+                        B.cjsMortal.scaleX *= n,
+                        B.cjsMortal.scaleY *= n,
+                        B.cjsMortal[a][a+"_special"].gotoAndPlay("special")
+                        return B.getAnimDuration(B.cjsMortal[a][a+"_special"])
                 }
                 function e(a) {
                     var b = a.replace(/_[a-z][0-9]/g, "").replace(/.*_([a-z])?.*/, "$1");
@@ -368,7 +410,7 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     var c = B.getAnimDuration(b[a][a + "_effect"]);
                     createjs.Tween.get(b, {
                         useTicks: !0
-                    }).wait(c).call(function () {
+                    }).call(function () {
                         B.stage.removeChild(b)
                     })
                 }
@@ -454,15 +496,22 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case q.MORTAL_K_2:
                         z = !0;
                         var E = b;
-                        this.currentIndex = b[b.length-1].charCodeAt()-65
+                        this.currentIndex = E[E.length-1].charCodeAt()-65
                         if (this.currentIndex >= this.cjsMortalList.length){
                             this.currentIndex=0
                         }
                         var C = this.cjsMortalList[this.currentIndex].list;
                         this.damageTarget = C[this.mortalIndex].target === s.THEM ? s.ENEMY : s.PLAYER;
                         this.updateCjsParams(this.currentIndex);
-                        d(this.cjsNameMortal);
-                        y = this.getAnimDuration(x[this.cjsNameNpc + "_" + E]);
+                        if(is_mc && mc_wpn)
+                        { // weapon duration hack
+                            y = d_sp(this.cjsNameMortal) + this.getAnimDuration(x[this.cjsNameNpc + "_" + E]);
+                        }
+                        else
+                        {
+                            d(this.cjsNameMortal)
+                            y = this.getAnimDuration(x[this.cjsNameNpc + "_" + E]);
+                        }
                         l();
                         break;
                     case q.ATTACK:

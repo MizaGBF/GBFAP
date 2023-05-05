@@ -13,6 +13,22 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
             , c = _.flatten(_.map(a, function (a) {
                 return cjsloader.manifest(a)
             }))
+        // mc only fix
+        let phit = false;
+        let melee = false;
+        if(is_mc && mc_wpn) // set wpn
+        {
+            for(let e of c)
+            {
+                if(melee)
+                {
+                    if(e.id == "weapon_l") e.src = "img/sp/cjs/" + mc_wpn + "_1.png"
+                    else if(e.id == "weapon_r") e.src = "img/sp/cjs/" + mc_wpn + "_2.png"
+                }
+                else if(e.id == "weapon") e.src = "img/sp/cjs/" + mc_wpn + ".png"
+            }
+        }
+        // end
         return (function () {}),
             manifestloader.once("complete", function () {
                 b.resolve()

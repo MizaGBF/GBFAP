@@ -181,8 +181,14 @@ var versionChange = function (obj) {
     // header image
     if(!AnimeDebug)
     {
-        var id = AnimeData[1][animeVersion]['cjs'][0];
-        id = id.split('_').slice(1, (id.includes("_st") ? 4 : 3)).join('_');
-        document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + ".jpg"
+        let id = (mc_id) ? mc_id : AnimeData[1][animeVersion]['cjs'][0];
+        let el = id.split('_');
+        id = el.slice(1, (id.includes("_st") ? 4 : 3)).join('_');
+        if(el.length == 2 && el[0].length == 6)
+            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg"
+        else if(id.startswith("10"))
+            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg"
+        else
+            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + ".jpg"
     }
 };
