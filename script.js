@@ -15,7 +15,7 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
             }))
         // mc only fix
         let phit = false;
-        let melee = false;
+        let melee = mc_id.includes("_me_");
         if(is_mc && mc_wpn) // set wpn
         {
             for(let e of c)
