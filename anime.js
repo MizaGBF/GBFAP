@@ -206,7 +206,7 @@ function loadCharacter(id)
             AnimeData[1][p]['cjs_pos'] = [{"y":0,"x":0}];
             AnimeData[1][p]['special_pos'] = [[{"y":0,"x":0}]];
         }
-        successLoading(id);
+        successLoading(id+style);
     }
     else // fail
     {
