@@ -948,7 +948,8 @@ class Updater():
             try:
                 if force or self.modified[file]:
                     with open("json/" + file + ".json", 'w') as outfile:
-                        self.indexes[file] = dict(sorted(self.indexes[file].items(), reverse=True))
+                        if file == "mc":
+                            self.indexes[file] = dict(sorted(self.indexes[file].items(), reverse=True))
                         json.dump(self.indexes[file], outfile)
                     update_changelog = True
                     print("Updated index {}.json".format(file))

@@ -277,7 +277,7 @@ function successLoading(id)
     document.getElementById('temp').remove(); // remove loading image
     result_area = document.getElementById('result');
     let ref = document.createElement('a'); // add GBFAL link
-    ref.setAttribute('href', "https://mizagbf.github.io/GBFAL/?id=" + id.split("_")[0]);
+    ref.setAttribute('href', "https://mizagbf.github.io/GBFAL/?id=" + id);
     ref.appendChild(document.createTextNode("Assets"));
     result_area.insertBefore(ref, result_area.firstChild);
     
