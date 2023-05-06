@@ -181,7 +181,7 @@ function loadCharacter(id)
         id = el[0];
         style = "_"+el[1];
     }
-    let ckey = id.slice(4, 7);
+    let ckey = id.startsWith('30') ? id.slice(4, 7) : id.slice(4, 8);
     if(ikey in index && ckey+style in index[ikey])
     {
         AnimeData = [];
@@ -211,7 +211,7 @@ function loadCharacter(id)
     else // fail
     {
         // DEBUG ONLY
-        if(!AnimeDebug && id.startswith('30') && id.length >= 10) // call debug mode (can be disabled by setting AnimeDebug to true)
+        if(!AnimeDebug && id.startsWith('30') && id.length >= 10) // call debug mode (can be disabled by setting AnimeDebug to true)
         {
             let d = getDebug();
             if(!AnimeLocal && d != null) // testing only
