@@ -952,6 +952,7 @@ class Updater():
                             self.indexes[file] = dict(sorted(self.indexes[file].items(), reverse=True))
                         json.dump(self.indexes[file], outfile)
                     update_changelog = True
+                    self.modified[file] = False
                     print("Updated index {}.json".format(file))
             except:
                 print("Failed to write:", file)

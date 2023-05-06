@@ -143,7 +143,11 @@ function initIndex(target)
 {
     try{
         index[index_files[target]] = JSON.parse(this.response);
-    }catch{}
+    }
+    catch
+    {
+        target--; // to retry
+    }
     target++;
     if(target < index_files.length)
         get("json/"+index_files[target]+".json?" + timestamp, initIndex, initIndex, target);
