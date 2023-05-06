@@ -21,15 +21,14 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
             {
                 if(melee)
                 {
-                    if(e.id == "weapon_l") e.src = Game.imgUri + "/img/sp/cjs/" + mc_wpn + "_1.png"
-                    else if(e.id == "weapon_r") e.src = Game.imgUri + "/img/sp/cjs/" + mc_wpn + "_2.png"
+                    if(e.id == "weapon_l") e.src = Game.imgUri + "/sp/cjs/" + mc_wpn + "_1.png"
+                    else if(e.id == "weapon_r") e.src = Game.imgUri + "/sp/cjs/" + mc_wpn + "_2.png"
                 }
                 else
                 {
-                    if(e.id == "weapon") e.src = Game.imgUri + "/img/sp/cjs/" + mc_wpn + ".png"
+                    if(e.id == "weapon") e.src = Game.imgUri + "/sp/cjs/" + mc_wpn + ".png"
                 }
             }
-            console.log(c);
         }
         // end
         return (function () {}),
