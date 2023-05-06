@@ -13,7 +13,9 @@ class Updater():
         limits = httpx.Limits(max_keepalive_connections=100, max_connections=100, keepalive_expiry=10)
         self.client = httpx.Client(http2=True, limits=limits)
         self.running = False
-        self.index = set()
+        self.indexes = {}
+        self.modified = {}
+        self.lock = {}
         self.queue = queue.Queue()
         self.quality = ("/img/", "/js/")
         self.force_update = False
@@ -489,7 +491,7 @@ class Updater():
             return response.content
 
     def run(self):
-        max_thread = 2
+        max_thread = 20
         print("Updating Database...")
         if self.force_update:
             print("Note: All characters will be updated")
@@ -498,12 +500,12 @@ class Updater():
                 print("Process aborted")
                 return
         self.running = True
-        with concurrent.futures.ThreadPoolExecutor(max_workers=120) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
             futures = []
             possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000", "10100{}00", "10200{}00", "10300{}00", "10400{}00", "10201{}00", "10101{}00", "10301{}00", "10401{}00", "10102{}00", "10202{}00", "10302{}00", "10402{}00", "10103{}00", "10203{}00", "10303{}00", "10403{}00", "10104{}00", "10204{}00", "10304{}00", "10404{}00", "10105{}00", "10205{}00", "10305{}00", "10405{}00", "10106{}00", "10206{}00", "10306{}00", "10406{}00", "10107{}00", "10207{}00", "10307{}00", "10407{}00", "10108{}00", "10208{}00", "10308{}00", "10408{}00", "10209{}00", "10109{}00", "10309{}00", "10409{}00"]
             err = []
             for p in possibles:
-                err.append([0, True, Lock(), 0])
+                err.append([Lock(), 0])
             for i in range(max_thread):
                 futures.append(executor.submit(self.styleProcessing))
                 futures.append(executor.submit(self.run_class, i, max_thread))
@@ -518,48 +520,48 @@ class Updater():
                     print("Progress 100%")
                 elif finished > (len(futures) - max_thread):
                     pass
-                elif finished > 0 and finished % 10 == 0:
+                elif finished > 0 and finished % (len(possibles)+1) == 0:
                     print("Progress {:.1f}%".format((100*finished)/(len(futures) - max_thread)))
         self.running = False
         print("Done")
         sum_res = 0
         for e in err:
-            sum_res += e[3]
+            sum_res += e[1]
         if sum_res > 0:
             print("New additions:")
-            if err[0][3] > 0: print(err[0][3], "R Characters")
-            if err[1][3] > 0: print(err[1][3], "SR Characters")
-            if err[2][3] > 0: print(err[2][3], "SSR Characters")
-            if err[3][3] > 0: print(err[3][3], "Skins")
+            if err[0][1] > 0: print(err[0][1], "R Characters")
+            if err[1][1] > 0: print(err[1][1], "SR Characters")
+            if err[2][1] > 0: print(err[2][1], "SSR Characters")
+            if err[3][1] > 0: print(err[3][1], "Skins")
             i = 4
             while i < len(possibles):
                 for j in range(4):
-                    if err[i+j][3] > 0:
-                        print(err[i+j][3], ["N", "R", "SR", "SSR"][j], ["Swords", "Daggers", "Spears", "Axes", "Staffs", "Guns", "Melees", "Bows", "Harps", "Katanas"][(i-4)//4])
+                    if err[i+j][1] > 0:
+                        print(err[i+j][1], ["N", "R", "SR", "SSR"][j], ["Swords", "Daggers", "Spears", "Axes", "Staffs", "Guns", "Melees", "Bows", "Harps", "Katanas"][(i-4)//4])
                 i += 4
-            self.loadIndex()
-            self.saveIndex()
+        self.saveIndex()
 
     def run_sub(self, start, step, err, file):
         eid = start
-        while err[1] and err[0] < 20 and self.running:
+        errc = 0
+        while errc < 20 and self.running:
             f = file.format(str(eid).zfill(3))
-            if self.force_update or f not in self.index:
+            ikey = f[:3]
+            if file.startswith("10"): ckey = f[4:8]
+            else: ckey = f[4:7]
+            if self.force_update or ckey not in self.indexes[ikey]:
                 if file.startswith("10"): r = self.update_weapon(f)
                 else: r = self.update(f)
                 if not r:
-                    with err[2]:
-                        err[0] += 1
-                        if err[0] >= 20:
-                            err[1] = False
-                            return
+                    errc += 1
+                    if errc >= 20:
+                        return
                 else:
-                    with err[2]:
-                        err[0] = 0
-                        err[3] += 1
+                    errc = 0
+                    with err[0]:
+                        err[1] += 1
             else:
-                with err[2]:
-                    err[0] = 0
+                errc = 0
             eid += step
 
     def run_class(self, start, step):
@@ -567,7 +569,7 @@ class Updater():
         i = start
         while i < len(keys):
             f = keys[i]
-            if self.force_update or f not in self.index:
+            if self.force_update or f not in self.indexes['mc']:
                 self.update_class(f)
             i += step
 
@@ -580,6 +582,7 @@ class Updater():
                     self.req(self.imgUri + "/sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg")
                 except:
                     if not self.debug_mode: return False
+            wid = None
             colors = []
             for i in ["01", "02", "03", "04", "05", "80", ]:
                 try:
@@ -635,11 +638,8 @@ class Updater():
             if sp is None:
                 sp = 'sp_{}_01210001'.format(mc_cjs.split('_')[1])
             character_data = {}
-            character_data['0'] = {'length': len(colors)*2}
-            character_data['1'] = {}
-            character_data['2'] = {"1": {"1": ""},"2": {"1": ""}}
-            # for each version
-            import traceback
+            if wid is not None: character_data['w'] = wid
+            character_data['v'] = []
             for x, c in enumerate(colors):
                 if c == colors[0]: var = ""
                 else: var = " v"+str(x)
@@ -651,28 +651,15 @@ class Updater():
                         elif sp.endswith('_0_s2'):
                             sp = sp[:-5] + '_1_s2'
                             if self.download_assets: self.getJS(sp)
-                    character_data['0'][str(x*2+i)] = ('Gran' if i == 0 else 'Djeeta') + var
-                    character_data['1'][str(x*2+i)] = {}
-                    character_data['1'][str(x*2+i)]['id'] = id # CLASS ONLY, only for fancy stuff
-                    try:
-                        if wid is not None:
-                            character_data['1'][str(x*2+i)]['wpn'] = wid
-                    except:
-                        pass
-                    character_data['1'][str(x*2+i)]['cjs'] = [c.replace('_0_', '_{}_'.format(i))]
-                    character_data['1'][str(x*2+i)]['action_label_list'] = ['ability', mortal, 'stbwait', 'short_attack', 'double', 'triple']
-                    character_data['1'][str(x*2+i)]['effect'] = [phit]
-                    character_data['1'][str(x*2+i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":sp,"fixed_pos_owner_bg":0,"full_screen":0}]}]
-                    # update full screen mode
-                    if '_s2' in character_data['1'][str(x*2+i)]['special'][0]['list'][0]['cjs'] or '_s3' in character_data['1'][str(x*2+i)]['special'][0]['list'][0]['cjs']:
-                        character_data['1'][str(x*2+i)]['special'][0]['list'][0]['full_screen'] = 1
-                    character_data['1'][str(x*2+i)]['cjs_pos'] = [{"y":0,"x":0}]
-                    character_data['1'][str(x*2+i)]['special_pos'] = [[{"y":0,"x":0}]]
-            with open("json/" + id + ".json", 'w') as outfile:
-                json.dump(character_data, outfile)
+                    tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', '_{}_'.format(i)), mortal, phit, sp, False] # name, cjs, mortal, phit, sp, fullscreen
+                    if '_s2' in tmp[4] or '_s3' in tmp[4]:
+                        tmp[5] = True
+                    character_data['v'].append(tmp)
+            with self.lock['mc']:
+                self.indexes['mc'][id] = character_data
+                self.modified['mc'] = True
             return True
         except Exception as e:
-            print(traceback.format_exc())
             print("Error", e, "for id", id)
             return False
 
@@ -707,25 +694,18 @@ class Updater():
                     except:
                         pass
             character_data = {}
-            character_data['0'] = {'length': 2}
-            character_data['1'] = {}
-            character_data['2'] = {"1": {"1": ""},"2": {"1": ""}}
-            # for each version
+            character_data['w'] = id
+            character_data['v'] = []
             for i in range(2):
-                character_data['0'][str(i)] = 'Gran' if i == 0 else 'Djeeta'
-                character_data['1'][str(i)] = {}
-                character_data['1'][str(i)]['wpn'] = id
-                character_data['1'][str(i)]['cjs'] = [mc_cjs.format(i)]
-                character_data['1'][str(i)]['action_label_list'] = ['ability', 'mortal_A', 'stbwait', 'short_attack', 'double', 'triple']
-                character_data['1'][str(i)]['effect'] = [phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])]
-                character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":(sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1])),"fixed_pos_owner_bg":0,"full_screen":0}]}]
-                # update full screen mode
-                if '_s2' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs'] or '_s3' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs']:
-                    character_data['1'][str(i)]['special'][0]['list'][0]['full_screen'] = 1
-                character_data['1'][str(i)]['cjs_pos'] = [{"y":0,"x":0}]
-                character_data['1'][str(i)]['special_pos'] = [[{"y":0,"x":0}]]
-            with open("json/" + id + ".json", 'w') as outfile:
-                json.dump(character_data, outfile)
+                tmp = [('Gran' if i == 0 else 'Djeeta'), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1])), False] # name, cjs, mortal, phit, sp, fullscreen
+                if '_s2' in tmp[4] or '_s3' in tmp[4]:
+                    tmp[5] = True
+                character_data['v'].append(tmp)
+            ikey = id[:3]
+            ckey = id[4:8]
+            with self.lock[ikey]:
+                self.indexes[ikey][ckey] = character_data
+                self.modified[ikey] = True
             return True
         except Exception as e:
             print("Error", e, "for id", id)
@@ -796,50 +776,46 @@ class Updater():
             
             # building the character data
             keys = list(good_variations.keys())
-            character_data['0'] = {'length': len(keys)}
-            character_data['1'] = {} 
-            character_data['2'] = {"1": {"1": ""},"2": {"1": ""}}
-            # for each version
+            character_data['v'] = []
             for i in range(len(keys)):
-                character_data['0'][str(i)] = keys[i][2]
-                character_data['1'][str(i)] = {}
-                character_data['1'][str(i)]['cjs'] = [good_variations[keys[i]].replace('.js', '')]
-                character_data['1'][str(i)]['action_label_list'] = ['ability', mortal[keys[i]], 'stbwait', 'short_attack', 'double', 'triple']
+                tmp = [keys[i][2], good_variations[keys[i]].replace('.js', ''), mortal[keys[i]], None, None, False] # name, cjs, mortal, phit, sp, fullscreen
+                # phit
                 if keys[i] in good_phits:
-                    character_data['1'][str(i)]['effect'] = [good_phits[keys[i]].replace('.js', '')]
+                    tmp[3] = good_phits[keys[i]].replace('.js', '')
                 else: # if no phit, try to use inferior uncap ones
                     for j in range(i-1, -1, -1):
                         if keys[i][1] == keys[j][1] and good_variations[keys[j]] in good_phits:
-                            character_data['1'][str(i)]['effect'] = [good_phits[keys[j]].replace('.js', '')]
+                            tmp[3] = good_phits[keys[j]].replace('.js', '')
                             break
                 # if no attack/phit AT ALL
-                if 'effect' not in character_data['1'][str(i)]:
+                if tmp[3] is None:
                     if id in self.patches: # apply patch if existing
-                        character_data['1'][str(i)]['effect'] = [self.patches[id][2]]
-                        self.getJS(character_data['1'][str(i)]['effect'][0])
+                        tmp[3] = self.patches[id][2]
+                        if self.download_assets: self.getJS(tmp[3])
                     else: # put default
-                        character_data['1'][str(i)]['effect'] = ['phit_ax_0001']
-                # if no ougi/nsp
+                        tmp[3] = 'phit_ax_0001'
+                # sp
                 if keys[i] in good_nsp:
-                    character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":good_nsp[keys[i]].replace('.js', ''),"fixed_pos_owner_bg":0,"full_screen":0}]}]
+                    tmp[4] = good_nsp[keys[i]].replace('.js', '')
                 else: # try to use inferior uncap one
                     for j in range(i-1, -1, -1):
                         if keys[j] in good_nsp:
-                            character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":good_nsp[keys[j]].replace('.js', ''),"fixed_pos_owner_bg":0,"full_screen":1}]}]
+                            tmp[4] = good_nsp[keys[j]].replace('.js', '')
                             break
                 # if no special AT ALL
-                if 'special' not in character_data['1'][str(i)] and id in self.patches: # apply patch if existing
-                    character_data['1'][str(i)]['special'] = [{"random":0,"list":[{"target":"them","cjs":good_variations[keys[j]].replace('.js', '').replace('npc', 'nsp').replace(id, self.patches[id][0]) + self.patches[id][1] ,"fixed_pos_owner_bg":0,"full_screen":1}]}]
-                    self.getJS(character_data['1'][str(i)]['special'][0]['list'][0]['cjs'])
+                if tmp[4] is None and id in self.patches: # apply patch if existing
+                    tmp[4] = good_variations[keys[j]].replace('.js', '').replace('npc', 'nsp').replace(id, self.patches[id][0]) + self.patches[id][1]
+                    if self.download_assets: self.getJS(tmp[4])
                 # raise error if still no special
-                if 'special' not in character_data['1'][str(i)]: raise Exception("No special set")
-                # update full screen mode
-                if '_s2' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs'] or '_s3' in character_data['1'][str(i)]['special'][0]['list'][0]['cjs']:
-                    character_data['1'][str(i)]['special'][0]['list'][0]['full_screen'] = 1
-                character_data['1'][str(i)]['cjs_pos'] = [{"y":0,"x":0}]
-                character_data['1'][str(i)]['special_pos'] = [[{"y":0,"x":0}]]
-            with open("json/" + id + style + ".json", 'w') as outfile:
-                json.dump(character_data, outfile)
+                if tmp[4] is None: raise Exception("No special set")
+                if '_s2' in tmp[4] or '_s3' in tmp[4]:
+                    tmp[5] = True
+                character_data['v'].append(tmp)
+            ikey = id[:3]
+            ckey = id[4:7]
+            with self.lock[ikey]:
+                self.indexes[ikey][ckey+style] = character_data
+                self.modified[ikey] = True
             return True
         except Exception as e:
             print("Error", e, "for id", id)
@@ -878,7 +854,6 @@ class Updater():
 
     def manualUpdate(self, ids):
         max_thread = 40
-        counter = 0
         tcounter = 0
         self.running = True
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_thread+2) as executor:
@@ -903,15 +878,10 @@ class Updater():
                     tfinished += 1
                     if tfinished >= tcounter:
                         self.running = False
-                    r = future.result()
-                    if isinstance(r, int): counter += r
-                    elif r: counter += 1
+                    future.result()
         self.running = False
         print("Done")
-        if counter > 0:
-            self.loadIndex()
-            self.saveIndex()
-            print(counter, "successfully processed ID")
+        self.saveIndex()
 
     def getJS(self, js):
         data = self.req(self.manifestUri + js + ".js")
@@ -963,23 +933,31 @@ class Updater():
         self.download_assets = tmp
 
     def loadIndex(self):
-        files = [f for f in os.listdir('json/') if os.path.isfile(os.path.join('json/', f))]
-        known = []
-        for f in files:
-            if f.startswith("371") or f.startswith("304") or f.startswith("303") or f.startswith("302") or f.startswith("10") or (len(f.split('.json')[0]) == 9 and f[6] == '_'):
-                known.append(f.split('.')[0])
-        self.index = set(known)
+        for file in ["101", "102", "103", "104", "302", "303", "304", "371", "mc"]:
+            try:
+                self.modified[file] = False
+                self.lock[file] = Lock()
+                with open("json/" + file + ".json", mode="r", encoding="utf-8") as f:
+                    self.indexes[file] = json.load(f)
+            except:
+                self.indexes[file] = {}
 
-    def saveIndex(self):
-        with open("json/index.json", 'w') as outfile:
-            i = list(self.index)
-            i.sort()
-            i.reverse()
-            json.dump(i, outfile)
-        print("Index updated")
-        with open('json/changelog.json', mode='w', encoding='utf-8') as outfile:
-            json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000)}, outfile)
-        print("changelog.json updated")
+    def saveIndex(self, force=False):
+        update_changelog = False
+        for file in ["101", "102", "103", "104", "302", "303", "304", "371", "mc"]:
+            try:
+                if force or self.modified[file]:
+                    with open("json/" + file + ".json", 'w') as outfile:
+                        self.indexes[file] = dict(sorted(self.indexes[file].items(), reverse=True))
+                        json.dump(self.indexes[file], outfile)
+                    update_changelog = True
+                    print("Updated index {}.json".format(file))
+            except:
+                print("Failed to write:", file)
+        if update_changelog:
+            with open('json/changelog.json', mode='w', encoding='utf-8') as outfile:
+                json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000)}, outfile)
+            print("changelog.json updated")
 
     def start(self, args):
         self.force_update = ('-force' in args)
@@ -990,7 +968,7 @@ class Updater():
         if '-update' in args:
             self.manualUpdate(args['-update'])
         elif '-index' in args:
-            self.saveIndex()
+            self.saveIndex(True)
         else:
             self.run()
 
