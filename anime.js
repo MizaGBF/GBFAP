@@ -185,7 +185,7 @@ function loadCharacter(id)
         id = el[0];
         style = "_"+el[1];
     }
-    let ckey = id.startsWith('30') ? id.slice(4, 7) : id.slice(4, 8);
+    let ckey = (id.startsWith('30') || id.startsWith('37')) ? id.slice(4, 7) : id.slice(4, 8);
     if(ikey in index && ckey+style in index[ikey])
     {
         AnimeData = [];

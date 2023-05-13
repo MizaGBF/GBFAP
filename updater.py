@@ -339,6 +339,7 @@ class Updater():
             "3710139000": ("", "", "phit_3040098000"),
             "3710167000": ("", "", "phit_3040331000")
         }
+        self.special_fix = {"3710171000":"3710167000","3710170000":"3710167000","3710169000":"3710167000","3710168000":"3710167000"}
         self.class_lookup = { # need to be manually updated..... :(
             "150201_sw": ["dkf_sw", "dkf_kn"], # dark fencer
             "200201_kn": ["acm_kn", "acm_gu"], # alchemist
@@ -727,12 +728,13 @@ class Updater():
             found = False
             mortal = {}
             # npc file check
+            tid = self.special_fix.get(id, id) # fix for bobobo skin
             for i in range(0, len(self.variations), 2):
                 fcheck = False
                 for ftype in ["", "_s2"]:
                     for j in range(2):
                         try:
-                            fn = "npc_{}{}{}".format(id, self.variations[i+j][0].format(style), ftype)
+                            fn = "npc_{}{}{}".format(tid, self.variations[i+j][0].format(style), ftype)
                             ret = self.getJS(fn)
                             if not ret[0]:
                                 data = self.req(self.cjsUri + fn + ".js").decode('utf-8')
@@ -758,7 +760,7 @@ class Updater():
                 for s in ["", "_s2", "_s3", "_0_s2", "_0_s3"]:
                     for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
                         try:
-                            fn = "nsp_{}{}{}{}".format(id, v[0].format(style), s, m)
+                            fn = "nsp_{}{}{}{}".format(tid, v[0].format(style), s, m)
                             self.getJS(fn)
                             good_nsp[v] = fn + ".js"
                             found = True
@@ -768,7 +770,7 @@ class Updater():
                     if found: break
                 # attack check
                 try:
-                    fn = "phit_{}{}".format(id, v[1])
+                    fn = "phit_{}{}".format(tid, v[1])
                     self.getJS(fn)
                     good_phits[v] = fn + ".js"
                 except:
@@ -789,8 +791,8 @@ class Updater():
                             break
                 # if no attack/phit AT ALL
                 if tmp[3] is None:
-                    if id in self.patches: # apply patch if existing
-                        tmp[3] = self.patches[id][2]
+                    if tid in self.patches: # apply patch if existing
+                        tmp[3] = self.patches[tid][2]
                         if self.download_assets: self.getJS(tmp[3])
                     else: # put default
                         tmp[3] = 'phit_ax_0001'
@@ -803,8 +805,8 @@ class Updater():
                             tmp[4] = good_nsp[keys[j]].replace('.js', '')
                             break
                 # if no special AT ALL
-                if tmp[4] is None and id in self.patches: # apply patch if existing
-                    tmp[4] = good_variations[keys[j]].replace('.js', '').replace('npc', 'nsp').replace(id, self.patches[id][0]) + self.patches[id][1]
+                if tmp[4] is None and tid in self.patches: # apply patch if existing
+                    tmp[4] = good_variations[keys[j]].replace('.js', '').replace('npc', 'nsp').replace(tid, self.patches[tid][0]) + self.patches[tid][1]
                     if self.download_assets: self.getJS(tmp[4])
                 # raise error if still no special
                 if tmp[4] is None: raise Exception("No special set")
