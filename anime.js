@@ -23,6 +23,7 @@ var index_files = ["302", "303", "304", "371", "101", "102", "103", "104", "mc"]
 var index = {}
 var timestamp = Date.now();
 var bookmarks = [];
+var intervals = [];
 
 var endpoints = [ // possible asset endpoints
     "prd-game-a-granbluefantasy.akamaized.net/",

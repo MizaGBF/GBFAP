@@ -370,7 +370,6 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                         B.cjsMortal.scaleX *= n,
                         B.cjsMortal.scaleY *= n,
                         B.cjsMortal[a].gotoAndPlay("special")
-                        console.log(B.getAnimDuration(B.cjsMortal[a][a+"_special"]));
                 }
                 function d_sp(a) { // custom version of d() above, for weapons
                     B.cjsMortal = new lib[a],
