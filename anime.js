@@ -224,6 +224,12 @@ function importBookmark()
     }
 }
 
+function rmPopup(popup) {
+    popup.parentNode.removeChild(popup);
+    clearInterval(intervals[0]);
+    intervals.shift();
+}
+
 // ========================================================================
 // Utility
 
