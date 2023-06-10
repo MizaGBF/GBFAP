@@ -197,6 +197,7 @@ function importBookmark()
             if(typeof tmp != 'object') return;
             let fav = false;
             let i = 0;
+            let id = getParam();
             while(i < tmp.length)
             {
                 let e = tmp[i];
@@ -206,7 +207,7 @@ function importBookmark()
                     tmp.splice(i, 1);
                     continue;
                 }
-                if(last_id == e[0]) fav = true;
+                if(id == e[0]) fav = true;
                 ++i;
             }
             bookmarks = tmp;
@@ -220,9 +221,7 @@ function importBookmark()
             intervals.push(setInterval(rmPopup, 2500, div));
             updateBookmark();
         }
-        catch(error) {
-            console.error(error);
-        }
+        catch {}
     });
 }
 
