@@ -220,7 +220,9 @@ function importBookmark()
             intervals.push(setInterval(rmPopup, 2500, div));
             updateBookmark();
         }
-        catch {}
+        catch(error) {
+            console.error(error);
+        }
     });
 }
 
