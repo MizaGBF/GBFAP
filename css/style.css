@@ -28,6 +28,12 @@ footer, #header {
     color: white;
 }
 
+#favorite {
+    width: 144px;
+    height: 39px;
+    float: right;
+}
+
 label {
     width: 200px;
     display: inline-block;
@@ -56,6 +62,19 @@ summary {
     margin-right: auto;
     color: #ffffff;
     text-shadow: #000000 1px 0 10px;
+}
+
+button {
+    background: url(../assets/ui/button_bg.png) no-repeat;
+    background-size: 100% 100%;
+    width: 220x;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #ffffff;
+    font-size: 30px;
+    text-shadow: #000000 1px 0 10px;
+    border-style: none;
 }
 
 .subdetails {
@@ -104,6 +123,22 @@ summary {
 
 h3 {
     font-size: 20px;
+}
+
+.popup {
+    border-radius: 25px;
+    border: 2px solid #000633;
+    padding: 20px;
+    background-color: #005291;
+    position:fixed;
+    top:5%;
+    left:5%;
+    z-index:100;
+    text-align: center;
+    font-size: 25px;
+    width: 12em;
+    color: #ffffff;
+    align-items: center;
 }
 
 .content {

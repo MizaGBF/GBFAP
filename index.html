@@ -21,12 +21,17 @@
 <body onload="init()">
     <a href="index.html"><img id="titleheader" src="assets/ui/header.png" alt="header"></a>
     <div id="header">
-        <div id="version">v2.2</div>
+        <div id="version">v3.0</div>
         <div id="timestamp">Last update</a>:</div>
     </div>
-    <br>
+    <details style="display:none">
+        <summary>Bookmarks</summary>
+        <div id="bookmark" class="result">
+        </div>
+    </details>
     <div id="result">
         <img src="assets/ui/loading.gif" id="temp">
+        <br><input type="image" src="assets/ui/fav_0.png" style="display:none" id="favorite">
         <div id="AnimationPlayer"></div>
         <ul class="tips">
             <li>Loading can take time if the player hasn't been used recently.</li>

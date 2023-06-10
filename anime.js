@@ -22,6 +22,7 @@ if(AnimeLocal) // local install version
 var index_files = ["302", "303", "304", "371", "101", "102", "103", "104", "mc"];
 var index = {}
 var timestamp = Date.now();
+var bookmarks = [];
 
 var endpoints = [ // possible asset endpoints
     "prd-game-a-granbluefantasy.akamaized.net/",
@@ -35,6 +36,192 @@ var counter = 0; // endpoint counter (gbf doesn't support http/2 so we cycle thr
 var is_mc = false; // set to true if we are dealing with main character animations
 var mc_id = null; // used by classes only
 var mc_wpn = null; // used by weapons and classes
+
+// ========================================================================
+// Bookmark (taken from GBFAL)
+function updateDynamicList(dynarea, idlist)
+{
+    for(let e of idlist)
+    {
+        switch(e[1])
+        {
+            case 3: // character, skin, ...
+            {
+                if(e[0].includes('_st'))
+                    addImage(dynarea, "sp/assets/npc/m/" + e[0].split('_')[0] + "_01_" + e[0].split('_')[1] + ".jpg", e[0]);
+                else
+                    addImage(dynarea, "sp/assets/npc/m/" + e[0] + "_01.jpg", e[0]);
+                break;
+            }
+            case 1: // weapon
+            {
+                addImage(dynarea, "sp/assets/weapon/m/" + e[0] + ".jpg", e[0]);
+                break;
+            }
+            case 0: // mc
+            {
+                addImage(dynarea, "sp/assets/leader/m/" + e[0].split('_')[0] + "_01.jpg", e[0]);
+                break;
+            }
+        }
+    }
+}
+
+function favButton(id, search_type)
+{
+    let fav = document.getElementById('favorite');
+    fav.style.display = null;
+    fav.onclick = function() { toggleBookmark(id, search_type); };
+    for(let e of bookmarks)
+    {
+        if(e[0] == id)
+        {
+            if(fav.src != "assets/ui/fav_1.png")
+                fav.src = "assets/ui/fav_1.png";
+            return;
+        }
+    }
+    if(fav.src != "assets/ui/fav_0.png")
+        fav.src = "assets/ui/fav_0.png";
+}
+
+function toggleBookmark(id, search_type)
+{
+    try
+    {
+        bookmarks = localStorage.getItem("favorite");
+        if(bookmarks == null)
+        {
+            bookmarks = [];
+        }
+        else
+        {
+            bookmarks = JSON.parse(bookmarks);
+        }
+    }
+    catch
+    {
+        bookmarks = [];
+    }
+    if(id != null)
+    {
+        let fav = document.getElementById('favorite');
+        if(fav.src.endsWith('fav_0.png'))
+        {
+            bookmarks.push([id, search_type]);
+            fav.src = "assets/ui/fav_1.png";
+        }
+        else
+        {
+            for(let i = 0; i < bookmarks.length; ++i)
+            {
+                if(bookmarks[i][0] == id)
+                {
+                    bookmarks.splice(i, 1);
+                    break;
+                }
+            }
+            fav.src = "assets/ui/fav_0.png";
+        }
+        localStorage.setItem("favorite", JSON.stringify(bookmarks));
+    }
+    updateBookmark();
+}
+
+function updateBookmark()
+{
+    if(bookmarks.length == 0)
+    {
+        document.getElementById('bookmark').parentNode.style.display = "none";
+        return;
+    }
+    let bookarea = document.getElementById('bookmark');
+    bookarea.parentNode.style.display = null;
+    bookarea.innerHTML = "";
+    updateDynamicList(bookarea, bookmarks);
+    bookarea.appendChild(document.createElement("br"));
+    let btn = document.createElement("button");
+    btn.innerHTML = "Clear";
+    btn.onclick = clearBookmark;
+    bookarea.appendChild(btn);
+    btn = document.createElement("button");
+    btn.innerHTML = "Export";
+    btn.onclick = exportBookmark;
+    bookarea.appendChild(btn);
+    btn = document.createElement("button");
+    btn.innerHTML = "Import";
+    btn.onclick = importBookmark;
+    bookarea.appendChild(btn);
+}
+
+function clearBookmark()
+{
+    localStorage.removeItem('favorite');
+    document.getElementById('bookmark').parentNode.style.display = "none";
+    document.getElementById('favorite').src = "assets/ui/fav_0.png";
+}
+
+function exportBookmark()
+{
+    try
+    {
+        bookmarks = localStorage.getItem("favorite");
+        if(bookmarks == null)
+        {
+            bookmarks = [];
+        }
+        else
+        {
+            bookmarks = JSON.parse(bookmarks);
+        }
+    }
+    catch
+    {
+        bookmarks = [];
+    }
+    navigator.clipboard.writeText(JSON.stringify(bookmarks));
+    let div = document.createElement('div');
+    div.className = 'popup';
+    div.textContent ='Bookmarks have been copied'
+    document.body.appendChild(div)
+    intervals.push(setInterval(rmPopup, 2500, div));
+}
+
+function importBookmark()
+{
+    try
+    {
+        let tmp = JSON.parse(navigator.clipboard.readText());
+        if(typeof tmp != 'object') return;
+        let fav = false;
+        let i = 0;
+        while(i < tmp.length)
+        {
+            let e = tmp[i];
+            if(typeof e != 'object' || e.length != 2 || typeof e[0] != 'string' || typeof e[1] != 'number') return
+            if(e[1] == 2 || e[1] == 4 || e[1] == 5) // for GBFAL compatibiliy
+            {
+                tmp.splice(i, 1);
+                continue;
+            }
+            if(last_id == e[0]) fav = true;
+            ++i;
+        }
+        bookmarks = tmp;
+        localStorage.setItem("favorite", JSON.stringify(bookmarks));
+        if(fav) document.getElementById('favorite').src = "assets/ui/fav_1.png";
+        else document.getElementById('favorite').src = "assets/ui/fav_0.png";
+        let div = document.createElement('div');
+        div.className = 'popup';
+        div.textContent ='Bookmarks have been imported with success'
+        document.body.appendChild(div)
+        intervals.push(setInterval(rmPopup, 2500, div));
+        updateBookmark();
+    }
+    catch
+    {
+    }
+}
 
 // ========================================================================
 // Utility
@@ -122,6 +309,7 @@ function init()
         document.getElementById('result').remove();
     }
     get("json/changelog.json?" + timestamp, initChangelog, initChangelog, null);
+    toggleBookmark(null, null);
 }
 
 // set the last update time
@@ -318,6 +506,8 @@ function successLoading(id)
             if(result.childNodes.length <= 2) result.remove();
         }
     }
+    // enable favorite
+    favButton(id, id.startsWith('10') ? 1 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
 
     // load the player
     require(["createjs"], function (b) {
