@@ -190,38 +190,38 @@ function exportBookmark()
 
 function importBookmark()
 {
-    try
-    {
-        let tmp = JSON.parse(navigator.clipboard.readText());
-        if(typeof tmp != 'object') return;
-        let fav = false;
-        let i = 0;
-        while(i < tmp.length)
+    navigator.clipboard.readText().then((clipText) => {
+        try
         {
-            let e = tmp[i];
-            if(typeof e != 'object' || e.length != 2 || typeof e[0] != 'string' || typeof e[1] != 'number') return
-            if(e[1] == 2 || e[1] == 4 || e[1] == 5) // for GBFAL compatibiliy
+            let tmp = JSON.parse(clipText);
+            if(typeof tmp != 'object') return;
+            let fav = false;
+            let i = 0;
+            while(i < tmp.length)
             {
-                tmp.splice(i, 1);
-                continue;
+                let e = tmp[i];
+                if(typeof e != 'object' || e.length != 2 || typeof e[0] != 'string' || typeof e[1] != 'number') return
+                if(e[1] == 2 || e[1] == 4 || e[1] == 5) // for GBFAL compatibiliy
+                {
+                    tmp.splice(i, 1);
+                    continue;
+                }
+                if(last_id == e[0]) fav = true;
+                ++i;
             }
-            if(last_id == e[0]) fav = true;
-            ++i;
+            bookmarks = tmp;
+            localStorage.setItem("favorite", JSON.stringify(bookmarks));
+            if(fav) document.getElementById('favorite').src = "assets/ui/fav_1.png";
+            else document.getElementById('favorite').src = "assets/ui/fav_0.png";
+            let div = document.createElement('div');
+            div.className = 'popup';
+            div.textContent ='Bookmarks have been imported with success'
+            document.body.appendChild(div)
+            intervals.push(setInterval(rmPopup, 2500, div));
+            updateBookmark();
         }
-        bookmarks = tmp;
-        localStorage.setItem("favorite", JSON.stringify(bookmarks));
-        if(fav) document.getElementById('favorite').src = "assets/ui/fav_1.png";
-        else document.getElementById('favorite').src = "assets/ui/fav_0.png";
-        let div = document.createElement('div');
-        div.className = 'popup';
-        div.textContent ='Bookmarks have been imported with success'
-        document.body.appendChild(div)
-        intervals.push(setInterval(rmPopup, 2500, div));
-        updateBookmark();
-    }
-    catch
-    {
-    }
+        catch {}
+    });
 }
 
 function rmPopup(popup) {
