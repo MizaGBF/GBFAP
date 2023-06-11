@@ -341,130 +341,130 @@ class Updater():
         }
         self.special_fix = {"3710171000":"3710167000","3710170000":"3710167000","3710169000":"3710167000","3710168000":"3710167000"}
         self.class_lookup = { # need to be manually updated..... :(
-            "150201_sw": ["dkf_sw", "dkf_kn"], # dark fencer
-            "200201_kn": ["acm_kn", "acm_gu"], # alchemist
-            "310401_sw": ["mcd_sw"], # mac do
-            "130201_wa": ["hrm_wa", "hrm_kn"], # hermit
-            "120401_wa": ["hlr_wa", "hlr_sp"], # iatromantis
-            "150301_sw": ["csr_sw", "csr_kn"], # chaos ruler
-            "170201_bw": ["sdw_bw", "sdw_gu"], # sidewinder
-            "240201_gu": ["gns_gu"], # gunslinger
-            "360001_me": ["vee_me"], # vyrn suit
-            "310701_sw": ["fal_sw"], # fallen
-            "400001_kt": ["szk_kt"], # zhuque
-            "450301_sw": ["rlc_sw", "rlc_gu"], # relic buster
-            "140301_kn": ["gzk_kn", "gzk_gu"], # bandit tycoon
-            "110001_sw": ["kni_sw", "kni_sp"], # knight
-            "270301_mc": ["ris_mc"], # rising force
-            "290201_gu": ["kks_gu"], # mechanic
-            "190101_sp": ["drg_sp", "drg_ax"], # dragoon
-            "140201_kn": ["hky_kn", "hky_gu"], # hawkeye
-            "240301_gu": ["sol_gu"], # soldier
-            "120301_wa": ["sag_wa", "sag_sp"], # sage
-            "120101_wa": ["cle_wa", "cle_sp"], # cleric
-            "150101_sw": ["ars_sw", "ars_kn"], # arcana dueler
-            "130301_wa": ["wrk_wa", "wrk_kn"], # warlock
-            "130401_wa": ["mnd_wa", "mnd_kn"], # manadiver
-            "310601_sw": ["edg_sw"], # eternal 2
-            "120001_wa": ["pri_wa", "pri_sp"], # priest
-            "180101_mc": ["mst_kn", "mst_mc"], # bard
-            "200301_kn": ["dct_kn", "dct_gu"], # doctor
-            "220201_kt": ["smr_bw", "smr_kt"], # samurai
-            "140001_kn": ["thi_kn", "thi_gu"], # thief
-            "370601_me": ["bel_me"], # belial 1
-            "370701_me": ["ngr_me"], # cook
-            "330001_sp": ["sry_sp"], # qinglong
-            "370501_me": ["phm_me"], # anime s2 skin
-            "440301_bw": ["rbn_bw"], # robin hood
-            "160201_me": ["ogr_me"], # ogre
-            "210301_me": ["mhs_me", "mhs_kt"], # runeslayer
-            "310001_sw": ["lov_sw"], # lord of vermillion
-            "370801_me": ["frb_me"], # belial 2
-            "180201_mc": ["sps_kn", "sps_mc"], # superstar
-            "310301_sw": ["chd_sw"], # attack on titan
-            "125001_wa": ["snt_wa"], # santa
-            "110301_sw": ["spt_sw", "spt_sp"], # spartan
-            "310801_sw": ["ykt_sw"], # yukata
-            "110201_sw": ["hsb_sw", "hsb_sp"], # holy saber
-            "230301_sw": ["glr_sw", "glr_kt"], # glorybringer
-            "130101_wa": ["srr_wa", "srr_kn"], # sorcerer
-            "430301_wa": ["mnk_wa", "mnk_me"], # monk
-            "280301_kn": ["msq_kn"], # masquerade
-            "250201_wa": ["wmn_wa"], # mystic
-            "160001_me": ["grp_me"], # grappler
-            "110101_sw": ["frt_sw", "frt_sp"], # sentinel
-            "270201_mc": ["drm_mc"], # taiko
-            "300301_sw": ["crs_sw", "crs_kt"], # chrysaor
-            "360101_gu": ["rac_gu"], # platinum sky 2
-            "300201_sw": ["gda_sw", "gda_kt"], # gladiator
-            "100101_sw": ["wrr_sw", "wrr_ax"], # warrior
-            "170001_bw": ["rng_bw", "rng_gu"], # ranger
-            "280201_kn": ["dnc_kn"], # dancer
-            "410301_mc": ["lmb_ax", "lmb_mc"],
-            "100001_sw": ["fig_sw", "fig_ax"], # fighter
-            "180301_kn": ["els_kn", "els_mc"], # elysian
-            "250301_wa": ["knd_wa"], # nekomancer
-            "260201_kn": ["asa_kn"], # assassin
-            "370301_me": ["kjm_me"], # monster 3
-            "140101_kn": ["rdr_kn", "rdr_gu"], # raider
-            "180001_mc": ["hpt_kn", "hpt_mc"], # superstar
-            "370001_me": ["kjt_me"], # monster 1
-            "165001_me": ["stf_me"], # street fighter
-            "160301_me": ["rsr_me"], # luchador
-            "100201_sw": ["wms_sw", "wms_ax"], # weapon master
-            "170301_bw": ["hdg_bw", "hdg_gu"], # nighthound
-            "230201_sw": ["sdm_sw", "sdm_kt"], # swordmaster
-            "310201_sw": ["swm_sw"], # summer
-            "190301_sp": ["aps_sp", "aps_ax"], # apsaras
-            "100401_sw": ["vkn_sw", "vkn_ax"], # viking
-            "150001_sw": ["enh_sw", "enh_kn"], # enhancer
-            "220301_bw": ["kng_bw", "kng_kt"], # kengo
-            "120201_wa": ["bis_wa", "bis_sp"], # bishop
-            "310101_sw": ["ani_sw"], # anime season 1
-            "130001_wa": ["wiz_wa", "wiz_kn"], # wizard
-            "185001_kn": ["idl_kn", "idl_mc"], # idol
-            "100301_sw": ["bsk_sw", "bsk_ax"], # berserker
-            "160101_me": ["kun_me"], # kung fu artist
-            "370201_me": ["kjb_me"], # monster 2
-            "110401_sw": ["pld_sw", "pld_sp"], # paladin
-            "310501_sw": ["cnq_sw"], # eternal 1
-            "310901_sw": ["vss_sw"], # versus skin
-            "190001_sp": ["lnc_sp", "lnc_ax"], # lancer
-            "420301_sp": ["cav_sp", "cav_gu"], # cavalier
-            "190201_sp": ["vkr_sp", "vkr_ax"], # valkyrie
-            "260301_kn": ["tmt_kn"], # tormentor
-            "210201_kt": ["nnj_me", "nnj_kt"], # ninja
-            "370401_me": ["ybk_me"], # bird
-            "320001_kn": ["sut_kn"], # story dancer
-            "170101_bw": ["mrk_bw", "mrk_gu"], # archer
-            "311001_sw": ["gkn_sw"], # school
-            "340001_ax": ["gnb_ax"], # xuanwu
-            "360201_gu": ["ebi_gu"], # premium friday
-            "370901_me": ["byk_me"], # baihu
-            "460301_sw": ["ymt_sw", "ymt_kt"] # yamato
+            "150201": ["dkf_sw", "dkf_kn"], # dark fencer
+            "200201": ["acm_kn", "acm_gu"], # alchemist
+            "310401": ["mcd_sw"], # mac do
+            "130201": ["hrm_wa", "hrm_kn"], # hermit
+            "120401": ["hlr_wa", "hlr_sp"], # iatromantis
+            "150301": ["csr_sw", "csr_kn"], # chaos ruler
+            "170201": ["sdw_bw", "sdw_gu"], # sidewinder
+            "240201": ["gns_gu"], # gunslinger
+            "360001": ["vee_me"], # vyrn suit
+            "310701": ["fal_sw"], # fallen
+            "400001": ["szk_kt"], # zhuque
+            "450301": ["rlc_sw", "rlc_gu"], # relic buster
+            "140301": ["gzk_kn", "gzk_gu"], # bandit tycoon
+            "110001": ["kni_sw", "kni_sp"], # knight
+            "270301": ["ris_mc"], # rising force
+            "290201": ["kks_gu"], # mechanic
+            "190101": ["drg_sp", "drg_ax"], # dragoon
+            "140201": ["hky_kn", "hky_gu"], # hawkeye
+            "240301": ["sol_gu"], # soldier
+            "120301": ["sag_wa", "sag_sp"], # sage
+            "120101": ["cle_wa", "cle_sp"], # cleric
+            "150101": ["ars_sw", "ars_kn"], # arcana dueler
+            "130301": ["wrk_wa", "wrk_kn"], # warlock
+            "130401": ["mnd_wa", "mnd_kn"], # manadiver
+            "310601": ["edg_sw"], # eternal 2
+            "120001": ["pri_wa", "pri_sp"], # priest
+            "180101": ["mst_kn", "mst_mc"], # bard
+            "200301": ["dct_kn", "dct_gu"], # doctor
+            "220201": ["smr_bw", "smr_kt"], # samurai
+            "140001": ["thi_kn", "thi_gu"], # thief
+            "370601": ["bel_me"], # belial 1
+            "370701": ["ngr_me"], # cook
+            "330001": ["sry_sp"], # qinglong
+            "370501": ["phm_me"], # anime s2 skin
+            "440301": ["rbn_bw"], # robin hood
+            "160201": ["ogr_me"], # ogre
+            "210301": ["mhs_me", "mhs_kt"], # runeslayer
+            "310001": ["lov_sw"], # lord of vermillion
+            "370801": ["frb_me"], # belial 2
+            "180201": ["sps_kn", "sps_mc"], # superstar
+            "310301": ["chd_sw"], # attack on titan
+            "125001": ["snt_wa"], # santa
+            "110301": ["spt_sw", "spt_sp"], # spartan
+            "310801": ["ykt_sw"], # yukata
+            "110201": ["hsb_sw", "hsb_sp"], # holy saber
+            "230301": ["glr_sw", "glr_kt"], # glorybringer
+            "130101": ["srr_wa", "srr_kn"], # sorcerer
+            "430301": ["mnk_wa", "mnk_me"], # monk
+            "280301": ["msq_kn"], # masquerade
+            "250201": ["wmn_wa"], # mystic
+            "160001": ["grp_me"], # grappler
+            "110101": ["frt_sw", "frt_sp"], # sentinel
+            "270201": ["drm_mc"], # taiko
+            "300301": ["crs_sw", "crs_kt"], # chrysaor
+            "360101": ["rac_gu"], # platinum sky 2
+            "300201": ["gda_sw", "gda_kt"], # gladiator
+            "100101": ["wrr_sw", "wrr_ax"], # warrior
+            "170001": ["rng_bw", "rng_gu"], # ranger
+            "280201": ["dnc_kn"], # dancer
+            "410301": ["lmb_ax", "lmb_mc"],
+            "100001": ["fig_sw", "fig_ax"], # fighter
+            "180301": ["els_kn", "els_mc"], # elysian
+            "250301": ["knd_wa"], # nekomancer
+            "260201": ["asa_kn"], # assassin
+            "370301": ["kjm_me"], # monster 3
+            "140101": ["rdr_kn", "rdr_gu"], # raider
+            "180001": ["hpt_kn", "hpt_mc"], # superstar
+            "370001": ["kjt_me"], # monster 1
+            "165001": ["stf_me"], # street fighter
+            "160301": ["rsr_me"], # luchador
+            "100201": ["wms_sw", "wms_ax"], # weapon master
+            "170301": ["hdg_bw", "hdg_gu"], # nighthound
+            "230201": ["sdm_sw", "sdm_kt"], # swordmaster
+            "310201": ["swm_sw"], # summer
+            "190301": ["aps_sp", "aps_ax"], # apsaras
+            "100401": ["vkn_sw", "vkn_ax"], # viking
+            "150001": ["enh_sw", "enh_kn"], # enhancer
+            "220301": ["kng_bw", "kng_kt"], # kengo
+            "120201": ["bis_wa", "bis_sp"], # bishop
+            "310101": ["ani_sw"], # anime season 1
+            "130001": ["wiz_wa", "wiz_kn"], # wizard
+            "185001": ["idl_kn", "idl_mc"], # idol
+            "100301": ["bsk_sw", "bsk_ax"], # berserker
+            "160101": ["kun_me"], # kung fu artist
+            "370201": ["kjb_me"], # monster 2
+            "110401": ["pld_sw", "pld_sp"], # paladin
+            "310501": ["cnq_sw"], # eternal 1
+            "310901": ["vss_sw"], # versus skin
+            "190001": ["lnc_sp", "lnc_ax"], # lancer
+            "420301": ["cav_sp", "cav_gu"], # cavalier
+            "190201": ["vkr_sp", "vkr_ax"], # valkyrie
+            "260301": ["tmt_kn"], # tormentor
+            "210201": ["nnj_me", "nnj_kt"], # ninja
+            "370401": ["ybk_me"], # bird
+            "320001": ["sut_kn"], # story dancer
+            "170101": ["mrk_bw", "mrk_gu"], # archer
+            "311001": ["gkn_sw"], # school
+            "340001": ["gnb_ax"], # xuanwu
+            "360201": ["ebi_gu"], # premium friday
+            "370901": ["byk_me"], # baihu
+            "460301": ["ymt_sw", "ymt_kt"] # yamato
         }
         self.class_ougi = {
-            "320001_kn": "1040115000", # school dancer
-            "340001_ax": "1040315700", # xuanwu
-            "400001_kt": "1040913700", # zhuque
-            "330001_sp": "1040216600", # qinglong
-            "370901_me": "1040617400", # baihu
-            "310501_sw": "1040016700", # eternal 1
-            "310601_sw": "1040016800", # eternal 2
-            "360101_gu": "1040508600", # platinum sky 2
-            "370801_me": "1040616000", # belial 2
-            "310701_sw": "1040016900", # fallen
-            "370001_me": "1040610300", # monster 1
-            "310901_sw": "1040019100", # versus
-            "370201_me": "1040610200", # monster 2
-            "370301_me": "1040610400", # monster 3
-            "370601_me": "1040614400", # belial 1
-            "370701_me": "1040615300", # cook
-            "310001_sw": "1040009100", # lord of vermillion
-            "310801_sw": "1040018800", # yukata
-            "311001_sw": "1040020200", # school
-            "310301_sw": "1040014200", # attack on titan
-            "360201_gu": "1040515800" # premium friday
+            "320001": "1040115000", # school dancer
+            "340001": "1040315700", # xuanwu
+            "400001": "1040913700", # zhuque
+            "330001": "1040216600", # qinglong
+            "370901": "1040617400", # baihu
+            "310501": "1040016700", # eternal 1
+            "310601": "1040016800", # eternal 2
+            "360101": "1040508600", # platinum sky 2
+            "370801": "1040616000", # belial 2
+            "310701": "1040016900", # fallen
+            "370001": "1040610300", # monster 1
+            "310901": "1040019100", # versus
+            "370201": "1040610200", # monster 2
+            "370301": "1040610400", # monster 3
+            "370601": "1040614400", # belial 1
+            "370701": "1040615300", # cook
+            "310001": "1040009100", # lord of vermillion
+            "310801": "1040018800", # yukata
+            "311001": "1040020200", # school
+            "310301": "1040014200", # attack on titan
+            "360201": "1040515800" # premium friday
         }
         self.class_placeholders = {
             "sw": "1010000000",

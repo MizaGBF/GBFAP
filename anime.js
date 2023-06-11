@@ -350,14 +350,14 @@ function initIndex(target)
     else
     {
         let id = getParam();
-        if(id != null && id.length >= 9)
+        if(id != null)
         {
             let el = id.split("_");
             if(!isNaN(el[0]) && el[0].length >= 10 && ["302", "303", "304", "371", "101", "102", "103", "104"].includes(el[0].slice(0, 3)))
             {
                 loadCharacter(id);
             }
-            else if(id.length == 9 && el.length == 2 && el[0].length == 6 && !isNaN(el[0]))
+            else if(id.length == 6 && !isNaN(id))
             {
                 loadMC(id);
             }
@@ -499,7 +499,7 @@ function successLoading(id)
             this.id = "character"
         }
         let el = id.split("_");
-        if(el.length == 2 && el[0].length == 6)
+        if(el.length == 1 && el[0].length == 6)
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
         else if(id.startsWith("10"))
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
@@ -610,7 +610,7 @@ function displayMC(elem)
             d = "&debug=" + d;
         for(const [id, value] of Object.entries(index["mc"]))
         {
-            addImage(node, "sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg", id, d);
+            addImage(node, "sp/assets/leader/m/" + id + "_01.jpg", id, d);
         }
     }
 }
