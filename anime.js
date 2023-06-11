@@ -538,7 +538,7 @@ function failLoading(id)
 // on success requesting a character json
 function successJSON(id)
 {
-    is_mc = (!id.startsWith("3") || (id.length == 6);
+    is_mc = (!id.startsWith("3") || (id.length == 6));
     AnimeData = JSON.parse(this.response); // parse the data
     if('id' in AnimeData[1][0]) mc_id = AnimeData[1][0]['id'];
     if('wpn' in AnimeData[1][0]) mc_wpn = AnimeData[1][0]['wpn'];
