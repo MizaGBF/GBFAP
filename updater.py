@@ -2,8 +2,6 @@ import httpx
 import json
 import concurrent.futures
 from threading import Lock
-import os
-import os.path
 import sys
 import queue
 from datetime import datetime, timezone
@@ -13,9 +11,10 @@ class Updater():
         limits = httpx.Limits(max_keepalive_connections=100, max_connections=100, keepalive_expiry=10)
         self.client = httpx.Client(http2=True, limits=limits)
         self.running = False
-        self.indexes = {}
-        self.modified = {}
-        self.lock = {}
+        self.latest_additions = {}
+        self.index = {}
+        self.modified = False
+        self.lock = Lock()
         self.queue = queue.Queue()
         self.quality = ("/img/", "/js/")
         self.force_update = False
@@ -547,10 +546,7 @@ class Updater():
         errc = 0
         while errc < 20 and self.running:
             f = file.format(str(eid).zfill(3))
-            ikey = f[:3]
-            if file.startswith("10"): ckey = f[4:8]
-            else: ckey = f[4:7]
-            if self.force_update or ckey not in self.indexes[ikey]:
+            if self.force_update or f not in self.index:
                 if file.startswith("10"): r = self.update_weapon(f)
                 else: r = self.update(f)
                 if not r:
@@ -570,7 +566,7 @@ class Updater():
         i = start
         while i < len(keys):
             f = keys[i]
-            if self.force_update or f not in self.indexes['mc']:
+            if self.force_update or f not in self.index:
                 self.update_class(f)
             i += step
 
@@ -656,9 +652,10 @@ class Updater():
                     if '_s2' in tmp[4] or '_s3' in tmp[4]:
                         tmp[5] = True
                     character_data['v'].append(tmp)
-            with self.lock['mc']:
-                self.indexes['mc'][id] = character_data
-                self.modified['mc'] = True
+            with self.lock:
+                self.index[id] = character_data
+                self.modified = True
+                self.latest_additions[id] = 0
             return True
         except Exception as e:
             print("Error", e, "for id", id)
@@ -702,11 +699,10 @@ class Updater():
                 if '_s2' in tmp[4] or '_s3' in tmp[4]:
                     tmp[5] = True
                 character_data['v'].append(tmp)
-            ikey = id[:3]
-            ckey = id[4:8]
-            with self.lock[ikey]:
-                self.indexes[ikey][ckey] = character_data
-                self.modified[ikey] = True
+            with self.lock:
+                self.index[id] = character_data
+                self.modified = True
+                self.latest_additions[id] = 1
             return True
         except Exception as e:
             print("Error", e, "for id", id)
@@ -813,11 +809,10 @@ class Updater():
                 if '_s2' in tmp[4] or '_s3' in tmp[4]:
                     tmp[5] = True
                 character_data['v'].append(tmp)
-            ikey = id[:3]
-            ckey = id[4:7]
-            with self.lock[ikey]:
-                self.indexes[ikey][ckey+style] = character_data
-                self.modified[ikey] = True
+            with self.lock:
+                self.index[id+style] = character_data
+                self.modified = True
+                self.latest_additions[id+style] = 3
             return True
         except Exception as e:
             print("Error", e, "for id", id)
@@ -895,7 +890,7 @@ class Updater():
     def phitUpdate(self, phit):
         try:
             self.getJS(phit)
-        except Exception as e:
+        except:
             pass
 
     def initFiles(self):
@@ -935,32 +930,41 @@ class Updater():
         self.download_assets = tmp
 
     def loadIndex(self):
-        for file in ["101", "102", "103", "104", "302", "303", "304", "371", "mc"]:
-            try:
-                self.modified[file] = False
-                self.lock[file] = Lock()
-                with open("json/" + file + ".json", mode="r", encoding="utf-8") as f:
-                    self.indexes[file] = json.load(f)
-            except:
-                self.indexes[file] = {}
+        try:
+            self.modified = False
+            with open("json/data.json", mode="r", encoding="utf-8") as f:
+                self.index = json.load(f)
+        except:
+            self.index = {}
 
     def saveIndex(self, force=False):
         update_changelog = False
-        for file in ["101", "102", "103", "104", "302", "303", "304", "371", "mc"]:
-            try:
-                if force or self.modified[file]:
-                    with open("json/" + file + ".json", 'w') as outfile:
-                        if file == "mc":
-                            self.indexes[file] = dict(sorted(self.indexes[file].items(), reverse=True))
-                        json.dump(self.indexes[file], outfile)
-                    update_changelog = True
-                    self.modified[file] = False
-                    print("Updated index {}.json".format(file))
-            except:
-                print("Failed to write:", file)
+        try:
+            if force or self.modified:
+                with open("json/data.json", 'w') as outfile:
+                    self.index = dict(sorted(self.index.items(), reverse=True))
+                    json.dump(self.index, outfile)
+                update_changelog = True
+                self.modified = False
+                print("Updated data.json")
+        except:
+            print("Failed to write data.json")
         if update_changelog:
+            try:
+                with open('json/changelog.json', mode='r', encoding='utf-8') as f:
+                    existing = {}
+                    for e in json.load(f).get('new', []):
+                        existing[e[0]] = e[1]
+            except:
+                existing = {}
+            new = []
+            existing = existing | self.latest_additions
+            self.latest_additions = {}
+            for k, v in existing.items():
+                new.append([k, v])
+            if len(new) > 50: new = new[len(new)-50:]
             with open('json/changelog.json', mode='w', encoding='utf-8') as outfile:
-                json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000)}, outfile)
+                json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new}, outfile)
             print("changelog.json updated")
 
     def start(self, args):

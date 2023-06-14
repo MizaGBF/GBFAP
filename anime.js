@@ -19,9 +19,10 @@ if(AnimeLocal) // local install version
     };
 }
 
-var index_files = ["302", "303", "304", "371", "101", "102", "103", "104", "mc"];
+var index_files = ["data"];
 var index = {}
 var timestamp = Date.now();
+var lastsearches = [];
 var bookmarks = [];
 var intervals = [];
 
@@ -33,13 +34,12 @@ var endpoints = [ // possible asset endpoints
     "prd-game-a4-granbluefantasy.akamaized.net/",
     "prd-game-a5-granbluefantasy.akamaized.net/"
 ];
-var counter = 0; // endpoint counter (gbf doesn't support http/2 so we cycle through the endpoints)
 var is_mc = false; // set to true if we are dealing with main character animations
 var mc_id = null; // used by classes only
 var mc_wpn = null; // used by weapons and classes
 
 // ========================================================================
-// Bookmark (taken from GBFAL)
+// Bookmark & History (taken from GBFAL)
 function updateDynamicList(dynarea, idlist)
 {
     for(let e of idlist)
@@ -159,7 +159,9 @@ function clearBookmark()
 {
     localStorage.removeItem('favorite');
     document.getElementById('bookmark').parentNode.style.display = "none";
-    document.getElementById('favorite').src = "assets/ui/fav_0.png";
+    try {
+        document.getElementById('favorite').src = "assets/ui/fav_0.png";
+    } catch {}
 }
 
 function exportBookmark()
@@ -231,6 +233,60 @@ function rmPopup(popup) {
     intervals.shift();
 }
 
+function clearHistory()
+{
+    localStorage.removeItem('lastsearches');
+    document.getElementById('history').parentNode.style.display = "none";
+}
+
+function updateHistory(id, search_type)
+{
+    // update local storage
+    try
+    {
+        lastsearches = localStorage.getItem("lastsearches");
+        if(lastsearches == null)
+        {
+            lastsearches = [];
+        }
+        else
+        {
+            lastsearches = JSON.parse(lastsearches);
+        }
+    }
+    catch
+    {
+        lastsearches = [];
+    }
+    if(id != null)
+    {
+        for(let e of lastsearches)
+        {
+            if(e[0] == id) return; // don't update if already in
+        }
+        lastsearches.push([id, search_type]);
+        localStorage.setItem("lastsearches", JSON.stringify(lastsearches));
+    }
+    if(lastsearches.length == 0)
+    {
+        document.getElementById('history').parentNode.style.display = "none";
+        return;
+    }
+    else if(lastsearches.length > 10)
+    {
+        lastsearches = lastsearches.slice(lastsearches.length - 10);
+    }
+    let histarea = document.getElementById('history');
+    histarea.parentNode.style.display = null;
+    histarea.innerHTML = "";
+    updateDynamicList(histarea, lastsearches);
+    histarea.appendChild(document.createElement("br"));
+    let btn = document.createElement("button");
+    btn.innerHTML = "Clear";
+    btn.onclick = clearHistory;
+    histarea.appendChild(btn);
+}
+
 // ========================================================================
 // Utility
 
@@ -282,11 +338,9 @@ function getDebug()
 }
 
 // return an asset endpoint
-function getEndpoint()
+function getEndpoint(endpointIndex)
 {
-    let e = endpoints[counter];
-    counter = (counter + 1) % endpoints.length;
-    return e;
+    return endpoints[endpointIndex % endpoints.length];
 }
 
 // add image to node
@@ -305,7 +359,7 @@ function addImage(node, path, id, d = null)
     img.onload = function() {
         this.id = "done"
     }
-    img.src = "https://" + getEndpoint() + "assets_en/img_low/" + path; 
+    img.src = "https://" + getEndpoint(parseInt(id.replace(/\D/g,''))) + "assets_en/img_low/" + path; 
 }
 
 // ========================================================================
@@ -317,6 +371,7 @@ function init()
         document.getElementById('result').remove();
     }
     get("json/changelog.json?" + timestamp, initChangelog, initChangelog, null);
+    updateHistory(null, null);
     toggleBookmark(null, null);
 }
 
@@ -325,6 +380,16 @@ function initChangelog(unusued)
 {
     try{
         let json = JSON.parse(this.response);
+        if(json.hasOwnProperty("new"))
+        {
+            updated = json["new"].reverse();
+            if(updated.length > 0)
+            {
+                let newarea = document.getElementById('updated');
+                newarea.parentNode.style.display = null;
+                updateDynamicList(newarea, updated);
+            }
+        }
         timestamp = new Date(json['timestamp']);
         let date = timestamp.toISOString();
         timestamp = timestamp.getTime();
@@ -338,7 +403,7 @@ function initChangelog(unusued)
 function initIndex(target)
 {
     try{
-        index[index_files[target]] = JSON.parse(this.response);
+        index = JSON.parse(this.response);
     }
     catch
     {
@@ -373,7 +438,6 @@ function initIndex(target)
 
 function loadCharacter(id)
 {
-    let ikey = id.slice(0, 3);
     let el = id.split("_");
     let style = "";
     if(el.length == 2)
@@ -381,14 +445,14 @@ function loadCharacter(id)
         id = el[0];
         style = "_"+el[1];
     }
-    let ckey = (id.startsWith('30') || id.startsWith('37')) ? id.slice(4, 7) : id.slice(4, 8);
-    if(ikey in index && ckey+style in index[ikey])
+    if(id+style in index)
     {
+        updateHistory(id+style, parseInt(id[0]));
         AnimeData = [];
         AnimeData.push([]);
         AnimeData.push([]);
         AnimeData.push({1: {1: ""},2: {1: ""}});
-        const data = index[ikey][ckey+style];
+        const data = index[id+style];
         if('w' in data)
         {
             is_mc = true;
@@ -437,13 +501,14 @@ function loadCharacter(id)
 
 function loadMC(id)
 {
-    if('mc' in index && id in index['mc'])
+    if(id in index)
     {
+        updateHistory(id, 0);
         AnimeData = [];
         AnimeData.push([]);
         AnimeData.push([]);
         AnimeData.push({1: {1: ""},2: {1: ""}});
-        const data = index['mc'][id];
+        const data = index[id];
         is_mc = true;
         if('w' in data) mc_wpn = data['w'];
         mc_id = id;
@@ -560,39 +625,30 @@ function failJSON(id)
 
 // ========================================================================
 // index display
-
 // display character / weapon
 function displayIndexed(elem, key)
 {
-    let ikey = key.slice(0, 3);
-    let skey = null;
-    if(key.length == 5) skey = key[4];
-    if(ikey in index)
+    elem.removeAttribute("onclick");
+    let node = document.getElementById('areaindexed'+key);
+    let d = getDebug();
+    if(d != null)
+        d = "&debug=" + d;
+    const ordered = Object.keys(index).sort().reverse();
+    for(const id of ordered)
     {
-        elem.removeAttribute("onclick");
-        let node = document.getElementById('areaindexed'+key);
-        let d = getDebug();
-        if(d != null)
-            d = "&debug=" + d;
-        const ordered = Object.keys(index[ikey]).sort().reverse();
-        for(const id of ordered)
+        if(id.length >= 10 && id.startsWith(key))
         {
-            const value = index[ikey][id];
-            if(skey == null || value["w"][4] == skey)
+            if(key.startsWith("10"))
+            {
+                addImage(node, "sp/assets/weapon/m/" + id + ".jpg", id, d);
+            }
+            else
             {
                 let el = id.split("_");
-                if(key.startsWith("10"))
-                {
-                    addImage(node, "sp/assets/weapon/m/" + value["w"] + ".jpg", value["w"], d);
-                }
+                if(el.length == 1)
+                    addImage(node, "sp/assets/npc/m/" + id + "_01.jpg", id, d);
                 else
-                {
-                    let fid = ikey + "0" + el[0] + "000";
-                    if(el.length == 1)
-                        addImage(node, "sp/assets/npc/m/" + fid + "_01.jpg", fid, d);
-                    else
-                        addImage(node, "sp/assets/npc/m/" + fid + "_01_" + el[1] + ".jpg", fid + "_" + el[1], d);
-                }
+                    addImage(node, "sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg", id, d);
             }
         }
     }
@@ -601,16 +657,15 @@ function displayIndexed(elem, key)
 // display MC
 function displayMC(elem)
 {
-    if("mc" in index)
+    elem.removeAttribute("onclick");
+    let node = document.getElementById('areamc');
+    let d = getDebug();
+    if(d != null)
+        d = "&debug=" + d;
+    const ordered = Object.keys(index).sort().reverse();
+    for(const id of ordered)
     {
-        elem.removeAttribute("onclick");
-        let node = document.getElementById('areamc');
-        let d = getDebug();
-        if(d != null)
-            d = "&debug=" + d;
-        for(const [id, value] of Object.entries(index["mc"]))
-        {
+        if(id.length == 6)
             addImage(node, "sp/assets/leader/m/" + id + "_01.jpg", id, d);
-        }
     }
 }
