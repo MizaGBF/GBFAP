@@ -465,6 +465,7 @@ class Updater():
             "310301": "1040014200", # attack on titan
             "360201": "1040515800" # premium friday
         }
+        self.class_gbfal = False
         self.class_placeholders = {
             "sw": "1010000000",
             "kn": "1010100000",
@@ -480,6 +481,30 @@ class Updater():
         self.exclusion = set([])
         self.loadIndex()
 
+    def update_class_from_GBFAL(self): # update class_lookup and class_ougi according to GBFAL data
+        try:
+            if self.class_gbfal: return # only run once
+            with open("../GBFAL/json/data.json", mode="r", encoding="utf-8") as f:
+                data = json.load(f)
+            print("Checking GBFAL data for new classes...")
+            count = 0
+            for k in data['job']:
+                if k not in self.class_lookup:
+                    self.class_lookup[k] = data['job'][k][6] # mh
+                    for x, v in data['job_wpn'].items():
+                        if v == k:
+                            self.class_ougi[k] = x
+                    for x, v in data['job_id'].items():
+                        if v == k:
+                            for i in range(len(self.class_lookup[k])):
+                                self.class_lookup[k] = x + "_" + self.class_lookup[k]
+                    count += 1
+            if count > 0:
+                print("found", count, "classes not present in the script, consider updating")
+        except:
+            pass
+        self.class_gbfal = True
+
     def req(self, url, headers={}, head=False):
         if head:
             response = self.client.head(url.replace('/img/', self.quality[0]).replace('/js/', self.quality[1]), headers={'connection':'keep-alive'} |headers, timeout=50)
@@ -492,6 +517,7 @@ class Updater():
 
     def run(self):
         max_thread = 20
+        self.update_class_from_GBFAL()
         print("Updating Database...")
         if self.force_update:
             print("Note: All characters will be updated")
