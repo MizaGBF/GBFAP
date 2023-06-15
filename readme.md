@@ -31,7 +31,6 @@ The resulting data will be in the `json` folder.
   
 There are three main possible command lines:
 * `python updater.py` to simply retrieve unindexed characters.  
-* `python updater.py -index` to simply rebuild the index.json file.  
 * `python updater.py -update list_of_character_id` to manually fetch the specified characters (You don't need to specify the character style).  
   
 You can then append the following options for more control:

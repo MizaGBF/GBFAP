@@ -593,6 +593,7 @@ class Updater():
         while i < len(keys):
             f = keys[i]
             if self.force_update or f not in self.index:
+                print(f)
                 self.update_class(f)
             i += step
 
@@ -600,11 +601,10 @@ class Updater():
         try:
             if id in self.exclusion: return False
             if id not in self.class_lookup: return False
-            if not self.download_assets: # don't check anything if this asset isn't found
-                try:
-                    self.req(self.imgUri + "/sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg")
-                except:
-                    if not self.debug_mode: return False
+            try:
+                self.req(self.imgUri + "/sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg")
+            except:
+                if not self.debug_mode: return False
             wid = None
             colors = []
             for i in ["01", "02", "03", "04", "05", "80", ]:
@@ -690,11 +690,10 @@ class Updater():
     def update_weapon(self, id):
         try:
             if id in self.exclusion: return False
-            if not self.download_assets: # don't check anything if this asset isn't found
-                try:
-                    self.req(self.imgUri + "/sp/assets/weapon/m/" + id + ".jpg")
-                except:
-                    if not self.debug_mode: return False
+            try:
+                self.req(self.imgUri + "/sp/assets/weapon/m/" + id + ".jpg")
+            except:
+                if not self.debug_mode: return False
             # containers
             mc_cjs = self.possible_class[(int(id) // 100000) % 10]
             sp = None
@@ -737,11 +736,10 @@ class Updater():
     def update(self, id, style=""):
         try:
             if id in self.exclusion: return False
-            if not self.download_assets: # don't check anything if this asset isn't found
-                try:
-                    self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg", head=True)
-                except:
-                    if not self.debug_mode: return False
+            try:
+                self.req(self.imgUri + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg", head=True)
+            except:
+                if not self.debug_mode: return False
             # containers
             character_data = {}
             good_variations = {}
@@ -1001,14 +999,12 @@ class Updater():
             self.initFiles()
         if '-update' in args:
             self.manualUpdate(args['-update'])
-        elif '-index' in args:
-            self.saveIndex(True)
         else:
             self.run()
 
 if __name__ == '__main__':
     args = {}
-    expected_args = ["-force", "-download", "-init", "-index", "-update", "-debug"]
+    expected_args = ["-force", "-download", "-init", "-update", "-debug"]
     update_flag = False
     for i in range(1, len(sys.argv)):
         if update_flag:
