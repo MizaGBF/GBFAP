@@ -593,7 +593,6 @@ class Updater():
         while i < len(keys):
             f = keys[i]
             if self.force_update or f not in self.index:
-                print(f)
                 self.update_class(f)
             i += step
 
