@@ -573,7 +573,6 @@ class Updater():
         while errc < 20 and self.running:
             f = file.format(str(eid).zfill(3))
             if self.force_update or f not in self.index:
-                print(f)
                 if file.startswith("10"): r = self.update_weapon(f)
                 else: r = self.update(f)
                 if not r:
