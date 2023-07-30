@@ -67,40 +67,22 @@ summary {
 .red-sum {
     background: url(../assets/ui/button_bg_red.png) no-repeat;
     background-size: 100% 100%;
-    width: 250px;
-    height: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #ffffff;
-    text-shadow: #000000 1px 0 10px;
 }
 
 .green-sum {
     background: url(../assets/ui/button_bg_green.png) no-repeat;
     background-size: 100% 100%;
-    width: 250px;
-    height: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #ffffff;
-    text-shadow: #000000 1px 0 10px;
 }
 
 .yellow-sum {
     background: url(../assets/ui/button_bg_yellow.png) no-repeat;
     background-size: 100% 100%;
-    width: 250px;
-    height: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #ffffff;
-    text-shadow: #000000 1px 0 10px;
 }
 
 button {
     background: url(../assets/ui/button_bg.png) no-repeat;
     background-size: 100% 100%;
-    width: 220x;
+    width: 220px;
     height: 40px;
     margin-left: auto;
     margin-right: auto;
@@ -134,7 +116,7 @@ button {
 }
 
 #loading {
-    background: url(../assets/ui/loading.gif); 
+    background: url(../assets/ui/loading.gif) no-repeat; 
     width: 32px;
     height: 32px;
 }
@@ -197,20 +179,55 @@ h3 {
 
 a:link {
     color: red;
-    font-size: 15px;
+    font-size: 1em;
 }
 
 a:visited {
     color: pink;
-    font-size: 15px;
+    font-size: 1em;
 }
 
 a:hover {
     color: white;
-    font-size: 15px;
+    font-size: 1em;
 }
 
 a:active {
     color: yellow;
-    font-size: 15px;
+    font-size: 1em;
+}
+
+@media (hover: none) { /* mobile stuff */
+    #titleheader {
+        min-width: 800px;
+    }
+
+    summary {
+        width: 450px;
+        height: 72px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 40px;
+    }
+
+    button {
+        width: 330px;
+        height: 60px;
+        font-size: 40px;
+    }
+
+    footer, #header {
+        font-size: 30px;
+        width:400px;
+    }
+
+    #favorite {
+        width: 216px;
+        height: 58.5px;
+    }
+    
+    .mobile-big > img {
+        height: 160px;
+        min-height: 160px;
+    }
 }

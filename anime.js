@@ -100,7 +100,7 @@ function toggleBookmark(id, search_type)
             bookmarks = JSON.parse(bookmarks);
         }
     }
-    catch
+    catch(err)
     {
         bookmarks = [];
     }
@@ -159,9 +159,7 @@ function clearBookmark()
 {
     localStorage.removeItem('favorite');
     document.getElementById('bookmark').parentNode.style.display = "none";
-    try {
-        document.getElementById('favorite').src = "assets/ui/fav_0.png";
-    } catch {}
+    document.getElementById('favorite').src = "assets/ui/fav_0.png";
 }
 
 function exportBookmark()
@@ -178,7 +176,7 @@ function exportBookmark()
             bookmarks = JSON.parse(bookmarks);
         }
     }
-    catch
+    catch(err)
     {
         bookmarks = [];
     }
@@ -223,7 +221,7 @@ function importBookmark()
             intervals.push(setInterval(rmPopup, 2500, div));
             updateBookmark();
         }
-        catch {}
+        catch(err) {}
     });
 }
 
@@ -254,7 +252,7 @@ function updateHistory(id, search_type)
             lastsearches = JSON.parse(lastsearches);
         }
     }
-    catch
+    catch(err)
     {
         lastsearches = [];
     }
@@ -394,7 +392,7 @@ function initChangelog(unusued)
         let date = timestamp.toISOString();
         timestamp = timestamp.getTime();
         document.getElementById('timestamp').innerHTML += " " + date.split('T')[0] + " " + date.split('T')[1].split(':').slice(0, 2).join(':') + " UTC";
-    }catch{
+    }catch(err){
         document.getElementById('timestamp').innerHTML = "";
     }
     get("json/"+index_files[0]+".json?" + timestamp, initIndex, initIndex, 0);
@@ -405,7 +403,7 @@ function initIndex(target)
     try{
         index = JSON.parse(this.response);
     }
-    catch
+    catch(err)
     {
         target--; // to retry
     }
@@ -621,7 +619,6 @@ function failJSON(id)
     removeChilds(result_area);
     result_area.appendChild(document.createTextNode("Error: Invalid ID"));
 }
-
 
 // ========================================================================
 // index display
