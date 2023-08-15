@@ -440,7 +440,8 @@ class Updater():
             "340001": ["gnb_ax"], # xuanwu
             "360201": ["ebi_gu"], # premium friday
             "370901": ["byk_me"], # baihu
-            "460301": ["ymt_sw", "ymt_kt"] # yamato
+            "460301": ["ymt_sw", "ymt_kt"], # yamato
+            "140401": ["kig_kn", "kig_gu"] # king
         }
         self.class_ougi = {
             "320001": "1040115000", # school dancer
