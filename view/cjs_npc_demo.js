@@ -316,8 +316,8 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case 'win_2': return "Win Alt. 2";
                     case 'win_3': return "Win Alt. 3";
                     case 'ability': return "C.A. Charged";
-                    case 'attack': return "Attack";
-                    case 'attack_2': return "Attack (Spe)";
+                    case 'attack': return "Action 1";
+                    case 'attack_2': return "Action 2";
                     case 'hide': return "Hide";
                     case 'invisible': return "Invisible";
                     case 'stbwait': return "Weapon Drew (Wait)";
@@ -409,7 +409,7 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     var c = B.getAnimDuration(b[a][a + "_effect"]);
                     createjs.Tween.get(b, {
                         useTicks: !0
-                    }).call(function () {
+                    }).wait(c).call(function () {
                         B.stage.removeChild(b)
                     })
                 }

@@ -774,6 +774,7 @@ class Updater():
             if not found: return False # no npc found, we quit
             if not id.startswith("371") and style == "":
                 self.queue.put((id, ["_st2"])) # style check
+            last_phit = None
             for v in good_variations:
                 found = False
                 # ougi check
@@ -790,11 +791,13 @@ class Updater():
                     if found: break
                 # attack check
                 try:
-                    fn = "phit_{}{}".format(tid, v[1])
+                    fn = "phit_{}{}".format(tid, v[0].format(style).replace("_01", ""))
                     self.getJS(fn)
                     good_phits[v] = fn + ".js"
+                    last_phit = v
                 except:
-                    pass
+                    if last_phit is not None:
+                        good_phits[v] = good_phits[last_phit]
             
             # building the character data
             keys = list(good_variations.keys())
