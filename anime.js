@@ -90,7 +90,7 @@ function toggleBookmark(id, search_type)
 {
     try
     {
-        bookmarks = localStorage.getItem("favorite");
+        bookmarks = localStorage.getItem("gbfap-bookmark");
         if(bookmarks == null)
         {
             bookmarks = [];
@@ -124,7 +124,7 @@ function toggleBookmark(id, search_type)
             }
             fav.src = "assets/ui/fav_0.png";
         }
-        localStorage.setItem("favorite", JSON.stringify(bookmarks));
+        localStorage.setItem("gbfap-bookmark", JSON.stringify(bookmarks));
     }
     updateBookmark();
 }
@@ -157,7 +157,7 @@ function updateBookmark()
 
 function clearBookmark()
 {
-    localStorage.removeItem('favorite');
+    localStorage.removeItem('gbfap-bookmark');
     document.getElementById('bookmark').parentNode.style.display = "none";
     document.getElementById('favorite').src = "assets/ui/fav_0.png";
 }
@@ -166,7 +166,7 @@ function exportBookmark()
 {
     try
     {
-        bookmarks = localStorage.getItem("favorite");
+        bookmarks = localStorage.getItem("gbfap-bookmark");
         if(bookmarks == null)
         {
             bookmarks = [];
@@ -211,7 +211,7 @@ function importBookmark()
                 ++i;
             }
             bookmarks = tmp;
-            localStorage.setItem("favorite", JSON.stringify(bookmarks));
+            localStorage.setItem("gbfap-bookmark", JSON.stringify(bookmarks));
             if(fav) document.getElementById('favorite').src = "assets/ui/fav_1.png";
             else document.getElementById('favorite').src = "assets/ui/fav_0.png";
             let div = document.createElement('div');
@@ -233,7 +233,7 @@ function rmPopup(popup) {
 
 function clearHistory()
 {
-    localStorage.removeItem('lastsearches');
+    localStorage.removeItem('gbfap-history');
     document.getElementById('history').parentNode.style.display = "none";
 }
 
@@ -242,7 +242,7 @@ function updateHistory(id, search_type)
     // update local storage
     try
     {
-        lastsearches = localStorage.getItem("lastsearches");
+        lastsearches = localStorage.getItem("gbfap-history");
         if(lastsearches == null)
         {
             lastsearches = [];
@@ -263,7 +263,7 @@ function updateHistory(id, search_type)
             if(e[0] == id) return; // don't update if already in
         }
         lastsearches.push([id, search_type]);
-        localStorage.setItem("lastsearches", JSON.stringify(lastsearches));
+        localStorage.setItem("gbfap-history", JSON.stringify(lastsearches));
     }
     if(lastsearches.length == 0)
     {
@@ -364,6 +364,19 @@ function addImage(node, path, id, d = null)
 // entry point / loading
 function init()
 {
+    // localstorage retrocompatibility (remove in the future, maybe 2024+?)
+    let tmp = localStorage.getItem("favorite");
+    if(tmp != null)
+    {
+        localStorage.setItem("gbfap-bookmark", tmp);
+        localStorage.removeItem("favorite");
+    }
+    tmp = localStorage.getItem("lastsearches");
+    if(tmp != null)
+    {
+        localStorage.setItem("gbfap-history", tmp);
+        localStorage.removeItem("lastsearches");
+    }
     if(getParam() == null)
     {
         document.getElementById('result').remove();
