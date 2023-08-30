@@ -164,20 +164,6 @@ h3 {
     align-items: center;
 }
 
-.content {
-    background-image: url(../assets/ui/text_top.png), url(../assets/ui/text_bottom.png), url(../assets/ui/text_middle.png);
-    background-position: left top, left bottom, left center;
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    background-size: 100%, 100%, 100% 90%;
-    width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 80px 50px 80px 50px;
-    color: #ffffff;
-    text-align: left;
-    text-shadow: #000000 1px 0 10px;
-}
-
 .tips {
     font-size: 20px;
     margin-left: auto;
