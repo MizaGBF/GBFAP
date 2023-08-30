@@ -8,12 +8,11 @@ Two possible setups:
   
 ### You want to host the assets  
 1. Copy this repo.  
-2. Run `python updater.py -force -download -enemy` to download all the assets and new characters (The script will ask you to confirm).  
+2. Run `python updater.py -force -download -init` to download all the assets and new characters (The script will ask you to confirm).  
 3. Change line 2 of `anime.js`: From `var AnimeLocal = false;` to `var AnimeLocal = true;`  
   
 You can now host the project in the way you prefer.  
-Be sure to run `python updater.py -init` at least once.  
-I recommend emptying the `json` folder and run `python updater.py -download`.  
+You only need to use `-init` and `-force` once. Simply do `python updater.py -download` for future updates.  
   
 ### You DON'T want to host the assets  
 1. Copy this repo.  
@@ -22,7 +21,7 @@ I recommend emptying the `json` folder and run `python updater.py -download`.
 4. Change line 3 of `anime.js` with the address of your proxy.  
   
 You can now host the project in the way you prefer.  
-To later add new characters, simply do `python updater.py`.  
+Simply do `python updater.py` for future updates.  
   
 # The updater  
 `updater.py` scours the GBF asset servers to build an index of playable character, along with the data needed for their respective demos.  

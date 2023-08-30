@@ -132,6 +132,13 @@ button {
     border-style: solid;
 }
 
+.faq {
+    background: #000000d0;
+    padding: 10px;
+    font-size: 20px;
+    text-align: start;
+}
+
 ::placeholder {
     color: #111111;
     opacity: 0.6;
@@ -220,6 +227,10 @@ a:active {
     footer, #header {
         font-size: 30px;
         width:400px;
+    }
+
+    .faq {
+        font-size: 25px;
     }
 
     #favorite {
