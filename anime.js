@@ -377,10 +377,6 @@ function init()
         localStorage.setItem("gbfap-history", tmp);
         localStorage.removeItem("lastsearches");
     }
-    if(getParam() == null)
-    {
-        document.getElementById('result').remove();
-    }
     get("json/changelog.json?" + timestamp, initChangelog, initChangelog, null);
     updateHistory(null, null);
     toggleBookmark(null, null);
@@ -401,14 +397,25 @@ function initChangelog(unusued)
                 updateDynamicList(newarea, updated);
             }
         }
-        timestamp = new Date(json['timestamp']);
-        let date = timestamp.toISOString();
-        timestamp = timestamp.getTime();
-        document.getElementById('timestamp').innerHTML += " " + date.split('T')[0] + " " + date.split('T')[1].split(':').slice(0, 2).join(':') + " UTC";
-    }catch(err){
-        document.getElementById('timestamp').innerHTML = "";
-    }
+        timestamp = json.timestamp;
+        clock();
+    }catch(err){}
     get("json/"+index_files[0]+".json?" + timestamp, initIndex, initIndex, 0);
+}
+
+function clock()
+{
+    let now = new Date();
+    let elapsed = (now - (new Date(timestamp))) / 1000;
+    let msg = ""
+    if(elapsed < 60) msg = Math.trunc(elapsed) + " seconds ago.";
+    else if(elapsed < 3600) msg = Math.trunc(elapsed / 60) + " minutes ago.";
+    else if(elapsed < 172800) msg = Math.trunc(elapsed / 3600) + " hours ago.";
+    else if(elapsed < 5270400) msg = Math.trunc(elapsed / 86400) + " days ago.";
+    else if(elapsed < 63115200) msg = Math.trunc(elapsed / 2635200) + " months ago.";
+    else msg = Math.trunc(elapsed / 31557600) + " years ago.";
+    document.getElementById('timestamp').innerHTML = "Last update: " + msg;
+    setTimeout(clock, now.getTime() % 1000 + 1);
 }
 
 function initIndex(target)
