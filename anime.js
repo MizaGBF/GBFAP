@@ -377,6 +377,10 @@ function init()
         localStorage.setItem("gbfap-history", tmp);
         localStorage.removeItem("lastsearches");
     }
+    if(getParam() == null)
+    {
+        document.getElementById('result').remove();
+    }
     get("json/changelog.json?" + timestamp, initChangelog, initChangelog, null);
     updateHistory(null, null);
     toggleBookmark(null, null);
