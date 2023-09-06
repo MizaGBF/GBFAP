@@ -126,7 +126,7 @@ button {
     background: #000000b0;
     border-color: #000000;
     color: #ffffff;
-    font-size: 30px;
+    font-size: 24px;
     border-radius: 10px;
     margin: 1em;
     border-style: solid;
@@ -208,6 +208,10 @@ a:active {
         width: 330px;
         height: 60px;
         font-size: 40px;
+    }
+
+    #result, .result {
+        font-size: 30px;
     }
 
     footer, #header {
