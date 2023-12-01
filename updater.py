@@ -442,7 +442,7 @@ class Updater():
             "370901": ["byk_me"], # baihu
             "460301": ["ymt_sw", "ymt_kt"], # yamato
             "140401": ["kig_kn", "kig_gu"], # king
-            "311101": ["vss_sw"] # versus skin
+            "311101": [] # versus skin
         }
         self.class_ougi = {
             "320001": "1040115000", # school dancer
