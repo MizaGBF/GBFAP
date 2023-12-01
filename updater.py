@@ -442,7 +442,7 @@ class Updater():
             "370901": ["byk_me"], # baihu
             "460301": ["ymt_sw", "ymt_kt"], # yamato
             "140401": ["kig_kn", "kig_gu"], # king
-            "311101": [] # versus skin
+            "311101": [] # versus rising skin
         }
         self.class_ougi = {
             "320001": "1040115000", # school dancer
@@ -466,7 +466,7 @@ class Updater():
             "311001": "1040020200", # school
             "310301": "1040014200", # attack on titan
             "360201": "1040515800", # premium friday
-            "311101": "1040025000" # versus skin
+            "311101": "1040025000" # versus rising skin
         }
         self.class_gbfal = False
         self.class_placeholders = {
