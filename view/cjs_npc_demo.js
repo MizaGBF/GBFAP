@@ -333,6 +333,9 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case 'change_1': return "Change Form 1";
                     case 'change_2': return "Change Form 2";
                     case 'summon': return "Summoning";
+                    case 'vs_motion_1': return "GBFVS Skill 1";
+                    case 'vs_motion_2': return "GBFVS Skill 2";
+                    case 'vs_motion_3': return "GBFVS Skill 3";
                     default: return a;
                 };
             },
