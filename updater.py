@@ -576,8 +576,14 @@ class Updater():
         while errc < 20 and self.running:
             f = file.format(str(eid).zfill(3))
             if self.force_update or f not in self.index:
-                if file.startswith("10"): r = self.update_weapon(f)
-                else: r = self.update(f)
+                if file.startswith("10"):
+                    if f in self.class_ougi.values():
+                        errc = 0
+                        eid += step
+                        continue
+                    r = self.update_weapon(f)
+                else:
+                    r = self.update(f)
                 if not r:
                     errc += 1
                     if errc >= 20:
@@ -609,13 +615,14 @@ class Updater():
                 if not self.debug_mode: return False
             wid = None
             colors = []
-            for i in ["01", "02", "03", "04", "05", "80", ]:
+            for i in ["01", "02", "03", "04", "05", "80"]:
                 try:
                     self.getJS(self.class_lookup[id][0] + "_0_{}".format(i))
                     if self.download_assets: self.getJS(self.class_lookup[id][0] + "_1_{}".format(i))
                     colors.append(self.class_lookup[id][0] + "_0_{}".format(i))
                 except:
                     pass
+            if len(colors) == 0: return False
             if id in self.class_ougi: # skin with custom weapon
                 mortal = "mortal_B" # skin with custom ougis use this
                 mc_cjs = colors[0]
@@ -710,6 +717,7 @@ class Updater():
                         break
                 except:
                     pass
+            if phit is None or sp is None: return False
             if self.download_assets: # download asset
                 for fn in ["", "_1", "_2"]:
                     try:
@@ -735,7 +743,7 @@ class Updater():
             print("Error", e, "for id", id)
             return False
 
-    def update(self, id, style=""):
+    def update(self, id, style=""): # character
         try:
             if id in self.exclusion: return False
             try:
@@ -852,7 +860,10 @@ class Updater():
             return (False, None)
         st = manifest.find('manifest:') + len('manifest:')
         ed = manifest.find(']', st) + 1
-        data = json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src:', '"src":').replace('type:', '"type":').replace('id:', '"id":'))
+        try: data = json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src:', '"src":').replace('type:', '"type":').replace('id:', '"id":'))
+        except Exception as e:
+            print(e)
+            raise Exception()
         for l in data:
             src = l['src'].split('?')[0]
             if src == '/sp/cjs/nsp_3020005000_01_ef081.png': continue # R deliford base form fix
