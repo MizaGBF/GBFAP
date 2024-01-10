@@ -610,9 +610,10 @@ class Updater():
                 for j in possibles:
                     tasks.append(tg.create_task(self.run_sub(i, self.MAX_RUN_TASK, j)))
             self.progress = Progress(total=len(tasks)-1, silent=False)
-            while not self.progress.is_maxed():
-                await asyncio.sleep(5)
-            print("Finishing remaining tasks...")
+            if len(tasks) > 1:
+                while not self.progress.is_maxed():
+                    await asyncio.sleep(5)
+                print("Finishing remaining tasks...")
             self.running = False
         for t in tasks:
             t.result()
@@ -955,11 +956,12 @@ class Updater():
                 elif id in self.class_lookup:
                     tasks.append(tg.create_task(self.progress_container(self.update_class(id))))
                     tcounter += 1
-            print("Attempting to update", tcounter, "element(s)")
-            self.progress = Progress(total=tcounter, silent=False)
-            while not self.progress.is_maxed():
-                await asyncio.sleep(2)
-            print("Finishing remaining tasks...")
+            if tcounter > 0:
+                print("Attempting to update", tcounter, "element(s)")
+                self.progress = Progress(total=tcounter, silent=False)
+                while not self.progress.is_maxed():
+                    await asyncio.sleep(2)
+                print("Finishing remaining tasks...")
             self.running = False
         for t in tasks:
             t.result()
