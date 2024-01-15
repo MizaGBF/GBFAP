@@ -380,8 +380,8 @@ class Updater():
         "3710139000": ("", "", "phit_3040098000"),
         "3710167000": ("", "", "phit_3040331000")
     }
-    # for bobobo (so far)
-    ID_SUBSTITUTE = {"3710171000":"3710167000","3710170000":"3710167000","3710169000":"3710167000","3710168000":"3710167000"}
+    # for bobobo and opus so far
+    ID_SUBSTITUTE = {"3710171000":"3710167000","3710170000":"3710167000","3710169000":"3710167000","3710168000":"3710167000","1040017100":"1040017000","1040212600":"1040212500","1040809500":"1040809400","1040911100":"1040911000","1040415100":"1040415000","1040310700":"1040310600"}
     # CDN endpoints
     ENDPOINT = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/"
     JS = ENDPOINT + "js/"
@@ -755,6 +755,7 @@ class Updater():
                 if not self.debug_mode: return False
             # containers
             mc_cjs = self.CLASS[(int(id) // 100000) % 10]
+            sid = self.ID_SUBSTITUTE.get(id, None)
             for uncap in ["", "_02"]:
                 character_data = {}
                 character_data['w'] = id + uncap
@@ -764,27 +765,30 @@ class Updater():
                     case _: spu = 0
                 sp = None
                 phit = None
-                for fn in ["phit_{}{}".format(id, uncap), "sp_{}".format(id), "sp_{}_{}".format(id, spu), "sp_{}_{}_s2".format(id, spu), "sp_{}_0".format(id), "sp_{}_0_s2".format(id), "sp_{}_s2".format(id)]:
-                    try:
-                        await self.getJS(fn)
-                        if fn.startswith('phit'):
-                            phit = fn
-                        elif fn.startswith('sp'):
-                            sp = fn
-                            break
-                    except:
-                        pass
+                for i in ([id] if sid is None else [id, sid]):
+                    for fn in ["phit_{}{}".format(i, uncap), "sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_0".format(i), "sp_{}_0_s2".format(i), "sp_{}_s2".format(i)]:
+                        try:
+                            await self.getJS(fn)
+                            if fn.startswith('phit'):
+                                phit = fn
+                            elif fn.startswith('sp'):
+                                sp = fn
+                                break
+                        except:
+                            pass
                 if phit is None or sp is None:
+                    print(id, sid)
                     if uncap == "": return False
                     else: break
                 if self.download_assets: # download asset
-                    for fn in ["", "_1", "_2", "_3"]:
-                        try:
-                            data = await self.req(self.IMG + "/sp/cjs/" + id + uncap + fn + ".png")
-                            with open("img/sp/cjs/" + id + uncap + fn + ".png", "wb") as f:
-                                f.write(data)
-                        except:
-                            pass
+                    for i in ([id] if sid is None else [id, sid]):
+                        for fn in ["", "_1", "_2", "_3"]:
+                            try:
+                                data = await self.req(self.IMG + "/sp/cjs/" + i + uncap + fn + ".png")
+                                with open("img/sp/cjs/" + i + uncap + fn + ".png", "wb") as f:
+                                    f.write(data)
+                            except:
+                                pass
                 for i in range(2):
                     tmp = [('Gran' if i == 0 else 'Djeeta'), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1])), False] # name, cjs, mortal, phit, sp, fullscreen
                     if '_s2' in tmp[4] or '_s3' in tmp[4]:
@@ -1071,7 +1075,7 @@ class Updater():
 
     async def boot(self, argv : list) -> None:
         try:
-            print("GBFAP updater v2.0\n")
+            print("GBFAP updater v2.1\n")
             self.client = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50))
             
             start_flags = set(["-force", "-download", "-init", "-debug"])
