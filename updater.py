@@ -763,10 +763,10 @@ class Updater():
                 match uncap:
                     case "_03":
                         uns = ["_03", "_02"]
-                        spus = [3, 2]
+                        spus = [3, 2, 0]
                     case "_02":
                         uns = ["_02"]
-                        spus = [2]
+                        spus = [2, 0]
                     case _:
                         uns = [""]
                         spus = [0]
@@ -778,12 +778,12 @@ class Updater():
                         if phit is not None and sp is not None: break
                         for spu in spus:
                             if phit is not None and sp is not None: break
-                            for fn in ["phit_{}{}".format(i, un), "sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_0".format(i), "sp_{}_0_s2".format(i), "sp_{}_s2".format(i)]:
+                            for fn in ["phit_{}{}".format(i, un), "sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_s2".format(i)]:
                                 try:
                                     await self.getJS(fn)
-                                    if fn.startswith('phit'):
+                                    if phit is None and fn.startswith('phit'):
                                         phit = fn
-                                    elif fn.startswith('sp'):
+                                    elif sp is None and fn.startswith('sp'):
                                         sp = fn
                                         break
                                 except:
