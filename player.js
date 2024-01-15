@@ -183,14 +183,21 @@ var versionChange = function (obj) {
     // header image
     if(!AnimeDebug)
     {
-        let id = (mc_id) ? mc_id : AnimeData[1][animeVersion]['cjs'][0];
-        let el = id.split('_');
-        id = el.slice(1, (id.includes("_st") ? 4 : 3)).join('_');
+        let el = AnimeID.split('_');
         if(el.length == 1 && el[0].length == 6)
-            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg"
-        else if(id.startswith("10"))
-            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg"
+        {
+            // do nothing
+        }
+        else if(AnimeID.startsWith("10"))
+        {
+            let id = AnimeID;
+            let u = Math.floor(animeVersion/2);
+            if(u > 0) id += "_0" + JSON.stringify(u+1);
+            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
+        }
         else
-            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + ".jpg"
+        {
+            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + AnimeData[1][animeVersion]['cjs'][0] + ".jpg"
+        }
     }
 };
