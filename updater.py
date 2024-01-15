@@ -756,28 +756,39 @@ class Updater():
             # containers
             mc_cjs = self.CLASS[(int(id) // 100000) % 10]
             sid = self.ID_SUBSTITUTE.get(id, None)
-            for uncap in ["", "_02"]:
+            for uncap in ["", "_02", "_03"]:
                 character_data = {}
                 character_data['w'] = id + uncap
                 character_data['v'] = []
                 match uncap:
-                    case "_02": spu = 2
-                    case _: spu = 0
+                    case "_03":
+                        uns = ["_03", "_02"]
+                        spus = [3, 2]
+                    case "_02":
+                        uns = ["_02"]
+                        spus = [2]
+                    case _:
+                        uns = [""]
+                        spus = [0]
                 sp = None
                 phit = None
                 for i in ([id] if sid is None else [id, sid]):
-                    for fn in ["phit_{}{}".format(i, uncap), "sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_0".format(i), "sp_{}_0_s2".format(i), "sp_{}_s2".format(i)]:
-                        try:
-                            await self.getJS(fn)
-                            if fn.startswith('phit'):
-                                phit = fn
-                            elif fn.startswith('sp'):
-                                sp = fn
-                                break
-                        except:
-                            pass
+                    if phit is not None and sp is not None: break
+                    for un in uns:
+                        if phit is not None and sp is not None: break
+                        for spu in spus:
+                            if phit is not None and sp is not None: break
+                            for fn in ["phit_{}{}".format(i, un), "sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_0".format(i), "sp_{}_0_s2".format(i), "sp_{}_s2".format(i)]:
+                                try:
+                                    await self.getJS(fn)
+                                    if fn.startswith('phit'):
+                                        phit = fn
+                                    elif fn.startswith('sp'):
+                                        sp = fn
+                                        break
+                                except:
+                                    pass
                 if phit is None or sp is None:
-                    print(id, sid)
                     if uncap == "": return False
                     else: break
                 if self.download_assets: # download asset
