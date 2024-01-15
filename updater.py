@@ -755,35 +755,41 @@ class Updater():
                 if not self.debug_mode: return False
             # containers
             mc_cjs = self.CLASS[(int(id) // 100000) % 10]
-            sp = None
-            phit = None
-            for fn in ["phit_{}".format(id), "sp_{}".format(id), "sp_{}_0".format(id), "sp_{}_0_s2".format(id), "sp_{}_s2".format(id)]:
-                try:
-                    await self.getJS(fn)
-                    if fn.startswith('phit'):
-                        phit = fn
-                    elif fn.startswith('sp'):
-                        sp = fn
-                        break
-                except:
-                    pass
-            if phit is None or sp is None: return False
-            if self.download_assets: # download asset
-                for fn in ["", "_1", "_2"]:
-                    try:
-                        data = await self.req(self.IMG + "/sp/cjs/" + id + fn + ".png")
-                        with open("img/sp/cjs/" + id + fn + ".png", "wb") as f:
-                            f.write(data)
-                    except:
-                        pass
             character_data = {}
             character_data['w'] = id
             character_data['v'] = []
-            for i in range(2):
-                tmp = [('Gran' if i == 0 else 'Djeeta'), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1])), False] # name, cjs, mortal, phit, sp, fullscreen
-                if '_s2' in tmp[4] or '_s3' in tmp[4]:
-                    tmp[5] = True
-                character_data['v'].append(tmp)
+            for uncap in ["", "_02"]:
+                match uncap:
+                    case "_02": spu = 2
+                    case _: spu = 0
+                sp = None
+                phit = None
+                for fn in ["phit_{}{}".format(id, uncap), "sp_{}".format(id), "sp_{}_{}".format(id, spu), "sp_{}_{}_s2".format(id, spu), "sp_{}_0".format(id), "sp_{}_0_s2".format(id), "sp_{}_s2".format(id)]:
+                    try:
+                        await self.getJS(fn)
+                        if fn.startswith('phit'):
+                            phit = fn
+                        elif fn.startswith('sp'):
+                            sp = fn
+                            break
+                    except:
+                        pass
+                if phit is None or sp is None:
+                    if uncap == "": return False
+                    else: break
+                if self.download_assets: # download asset
+                    for fn in ["", "_1", "_2", "_3"]:
+                        try:
+                            data = await self.req(self.IMG + "/sp/cjs/" + id + fn + ".png")
+                            with open("img/sp/cjs/" + id + fn + ".png", "wb") as f:
+                                f.write(data)
+                        except:
+                            pass
+                for i in range(2):
+                    tmp = [('Gran' if i == 0 else 'Djeeta') + uncap.replace("_02", " II"), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1])), False] # name, cjs, mortal, phit, sp, fullscreen
+                    if '_s2' in tmp[4] or '_s3' in tmp[4]:
+                        tmp[5] = True
+                    character_data['v'].append(tmp)
             self.index[id] = character_data
             self.modified = True
             self.latest_additions[id] = 1
