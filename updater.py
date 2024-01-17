@@ -879,17 +879,24 @@ class Updater():
             if not id.startswith("371") and style == "":
                 await self.queue.put((id, ["_st2"])) # style check
             last_phit = None
+            gendered_ougi = set()
             for v in good_variations:
                 found = False
                 g = v[0].split('_')[-1] # gender stuff
-                if g not in ["0", "1"]: g = ""
-                else: g = "_" + g
+                gender = False
+                if g not in ["0", "1"]:
+                    g = "_0"
+                else:
+                    g = "_" + g
+                    gender = True
                 # ougi check
                 for s in ["", "_s2", "_s3", g+"_s2", g+"_s3"]:
                     for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
                         try:
                             fn = "nsp_{}{}{}{}".format(tid, v[0].format(style), s, m)
                             await self.getJS(fn)
+                            if not gender and s.startswith(g):
+                                gendered_ougi.add(v)
                             good_nsp[v] = fn + ".js"
                             found = True
                             break
@@ -907,6 +914,35 @@ class Updater():
                         good_phits[v] = good_phits[last_phit]
             
             # building the character data
+            # first, processing gendered_ougi
+            need_sorting = False
+            for v in gendered_ougi:
+                for i, k in enumerate(self.VARIAS):
+                    if k == v:
+                        good_variations[self.GENDER_VARIAS[i*2]] = good_variations[v]
+                        good_variations[self.GENDER_VARIAS[i*2+1]] = good_variations[v]
+                        good_nsp[self.GENDER_VARIAS[i*2]] = good_nsp[v]
+                        good_nsp[self.GENDER_VARIAS[i*2+1]] = good_nsp[v].replace('_0_', '_1_')
+                        mortal[self.GENDER_VARIAS[i*2]] = mortal[v]
+                        mortal[self.GENDER_VARIAS[i*2+1]] = mortal[v]
+                        try:
+                            good_phits[self.GENDER_VARIAS[i*2]] = good_phits[v]
+                            good_phits[self.GENDER_VARIAS[i*2+1]] = good_phits[v]
+                        except:
+                            pass
+                        break
+                good_variations.pop(v)
+                good_nsp.pop(v)
+                good_phits.pop(v)
+                mortal.pop(v)
+                need_sorting = True
+            if need_sorting:
+                tmp = sorted(list(good_variations.keys()), key=lambda x: x[0])
+                v = good_variations
+                good_variations = {}
+                for k in tmp:
+                    good_variations[k] = v[k]
+            # creating data
             keys = list(good_variations.keys())
             character_data['v'] = []
             for i in range(len(keys)):
@@ -949,6 +985,7 @@ class Updater():
             return True
         except Exception as e:
             print("Error", e, "for id", id)
+            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
             return False
 
     async def processManifest(self, filename : str, manifest : str) -> tuple:
