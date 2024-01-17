@@ -985,7 +985,6 @@ class Updater():
             return True
         except Exception as e:
             print("Error", e, "for id", id)
-            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
             return False
 
     async def processManifest(self, filename : str, manifest : str) -> tuple:
