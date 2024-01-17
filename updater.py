@@ -74,6 +74,26 @@ class Updater():
         ("_04{}", "", "6★"),
         ("_04{}_f1", "_f1", "6★ II")
     ]
+    VARIA_STEP = 2
+    GENDER_VARIAS = [
+        ("_01{}_0", "", "0★ Gran"),
+        ("_01{}_1", "", "0★ Djeeta"),
+        ("_01{}_f1_0", "_f1", "0★ Gran II"),
+        ("_01{}_f1_1", "_f1", "0★ Djeeta II"),
+        ("_02{}_0", "", "4★ Gran"),
+        ("_02{}_1", "", "4★ Djeeta"),
+        ("_02{}_f1_0", "_f1", "4★ Gran II"),
+        ("_02{}_f1_1", "_f1", "4★ Djeeta II"),
+        ("_03{}_0", "", "5★ Gran"),
+        ("_03{}_1", "", "5★ Djeeta"),
+        ("_03{}_f1_0", "_f1", "5★ Gran II"),
+        ("_03{}_f1_1", "_f1", "5★ Djeeta II"),
+        ("_04{}_0", "", "6★ Gran"),
+        ("_04{}_1", "", "6★ Djeeta"),
+        ("_04{}_f1_0", "_f1", "6★ Gran II"),
+        ("_04{}_f1_1", "_f1", "6★ Djeeta II"),
+    ]
+    GENDER_VARIA_STEP = 4
     # MC classes
     CLASS = [
         "csr_sw_{}_01", # sword
@@ -829,36 +849,43 @@ class Updater():
             mortal = {}
             # npc file check
             tid = self.ID_SUBSTITUTE.get(id, id) # fix for bobobo skin
-            for i in range(0, len(self.VARIAS), 2):
-                fcheck = False
-                for ftype in ["", "_s2"]:
-                    for j in range(2):
-                        try:
-                            fn = "npc_{}{}{}".format(tid, self.VARIAS[i+j][0].format(style), ftype)
-                            ret = await self.getJS(fn)
-                            if not ret[0]:
-                                data = (await self.req(self.CJS + fn + ".js")).decode('utf-8')
-                            else:
-                                data = ret[1].decode('utf-8')
-                            if self.VARIAS[i+j] not in mortal: # for characters such as lina
-                                for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
-                                    if m in data:
-                                        mortal[self.VARIAS[i+j]] = m
-                                        break
-                            found = True
-                            good_variations[self.VARIAS[i+j]] = fn + ".js"
-                            fcheck = True
-                        except:
-                            break
-                    if fcheck: break
-            if not found: return False # no npc found, we quit
+            for vs in [(self.VARIAS, self.VARIA_STEP), (self.GENDER_VARIAS, self.GENDER_VARIA_STEP)]:
+                v = vs[0]
+                step = vs[1]
+                for i in range(0, len(v), step):
+                    fcheck = False
+                    for ftype in ["", "_s2"]:
+                        for j in range(2):
+                            try:
+                                fn = "npc_{}{}{}".format(tid, v[i+j][0].format(style), ftype)
+                                ret = await self.getJS(fn)
+                                if not ret[0]:
+                                    data = (await self.req(self.CJS + fn + ".js")).decode('utf-8')
+                                else:
+                                    data = ret[1].decode('utf-8')
+                                if v[i+j] not in mortal: # for characters such as lina
+                                    for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
+                                        if m in data:
+                                            mortal[v[i+j]] = m
+                                            break
+                                found = True
+                                good_variations[v[i+j]] = fn + ".js"
+                                fcheck = True
+                            except:
+                                break
+                        if fcheck: break
+            if not found:
+                return False # no npc found, we quit
             if not id.startswith("371") and style == "":
                 await self.queue.put((id, ["_st2"])) # style check
             last_phit = None
             for v in good_variations:
                 found = False
+                g = v[0].split('_')[-1] # gender stuff
+                if g not in ["0", "1"]: g = ""
+                else: g = "_" + g
                 # ougi check
-                for s in ["", "_s2", "_s3", "_0_s2", "_0_s3"]:
+                for s in ["", "_s2", "_s3", g+"_s2", g+"_s3"]:
                     for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
                         try:
                             fn = "nsp_{}{}{}{}".format(tid, v[0].format(style), s, m)
@@ -1086,7 +1113,7 @@ class Updater():
 
     async def boot(self, argv : list) -> None:
         try:
-            print("GBFAP updater v2.1\n")
+            print("GBFAP updater v2.2\n")
             self.client = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50))
             
             start_flags = set(["-force", "-download", "-init", "-debug"])
