@@ -1,4 +1,5 @@
 // main file
+var AnimeID = null; // will contain the Character id
 var AnimeData = null; // will contain the Character data for the player
 var AnimeLocal = false; // set to true if assets are on the same machine
 var AnimeDebug = false; // debug only, ignore it
@@ -440,6 +441,7 @@ function initIndex(target)
         if(id != null)
         {
             let el = id.split("_");
+            AnimeID = id;
             if(!isNaN(el[0]) && el[0].length >= 10 && ["302", "303", "304", "371", "101", "102", "103", "104"].includes(el[0].slice(0, 3)))
             {
                 loadCharacter(id);
@@ -450,6 +452,7 @@ function initIndex(target)
             }
             else
             {
+                AnimeID = null;
                 document.getElementById('temp').remove();
                 result_area = document.getElementById('result');
                 result_area.appendChild(document.createTextNode("Error: Invalid ID or Character not found."));

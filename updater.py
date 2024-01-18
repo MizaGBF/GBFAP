@@ -1168,9 +1168,9 @@ class Updater():
             self.force_update = ('-force' in flags)
             self.download_assets = ('-download' in flags)
             self.debug_mode = ('-debug' in flags)
-            if '-init' in flags: await self.initFiles()
+            """if '-init' in flags: await self.initFiles()
             elif "-update" in flags: await self.manualUpdate(extras)
-            else: await self.run()
+            else: await self.run()"""
         except Exception as e:
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
         try: await self.client.close()

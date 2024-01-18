@@ -197,7 +197,8 @@ var versionChange = function (obj) {
         }
         else
         {
-            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + AnimeData[1][animeVersion]['cjs'][0] + ".jpg"
+            el = AnimeData[1][animeVersion]['cjs'][0].split('_');
+            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg"
         }
     }
 };
