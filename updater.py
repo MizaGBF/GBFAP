@@ -78,20 +78,20 @@ class Updater():
     GENDER_VARIAS = [
         ("_01{}_0", "", "0★ Gran"),
         ("_01{}_1", "", "0★ Djeeta"),
-        ("_01{}_f1_0", "_f1", "0★ Gran II"),
-        ("_01{}_f1_1", "_f1", "0★ Djeeta II"),
+        ("_01{}_0_f1", "_f1", "0★ Gran II"),
+        ("_01{}_1_f1", "_f1", "0★ Djeeta II"),
         ("_02{}_0", "", "4★ Gran"),
         ("_02{}_1", "", "4★ Djeeta"),
-        ("_02{}_f1_0", "_f1", "4★ Gran II"),
-        ("_02{}_f1_1", "_f1", "4★ Djeeta II"),
+        ("_02{}_0_f1", "_f1", "4★ Gran II"),
+        ("_02{}_1_f1", "_f1", "4★ Djeeta II"),
         ("_03{}_0", "", "5★ Gran"),
         ("_03{}_1", "", "5★ Djeeta"),
-        ("_03{}_f1_0", "_f1", "5★ Gran II"),
-        ("_03{}_f1_1", "_f1", "5★ Djeeta II"),
+        ("_03{}_0_f1", "_f1", "5★ Gran II"),
+        ("_03{}_1_f1", "_f1", "5★ Djeeta II"),
         ("_04{}_0", "", "6★ Gran"),
         ("_04{}_1", "", "6★ Djeeta"),
-        ("_04{}_f1_0", "_f1", "6★ Gran II"),
-        ("_04{}_f1_1", "_f1", "6★ Djeeta II"),
+        ("_04{}_0_f1", "_f1", "6★ Gran II"),
+        ("_04{}_1_f1", "_f1", "6★ Djeeta II"),
     ]
     GENDER_VARIA_STEP = 4
     # MC classes
@@ -852,10 +852,10 @@ class Updater():
             for vs in [(self.VARIAS, self.VARIA_STEP), (self.GENDER_VARIAS, self.GENDER_VARIA_STEP)]:
                 v = vs[0]
                 step = vs[1]
-                for i in range(0, len(v), step):
+                for i in range(0, len(v)):
                     fcheck = False
                     for ftype in ["", "_s2"]:
-                        for j in range(2):
+                        for j in range(step):
                             try:
                                 fn = "npc_{}{}{}".format(tid, v[i+j][0].format(style), ftype)
                                 ret = await self.getJS(fn)
@@ -873,7 +873,7 @@ class Updater():
                                 fcheck = True
                             except:
                                 break
-                        if fcheck: break
+                        if not fcheck: break
             if not found:
                 return False # no npc found, we quit
             if not id.startswith("371") and style == "":
