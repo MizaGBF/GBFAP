@@ -198,6 +198,7 @@ var versionChange = function (obj) {
         else
         {
             el = AnimeData[1][animeVersion]['cjs'][0].split('_');
+            el[2] += (AnimeID.includes("_st2") ? "_st2" : "");
             document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg"
         }
     }
