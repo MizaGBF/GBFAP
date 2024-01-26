@@ -333,9 +333,12 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case 'change_1': return "Change Form 1";
                     case 'change_2': return "Change Form 2";
                     case 'summon': return "Summoning";
-                    case 'vs_motion_1': return "GBFVS Skill 1";
-                    case 'vs_motion_2': return "GBFVS Skill 2";
-                    case 'vs_motion_3': return "GBFVS Skill 3";
+                    case 'vs_motion_1': return "Custom Skill 1";
+                    case 'vs_motion_2': return "Custom Skill 2";
+                    case 'vs_motion_3': return "Custom Skill 3";
+                    case 'vs_motion_4': return "Custom Skill 4";
+                    case 'vs_motion_5': return "Custom Skill 5";
+                    case 'vs_motion_6': return "Custom Skill 6";
                     default: return a;
                 };
             },
