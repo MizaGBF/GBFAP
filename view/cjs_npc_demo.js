@@ -270,10 +270,10 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
             translateAction: function(a) {
                 switch(a)
                 {
-                    case 'ab_motion': return "Skill 1";
-                    case 'ab_motion_2': return "Skill 2";
-                    case 'ab_motion_3': return "Skill 3";
-                    case 'ab_motion_4': return "Skill 4";
+                    case 'ab_motion': return "Skill A";
+                    case 'ab_motion_2': return "Skill B";
+                    case 'ab_motion_3': return "Skill C";
+                    case 'ab_motion_4': return "Skill D";
                     case 'down': return "Low HP";
                     case 'short_attack': return "Attack 1";
                     case 'double': return "Attack 2";
@@ -333,12 +333,12 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case 'change_1': return "Change Form 1";
                     case 'change_2': return "Change Form 2";
                     case 'summon': return "Summoning";
-                    case 'vs_motion_1': return "Custom Skill 1";
-                    case 'vs_motion_2': return "Custom Skill 2";
-                    case 'vs_motion_3': return "Custom Skill 3";
-                    case 'vs_motion_4': return "Custom Skill 4";
-                    case 'vs_motion_5': return "Custom Skill 5";
-                    case 'vs_motion_6': return "Custom Skill 6";
+                    case 'vs_motion_1': return "Custom Skill A";
+                    case 'vs_motion_2': return "Custom Skill B";
+                    case 'vs_motion_3': return "Custom Skill C";
+                    case 'vs_motion_4': return "Custom Skill D";
+                    case 'vs_motion_5': return "Custom Skill E";
+                    case 'vs_motion_6': return "Custom Skill F";
                     default: return a;
                 };
             },
