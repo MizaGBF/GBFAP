@@ -621,29 +621,14 @@ function display(node, key, argA, argB, pad, reverse) // generic function to dis
             return;
     }
     let slist = {};
-    try
+    for(const id in target)
     {
-        for(const id of target)
+        if((lengths != null && !lengths.includes(id.length)) || (start != null && !id.startsWith(start))) continue;
+        let r = callback(id, argA, argB);
+        if(r != null)
         {
-            let r = callback(id, argA, argB);
-            if(r != null)
-            {
-                if(pad) slist[id.padStart(20, "0")] = r;
-                else slist[id] = r;
-            }
-        }
-    }
-    catch(err)
-    {
-        for(const id in target)
-        {
-            if(!lengths.includes(id.length) || !id.startsWith(start)) continue;
-            let r = callback(id, argA, argB);
-            if(r != null)
-            {
-                if(pad) slist[id.padStart(20, "0")] = r;
-                else slist[id] = r;
-            }
+            if(pad) slist[id.padStart(20, "0")] = r;
+            else slist[id] = r;
         }
     }
     const keys = reverse ? Object.keys(slist).sort().reverse() : Object.keys(slist).sort();
@@ -719,7 +704,12 @@ function display_backgrounds(id, key, unused = null)
             path = ["sp/raid/bg/", ".jpg"];
             break;
     };
-    return [[id, "GBF/assets_en/img_low/" + path[0] + id + path[1]]];
+    let ret = [];
+    for(let i of index['background'][id][0])
+    {
+        ret.push([i, "GBF/assets_en/img_low/" + path[0] + i + path[1]]);
+    }
+    return ret;
 }
 
 // =================================================================================================

@@ -592,12 +592,8 @@ class Updater():
             pass
         try:
             print("Checking GBFAL data for new backgrounds...")
-            bg_list = []
-            for v in self.gbfal['background'].values():
-                if v == 0: continue
-                bg_list += v[0]
-            if len(bg_list) != len(self.index.get('background', [])):
-                self.index['background'] = bg_list
+            if len(list(self.gbfal['background'].keys())) != len(list(self.index.get('background', {}))):
+                self.index['background'] = self.gbfal['background']
                 self.modified = True
                 print("Background list updated from GBFAL")
         except:
@@ -624,7 +620,6 @@ class Updater():
                     return await response.content.read()
 
     async def run(self) -> None:
-        self.update_data_from_GBFAL()
         if self.force_update:
             print("Note: All characters will be updated")
             s = input("Type quit to exit now:").lower()
@@ -1197,6 +1192,7 @@ class Updater():
                     with open(gbfal, mode="r", encoding="utf-8") as f:
                         self.gbfal = json.load(f)
                     print("GBFAL data is loaded")
+                    self.update_data_from_GBFAL()
                 except Exception as e:
                     print("GBFAL data couldn't be loaded")
                     print(e)
