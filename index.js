@@ -63,14 +63,14 @@ var Game = LOCAL ? // Game variable used by GBF scripts
     xjsUri: '',
     jsUri: '',
     imgUri: 'img',
-    gbfapUri: '',
+    gbfapUri: '/',
     setting: {}
 } :
 {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     jsUri: CORS + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     imgUri: CORS + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
-    gbfapUri: 'GBFAP/',
+    gbfapUri: '/GBFAP/',
     setting: {}
 };
 var debug_path = null;
@@ -150,7 +150,7 @@ function switchToDebug()
             xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
             jsUri: CORS + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
             imgUri: CORS + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
-            gbfapUri: 'GBFAP/',
+            gbfapUri: '/GBFAP/',
             setting: {}
         };
         debug_path = d;
