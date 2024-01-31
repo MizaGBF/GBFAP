@@ -568,7 +568,6 @@ function addIndexImage(node, path, id, is_bg = false) // add an image to an inde
             this.classList.remove("loading");
             this.classList.add("clickable");
             this.classList.add("index-image");
-            this.classList.add("preview");
         };
         img.onerror = function() {
             this.parentNode.remove();
