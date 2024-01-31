@@ -150,6 +150,7 @@ function switchToDebug()
             xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
             jsUri: CORS + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
             imgUri: CORS + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
+            gbfapUri: 'GBFAP/',
             setting: {}
         };
         debug_path = d;
