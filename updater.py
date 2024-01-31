@@ -420,6 +420,7 @@ class Updater():
         self.force_update = False
         self.download_assets = False
         self.debug_mode = False
+        self.gbfal = {} # gbfal data
         
         self.class_lookup = {
             "150201": ["dkf_sw", "dkf_kn"], # dark fencer
@@ -569,26 +570,36 @@ class Updater():
         self.loadIndex()
         self.http_sem = asyncio.Semaphore(self.MAX_HTTP) # http semaphore
 
-    def update_class_from_GBFAL(self) -> None: # update class_lookup and class_ougi according to GBFAL data
+    def update_data_from_GBFAL(self) -> None: # update class_lookup and class_ougi according to GBFAL data
+        if self.class_gbfal or len(list(self.gbfal.keys())) == 0: return # only run once and if gbfal is loaded
         try:
-            if self.class_gbfal: return # only run once
-            with open("../GBFAL/json/data.json", mode="r", encoding="utf-8") as f:
-                data = json.load(f)
             print("Checking GBFAL data for new classes...")
             count = 0
-            for k in data['job']:
+            for k in self.gbfal['job']:
                 if k not in self.class_lookup:
-                    self.class_lookup[k] = data['job'][k][6] # mh
-                    for x, v in data['job_wpn'].items():
+                    self.class_lookup[k] = self.gbfal['job'][k][6] # mh
+                    for x, v in self.gbfal['job_wpn'].items():
                         if v == k:
                             self.class_ougi[k] = x
-                    for x, v in data['job_id'].items():
+                    for x, v in self.gbfal['job_id'].items():
                         if v == k:
                             for i in range(len(self.class_lookup[k])):
                                 self.class_lookup[k] = x + "_" + self.class_lookup[k]
                     count += 1
             if count > 0:
-                print("found", count, "classes not present in the script, consider updating")
+                print("Found", count, "classes not present in GBFAP, from GBFAL, consider updating")
+        except:
+            pass
+        try:
+            print("Checking GBFAL data for new backgrounds...")
+            bg_list = []
+            for v in self.gbfal['background'].values():
+                if v == 0: continue
+                bg_list += v[0]
+            if len(bg_list) != len(self.index.get('background', [])):
+                self.index['background'] = bg_list
+                self.modified = True
+                print("Background list updated from GBFAL")
         except:
             pass
         self.class_gbfal = True
@@ -613,7 +624,7 @@ class Updater():
                     return await response.content.read()
 
     async def run(self) -> None:
-        self.update_class_from_GBFAL()
+        self.update_data_from_GBFAL()
         if self.force_update:
             print("Note: All characters will be updated")
             s = input("Type quit to exit now:").lower()
@@ -1151,15 +1162,25 @@ class Updater():
 
     async def boot(self, argv : list) -> None:
         try:
-            print("GBFAP updater v2.2\n")
+            print("GBFAP updater v2.3\n")
             self.client = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50))
             
             start_flags = set(["-force", "-download", "-init", "-debug"])
             flags = set()
             extras = []
-            for i, k in enumerate(argv):
+            gbfal = None
+            i = 0
+            while i < len(argv):
+                k = argv[i]
                 if k in start_flags:
                     flags.add(k) # continue...
+                elif k == "-gbfal":
+                    try:
+                        gbfal = argv[i+1]
+                        i += 1
+                    except:
+                        print("GBFAL parameter error")
+                        return
                 elif k.startswith("-"):
                     flags.add(k)
                     extras = argv[i+1:]
@@ -1167,9 +1188,18 @@ class Updater():
                 else:
                     print("Unknown parameter:", k)
                     return
+                i += 1
             self.force_update = ('-force' in flags)
             self.download_assets = ('-download' in flags)
             self.debug_mode = ('-debug' in flags)
+            if gbfal is not None:
+                try:
+                    with open(gbfal, mode="r", encoding="utf-8") as f:
+                        self.gbfal = json.load(f)
+                    print("GBFAL data is loaded")
+                except Exception as e:
+                    print("GBFAL data couldn't be loaded")
+                    print(e)
             if '-init' in flags: await self.initFiles()
             elif "-update" in flags: await self.manualUpdate(extras)
             else: await self.run()

@@ -17,322 +17,69 @@
     <link rel="icon" type="image/png" href="assets/icon.png" />
     <link rel="stylesheet" href="css/style.css">
     <script src="require.js"></script>
-    <script src="anime.js"></script>
+    <script src="index.js"></script>
 </head>
 <body onload="init()">
     <a href="index.html"><img id="titleheader" src="assets/ui/header.png" alt="header"></a>
     <div id="header">
-        v4.7
+        v5.0
         <div id="timestamp"></div>
     </div>
-    <details style="display:none">
-        <summary class="red-sum">Updated</summary>
-        <div id="updated" class="result">
-        </div>
-    </details>
-    <details style="display:none">
-        <summary class="green-sum">History</summary>
-        <div id="history" class="result">
-        </div>
-    </details>
-    <details style="display:none">
-        <summary class="green-sum">Bookmarks</summary>
-        <div id="bookmark" class="result">
-        </div>
-    </details>
-    <div id="result">
-        <img src="assets/ui/loading.gif" id="temp">
-        <br><input type="image" src="assets/ui/fav_0.png" style="display:none" id="favorite">
-        <div id="AnimationPlayer"></div>
-        <ul class="tips">
-            <li>Loading can take time if the player hasn't been used recently.</li>
-            <li>Please reload the page if it takes longer than one minute.</li>
-            <li>On PC, CTRL + Moousewheel lets you zoom in and out.</li>
-        </ul>
+    <div id="issues" style="display:none">
+        <h3>Known Issues</h3>
     </div>
-    <details>
-        <summary>Characters</summary>
-        <div class="subdetails">
-            <details onclick="displayIndexed(this, '304')">
-                <summary>SSR</summary>
-                <h3 class="result mobile-big" id="areaindexed304">
-                </h3>
-            </details>
-            <details onclick="displayIndexed(this, '303')">
-                <summary>SR</summary>
-                <h3 class="result mobile-big" id="areaindexed303">
-                </h3>
-            </details>
-            <details onclick="displayIndexed(this, '302')">
-                <summary>R</summary>
-                <h3 class="result mobile-big" id="areaindexed302">
-                </h3>
-            </details>
-            <details onclick="displayIndexed(this, '371')">
-                <summary>Skins</summary>
-                <h3 class="result mobile-big" id="areaindexed371">
-                </h3>
-            </details>
-        </div>
-    </details>
-    <details>
-        <summary>Weapons</summary>
-        <div class="subdetails">
-            <details>
-                <summary>SSR</summary>
-                <div class="subdetails">
-                    <details onclick="displayIndexed(this, '10400')">
-                        <summary>Sword</summary>
-                        <h3 class="result mobile-big" id="areaindexed10400">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10401')">
-                        <summary>Dagger</summary>
-                        <h3 class="result mobile-big" id="areaindexed10401">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10402')">
-                        <summary>Spear</summary>
-                        <h3 class="result mobile-big" id="areaindexed10402">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10403')">
-                        <summary>Axe</summary>
-                        <h3 class="result mobile-big" id="areaindexed10403">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10404')">
-                        <summary>Staff</summary>
-                        <h3 class="result mobile-big" id="areaindexed10404">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10405')">
-                        <summary>Gun</summary>
-                        <h3 class="result mobile-big" id="areaindexed10405">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10406')">
-                        <summary>Melee</summary>
-                        <h3 class="result mobile-big" id="areaindexed10406">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10407')">
-                        <summary>Bow</summary>
-                        <h3 class="result mobile-big" id="areaindexed10407">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10408')">
-                        <summary>Harp</summary>
-                        <h3 class="result mobile-big" id="areaindexed10408">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10409')">
-                        <summary>Katana</summary>
-                        <h3 class="result mobile-big" id="areaindexed10409">
-                        </h3>
-                    </details>
-                </div>
-            </details>
-            <details>
-                <summary>SR</summary>
-                <div class="subdetails">
-                    <details onclick="displayIndexed(this, '10300')">
-                        <summary>Sword</summary>
-                        <h3 class="result mobile-big" id="areaindexed10300">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10301')">
-                        <summary>Dagger</summary>
-                        <h3 class="result mobile-big" id="areaindexed10301">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10302')">
-                        <summary>Spear</summary>
-                        <h3 class="result mobile-big" id="areaindexed10302">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10303')">
-                        <summary>Axe</summary>
-                        <h3 class="result mobile-big" id="areaindexed10303">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10304')">
-                        <summary>Staff</summary>
-                        <h3 class="result mobile-big" id="areaindexed10304">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10305')">
-                        <summary>Gun</summary>
-                        <h3 class="result mobile-big" id="areaindexed10305">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10306')">
-                        <summary>Melee</summary>
-                        <h3 class="result mobile-big" id="areaindexed10306">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10307')">
-                        <summary>Bow</summary>
-                        <h3 class="result mobile-big" id="areaindexed10307">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10308')">
-                        <summary>Harp</summary>
-                        <h3 class="result mobile-big" id="areaindexed10308">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10309')">
-                        <summary>Katana</summary>
-                        <h3 class="result mobile-big" id="areaindexed10309">
-                        </h3>
-                    </details>
-                </div>
-            </details>
-            <details>
-                <summary>R</summary>
-                <div class="subdetails">
-                    <details onclick="displayIndexed(this, '10200')">
-                        <summary>Sword</summary>
-                        <h3 class="result mobile-big" id="areaindexed10200">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10201')">
-                        <summary>Dagger</summary>
-                        <h3 class="result mobile-big" id="areaindexed10201">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10202')">
-                        <summary>Spear</summary>
-                        <h3 class="result mobile-big" id="areaindexed10202">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10203')">
-                        <summary>Axe</summary>
-                        <h3 class="result mobile-big" id="areaindexed10203">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10204')">
-                        <summary>Staff</summary>
-                        <h3 class="result mobile-big" id="areaindexed10204">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10205')">
-                        <summary>Gun</summary>
-                        <h3 class="result mobile-big" id="areaindexed10205">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10206')">
-                        <summary>Melee</summary>
-                        <h3 class="result mobile-big" id="areaindexed10206">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10207')">
-                        <summary>Bow</summary>
-                        <h3 class="result mobile-big" id="areaindexed10207">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10208')">
-                        <summary>Harp</summary>
-                        <h3 class="result mobile-big" id="areaindexed10208">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10209')">
-                        <summary>Katana</summary>
-                        <h3 class="result mobile-big" id="areaindexed10209">
-                        </h3>
-                    </details>
-                </div>
-            </details>
-            <details>
-                <summary>N</summary>
-                <div class="subdetails">
-                    <details onclick="displayIndexed(this, '10100')">
-                        <summary>Sword</summary>
-                        <h3 class="result mobile-big" id="areaindexed10100">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10101')">
-                        <summary>Dagger</summary>
-                        <h3 class="result mobile-big" id="areaindexed10101">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10102')">
-                        <summary>Spear</summary>
-                        <h3 class="result mobile-big" id="areaindexed10102">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10103')">
-                        <summary>Axe</summary>
-                        <h3 class="result mobile-big" id="areaindexed10103">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10104')">
-                        <summary>Staff</summary>
-                        <h3 class="result mobile-big" id="areaindexed10104">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10105')">
-                        <summary>Gun</summary>
-                        <h3 class="result mobile-big" id="areaindexed10105">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10106')">
-                        <summary>Melee</summary>
-                        <h3 class="result mobile-big" id="areaindexed10106">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10107')">
-                        <summary>Bow</summary>
-                        <h3 class="result mobile-big" id="areaindexed10107">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10108')">
-                        <summary>Harp</summary>
-                        <h3 class="result mobile-big" id="areaindexed10108">
-                        </h3>
-                    </details>
-                    <details onclick="displayIndexed(this, '10109')">
-                        <summary>Katana</summary>
-                        <h3 class="result mobile-big" id="areaindexed10109">
-                        </h3>
-                    </details>
-                </div>
-            </details>
-        </div>
-    </details>
-        <details onclick="displayMC(this)">
-        <summary>Classes</summary>
-        <h3 class="result mobile-big" id="areamc">
-        </h3>
-    </details>
     <br>
-    <details>
-        <summary class="yellow-sum">FAQ</summary>
-        <div class="result mobile-big faq">
-            <h3>&#x2022; What is this?</h3>
-            <p>This webpage allows the playback of animations featuring characters, outfits, weapons, and main characters from the mobile game <a href="https://game.granbluefantasy.jp/">Granblue Fantasy</a>.This project is derived from the animation player found within the <a href="https://gbf.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5">Chinese Wiki</a>, itself based on the preview of the <a href="https://game.granbluefantasy.jp/#gacha/selected">Gacha page</a>.<br>This page doesn't host any content. Consequently, it's important to acknowledge that assets could potentially become inaccessible or undergo modifications at the discretion of Cygames.<br>Keep in mind: Granblue Fantasy content and materials are trademarks and copyrights of Cygames, Inc. or its licensors. All rights reserved.</p>
-            <h3>&#x2022; Why is the loading so slow?</h3>
-            <p>Because of the existence of <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/CORS">Cross-origin resource sharing policies</a> and because no assets are hosted here, javascript and sprite sheet files used for the animations must be fetched via a proxy.<br>This proxy can take a few minutes to wake up, if it hasn't be used recently.<br>In doubt, refresh the page if it's still loading after a minute or two.<br>It also has a limit on the number of hours it can run per month, for cost reasons, so please use this page with parsimony.</p>
-            <h3>&#x2022; Animations differ between the player and in-game.</h3>
-            <p>In some cases, characters might reuse animations from another.<br>As such, when an animation is missing, some guesswork is involved, which might lead to disparity between the game and what you see on this page.<br>Default animations are also used in some cases when no animations at all exist, like for Sakura's auto attack for example.</p>
-            <h3>&#x2022; When does it get updated?</h3>
-            <p>Updates to this page require manual interventions.<br>As such, you can expect them to occur between 15:00 and 08:00 JST.<br>It means that updates won't occur at the time of end-of-month Premium Galas, for example. Please be patient.<br>In the event that you observe an update to the GitHub repository but no corresponding changes on this page, try a forced refresh through CTRL+F5 or clearing your cache.</p>
-            <h3>&#x2022; The animation is stuck!</h3>
-            <p>If you noticed a problem or bug on this page, you can open an issue in the <a href="https://github.com/MizaGBF/GBFAP/issues">GitHub repository</a> or contact me directly.<br>Try to explain clearly what the problem is and provide screenshots, plus the ID of the element, if possible.</p>
-            <h3>&#x2022; Class Champion weapons seem to be bugged</h3>
-            <p>For those weapon series, and similar other series, use the first version of the weapon (usually the Fire one) to view the full animations.</p>
-            <h3>&#x2022; Can you add summons ?</h3>
-            <p>It would require further modifications and I have no plans to add them in the near future.<br>You are free to make it yourself and open a pull request however, if you have the knowledge to do so, I'll gladly accept.</p>
-            <h3>&#x2022; What about sounds ?</h3>
-            <p>Same answer. The original preview player isn't intended to play sounds.<br>Plus, it would require finding out which sound file matches which animation, potentially leading to a colossal amount of work.</p>
-            <h3>&#x2022; Unreleased asset policy</h3>
-            <p>Concerning unreleased assets, there are instances where Cygames inadvertently makes assets from upcoming content accessible to the general public.<br>In such occurrences, to prevent any potential complications, you can expect me to promptly delist related elements, if it's apparent that they were intended to remain concealed and if Cygames hasn't already addressed the situation.</p>
-            <h3>&#x2022; Can I use this project?</h3>
-            <p>The project is open source, under the <a href="https://github.com/MizaGBF/GBFAP/blob/main/license">MIT License</a>.<br>In the advent that I quit or disappear, you can do whatever you want, within the license scopes, with this project.<br>Alternatively, you could setup your own local version, if you have the knowledge to do so.</p>
-            <h3>&#x2022; How can I support you?</h3>
-            <p>You can leave a star on the <a href="https://github.com/MizaGBF/GBFAP">GitHub repository</a>.</p>
+    <div>
+        <button class="tabbutton" id="tab-index" onclick="openTab('index')"><img class="btn-icon" src="assets/ui/icon/index.png" />Index</button>
+        <button class="tabbutton" id="tab-view" onclick="openTab('view')" style="display:none"><img class="btn-icon" src="assets/ui/icon/view.png" />Player</button>
+        <button class="tabbutton" id="tab-new" onclick="openTab('new')"><img class="btn-icon" src="assets/ui/icon/new.png" />Updated</button>
+        <button class="tabbutton" id="tab-history" onclick="openTab('history')"><img class="btn-icon" src="assets/ui/icon/history.png" />History</button>
+        <button class="tabbutton" id="tab-bookmark" onclick="openTab('bookmark')"><img class="btn-icon" src="assets/ui/icon/bookmark.png" />Bookmarks</button>
+        <button class="tabbutton" id="tab-about" onclick="openTab('about')"><img class="btn-icon" src="assets/ui/icon/about.png" />About</button>
+    </div>
+    <br>
+    <div id="index" class="tabcontent" style="display:none">
+    </div>
+    <div id="view" class="tabcontent" style="display:none">
+        <div id="output" class="container container-header">
+            <img src="assets/ui/loading.gif" id="temp">
+            <div id="AnimationPlayer"></div>
+            <div class="tips">
+                Loading can take time if the player hasn't been used recently.<br>
+                Please reload the page if it takes longer than one minute.
+            </div>
         </div>
-    </details>
+    </div>
+    <div id="new" class="tabcontent container" style="display:none">
+    </div>
+    <div id="history" class="tabcontent container" style="display:none">
+    </div>
+    <div id="bookmark" class="tabcontent container" style="display:none">
+    </div>
+    <div id="about" class="tabcontent container" style="display:none">
+        <h3>&#x2022; What is this?</h3>
+        <p>This page allows the playback of animations featuring characters, outfits, weapons, and main characters from the mobile game <a href="https://game.granbluefantasy.jp/">Granblue Fantasy</a>.This project is derived from the animation player found within the <a href="https://gbf.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5">Chinese Wiki</a>, itself based on the preview of the <a href="https://game.granbluefantasy.jp/#gacha/selected">Gacha page</a>.<br>Please acknowledge that assets could potentially become inaccessible or undergo modifications at the discretion of Cygames.<br>Keep in mind: Granblue Fantasy content and materials are trademarks and copyrights of Cygames, Inc. or its licensors. All rights reserved.</p>
+        <h3>&#x2022; Why is the loading so slow?</h3>
+        <p>Because of the existence of <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/CORS">Cross-origin resource sharing policies</a> and because no assets are hosted here, javascript and sprite sheet files used for the animations must be fetched via a proxy.<br>This proxy can take a few minutes to wake up, if it hasn't be used recently.<br>In doubt, refresh the page if it's still loading after a minute or two.<br>It also has a limit on the number of hours it can run per month, for cost reasons, so please use this page with parsimony.</p>
+        <h3>&#x2022; Animations differ between the player and in-game.</h3>
+        <p>In some cases, characters might reuse animations from another.<br>As such, when an animation is missing, some guesswork is involved, which might lead to disparity between the game and what you see on this page.<br>Default animations are also used in some cases when no animations at all exist, like for Sakura's auto attack for example.</p>
+        <h3>&#x2022; When does it get updated?</h3>
+        <p>Updates to this page require manual interventions.<br>As such, you can expect them to occur between 15:00 and 08:00 JST, when I'm available.</p>
+        <h3>&#x2022; The animation is stuck!</h3>
+        <p>If you noticed a problem or bug on this page, you can open an issue in the <a href="https://github.com/MizaGBF/GBFAP/issues">GitHub repository</a> or contact me directly.<br>Try to explain clearly what the problem is and provide screenshots, plus the ID of the element, if possible.</p>
+        <h3>&#x2022; Class Champion weapons seem to be bugged</h3>
+        <p>For those weapon series, and similar other series, use the first version of the weapon (usually the Fire one) to view the full animations.</p>
+        <h3>&#x2022; Can you add summons ?</h3>
+        <p>It would require further modifications and I have no plans to add them in the near future.<br>You are free to make it yourself and open a pull request however, if you have the knowledge to do so, I'll gladly accept.</p>
+        <h3>&#x2022; What about sounds ?</h3>
+        <p>Same answer. The original preview player isn't intended to play sounds.<br>Plus, it would require finding out which sound file matches which animation, potentially leading to a colossal amount of work.</p>
+        <h3>&#x2022; Unreleased asset policy</h3>
+        <p>Concerning unreleased assets, there are instances where Cygames inadvertently makes assets from upcoming content accessible to the general public.<br>In such occurrences, to prevent any potential complications, you can expect me to promptly delist related elements, if it's apparent that they were intended to remain concealed and if Cygames hasn't already addressed the situation.</p>
+        <h3>&#x2022; Can I use this project?</h3>
+        <p>The project is open source, under the <a href="https://github.com/MizaGBF/GBFAP/blob/main/license">MIT License</a>.<br>In the advent that I quit or disappear, you can do whatever you want, within the license scopes, with this project.<br>Alternatively, you could setup your own local version, if you have the knowledge to do so.</p>
+        <h3>&#x2022; How can I support you?</h3>
+        <p>You can leave a star on the <a href="https://github.com/MizaGBF/GBFAP">GitHub repository</a>.</p>
+    </div>
     <br>
 </body>
 <footer>

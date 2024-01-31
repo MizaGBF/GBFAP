@@ -9,7 +9,7 @@ Two possible setups:
 ### You want to host the assets  
 1. Copy this repo.  
 2. Run `python updater.py -force -download -init` to download all the assets and new characters (The script will ask you to confirm).  
-3. Change line 2 of `anime.js`: From `var AnimeLocal = false;` to `var AnimeLocal = true;`  
+3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
   
 You can now host the project in the way you prefer.  
 You only need to use `-init` and `-force` once. Simply do `python updater.py -download` for future updates.  
@@ -18,7 +18,7 @@ You only need to use `-init` and `-force` once. Simply do `python updater.py -do
 1. Copy this repo.  
 2. Run `python updater.py -force` to build a clean character index (The script will ask you to confirm).  
 3. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF.  
-4. Change line 3 of `anime.js` with the address of your proxy.  
+4. Change line 3 of `index.js` with the address of your proxy.  
   
 You can now host the project in the way you prefer.  
 Simply do `python updater.py` for future updates.  
@@ -32,10 +32,13 @@ There are three main possible command lines:
 * `python updater.py` to simply retrieve unindexed characters.  
 * `python updater.py -update list_of_character_id` to manually fetch the specified characters (You don't need to specify the character style).  
   
-You can then append the following options for more control:
+You can then add the following options before for more control:
 * `-force` will force a character indexation and, as a result, rebuild its JSON data (No need to use with `-update`).  
 * `-download` will download and save the character assets in their respective folders.  
 * `-init` will download the assets needed for the demo enemy and the dummy attack effect, among other things. This command isn't needed if you don't host the assets.  
+  
+And the following if you're using [GBFAL](https://github.com/MizaGBF/GBFAL):
+* `-gbfal` followed by the path to GBFAL `data.json` file.  
   
 # Element update  
 If a character gets an uncap or a class gets updated, simply do:  
@@ -73,7 +76,7 @@ The following files are modified/customized from what GBF uses:
 * lib/raid/extension.js  
   
 Along with:  
-* anime.js  
+* index.js  
 * player.js  
 * script.js  
   

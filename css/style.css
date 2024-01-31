@@ -1,22 +1,167 @@
 html { 
-    background: url(../assets/ui/background.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: #252526;
 }
 
 body {
     font-family: sans-serif;
     font-size: 30px;
     text-align: center;
+    color: white;
+}
+
+.element-detail {
+    list-style-type: '';
+    background: #2d2d30;
+    width: 80%;
+    height: 40px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: #ffffff;
+    text-shadow: #000000 1px 0 10px;
+    font-size: 28px;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.element-detail:hover {
+    outline: solid #ffffff;
+}
+
+details[open] > .element-detail {
+    outline: solid #007acc;
+}
+
+.sub-detail {
+    width: 75%;
+    height: 30px;
+    font-size: 24px;
+}
+
+.detail-icon {
+    height: 40px;
+    vertical-align: middle;
+    margin-left: 20%;
+    margin-right: 15%;
+}
+
+.sub-detail-icon {
+    height: 30px;
+    vertical-align: middle;
+    margin-left: 20%;
+    margin-right: 15%;
+}
+
+.container {
+    background: #181818;
+    color: #ffffff;
+    font-size: 30px;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    position: relative;
+}
+
+.container-header {
+    font-size: 24px;
+}
+
+.std-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.std-button {
+    width: 100px;
+    height: 40px;
+    background: #2d2d30;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    border: none;
+    outline: none;
+    color: white;
+    margin: 1px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#fav-btn {
+    background: #2d2d30;
+    width: 45px;
+    height: 45px;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    color: #000000;
+    display: inline-block;
+    font-size: 30px;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+
+#character {
+    height: 80px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 45px;
+}
+
+#fav-btn:hover {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+#fav-btn.fav-on {
+    border-color: #ffd700;
+    color: #ffd700;
+}
+
+.tabbutton {
+    width: 200px;
+    height: 80px;
+    background: #2d2d30;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    border: none;
+    outline: none;
+    color: white;
+    margin: 1px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.tabbutton:hover, .std-button:hover {
+  outline: solid #ffffff;
+}
+
+.tabbutton.active {
+  outline: solid #007acc;
+}
+
+.btn-icon {
+    width: 70px;
+    vertical-align: middle;
+    position: relative;
+    left: -10px;
 }
 
 footer, #header {
     font-family: sans-serif;
-    font-size: 15px;
+    font-size: 17px;
     text-align:center;
-    background: #000000b0;
+    background: #000000;
     border-color: #000000;
     border-radius: 10px;
     border-style: solid;
@@ -24,128 +169,19 @@ footer, #header {
     margin:auto;
 }
 
-#header {
-    color: white;
-}
-
-#favorite {
-    width: 144px;
-    height: 39px;
-    float: right;
-}
-
-label {
-    width: 200px;
-    display: inline-block;
-    font-size: 25px;
-}
-
-select {
-  background-color: #ffffffb0;
-  border: none;
-  margin: 5px;
-  width: 200px;
-  font-size: 25px;
-  display: inline-block;
-}
-
-select:hover {
-  background-color: #ffffff;
-}
-
-summary {
-    background: url(../assets/ui/button_bg.png) no-repeat;
-    background-size: 100% 100%;
-    width: 250px;
-    height: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #ffffff;
-    text-shadow: #000000 1px 0 10px;
-    font-size: 28px;
-}
-
-.red-sum {
-    background: url(../assets/ui/button_bg_red.png) no-repeat;
-    background-size: 100% 100%;
-}
-
-.green-sum {
-    background: url(../assets/ui/button_bg_green.png) no-repeat;
-    background-size: 100% 100%;
-}
-
-.yellow-sum {
-    background: url(../assets/ui/button_bg_yellow.png) no-repeat;
-    background-size: 100% 100%;
-}
-
-button {
-    background: url(../assets/ui/button_bg.png) no-repeat;
-    background-size: 100% 100%;
-    width: 220px;
-    height: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #ffffff;
-    font-size: 30px;
-    text-shadow: #000000 1px 0 10px;
-    border-style: none;
-}
-
-.subdetails {
-    background: #00000040;
+#issues {
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align:center;
+    background: #301919;
     border-color: #000000;
-    border-radius: 5px;
+    border-radius: 20px;
     border-style: solid;
+    width:80%;
     margin:auto;
-}
-
-#act-name, #act-duration, #act-label {
-    width: 200px;
-    font-size: 20px;
-    display: inline-block;
-}
-
-#titleheader {
-    border: 5px solid #000000;
-    border-radius: 10px;
-}
-
-#version {
-    font-size: 16px;
-}
-
-#loading {
-    background: url(../assets/ui/loading.gif) no-repeat; 
-    width: 32px;
-    height: 32px;
-}
-
-#result, .result {
-    background: #000000b0;
-    border-color: #000000;
-    color: #ffffff;
-    font-size: 24px;
-    border-radius: 10px;
-    margin: 1em;
-    border-style: solid;
-}
-
-.faq {
-    background: #000000d0;
-    padding: 10px;
-    font-size: 20px;
-    text-align: start;
-}
-
-::placeholder {
-    color: #111111;
-    opacity: 0.6;
-}
-
-h3 {
-    font-size: 20px;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding-bottom:10px;
 }
 
 .popup {
@@ -168,68 +204,212 @@ h3 {
     font-size: 20px;
     margin-left: auto;
     margin-right: auto;
-    width:600px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    max-width:600px;
+}
+
+label {
+    width: 200px;
+    display: inline-block;
+    font-size: 25px;
+}
+
+select {
+  background-color: #ffffffb0;
+  border: none;
+  margin: 5px;
+  width: 200px;
+  font-size: 25px;
+  display: inline-block;
+}
+
+select:hover {
+  background-color: #ffffff;
+}
+
+#act-name, #act-duration, #act-label {
+    width: 200px;
+    font-size: 20px;
+    display: inline-block;
+}
+
+#titleheader {
+    border: 5px solid #000000;
+    border-radius: 10px;
+}
+
+.loading, #loading {
+    background: url(../assets/ui/loading.gif) no-repeat;
+    min-width : 138px;
+    max-width : 138px;
+    height: 78px;
+    border: 2px solid #808080;
+    border-radius: 10px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+.tabcontent {
+    padding: 10px;
+    font-size: 20px;
+    text-align: start;
+}
+
+.index-image {
+    max-height: 80px;
+}
+
+.preview {
+    min-width : 138px;
+    max-width : 138px;
+    height: 78px;
+    border: 2px solid #808080;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+img {
+    object-fit: contain;
 }
 
 a:link {
-    color: red;
+    color: #00ffff;
     font-size: 1em;
 }
 
 a:visited {
-    color: pink;
+    color: #aaffff;
     font-size: 1em;
 }
 
 a:hover {
-    color: white;
+    color: #ffaaaa;
     font-size: 1em;
 }
 
 a:active {
-    color: yellow;
+    color: #ff0000;
     font-size: 1em;
 }
 
 @media (hover: none) { /* mobile stuff */
-    #titleheader {
-        min-width: 800px;
+    body {
+        font-size: 50px;
     }
 
-    summary {
-        width: 450px;
-        height: 72px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        font-size: 38px;
-    }
-
-    button {
-        width: 330px;
-        height: 60px;
+    .element-detail {
+        width: 80%;
+        height: 80px;
+        margin-top: 10px;
+        margin-bottom: 40px;
         font-size: 40px;
     }
 
-    #result, .result {
+    .sub-detail {
+        height: 70px;
+        font-size: 25px;
+    }
+
+    .detail-icon {
+        height: 60px;
+        margin-left: 5%;
+        margin-right: 15%;
+    }
+
+    .sub-detail-icon {
+        height: 50px;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .container {
         font-size: 30px;
+    }
+
+    .container-header {
+        font-size: 40px;
+        line-height: 1.5;
+    }
+
+    .std-button {
+        width: 200px;
+        height: 80px;
+        font-size: 50px;
+        margin: 10px;
+    }
+
+    #fav-btn {
+        width: 80px;
+        height: 80px;
+        font-size: 52px;
+    }
+
+    #character {
+        height: 160px;
+        margin-left: 80px;
+    }
+
+    .tabbutton {
+        width: 400px;
+        height: 160px;
+        font-size: 40px;
+    }
+
+    .btn-icon {
+        width: 100px;
+        left: -20px;
     }
 
     footer, #header {
         font-size: 30px;
-        width:400px;
+        width:600px;
+        line-height: 1.5;
     }
 
-    .faq {
-        font-size: 25px;
+    #issues {
+        font-size: 40px;
+        width:80%;
     }
 
-    #favorite {
-        width: 216px;
-        height: 58.5px;
+    .popup {
+        font-size: 50px;
+        width: 15em;
+    }
+
+    .loading {
+        min-width : 138px;
+        max-width : 138px;
+        height: 78px;
+    }
+
+    .tabcontent {
+        font-size: 40px;
+    }
+
+    .index-image {
+        max-height: 160px;
+    }
+
+    .preview {
+        min-width : 278px;
+        max-width : 278px;
+        height: 158px;
     }
     
-    .mobile-big > img {
-        height: 160px;
-        min-height: 160px;
+    label {
+        font-size: 40px;
+    }
+
+    select {
+      margin: 20px;
+      width: 300px;
+      font-size: 40px;
+    }
+
+    #act-name, #act-duration, #act-label {
+        width: 300px;
+        font-size: 40px;
     }
 }
