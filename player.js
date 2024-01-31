@@ -46,9 +46,9 @@ document.getElementById("AnimationPlayer").innerHTML = '\
                 <label>Background</label>\
                 <div>\
                     <button class="std-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');">Select</button>\
-                    <button class="std-button" onclick="setExternalBackground(\'img/sp/raid/0.jpg\')">Black</button>\
-                    <button class="std-button" onclick="setExternalBackground(\'img/sp/raid/1.jpg\')">Grid</button>\
-                    <button class="std-button" onclick="setExternalBackground(\'img/sp/raid/2.jpg\')">Green</button>\
+                    <button class="std-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/0.jpg\')">Black</button>\
+                    <button class="std-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/1.jpg\')">Grid</button>\
+                    <button class="std-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/2.jpg\')">Green</button>\
                 </div>\
             </div>\
             <div class="version-selection">'+

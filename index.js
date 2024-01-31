@@ -63,12 +63,14 @@ var Game = LOCAL ? // Game variable used by GBF scripts
     xjsUri: '',
     jsUri: '',
     imgUri: 'img',
+    gbfapUri: '',
     setting: {}
 } :
 {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     jsUri: CORS + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     imgUri: CORS + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
+    gbfapUri: 'GBFAP/',
     setting: {}
 };
 var debug_path = null;
@@ -312,7 +314,7 @@ function loadCharacter(id)
         id = el[0];
         style = "_"+el[1];
     }
-    if(false && id+style in index)
+    if(id+style in index)
     {
         updateHistory(id+style, parseInt(id[0]));
         AnimeData = [];
@@ -344,6 +346,7 @@ function loadCharacter(id)
         // DEBUG ONLY
         if(switchToDebug() && id.startsWith('30') && id.length >= 10 && !LOCAL) // call debug mode (can be disabled by setting AnimeDebug to true)
         {
+            document.getElementById('fav-btn').remove();
             get(CORS + debug_path + "/json/" + id + ".json?" + timestamp, successJSON, failJSON, id);
             return
         }
@@ -783,8 +786,11 @@ function clearBookmark() // clear the bookmark list
 {
     localStorage.removeItem('gbfap-bookmark');
     let fav = document.getElementById('fav-btn');
-    fav.classList.remove("fav-on");
-    fav.innerHTML = "☆";
+    if(fav != null)
+    {
+        fav.classList.remove("fav-on");
+        fav.innerHTML = "☆";
+    }
     bookmarks = [];
     updateBookmark();
 }
