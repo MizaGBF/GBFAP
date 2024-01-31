@@ -89,7 +89,7 @@ var mc_wpn = null; // used by weapons and classes
 
 // generic xhr request function
 // id is passed to the callbacks
-// default timeout is 60s
+// default timeout is 120s
 function get(url, callback, err_callback, id) {
     var xhr = new XMLHttpRequest();
     xhr.ontimeout = function () {
@@ -106,7 +106,7 @@ function get(url, callback, err_callback, id) {
         }
     };
     xhr.open("GET", url, true);
-    xhr.timeout = 60000;
+    xhr.timeout = 120000;
     xhr.send(null);
 }
 
