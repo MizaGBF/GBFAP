@@ -77,7 +77,6 @@ details[open] > .element-detail {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 5px;
 }
 
 .std-button {
@@ -103,12 +102,13 @@ details[open] > .element-detail {
     border-radius: 5px;
     border-style: solid;
     color: #000000;
-    display: inline-block;
+    display: flex;
     font-size: 30px;
     justify-content: center;
     align-items: center;
-    vertical-align: middle;
-    margin-left: 20px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
 }
 
 #character {
@@ -268,7 +268,6 @@ select:hover {
     height: 78px;
     border: 2px solid #808080;
     border-radius: 10px;
-    object-fit: contain;
 }
 
 img {
