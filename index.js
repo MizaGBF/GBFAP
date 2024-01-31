@@ -294,7 +294,11 @@ function initIndex(unused)
             document.getElementById('output').innerHTML = "Error: Invalid ID or Character not found.";
         }
     }
-    else openTab("index");
+    else
+    {
+        document.getElementById('background-index').remove();
+        openTab("index");
+    }
 }
 
 function loadCharacter(id)
