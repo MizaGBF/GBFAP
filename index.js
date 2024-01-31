@@ -140,7 +140,7 @@ function getEndpoint(endpointIndex)
 
 function switchToDebug()
 {
-    if(debug_path == null)
+    if(!AnimeDebug)
     {
         let d = getDebug();
         if(d == null) return false;
@@ -151,6 +151,7 @@ function switchToDebug()
             setting: {}
         };
         debug_path = d;
+        AnimeDebug = true;
         return true;
     }
     else return true;
@@ -291,6 +292,7 @@ function initIndex(unused)
         else
         {
             AnimeID = null;
+            document.getElementById('background-index').remove();
             document.getElementById('output').innerHTML = "Error: Invalid ID or Character not found.";
         }
     }
@@ -310,7 +312,7 @@ function loadCharacter(id)
         id = el[0];
         style = "_"+el[1];
     }
-    if(id+style in index)
+    if(false && id+style in index)
     {
         updateHistory(id+style, parseInt(id[0]));
         AnimeData = [];
@@ -340,7 +342,7 @@ function loadCharacter(id)
     else // fail
     {
         // DEBUG ONLY
-        if(!AnimeDebug && id.startsWith('30') && id.length >= 10 && !LOCAL && switchToDebug()) // call debug mode (can be disabled by setting AnimeDebug to true)
+        if(switchToDebug() && id.startsWith('30') && id.length >= 10 && !LOCAL) // call debug mode (can be disabled by setting AnimeDebug to true)
         {
             get(CORS + debug_path + "/json/" + id + ".json?" + timestamp, successJSON, failJSON, id);
             return
