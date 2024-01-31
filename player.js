@@ -7,44 +7,6 @@ var stage={
     global:{}
 };
 
-var bgList = [
-    'event_82',
-    'e027r_3',
-    'event_283',
-    'event_177',
-    'event_323',
-    'common_074',
-    'event_321',
-    'event_322',
-    'common_045',
-    'event_386',
-    'event_386_a',
-    'common_067',
-    'event_460',
-    '0',
-    '1',
-    '2'
-]
-
-var bgName = [
-    'Trial',
-    'Town',
-    'Beach',
-    'Auld Lang Syne',
-    'Lucilius',
-    'Cosmos',
-    'Alanaan',
-    'Nier',
-    'Grimnir',
-    'Vikala I',
-    'Vikala II',
-    'Fediel',
-    'Masquerade',
-    'Black',
-    'Dummy',
-    'Green'
-]
-
 var cjs = new Object;
 cjs.canvas = {};
 cjs.stage = {};
@@ -84,9 +46,9 @@ document.getElementById("AnimationPlayer").innerHTML = '\
                 <label>Background</label>\
                 <div>\
                     <button class="std-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');">Select</button>\
-                    <button class="std-button" onclick="setExternalBackground(\'/img/sp/raid/0.jpg\')">Black</button>\
-                    <button class="std-button" onclick="setExternalBackground(\'/img/sp/raid/1.jpg\')">Grid</button>\
-                    <button class="std-button" onclick="setExternalBackground(\'/img/sp/raid/2.jpg\')">Green</button>\
+                    <button class="std-button" onclick="setExternalBackground(\'img/sp/raid/0.jpg\')">Black</button>\
+                    <button class="std-button" onclick="setExternalBackground(\'img/sp/raid/1.jpg\')">Grid</button>\
+                    <button class="std-button" onclick="setExternalBackground(\'img/sp/raid/2.jpg\')">Green</button>\
                 </div>\
             </div>\
             <div class="version-selection">'+
