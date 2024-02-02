@@ -347,7 +347,8 @@ function loadCharacter(id)
         // DEBUG ONLY
         if(switchToDebug() && id.startsWith('30') && id.length >= 10 && !LOCAL) // call debug mode (can be disabled by setting AnimeDebug to true)
         {
-            document.getElementById('fav-btn').remove();
+            let fav = document.getElementById('fav-btn');
+            if(fav != null) fav.remove();
             get(CORS + debug_path + "/json/" + id + ".json?" + timestamp, successJSON, failJSON, id);
             return
         }
