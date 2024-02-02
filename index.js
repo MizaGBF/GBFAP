@@ -350,7 +350,6 @@ function loadCharacter(id)
     {
         // DEBUG ONLY
         document.getElementById('output').innerHTML = '<img src="assets/ui/loading.gif" id="temp"><div id="AnimationPlayer"></div><div class="tips">Loading Debug Data.<br>Wait a minute or two before reloading if it takes too much time.</div>';
-        console.log("hi");
         if(switchToDebug() && id.startsWith('30') && id.length >= 10 && !LOCAL) // call debug mode (can be disabled by setting AnimeDebug to true)
         {
             let fav = document.getElementById('fav-btn');
