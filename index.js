@@ -2,6 +2,7 @@
 const LOCAL = false; // set to true if assets are on the same machine
 const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
 const HISTORY_LENGTH = 20; // size limit of the history
+const PLAYER_ENEMIES = ["enemy_9100211", "enemy_9100221", "enemy_6204152"]; // rotating enemies
 const ENDPOINTS = [ // possible asset endpoints, used for the index
     "https://prd-game-a-granbluefantasy.akamaized.net/",
     "https://prd-game-a1-granbluefantasy.akamaized.net/",
@@ -58,6 +59,7 @@ const BACKGROUNDS = [
 var AnimeID = null; // will contain the Character id
 var AnimeData = null; // will contain the Character data for the player
 var AnimeDebug = false; // debug only, ignore it
+var AnimeEnemy = PLAYER_ENEMIES[Math.floor(Math.random() * PLAYER_ENEMIES.length)];
 var Game = LOCAL ? // Game variable used by GBF scripts
 {
     xjsUri: '',
@@ -100,10 +102,12 @@ function get(url, callback, err_callback, id) {
             if (xhr.status === 200) {
                 callback.apply(xhr, [id]);
             } else {
-                load_try = true;
                 err_callback.apply(xhr, [id]);
             }
         }
+    };
+    xhr.onerror = function() {
+        err_callback.apply(xhr, [id]);
     };
     xhr.open("GET", url, true);
     xhr.timeout = 120000;
@@ -345,6 +349,8 @@ function loadCharacter(id)
     else // fail
     {
         // DEBUG ONLY
+        document.getElementById('output').innerHTML = '<img src="assets/ui/loading.gif" id="temp"><div id="AnimationPlayer"></div><div class="tips">Loading Debug Data.<br>Wait a minute or two before reloading if it takes too much time.</div>';
+        console.log("hi");
         if(switchToDebug() && id.startsWith('30') && id.length >= 10 && !LOCAL) // call debug mode (can be disabled by setting AnimeDebug to true)
         {
             let fav = document.getElementById('fav-btn');
@@ -352,11 +358,7 @@ function loadCharacter(id)
             get(CORS + debug_path + "/json/" + id + ".json?" + timestamp, successJSON, failJSON, id);
             return
         }
-        // remove loading image and put error message
-        document.getElementById('temp').remove();
-        output = document.getElementById('output');
-        removeChilds(output);
-        output.appendChild(document.createTextNode("Error: Invalid ID"));
+        document.getElementById('output').innerHTML = "Error: Couldn't load ID " + id + style;
     }
 }
 
@@ -389,36 +391,29 @@ function loadMC(id)
     }
     else // fail
     {
-        // remove loading image and put error message
-        document.getElementById('temp').remove();
-        output = document.getElementById('output');
-        removeChilds(output);
-        output.appendChild(document.createTextNode("Error: Invalid ID"));
+        document.getElementById('output').innerHTML = "Error: Couldn't load ID " + id;
     }
 }
 
 // on success loading the player
 function successLoading(id)
 {
-    document.getElementById('temp').remove(); // remove loading image
+    // try to access CORS proxy by requesting the enemy
+    get(Game.jsUri + "/model/manifest/" + AnimeEnemy + ".js", startplayer, playerFail, id);
+}
+
+// on error loading the player
+function failLoading(id)
+{
+    document.getElementById('temp').remove();
     output = document.getElementById('output');
-    let ref = document.createElement('a'); // add GBFAL link
-    ref.setAttribute('href', "https://mizagbf.github.io/GBFAL/?id=" + id);
-    ref.appendChild(document.createTextNode("Assets"));
-    output.insertBefore(ref, output.firstChild);
-    
-    output.insertBefore(document.createElement('br'), output.firstChild);
-    
-    ref = document.createElement('a'); // add wiki link
-    ref.setAttribute('href', "https://gbf.wiki/index.php?title=Special:Search&search=" + id);
-    ref.appendChild(document.createTextNode("Wiki"));
-    output.insertBefore(ref, output.firstChild);
-    
-    output.insertBefore(document.createElement('br'), output.firstChild);
-    
-    let favbtn = document.createElement("button");
-    favbtn.id = "fav-btn";
-    output.insertBefore(favbtn, output.firstChild);
+    removeChilds(output);
+    output.appendChild(document.createTextNode("Error: Couldn't load the ID, please reload the page"));
+}
+
+function startplayer(id)
+{
+    document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/index.php?title=Special:Search&search=' + id + '">Wiki</a><br><a href="https://mizagbf.github.io/GBFAL/?id=' + id + '">Assets</a><div id="AnimationPlayer"></div><div class="tips">Try to reload the page if it takes too much time or if assets don\'t load.</div>';
     
     if(!AnimeDebug)
     {
@@ -450,41 +445,29 @@ function successLoading(id)
     // load the player
     require(["createjs"], function (b) {
         window.createjs = b
-    })
-    require(['player','lib/common', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader'])
+    });
+    require(['player','lib/common', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader']);
 }
 
-// on error loading the player
-function failLoading(id)
+function playerFail(id)
 {
-    document.getElementById('temp').remove();
-    output = document.getElementById('output');
-    removeChilds(output);
-    output.appendChild(document.createTextNode("Error: Couldn't load the ID, please reload the page"));
+    document.getElementById('output').innerHTML = "Error: Failed to load the player.<br>Try reloading the page or report the issue if it persists.";
 }
 
-// ========================================================================
-// debug / old or unused
-// on success requesting a character json
+// on success requesting a debug character json
 function successJSON(id)
 {
     is_mc = (!id.startsWith("3") || (id.length == 6));
     AnimeData = JSON.parse(this.response); // parse the data
     if('id' in AnimeData[1][0]) mc_id = AnimeData[1][0]['id'];
     if('wpn' in AnimeData[1][0]) mc_wpn = AnimeData[1][0]['wpn'];
-    get(Game.jsUri + "/model/manifest/enemy_6204152.js", successLoading, failLoading, id); // load the player
-    // note: my CORS proxy is hosted on a free render.com tier
-    // this step add a loading animation while the proxy wakes up
+    startplayer(id);
 }
 
-// on error requesting a character json
+// on error requesting a debug character json
 function failJSON(id)
 {
-    // remove loading image and put error message
-    document.getElementById('temp').remove();
-    output = document.getElementById('output');
-    removeChilds(output);
-    output.appendChild(document.createTextNode("Error: Invalid ID"));
+    document.getElementById('output').innerHTML = "Error: Couldn't load ID " + id;
 }
 
 function updateList(node, elems) // update a list of elements

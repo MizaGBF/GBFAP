@@ -1,14 +1,5 @@
 define(["view/cjs", "view/content", "lib/common"], function (a, b) {
-    var c = function(){
-        let enemy = new URLSearchParams(window.location.search).get("enemy");
-        if(enemy == null)
-        {
-            let arr = ["enemy_9100211", "enemy_9100221", "enemy_6204152"];
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-        else
-            return "enemy_"+enemy;
-    }();
+    var c = AnimeEnemy;
     var canvasSize = 2000;
     var realSize = 1400;
     var windowSize = 453;
