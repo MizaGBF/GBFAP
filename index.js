@@ -781,13 +781,14 @@ function exportBookmark() // export the bookmark list to the clipboard
         {
             bookmarks = JSON.parse(bookmarks);
         }
+        navigator.clipboard.writeText(JSON.stringify(bookmarks));
+        pushPopup("Bookmarks have been copied");
     }
     catch(err)
     {
         console.error("Exception thrown", err.stack);
         bookmarks = [];
     }
-    pushPopup("Bookmarks have been copied");
 }
 
 function importBookmark() // import the bookmark list from the clipboard. need localhost or a HTTPS host
