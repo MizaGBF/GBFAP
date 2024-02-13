@@ -13,17 +13,17 @@ const ENDPOINTS = [ // possible asset endpoints, used for the index
 ];
 // html index related (copied from GBFAL)
 const CHARACTERS = [
-    ["Year 2024 (Dragon)", [0, -1, 0, -1, 504, 999]],
-    ["Year 2023 (Rabbit)", [0, -1, 0, -1, 443, 504]],
-    ["Year 2022 (Tiger)", [0, -1, 0, -1, 379, 443]],
-    ["Year 2021 (Ox)", [74, 75, 0, -1, 316, 379]],
-    ["Year 2020 (Rat)", [73, 74, 281, 323, 256, 316]],
-    ["Year 2019 (Pig)", [72, 73, 263, 281, 199, 256]],
-    ["Year 2018 (Dog)", [71, 72, 233, 263, 149, 199]],
-    ["Year 2017 (Chicken)", [0, -1, 173, 233, 108, 149]],
-    ["Year 2016 (Monkey)", [47, 71, 113, 173, 72, 108]],
-    ["Year 2015 (Sheep)", [30, 47, 51, 113, 30, 72]],
-    ["Year 2014", [0, 30, 0, 51, 0, 30]]
+    ["Year 2024 (Dragon)", "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_7789.png", [0, -1, 0, -1, 504, 999]],
+    ["Year 2023 (Rabbit)", "https://prd-game-a2-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_7514.png", [0, -1, 0, -1, 443, 504]],
+    ["Year 2022 (Tiger)", "https://prd-game-a4-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_7300.png", [0, -1, 0, -1, 379, 443]],
+    ["Year 2021 (Ox)", "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_7493.png", [74, 75, 0, -1, 316, 379]],
+    ["Year 2020 (Rat)", "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_6761.png", [73, 74, 281, 323, 256, 316]],
+    ["Year 2019 (Pig)", "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_6377.png", [72, 73, 263, 281, 199, 256]],
+    ["Year 2018 (Dog)", "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_6198_1.png", [71, 72, 233, 263, 149, 199]],
+    ["Year 2017 (Chicken)", "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_6019.png", [0, -1, 173, 233, 108, 149]],
+    ["Year 2016 (Monkey)", "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_1467.png", [47, 71, 113, 173, 72, 108]],
+    ["Year 2015 (Sheep)", "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_6054.png", [30, 47, 51, 113, 30, 72]],
+    ["Year 2014", "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/status/x64/status_6093.png", [0, 30, 0, 51, 0, 30]]
 ];
 const SKINS = [
     ["ID 200 to 299", [200, 300]],
@@ -230,8 +230,8 @@ function initIndex(unused)
     parents = makeIndexSummary(content, "Characters", true, false, "assets/ui/icon/characters.png");
     for(let i of CHARACTERS)
     {
-        elems = makeIndexSummary(parents[0], i[0], false, true);
-        const tmp = [elems[0], i[1]];
+        elems = makeIndexSummary(parents[0], i[0], false, true, i[1]);
+        const tmp = [elems[0], i[2]];
         elems[1].onclick = function (){
             display(tmp[0], 'characters', tmp[1], null, false, true);
             this.onclick = null;
