@@ -377,7 +377,7 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                         B.cjsMortal.y += B.cjsMortalPos.y,
                         B.cjsMortal.scaleX *= n,
                         B.cjsMortal.scaleY *= n,
-                        B.cjsMortal[a].gotoAndPlay("special")
+                        B.cjsMortal[a].gotoAndPlay("special");
                 }
                 function d_sp(a) { // custom version of d() above, for weapons
                     B.cjsMortal = new lib[a],
@@ -392,8 +392,8 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                         B.cjsMortal.y += B.cjsMortalPos.y,
                         B.cjsMortal.scaleX *= n,
                         B.cjsMortal.scaleY *= n,
-                        B.cjsMortal[a][a+"_special"].gotoAndPlay("special")
-                        return B.getAnimDuration(B.cjsMortal[a][a+"_special"])
+                        B.cjsMortal[a][a+"_special"].gotoAndPlay("special");
+                        return B.getAnimDuration(B.cjsMortal[a][a+"_special"]);
                 }
                 function d_summon(a) { // custom version of d() above, for summons
                     B.cjsMortal = new lib[a],
@@ -413,10 +413,14 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                         for(const k in B.cjsMortal[a])
                         {
                             if(k.includes('attack'))
+                            {
+                                B.cjsMortal[a].gotoAndPlay('attack');
                                 return B.getAnimDuration(B.cjsMortal[a][k]);
+                            }
                         }
                         return 0;
                     }
+                    //B.cjsMortal[a][a].gotoAndPlay(a.includes('attack') ? 'attack' : 'damage'); // not needed?
                     return B.getAnimDuration(B.cjsMortal[a][a]);
                 }
                 function e(a) {
