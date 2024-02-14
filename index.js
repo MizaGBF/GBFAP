@@ -386,6 +386,7 @@ function loadCharacter(id)
             return
         }
         document.getElementById('output').innerHTML = "Error: Couldn't load ID " + id + style;
+        if(id.length == 10 && id.startsWith("20")) document.getElementById('output').innerHTML = "<br>Note: This summon might be unsupported or with an identical animation on another ID.";
     }
 }
 

@@ -50,7 +50,7 @@ Some skins (and rarely some seasonal characters) reuse the Charge Attack or Atta
 As there is no way to programmatically find it, at least currently, you'll have to set those exceptions manually in `updater.py`.  
 First, you'll likely get a `No special set` error for characters without corresponding charge attack.  
 Second, characters without corresponding attack effect will use a default one.  
-To fix any of those two issues, find out the ID of the Character that it's supposed to borrow the files from and open `update.py` and look for `self.patches` around line 31.  
+To fix any of those two issues, find out the ID of the Character that it's supposed to borrow the files from and open `update.py` and look for `PATCHES` around line 31.  
 Simply add a new line in the list (don't forget the comma in the previous one) such as it looks that way:
 `"ID_CHARA_WITHOUT_OUGI" : ("ID_OUGI_BORROWED_FROM", "", "")`.  
 Example:  
@@ -62,6 +62,11 @@ The third value (`''`) is for the matching attack effect.
 In a similar fashion, classes must be set in the code too.  
 Just look at the full list in `updater.py` for more examples.  
 Once the change is done, run `updater.py` again for the concerned characters.  
+  
+In a similar ways, some summons share assets, such as the Arcarum ones.  
+The groups must be defined in the `SHARED_SUMMONS` variable.  
+  
+There are other weird exceptions, I recommend trying to read the code for more infos.  
   
 # Additional Notes  
 Downloaded assets are saved in the following folders:  
