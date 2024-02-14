@@ -463,10 +463,7 @@ function startplayer(id)
         else
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
         img.onerror = function() { // can't be loaded? character doesn't exist
-            let result = this.parentNode.parentNode;
-            this.parentNode.remove();
-            this.remove();
-            if(result.childNodes.length <= 2) result.remove();
+            document.getElementById('output').innerHTML = "Error: The element isn't accessible yet.";
         }
     }
     // enable favorite

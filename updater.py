@@ -662,6 +662,7 @@ class Updater():
             if s == "quit":
                 print("Process aborted")
                 return
+        self.debug_mode = False
         print("Updating index...")
         self.running = True
         self.progress = Progress()
