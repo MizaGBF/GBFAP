@@ -849,12 +849,11 @@ function importBookmark() // import the bookmark list from the clipboard. need l
             if(typeof tmp != 'object') return;
             let val = false;
             let i = 0;
-            let last_id_f = (last_id == null) ? null : (isNaN(last_id) ? last_id : last_id.replace(/\D/g,'')); // strip letters
             while(i < tmp.length)
             {
                 let e = tmp[i];
                 if(typeof e != 'object' || e.length != 2 || typeof e[0] != 'string' || typeof e[1] != 'number') return;
-                if(last_id_f == e[0] && last_type == e[1]) val = true;
+                if(AnimeID == e[0]) val = true;
                 ++i;
             }
             bookmarks = tmp;
