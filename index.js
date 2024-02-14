@@ -469,7 +469,7 @@ function startplayer(id)
         }
     }
     // enable favorite
-    favButton(true, id, id.startsWith('10') ? 1 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
+    favButton(true, id, id.startsWith('10') ? 1 : id.startsWith('20') ? 2 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
 
     // load the player
     require(["createjs"], function (b) {

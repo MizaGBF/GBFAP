@@ -855,7 +855,6 @@ class Updater():
             for uncap in ["_04", "_03", "_02", "_01"]:
                 try:
                     await self.req(self.IMG + "/sp/assets/summon/m/" + id + uncap.replace('_01', '') + ".jpg")
-                    raise Exception()
                 except:
                     if not self.debug_mode: 
                         if uncap != '_01':
@@ -897,11 +896,14 @@ class Updater():
                     if len(calls) == 0:
                         if uncap == "_01": return False
                         else: continue
+                uncap_data = []
                 for i, sp in enumerate(calls):
                     tmp = [str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if i > 0 else ''), mc_cjs, '', "phit_sw_0001", sp, ('attack' in sp)] # name, cjs, mortal, phit, sp, fullscreen
                     if '_s2' in tmp[4] or '_s3' in tmp[4]:
                         tmp[5] = True
-                    character_data['v'].append(tmp)
+                    uncap_data.append(tmp)
+                uncap_data.reverse()
+                character_data['v'] += uncap_data
             character_data['v'].reverse()
             self.index[id] = character_data
             self.modified = True
