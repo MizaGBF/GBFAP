@@ -30,6 +30,14 @@ const SKINS = [
     ["ID 100 to 199", [100, 200]],
     ["ID 000 to 099", [0, 100]]
 ];
+const SUMMONS = [
+    ["SSR ID 400 to 599", "4", [400, 600], "assets/ui/icon/ssr.png"],
+    ["SSR ID 200 to 399", "4", [200, 400], "assets/ui/icon/ssr.png"],
+    ["SSR ID 000 to 199", "4", [0, 200], "assets/ui/icon/ssr.png"],
+    ["SR", "3", [0, 1000], "assets/ui/icon/sr.png"],
+    ["R", "2", [0, 1000], "assets/ui/icon/r.png"],
+    ["N", "1", [0, 1000], "assets/ui/icon/n.png"]
+];
 const WEAPONS_RARITY = [
     ["SSR", "4", "assets/ui/icon/ssr.png"],
     ["SR", "3", "assets/ui/icon/sr.png"],
@@ -85,6 +93,7 @@ var intervals = []; // on screen notifications
 var is_mc = false; // set to true if we are dealing with main character animations
 var mc_id = null; // used by classes only
 var mc_wpn = null; // used by weapons and classes
+var mc_summon = null; // used by summons
 
 // ========================================================================
 // utility
@@ -247,6 +256,16 @@ function initIndex(unused)
             this.onclick = null;
         };
     }
+    parents = makeIndexSummary(content, "Summons", true, false, "assets/ui/icon/summons.png");
+    for(let i of SUMMONS)
+    {
+        elems = makeIndexSummary(parents[0], i[0], false, true, i[3]);
+        const tmp = [elems[0], i[1], i[2]];
+        elems[1].onclick = function (){
+            display(tmp[0], 'summons', tmp[1], tmp[2], false, true);
+            this.onclick = null;
+        };
+    }
     parents = makeIndexSummary(content, "Weapons", true, false, "assets/ui/icon/weapons.png");
     for(let i of WEAPONS_RARITY)
     {
@@ -288,7 +307,7 @@ function initIndex(unused)
         openTab("view");
         let el = id.split("_");
         AnimeID = id;
-        if(!isNaN(el[0]) && el[0].length >= 10 && ["302", "303", "304", "371", "101", "102", "103", "104"].includes(el[0].slice(0, 3)))
+        if(!isNaN(el[0]) && el[0].length >= 10 && ["302", "303", "304", "371", "101", "102", "103", "104", "201", "202", "203", "204"].includes(el[0].slice(0, 3)))
         {
             loadCharacter(id);
         }
@@ -332,15 +351,24 @@ function loadCharacter(id)
             is_mc = true;
             mc_wpn = data['w'];
         }
+        else if('s' in data)
+        {
+            is_mc = true;
+            mc_summon = data['s'];
+        }
         for(let d of data['v'])
         {
+            let is_old_summon = (mc_summon != null && !d[4].includes('attack'));
             AnimeData[0].push(d[0]); // name
             const p = AnimeData[1].length;
             AnimeData[1].push({});
             AnimeData[1][p]["cjs"] = [d[1]]; // cjs
-            AnimeData[1][p]['action_label_list'] = ['ability', d[2], 'stbwait', 'short_attack', 'double', 'triple']; // mortal
+            if(mc_summon == null) AnimeData[1][p]['action_label_list'] = ['ability', d[2], 'stbwait', 'short_attack', 'double', 'triple']; // mortal
+            else if(!is_old_summon) AnimeData[1][p]['action_label_list'] = ['summon', 'summon_atk', 'summon_dmg'];
+            else AnimeData[1][p]['action_label_list'] = ['summon', 'summon_atk'];
             AnimeData[1][p]['effect'] = [d[3]]; // phit
             AnimeData[1][p]['special'] = [{"random":0,"list":[{"target":"them","cjs":d[4],"fixed_pos_owner_bg":0,"full_screen":+d[5]}]}]; // special, fullscreen
+            if(mc_summon != null && d[4].includes('attack')) AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":d[4].replace('attack', 'damage'),"fixed_pos_owner_bg":0,"full_screen":0}]});
             AnimeData[1][p]['cjs_pos'] = [{"y":0,"x":0}];
             AnimeData[1][p]['special_pos'] = [[{"y":0,"x":0}]];
         }
@@ -427,6 +455,8 @@ function startplayer(id)
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
         else if(id.startsWith("10"))
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
+        else if(id.startsWith("20"))
+            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/summon/m/" + id + ".jpg";
         else if(el.length == 1)
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
         else
@@ -482,6 +512,11 @@ function updateList(node, elems) // update a list of elements
                     addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0].split('_')[0] + "_01_" + e[0].split('_')[1] + ".jpg", e[0]);
                 else
                     addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0] + "_01.jpg", e[0]);
+                break;
+            }
+            case 2: // summon
+            {
+                addIndexImage(node, "GBF/assets_en/img_low/sp/assets/summon/m/" + e[0] + ".jpg", e[0]);
                 break;
             }
             case 1: // weapon
@@ -584,6 +619,12 @@ function display(node, key, argA, argB, pad, reverse) // generic function to dis
             start = "37";
             lengths = [10, 14];
             break;
+        case "summons":
+            callback = display_summons;
+            target = index;
+            start = "20";
+            lengths = [10];
+            break;
         case "weapons":
             callback = display_weapons;
             target = index;
@@ -652,6 +693,14 @@ function display_skins(id, range, unused = null)
     let val = parseInt(id.slice(4, 7));
     if(val < range[0] || val >= range[1]) return null;
     return [[id, "GBF/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg"]];
+}
+
+function display_summons(id, rarity, range)
+{
+    if(id[2] != rarity) return null;
+    let val = parseInt(id.slice(4, 7));
+    if(val < range[0] || val >= range[1]) return null;
+    return [[id, "GBF/assets_en/img_low/sp/assets/summon/m/" + id + ".jpg"]];
 }
 
 function display_weapons(id, rarity, proficiency)

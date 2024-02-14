@@ -139,6 +139,13 @@ var versionChange = function (obj) {
             if(u > 0) id += "_0" + JSON.stringify(u+1);
             document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
         }
+        else if(AnimeID.startsWith("20"))
+        {
+            let id = AnimeID;
+            let u = parseInt(AnimeData[0][animeVersion][0]) - 3;
+            if(u > 0) id += "_0" + JSON.stringify(u+1);
+            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/summon/m/" + id + ".jpg"
+        }
         else
         {
             el = AnimeData[1][animeVersion]['cjs'][0].split('_');

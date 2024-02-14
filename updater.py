@@ -631,7 +631,7 @@ class Updater():
         self.progress = Progress()
         async with asyncio.TaskGroup() as tg:
             tasks = []
-            possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000", "10100{}00", "10200{}00", "10300{}00", "10400{}00", "10201{}00", "10101{}00", "10301{}00", "10401{}00", "10102{}00", "10202{}00", "10302{}00", "10402{}00", "10103{}00", "10203{}00", "10303{}00", "10403{}00", "10104{}00", "10204{}00", "10304{}00", "10404{}00", "10105{}00", "10205{}00", "10305{}00", "10405{}00", "10106{}00", "10206{}00", "10306{}00", "10406{}00", "10107{}00", "10207{}00", "10307{}00", "10407{}00", "10108{}00", "10208{}00", "10308{}00", "10408{}00", "10209{}00", "10109{}00", "10309{}00", "10409{}00"]
+            possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000", "2010{}000", "2020{}000", "2030{}000", "2040{}000", "10100{}00", "10200{}00", "10300{}00", "10400{}00", "10201{}00", "10101{}00", "10301{}00", "10401{}00", "10102{}00", "10202{}00", "10302{}00", "10402{}00", "10103{}00", "10203{}00", "10303{}00", "10403{}00", "10104{}00", "10204{}00", "10304{}00", "10404{}00", "10105{}00", "10205{}00", "10305{}00", "10405{}00", "10106{}00", "10206{}00", "10306{}00", "10406{}00", "10107{}00", "10207{}00", "10307{}00", "10407{}00", "10108{}00", "10208{}00", "10308{}00", "10408{}00", "10209{}00", "10109{}00", "10309{}00", "10409{}00"]
             tasks.append(tg.create_task(self.styleProcessing()))
             for i in range(self.MAX_RUN_TASK):
                 tasks.append(tg.create_task(self.run_class(i, self.MAX_RUN_TASK)))
@@ -662,6 +662,8 @@ class Updater():
                             eid += step
                             continue
                         r = await self.update_weapon(f)
+                    elif file.startswith("20"):
+                        r = await self.update_summon(f)
                     else:
                         r = await self.update(f)
                     if not r:
@@ -738,7 +740,6 @@ class Updater():
                 if self.download_assets: # download asset
                     for fn in ["", "_1", "_2"]:
                         try:
-                            print(self.IMG + "/sp/cjs/" + wid + fn + ".png")
                             data = await self.req(self.IMG + "/sp/cjs/" + wid + fn + ".png")
                             with open("img/sp/cjs/" + wid + fn + ".png", "wb") as f:
                                 f.write(data)
@@ -836,6 +837,75 @@ class Updater():
                 self.index[id+uncap] = character_data
                 self.modified = True
                 self.latest_additions[id+uncap] = 1
+            return True
+        except Exception as e:
+            print("Error", e, "for id", id)
+            return False
+
+    async def update_summon(self, id : str) -> bool:
+        try:
+            if id in self.exclusion: return False
+            # containers
+            mc_cjs = "fig_sw_0_01"
+            sid = self.ID_SUBSTITUTE.get(id, None)
+            character_data = {}
+            character_data['v'] = []
+            character_data['s'] = id
+            call_found = set()
+            for uncap in ["_04", "_03", "_02", "_01"]:
+                try:
+                    await self.req(self.IMG + "/sp/assets/summon/m/" + id + uncap.replace('_01', '') + ".jpg")
+                    raise Exception()
+                except:
+                    if not self.debug_mode: 
+                        if uncap != '_01':
+                            continue
+                        else:
+                            return False
+                match uncap:
+                    case "_04":
+                        uns = ["_04", "_03", "_02"]
+                    case "_03":
+                        uns = ["_03", "_02"]
+                    case "_02":
+                        uns = ["_02"]
+                    case "_01":
+                        uns = ["_01"]
+                calls = []
+                for i in ([id] if sid is None else [id, sid]):
+                    for un in uns:
+                        if un in call_found: break
+                        for m in ["", "_a", "_b", "_c", "_d", "_e"]:
+                            fn = "summon_{}{}{}_attack".format(i, un, m)
+                            try:
+                                await self.getJS(fn)
+                                await self.getJS(fn.replace('attack', 'damage'))
+                                calls.append(fn)
+                                call_found.add(un)
+                            except:
+                                if m != "": break
+                        if len(calls) != 0: break
+                    if len(calls) != 0: break
+                if len(calls) == 0:
+                    if uncap == '_01':
+                        try:
+                            fn = "summon_{}".format(id)
+                            await self.getJS(fn)
+                            calls.append(fn)
+                        except:
+                            pass
+                    if len(calls) == 0:
+                        if uncap == "_01": return False
+                        else: continue
+                for i, sp in enumerate(calls):
+                    tmp = [str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if i > 0 else ''), mc_cjs, '', "phit_sw_0001", sp, ('attack' in sp)] # name, cjs, mortal, phit, sp, fullscreen
+                    if '_s2' in tmp[4] or '_s3' in tmp[4]:
+                        tmp[5] = True
+                    character_data['v'].append(tmp)
+            character_data['v'].reverse()
+            self.index[id] = character_data
+            self.modified = True
+            self.latest_additions[id] = 2
             return True
         except Exception as e:
             print("Error", e, "for id", id)
@@ -1040,6 +1110,7 @@ class Updater():
             for id in ids:
                 if len(id) == 10:
                     if id.startswith("10"): tasks.append(tg.create_task(self.progress_container(self.update_weapon(id))))
+                    elif id.startswith("20"): tasks.append(tg.create_task(self.progress_container(self.update_summon(id))))
                     else: tasks.append(tg.create_task(self.progress_container(self.update(id, ""))))
                     tcounter += 1
                 elif len(id) == 14 and id.startswith("30") and id[10] == '_':
@@ -1081,7 +1152,7 @@ class Updater():
     async def initFiles(self) -> None:
         tmp = self.download_assets
         self.download_assets = True
-        with open("view/cjs_npc_demo.js", mode="r", encoding="utf-8") as f:
+        with open("index.js", mode="r", encoding="utf-8") as f:
             data = f.read()
             a = 0
             while True:
@@ -1095,7 +1166,7 @@ class Updater():
             print("Enemies updated")
             
             # weapons stuff
-            to_update = ['phit_0000000000']
+            to_update = ['fig_sw_0_01', 'phit_0000000000']
             for p in self.CLASS:
                 to_update.append(p.format(0))
                 to_update.append(p.format(1))
@@ -1157,52 +1228,49 @@ class Updater():
 
     async def boot(self, argv : list) -> None:
         try:
-            print("GBFAP updater v2.3\n")
-            self.client = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50))
-            
-            start_flags = set(["-force", "-download", "-init", "-debug"])
-            flags = set()
-            extras = []
-            gbfal = None
-            i = 0
-            while i < len(argv):
-                k = argv[i]
-                if k in start_flags:
-                    flags.add(k) # continue...
-                elif k == "-gbfal":
-                    try:
-                        gbfal = argv[i+1]
-                        i += 1
-                    except:
-                        print("GBFAL parameter error")
+            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
+                print("GBFAP updater v2.4\n")
+                start_flags = set(["-force", "-download", "-init", "-debug"])
+                flags = set()
+                extras = []
+                gbfal = None
+                i = 0
+                while i < len(argv):
+                    k = argv[i]
+                    if k in start_flags:
+                        flags.add(k) # continue...
+                    elif k == "-gbfal":
+                        try:
+                            gbfal = argv[i+1]
+                            i += 1
+                        except:
+                            print("GBFAL parameter error")
+                            return
+                    elif k.startswith("-"):
+                        flags.add(k)
+                        extras = argv[i+1:]
+                        break
+                    else:
+                        print("Unknown parameter:", k)
                         return
-                elif k.startswith("-"):
-                    flags.add(k)
-                    extras = argv[i+1:]
-                    break
-                else:
-                    print("Unknown parameter:", k)
-                    return
-                i += 1
-            self.force_update = ('-force' in flags)
-            self.download_assets = ('-download' in flags)
-            self.debug_mode = ('-debug' in flags)
-            if gbfal is not None:
-                try:
-                    with open(gbfal, mode="r", encoding="utf-8") as f:
-                        self.gbfal = json.load(f)
-                    print("GBFAL data is loaded")
-                    self.update_data_from_GBFAL()
-                except Exception as e:
-                    print("GBFAL data couldn't be loaded")
-                    print(e)
-            if '-init' in flags: await self.initFiles()
-            elif "-update" in flags: await self.manualUpdate(extras)
-            else: await self.run()
+                    i += 1
+                self.force_update = ('-force' in flags)
+                self.download_assets = ('-download' in flags)
+                self.debug_mode = ('-debug' in flags)
+                if gbfal is not None:
+                    try:
+                        with open(gbfal, mode="r", encoding="utf-8") as f:
+                            self.gbfal = json.load(f)
+                        print("GBFAL data is loaded")
+                        self.update_data_from_GBFAL()
+                    except Exception as e:
+                        print("GBFAL data couldn't be loaded")
+                        print(e)
+                if '-init' in flags: await self.initFiles()
+                elif "-update" in flags: await self.manualUpdate(extras)
+                else: await self.run()
         except Exception as e:
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
-        try: await self.client.close()
-        except: pass
 
     def start(self, argv : list) -> None:
         asyncio.run(self.boot(argv))

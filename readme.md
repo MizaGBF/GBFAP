@@ -25,7 +25,7 @@ Simply do `python updater.py` for future updates.
   
 # The updater  
 `updater.py` scours the GBF asset servers to build an index of playable character, along with the data needed for their respective demos.  
-It's currently compatible with all characters (R, SR, SSR, Skins), weapons and classes released up to today.  
+It's currently compatible with all characters (R, SR, SSR, Skins), summons, weapons and classes released up to today.  
 The resulting data will be in the `json` folder.  
   
 There are three main possible command lines:

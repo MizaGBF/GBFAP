@@ -49,6 +49,8 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
             CHARA_OUT: "chara_out",
             ABILITY: "ability",
             ABILITY_WAIT: "ability_wait",
+            SUMMON_ATTACK: "summon_atk", // special for summon use
+            SUMMON_DAMAGE: "summon_dmg", // special for summon use
             MORTAL: "mortal",
             MORTAL_A: "mortal_A",
             MORTAL_A_1: "mortal_A_1",
@@ -234,10 +236,11 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     createjs.Ticker.setFPS(this.fps)
             },
             getActionList: function() {
-                var newList=[]
-                var newSet=new Set()
-                var i = 0
-                var len=this.cjsNpc['name'].length
+                if(mc_summon != null) return this.cjsMortalList.length == 2 ? ["summon", "summon_atk", "summon_dmg"] : ["summon", "summon_atk"];
+                let newList=[]
+                let newSet=new Set()
+                let i = 0
+                let len=this.cjsNpc['name'].length
                 for (action in this.cjsNpc['children'][0]){
                     actionStr=action.toString()
                     if(is_mc && actionStr.includes("mortal") && ((mc_wpn == null && !actionStr.endsWith('_mortal_B')) || (mc_wpn != null && ["_1", "_2"].includes(actionStr.slice(-2))))) continue; // hack to disable some ougi options on mc
@@ -271,6 +274,8 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     case 'triple': return "Attack 3";
                     case 'quadruple': return "Attack 4";
                     case 'charge': return "Charged";
+                    case 'summon_atk': return "Summon Call";
+                    case 'summon_dmg': return "Summon Damage";
                     case 'mortal_A': return "Charge Attack";
                     case 'mortal_A_1': return "Charge Attack A";
                     case 'mortal_A_2': return "Charge Attack B";
@@ -389,6 +394,30 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                         B.cjsMortal.scaleY *= n,
                         B.cjsMortal[a][a+"_special"].gotoAndPlay("special")
                         return B.getAnimDuration(B.cjsMortal[a][a+"_special"])
+                }
+                function d_summon(a) { // custom version of d() above, for summons
+                    B.cjsMortal = new lib[a],
+                        B.stage.addChild(B.cjsMortal),
+                        B.isFullScreenMortal ? (B.cjsMortal.x = f.x,
+                            B.cjsMortal.y = f.y) : B.isFixedPosOwnerBG ? (B.cjsMortal.x = f.x,
+                                B.cjsMortal.y = f.y,
+                                B.stage.setChildIndex(B.cjsMortal, o.CHARACTER)) : (B.cjsMortal.x = B.cjsEnemy.x,
+                                    B.cjsMortal.y = B.cjsEnemy.y + k,
+                                    B.stage.setChildIndex(B.cjsMortal, o.CHARACTER)),
+                        B.cjsMortal.x += B.cjsMortalPos.x,
+                        B.cjsMortal.y += B.cjsMortalPos.y,
+                        B.cjsMortal.scaleX *= n,
+                        B.cjsMortal.scaleY *= n;
+                    if(!(a in B.cjsMortal[a])) // failsafe for old or untested summons
+                    {
+                        for(const k in B.cjsMortal[a])
+                        {
+                            if(k.includes('attack'))
+                                return B.getAnimDuration(B.cjsMortal[a][k]);
+                        }
+                        return 0;
+                    }
+                    return B.getAnimDuration(B.cjsMortal[a][a]);
                 }
                 function e(a) {
                     var b = a.replace(/_[a-z][0-9]/g, "").replace(/.*_([a-z])?.*/, "$1");
@@ -516,6 +545,16 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                         }
                         l();
                         break;
+                    case q.SUMMON_ATTACK: // summon hack
+                    case q.SUMMON_DAMAGE: // summon hack
+                        var E = b;
+                        this.currentIndex = 0 ;
+                        var C = this.cjsMortalList[this.currentIndex].list;
+                        this.damageTarget = C[this.mortalIndex].target === s.THEM ? s.ENEMY : s.PLAYER;
+                        this.updateCjsParams(this.currentIndex);
+                        y = d_summon(b == q.SUMMON_DAMAGE ? this.cjsNameMortal.replace('attack', 'damage') : this.cjsNameMortal);
+                        l();
+                        break;
                     case q.ATTACK:
                     case q.ATTACK_SHORT:
                     case q.ATTACK_DOUBLE:
@@ -549,7 +588,8 @@ define(["view/cjs", "view/content", "lib/common"], function (a, b) {
                     document.getElementById("act-duration").innerHTML = newDuration;
                 };
                 x.addEventListener(g, v);
-                x.gotoAndPlay(b);
+                if(b != q.SUMMON_ATTACK && b!= q.SUMMON_DAMAGE) // hack to avoid MC moving during summoning
+                    x.gotoAndPlay(b);
                 flag = true
                 for (i = 0; i < dispatchStack.length; i++) {
                     if (dispatchStack[i] == 0) {
