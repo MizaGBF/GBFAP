@@ -427,7 +427,7 @@ function loadMC(id)
 function successLoading(id)
 {
     // try to access CORS proxy by requesting the enemy
-    get(Game.jsUri + "/model/manifest/" + AnimeEnemy + ".js", startplayer, playerFail, id);
+    get(Game.jsUri + "/model/manifest/" + AnimeEnemy + ".js?" + Date.now(), startplayer, playerFail, id);
 }
 
 // on error loading the player
