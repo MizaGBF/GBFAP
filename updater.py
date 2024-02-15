@@ -453,6 +453,7 @@ class Updater():
         self.index = {}
         self.modified = False
         self.queue = asyncio.Queue()
+        self.update_changelog = True
         self.force_update = False
         self.download_assets = False
         self.debug_mode = False
@@ -941,7 +942,7 @@ class Updater():
                         else: continue
                 uncap_data = []
                 for i, sp in enumerate(calls):
-                    tmp = [str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if i > 0 else ''), mc_cjs, '', "phit_sw_0001", sp, ('attack' in sp)] # name, cjs, mortal, phit, sp, fullscreen
+                    tmp = [str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 and len(calls) > 1) else ''), mc_cjs, '', "phit_sw_0001", sp, ('attack' in sp)] # name, cjs, mortal, phit, sp, fullscreen
                     if '_s2' in tmp[4] or '_s3' in tmp[4]:
                         tmp[5] = True
                     uncap_data.append(tmp)
@@ -1241,41 +1242,40 @@ class Updater():
         except:
             self.index = {}
 
-    def saveIndex(self, force : bool = False) -> None:
-        update_changelog = False
+    def saveIndex(self) -> None:
         try:
-            if force or self.modified:
+            if self.modified:
+                self.modified = False
                 with open("json/data.json", 'w') as outfile:
                     self.index = dict(sorted(self.index.items(), reverse=True))
                     json.dump(self.index, outfile)
-                update_changelog = True
-                self.modified = False
-                print("Updated data.json")
-        except:
-            print("Failed to write data.json")
-        if update_changelog:
-            try:
-                with open('json/changelog.json', mode='r', encoding='utf-8') as f:
+                try:
+                    with open('json/changelog.json', mode='r', encoding='utf-8') as f:
+                        existing = {}
+                        for e in json.load(f).get('new', []):
+                            existing[e[0]] = e[1]
+                except:
                     existing = {}
-                    for e in json.load(f).get('new', []):
-                        existing[e[0]] = e[1]
-            except:
-                existing = {}
-            new = []
-            existing = existing | self.latest_additions
-            self.latest_additions = {}
-            for k, v in existing.items():
-                new.append([k, v])
-            if len(new) > self.MAX_NEW: new = new[len(new)-self.MAX_NEW:]
-            with open('json/changelog.json', mode='w', encoding='utf-8') as outfile:
-                json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new}, outfile)
-            print("changelog.json updated")
+                new = []
+                if self.update_changelog:
+                    existing = existing | self.latest_additions
+                self.latest_additions = {}
+                for k, v in existing.items():
+                    new.append([k, v])
+                if len(new) > self.MAX_NEW: new = new[len(new)-self.MAX_NEW:]
+                with open('json/changelog.json', mode='w', encoding='utf-8') as outfile:
+                    json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new}, outfile)
+                if self.update_changelog: print("data.json and changelog.json updated")
+                else: print("data.json updated")
+        except Exception as e:
+            print(e)
+            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
 
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v2.4\n")
-                start_flags = set(["-force", "-download", "-init", "-debug"])
+                print("GBFAP updater v2.5\n")
+                start_flags = set(["-force", "-download", "-init", "-nochange", "-debug"])
                 flags = set()
                 extras = []
                 gbfal = None
@@ -1299,6 +1299,7 @@ class Updater():
                         print("Unknown parameter:", k)
                         return
                     i += 1
+                self.update_changelog = ('-nochange' not in flags)
                 self.force_update = ('-force' in flags)
                 self.download_assets = ('-download' in flags)
                 self.debug_mode = ('-debug' in flags)

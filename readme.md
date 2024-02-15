@@ -36,6 +36,7 @@ You can then add the following options before for more control:
 * `-force` will force a character indexation and, as a result, rebuild its JSON data (No need to use with `-update`).  
 * `-download` will download and save the character assets in their respective folders.  
 * `-init` will download the assets needed for the demo enemy and the dummy attack effect, among other things. This command isn't needed if you don't host the assets.  
+* `-nochange` to not update the `changelog.json` recently updated element list.  
   
 And the following if you're using [GBFAL](https://github.com/MizaGBF/GBFAL):
 * `-gbfal` followed by the path to GBFAL `data.json` file.  
