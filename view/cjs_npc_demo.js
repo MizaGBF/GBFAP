@@ -244,7 +244,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.WAIT: return "Idle";
                 case animations.TO_STB_WAIT: return "Weapon Drew";
                 case animations.STB_WAIT: return "Weapon Drew (IDLE)";
-                case animations.CHARA_SELECT: "chara_select": 
+                case animations.CHARA_SELECT: return "Selection";
                 case animations.CHARA_IN: return "Fade In";
                 case animations.CHARA_OUT: return "Fade Out";
                 case 'charge': return "Charged";
