@@ -1,4 +1,6 @@
+// initialization of important variables
 var versionList=Array.from(AnimeData[0]);
+var action_speed=1;
 var action_index=AnimeData[1];
 var action_list={};
 var dispatchStack = new Array;
@@ -6,7 +8,6 @@ var animeVersion='0';
 var stage={
     global:{}
 };
-
 var cjs = new Object;
 cjs.canvas = {};
 cjs.stage = {};
@@ -16,6 +17,7 @@ for (i in action_index) {
     action_index[i].action_label_list =Array.from(action_index[i].action_label_list)
 }
 
+// set HTML
 var strCanvas = '<canvas class="cjs-npc-demo cjs-npc-demo-0" width="2000" height="2000" style="display:block; top:50%; left:50%; transform:translate(-50%,-50%); position: absolute;z-index:0;width:calc(256vw - 218px);max-height:1400px;max-width:1400px;"></canvas>'
 for (var i = 1; i < versionList.length; i++) {
     strCanvas = strCanvas + '<canvas class="cjs-npc-demo cjs-npc-demo-' + i +
@@ -43,9 +45,16 @@ document.getElementById("AnimationPlayer").innerHTML = '\
         </div>\
         <div class="anime-buttom">\
             <div class="bg-selection">\
+                <label>Controls</label>\
+                <div>\
+                    <button class="std-button" onclick="togglePause();" id="pause-btn">Pause</button>\
+                    <button class="std-button" onclick="changeSpeed(-0.25);" id="speed-btn">Slower</button>\
+                    <button class="std-button" onclick="changeSpeed(0.25);" id="speed-btn">Faster</button>\
+                    <button class="std-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');">Set BG.</button>\
+                </div>\
                 <label>Background</label>\
                 <div>\
-                    <button class="std-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');">Select</button>\
+                    <button class="std-button" onclick="setExternalBackground(\'https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img/sp/raid/bg/event_82.jpg\')">Default</button>\
                     <button class="std-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/0.jpg\')">Black</button>\
                     <button class="std-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/1.jpg\')">Grid</button>\
                     <button class="std-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/2.jpg\')">Green</button>\
@@ -57,8 +66,9 @@ document.getElementById("AnimationPlayer").innerHTML = '\
             <label for="act-selection">Action</label><select id="act-selection" onchange="actionChange(this)"></select><br/>\
         </div>\
         <div>\
-            <span id="act-label">Current:</span><span id="act-name">Loading...</span><br>\
-            <span id="act-label">Duration:</span><span id="act-duration">???</span>\
+            <span class="act-label">Current:</span><span id="act-name">Loading...</span><br>\
+            <span class="act-label">Duration:</span><span id="act-duration">???</span><br>\
+            <span class="act-label">Speed:</span><span id="act-speed">100%</span>\
         </div>\
     </div>';
 strSelection=null;
@@ -70,18 +80,48 @@ if (document.getElementById("version-selection")){
     document.getElementById("act-selection").focus();
 }
 
-var actionChange = function (obj) {
+// functions
+function actionChange(obj)
+{
     var action = obj.options[obj.selectedIndex].value;
-    if (action == 'default') {
+    if (action == 'default')
+    {
         action_list.motionList = action_index[animeVersion].action_label_list
     }
-    else {
+    else
+    {
         action_list.motionList = [action]
     }
     this.cjsViewList[animeVersion].cjsNpc.children[0].dispatchEvent("animationComplete");
 };
 
-var versionChange = function (obj) {
+function togglePause()
+{
+    if(document.getElementById("act-name").innerHTML == "Loading...") return;
+    if(this.cjsViewList[animeVersion].isPaused)
+    {
+        document.getElementById("pause-btn").innerHTML = "Pause";
+        this.cjsViewList[animeVersion].resume();
+    }
+    else
+    {
+        document.getElementById("pause-btn").innerHTML = "Play";
+        this.cjsViewList[animeVersion].pause();
+    }
+}
+
+function changeSpeed(delta)
+{
+    if(document.getElementById("act-name").innerHTML == "Loading...") return;
+    action_speed += delta;
+    if(action_speed > 2) action_speed = 2;
+    else if(action_speed < 0.25) action_speed = 0.25;
+    createjs.Ticker.setFPS(30*action_speed);
+    document.getElementById("act-speed").innerHTML = JSON.stringify(100*action_speed) + "%";
+}
+
+function versionChange(obj)
+{
     animeVersion = obj.options[obj.selectedIndex].value;
 
     //verify if action exists
@@ -123,6 +163,7 @@ var versionChange = function (obj) {
             canvas.style.setProperty('display', 'none');
         }
     };
+    document.getElementById("pause-btn").innerHTML = "Pause";
     
     // header image
     if(!AnimeDebug)

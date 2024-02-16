@@ -230,7 +230,7 @@ select:hover {
   background-color: #ffffff;
 }
 
-#act-name, #act-duration, #act-label {
+#act-name, #act-duration, #act-speed, .act-label {
     width: 200px;
     font-size: 20px;
     display: inline-block;
@@ -409,7 +409,7 @@ a:active {
       font-size: 40px;
     }
 
-    #act-name, #act-duration, #act-label {
+    #act-name, #act-duration, #act-speed, .act-label {
         width: 300px;
         font-size: 40px;
     }

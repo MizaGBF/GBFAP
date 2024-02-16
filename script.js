@@ -1,5 +1,4 @@
 define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], function (cjsloader, manifestloader, cjs_npc_demo) {
-    
     loadCJS = function (a) {
         var b = $.Deferred();
         return cjsloader.once("complete", function () {
@@ -41,7 +40,6 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
     cjsRender = function (a) {
         a.cjsRender()
     };
-
     prepareCjs = function () {
         var a = this
         a.cjsViewList = new Array();
