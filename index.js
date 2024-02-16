@@ -931,15 +931,18 @@ function toggleBookmark(id = null, search_type = null) // toggle bookmark state
 function setBookmarkButton(val) // set bookmark button state
 {
     let fav = document.getElementById('fav-btn');
-    if(val)
+    if(fav != null)
     {
-        fav.classList.add("fav-on");
-        fav.innerHTML = "★";
-    }
-    else
-    {
-        fav.classList.remove("fav-on");
-        fav.innerHTML = "☆";
+        if(val)
+        {
+            fav.classList.add("fav-on");
+            fav.innerHTML = "★";
+        }
+        else
+        {
+            fav.classList.remove("fav-on");
+            fav.innerHTML = "☆";
+        }
     }
 }
 
