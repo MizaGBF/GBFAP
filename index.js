@@ -1,5 +1,5 @@
 // constant
-const LOCAL = true; // set to true if assets are on the same machine
+const LOCAL = false; // set to true if assets are on the same machine
 const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
 const HISTORY_LENGTH = 20; // size limit of the history
 const PLAYER_ENEMIES = ["enemy_9100211", "enemy_9100221", "enemy_6204152"]; // rotating enemies
