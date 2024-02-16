@@ -243,7 +243,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             {
                 case animations.WAIT: return "Idle";
                 case animations.TO_STB_WAIT: return "Weapon Drew";
-                case animations.STB_WAIT: return "Weapon Drew (IDLE)";
+                case animations.STB_WAIT: return "Weapon Drew (Idle)";
                 case animations.CHARA_SELECT: return "Selection";
                 case animations.CHARA_IN: return "Fade In";
                 case animations.CHARA_OUT: return "Fade Out";
@@ -306,12 +306,12 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.INVISIBLE: return "Invisible";
                 case animations.HIDE: return "Hide";
                 case animations.DOWN: return "Low HP";
-                case animations.WAIT_SPECIAL: return "Wait (Special)";
-                case animations.WAIT_SPECIAL_1: return "Wait (Special) A";
-                case animations.WAIT_SPECIAL_2: return "Wait (Special) B";
-                case animations.WAIT_SPECIAL_3: return "Wait (Special) C";
-                case animations.WAIT_SPECIAL_4: return "Wait (Special) D";
-                case animations.WAIT_SPECIAL_5: return "Wait (Special) E";
+                case animations.WAIT_SPECIAL: return "Idle (Special)";
+                case animations.WAIT_SPECIAL_1: return "Idle (Special) A";
+                case animations.WAIT_SPECIAL_2: return "Idle (Special) B";
+                case animations.WAIT_SPECIAL_3: return "Idle (Special) C";
+                case animations.WAIT_SPECIAL_4: return "Idle (Special) D";
+                case animations.WAIT_SPECIAL_5: return "Idle (Special) E";
                 case animations.MISS:  return "Miss";
                 case animations.SUMMON: return "Summoning";
                 case animations.ABILITY_MOTION_OLD: return "Miss (Old)";
