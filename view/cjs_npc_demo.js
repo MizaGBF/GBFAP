@@ -5,12 +5,12 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
     canvasSize /= 2;
     let posFix = canvasSize - canvasSize / realSize * windowSize;
     const npcOffset = {
-        x: 140 + canvasSize,
-        y: 60 + canvasSize
+        x: is_enemy ? (-180 + canvasSize) : (140 + canvasSize),
+        y: is_enemy ? (310 + canvasSize) : (60 + canvasSize)
     };
     const enemyOffset = {
-        x: -140 + canvasSize,
-        y: 95 + canvasSize
+        x: is_enemy ? (180 + canvasSize) : (-140 + canvasSize),
+        y: is_enemy ? (170 + canvasSize) : (95 + canvasSize)
     };
     const bgOffset = {
         x: 50 + posFix,
@@ -28,6 +28,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
     };
     const animations = {
         WAIT: "wait",
+        WAIT_2: "wait_2",
+        WAIT_3: "wait_3",
         TO_STB_WAIT: "setup",
         STB_WAIT: "stbwait",
         CHARA_SELECT: "chara_select",
@@ -77,13 +79,20 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         ATTACK_TRIPLE: "triple",
         ATTACK_QUADRUPLE: "quadruple",
         SPECIAL_ATTACK: "attack_2",
+        ENEMY_ATTACK: "attack_3",
         CHANGE: "change",
         CHANGE_TO: "change_1",
         CHANGE_FROM: "change_2",
         CHANGE_TO_2: "change_1_2",
         CHANGE_FROM_2: "change_2_2",
         DEAD: "dead",
+        DEAD_2: "dead_2",
         DAMAGE: "damage",
+        DAMAGE_1: "damage_1",
+        DAMAGE_2: "damage_2",
+        DAMAGE_3: "damage_3",
+        DAMAGE_4: "damage_4",
+        DAMAGE_5: "damage_5",
         WIN: "win",
         INVISIBLE: "invisible",
         HIDE: "hide",
@@ -100,7 +109,101 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         ABILITY_MOTION: "ab_motion",
         ABILITY_MOTION_2: "ab_motion_2",
         ABILITY_MOTION_3: "ab_motion_3",
-        ABILITY_MOTION_4: "ab_motion_4"
+        ABILITY_MOTION_4: "ab_motion_4",
+        ENEMY_PHASE_1: "setin",
+        ENEMY_PHASE_2: "setin_2",
+        ENEMY_PHASE_3: "setin_3",
+        ENEMY_PHASE_4: "setin_4",
+        ENEMY_PHASE_5: "setin_5",
+        ENEMY_FORM_CHANGE: "form_change",
+        ENEMY_STANDBY_A: "standby_A",
+        ENEMY_STANDBY_B: "standby_B",
+        ENEMY_STANDBY_C: "standby_C",
+        ENEMY_BREAK_STANDBY_A: "break_standby_A",
+        ENEMY_BREAK_STANDBY_B: "break_standby_B",
+        ENEMY_BREAK_STANDBY_C: "break_standby_C",
+        ENEMY_DAMAGE_STANDBY_A: "damage_standby_A",
+        ENEMY_DAMAGE_STANDBY_B: "damage_standby_B",
+        ENEMY_DAMAGE_STANDBY_C: "damage_standby_C",
+        LINK_PHASE_1: "setin_link",
+        LINK_PHASE_1_2: "setin_link_2",
+        LINK_PHASE_1_F2: "setin_link_f2",
+        LINK_PHASE_1_F2_2: "setin_link_f2_2",
+        LINK_PHASE_2: "setin_2_link",
+        LINK_PHASE_2_2: "setin_2_link_2",
+        LINK_PHASE_2_F2: "setin_2_link_f2",
+        LINK_PHASE_2_F2_2: "setin_2_link_f2_2",
+        LINK_PHASE_3: "setin_3_link",
+        LINK_PHASE_3_2: "setin_3_link_2",
+        LINK_PHASE_3_F2: "setin_3_link_f2",
+        LINK_PHASE_3_F2_2: "setin_3_link_f2_2",
+        LINK_PHASE_4: "setin_4_link",
+        LINK_PHASE_4_2: "setin_4_link_2",
+        LINK_PHASE_4_F2: "setin_4_link_f2",
+        LINK_PHASE_4_F2_2: "setin_4_link_f2_2",
+        LINK_PHASE_5: "setin_5_link",
+        LINK_PHASE_5_2: "setin_5_link_2",
+        LINK_PHASE_5_F2: "setin_5_link_f2",
+        LINK_PHASE_5_F2_2: "setin_5_link_f2_2",
+        LINK_DAMAGE: "damage_link",
+        LINK_DAMAGE_2: "damage_link_2",
+        LINK_DEAD: "dead_link",
+        LINK_DEAD_1: "dead_1_link",
+        LINK_DEAD_2: "dead_2_link",
+        LINK_DEAD_3: "dead_3_link",
+        LINK_DEAD_A: "dead_link_1",
+        LINK_DEAD_B: "dead_link_2",
+        LINK_DEAD_C: "dead_link_3",
+        LINK_MORTAL_A: "mortal_A_link",
+        LINK_MORTAL_A_2: "mortal_A_link_2",
+        LINK_MORTAL_A_F2: "mortal_A_link_f2",
+        LINK_MORTAL_A_F2_2: "mortal_A_link_f2_2",
+        LINK_MORTAL_B: "mortal_B_link",
+        LINK_MORTAL_B_2: "mortal_B_link_2",
+        LINK_MORTAL_B_F2: "mortal_B_link_f2",
+        LINK_MORTAL_B_F2_2: "mortal_B_link_f2_2",
+        LINK_MORTAL_C: "mortal_C_link",
+        LINK_MORTAL_C_2: "mortal_C_link_2",
+        LINK_MORTAL_C_F2: "mortal_C_link_f2",
+        LINK_MORTAL_C_F2_2: "mortal_C_link_f2_2",
+        LINK_MORTAL_D: "mortal_D_link",
+        LINK_MORTAL_D_2: "mortal_D_link_2",
+        LINK_MORTAL_D_F2: "mortal_D_link_f2",
+        LINK_MORTAL_D_F2_2: "mortal_D_link_f2_2",
+        LINK_MORTAL_E: "mortal_E_link",
+        LINK_MORTAL_E_2: "mortal_E_link_2",
+        LINK_MORTAL_E_F2: "mortal_E_link_f2",
+        LINK_MORTAL_E_F2_2: "mortal_E_link_f2_2",
+        LINK_MORTAL_F: "mortal_F_link",
+        LINK_MORTAL_F_2: "mortal_F_link_2",
+        LINK_MORTAL_F_F2: "mortal_F_link_f2",
+        LINK_MORTAL_F_F2_2: "mortal_F_link_f2_2",
+        LINK_MORTAL_G: "mortal_G_link",
+        LINK_MORTAL_G_2: "mortal_G_link_2",
+        LINK_MORTAL_G_F2: "mortal_G_link_f2",
+        LINK_MORTAL_G_F2_2: "mortal_G_link_f2_2",
+        LINK_MORTAL_H: "mortal_H_link",
+        LINK_MORTAL_H_2: "mortal_H_link_2",
+        LINK_MORTAL_H_F2: "mortal_H_link_f2",
+        LINK_MORTAL_H_F2_2: "mortal_H_link_f2_2",
+        LINK_MORTAL_I: "mortal_I_link",
+        LINK_MORTAL_I_2: "mortal_I_link_2",
+        LINK_MORTAL_I_F2: "mortal_I_link_f2",
+        LINK_MORTAL_I_F2_2: "mortal_I_link_f2_2",
+        LINK_MORTAL_J: "mortal_J_link",
+        LINK_MORTAL_J_2: "mortal_J_link_2",
+        LINK_MORTAL_J_F2: "mortal_J_link_f2",
+        LINK_MORTAL_J_F2_2: "mortal_J_link_f2_2",
+        LINK_MORTAL_K: "mortal_K_link",
+        LINK_MORTAL_K_2: "mortal_K_link_2",
+        LINK_MORTAL_K_F2: "mortal_K_link_f2",
+        LINK_MORTAL_K_F2_2: "mortal_K_link_f2_2",
+        LINK_ATTACK: "attack_link",
+        LINK_ATTACK_2: "attack_link_2",
+        LINK_ATTACK_F2: "attack_link_f2",
+        LINK_ATTACK_F2_2: "attack_link_f2_2",
+        LINK_FORM_CHANGE: "form_change_link",
+        LINK_FORM_CHANGE_2: "form_change_link_2"
     };
     const aniState = {
         WAIT: 10,
@@ -196,7 +299,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             this.cjsEnemy.name = AnimeEnemy;
             this.cjsEnemy.x = enemyOffset.x;
             this.cjsEnemy.y = enemyOffset.y;
-            this.cjsEnemy.scaleX = scaling;
+            this.cjsEnemy.scaleX = scaling * (is_enemy ? -1 : 1);
             this.cjsEnemy.scaleY = scaling;
             this.cjsEnemy.getChildAt(0).gotoAndPlay("wait");
             this.stage.addChild(this.cjsEnemy);
@@ -242,6 +345,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             switch(action)
             {
                 case animations.WAIT: return "Idle";
+                case animations.WAIT_2: return "Idle (Overdrive)";
+                case animations.WAIT_3: return "Idle (Break)";
                 case animations.TO_STB_WAIT: return "Weapon Drew";
                 case animations.STB_WAIT: return "Weapon Drew (Idle)";
                 case animations.CHARA_SELECT: return "Selection";
@@ -291,14 +396,22 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.ATTACK_DOUBLE: return "Attack 2";
                 case animations.ATTACK_TRIPLE: return "Attack 3";
                 case animations.ATTACK_QUADRUPLE: return "Attack 4";
-                case animations.SPECIAL_ATTACK: return "Attack (Alt)";
+                case animations.SPECIAL_ATTACK: return "Attack B";
+                case animations.ENEMY_ATTACK: return "Attack C";
                 case animations.CHANGE: return "Change Form";
                 case animations.CHANGE_TO: return "Change Form 1";
                 case animations.CHANGE_FROM: return "Change Form 2";
                 case animations.CHANGE_TO_2: return "Change Form 3";
                 case animations.CHANGE_FROM_2: return "Change Form 4";
                 case animations.DEAD: return "Dead";
+                case animations.DEAD_1: return "Dead 1";
+                case animations.DEAD_2: return "Dead 2";
                 case animations.DAMAGE: return "Damaged";
+                case animations.DAMAGE_1: return "Damaged A";
+                case animations.DAMAGE_2: return "Damaged B (Overdrive)";
+                case animations.DAMAGE_3: return "Damaged C (Break)";
+                case animations.DAMAGE_4: return "Damaged D";
+                case animations.DAMAGE_5: return "Damaged E";
                 case animations.WIN: return "Win";
                 case 'win_1': return "Win Alt. 1";
                 case 'win_2': return "Win Alt. 2";
@@ -325,6 +438,100 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case 'vs_motion_4': return "Custom Skill D";
                 case 'vs_motion_5': return "Custom Skill E";
                 case 'vs_motion_6': return "Custom Skill F";
+                case animations.ENEMY_PHASE_1: return "Phase 1 (Entry)";
+                case animations.ENEMY_PHASE_2: return "Phase 2 (Overdrive)";
+                case animations.ENEMY_PHASE_3: return "Phase 3 (Break)";
+                case animations.ENEMY_PHASE_4: return "Phase 4";
+                case animations.ENEMY_PHASE_5: return "Phase 5";
+                case animations.ENEMY_FORM_CHANGE: return "Form Change";
+                case animations.ENEMY_STANDBY_A: return "Standby A";
+                case animations.ENEMY_STANDBY_B: return "Standby B";
+                case animations.ENEMY_STANDBY_C: return "Standby C";
+                case animations.ENEMY_BREAK_STANDBY_A: return "Standby A (Break)";
+                case animations.ENEMY_BREAK_STANDBY_B: return "Standby B (Break)";
+                case animations.ENEMY_BREAK_STANDBY_C: return "Standby C (Break)";
+                case animations.ENEMY_DAMAGE_STANDBY_A: return "Standby A (Damaged)";
+                case animations.ENEMY_DAMAGE_STANDBY_B: return "Standby B (Damaged)";
+                case animations.ENEMY_DAMAGE_STANDBY_C: return "Standby C (Damaged)";
+                case animations.LINK_PHASE_1: return "Phase 1 (Entry)(Link)";
+                case animations.LINK_PHASE_1_2: return "Phase 1 B (Entry)(Link)";
+                case animations.LINK_PHASE_1_F2: return "Phase 1 C (Entry)(Link)";
+                case animations.LINK_PHASE_1_F2_2: return "Phase 1 D (Entry)(Link)";
+                case animations.LINK_PHASE_2: return "Phase 2 (OD.)(Link)";
+                case animations.LINK_PHASE_2_2: return "Phase 2 B (OD.)(Link)";
+                case animations.LINK_PHASE_2_F2: return "Phase 2 C (OD.)(Link)";
+                case animations.LINK_PHASE_2_F2_2: return "Phase 2 D (OD.)(Link)";
+                case animations.LINK_PHASE_3: return "Phase 3 (Break)(Link)";
+                case animations.LINK_PHASE_3_2: return "Phase 3 B (Break)(Link)";
+                case animations.LINK_PHASE_3_F2: return "Phase 3 C (Break)(Link)";
+                case animations.LINK_PHASE_3_F2_2: return "Phase 3 D (Break)(Link)";
+                case animations.LINK_PHASE_4: return "Phase 4 (Link)";
+                case animations.LINK_PHASE_4_2: return "Phase 4 B (Link)";
+                case animations.LINK_PHASE_4_F2: return "Phase 4 C (Link)";
+                case animations.LINK_PHASE_4_F2_2: return "Phase 4 D (Link)";
+                case animations.LINK_PHASE_5: return "Phase 5 (Link)";
+                case animations.LINK_PHASE_5_2: return "Phase 5 B (Link)";
+                case animations.LINK_PHASE_5_F2: return "Phase 5 C (Link)";
+                case animations.LINK_PHASE_5_F2_2: return "Phase 5 D (Link)";
+                case animations.LINK_DAMAGE: return "Damaged (Link)";
+                case animations.LINK_DAMAGE_2: return "Damaged 2 (Link)";
+                case animations.LINK_DEAD: return "Dead (Link)";
+                case animations.LINK_DEAD_1: return "Dead 1 (Link)";
+                case animations.LINK_DEAD_2: return "Dead 2 (Link)";
+                case animations.LINK_DEAD_3: return "Dead 3 (Link)";
+                case animations.LINK_DEAD_A: return "Dead 1B (Link)";
+                case animations.LINK_DEAD_B: return "Dead 2B (Link)";
+                case animations.LINK_DEAD_C: return "Dead 3B (Link)";
+                case animations.LINK_MORTAL_A: return "Charge Atk. A (Link)";
+                case animations.LINK_MORTAL_A_2: return "Charge Atk. A2 (Link)";
+                case animations.LINK_MORTAL_A_F2: return "Charge Atk. A3 (Link)";
+                case animations.LINK_MORTAL_A_F2_2: return "Charge Atk. A4 (Link)";
+                case animations.LINK_MORTAL_B: return "Charge Atk. B (Link)";
+                case animations.LINK_MORTAL_B_2: return "Charge Atk. B2 (Link)";
+                case animations.LINK_MORTAL_B_F2: return "Charge Atk. B3 (Link)";
+                case animations.LINK_MORTAL_B_F2_2: return "Charge Atk. B4 (Link)";
+                case animations.LINK_MORTAL_C: return "Charge Atk. C (Link)";
+                case animations.LINK_MORTAL_C_2: return "Charge Atk. C2 (Link)";
+                case animations.LINK_MORTAL_C_F2: return "Charge Atk. C3 (Link)";
+                case animations.LINK_MORTAL_C_F2_2: return "Charge Atk. C4 (Link)";
+                case animations.LINK_MORTAL_D: return "Charge Atk. D (Link)";
+                case animations.LINK_MORTAL_D_2: return "Charge Atk. D2 (Link)";
+                case animations.LINK_MORTAL_D_F2: return "Charge Atk. D3 (Link)";
+                case animations.LINK_MORTAL_D_F2_2: return "Charge Atk. D4 (Link)";
+                case animations.LINK_MORTAL_E: return "Charge Atk. E (Link)";
+                case animations.LINK_MORTAL_E_2: return "Charge Atk. E2 (Link)";
+                case animations.LINK_MORTAL_E_F2: return "Charge Atk. E3 (Link)";
+                case animations.LINK_MORTAL_E_F2_2: return "Charge Atk. E4 (Link)";
+                case animations.LINK_MORTAL_F: return "Charge Atk. F (Link)";
+                case animations.LINK_MORTAL_F_2: return "Charge Atk. F2 (Link)";
+                case animations.LINK_MORTAL_F_F2: return "Charge Atk. F3 (Link)";
+                case animations.LINK_MORTAL_F_F2_2: return "Charge Atk. F4 (Link)";
+                case animations.LINK_MORTAL_G: return "Charge Atk. G (Link)";
+                case animations.LINK_MORTAL_G_2: return "Charge Atk. G2 (Link)";
+                case animations.LINK_MORTAL_G_F2: return "Charge Atk. G3 (Link)";
+                case animations.LINK_MORTAL_G_F2_2: return "Charge Atk. G4 (Link)";
+                case animations.LINK_MORTAL_H: return "Charge Atk. H (Link)";
+                case animations.LINK_MORTAL_H_2: return "Charge Atk. H2 (Link)";
+                case animations.LINK_MORTAL_H_F2: return "Charge Atk. H3 (Link)";
+                case animations.LINK_MORTAL_H_F2_2: return "Charge Atk. H4 (Link)";
+                case animations.LINK_MORTAL_I: return "Charge Atk. I (Link)";
+                case animations.LINK_MORTAL_I_2: return "Charge Atk. I2 (Link)";
+                case animations.LINK_MORTAL_I_F2: return "Charge Atk. I3 (Link)";
+                case animations.LINK_MORTAL_I_F2_2: return "Charge Atk. I4 (Link)";
+                case animations.LINK_MORTAL_J: return "Charge Atk. J (Link)";
+                case animations.LINK_MORTAL_J_2: return "Charge Atk. J2 (Link)";
+                case animations.LINK_MORTAL_J_F2: return "Charge Atk. J3 (Link)";
+                case animations.LINK_MORTAL_J_F2_2: return "Charge Atk. J4 (Link)";
+                case animations.LINK_MORTAL_K: return "Charge Atk. K (Link)";
+                case animations.LINK_MORTAL_K_2: return "Charge Atk. K2 (Link)";
+                case animations.LINK_MORTAL_K_F2: return "Charge Atk. K3 (Link)";
+                case animations.LINK_MORTAL_K_F2_2: return "Charge Atk. K4 (Link)";
+                case animations.LINK_ATTACK: return "Attack (Link)";
+                case animations.LINK_ATTACK_2: return "Attack B (Link)";
+                case animations.LINK_ATTACK_F2: return "Attack C (Link)";
+                case animations.LINK_ATTACK_F2_2: return "Attack D (Link)";
+                case animations.LINK_FORM_CHANGE: return "Form Change (Link)";
+                case animations.LINK_FORM_CHANGE_2: return "Form Change 2 (Link)"
                 default: return "??? (" + action + ")";
             };
         },
@@ -338,22 +545,25 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             elem.scaleY *= scaling,
             elem
         },
-        updateCjsParams: function(elem)
+        updateCjsParams: function(index)
         {
             this.cjsNameNpc = this.cjsList[0];
             this.cjsNameEffect = this.cjsEffectList[0];
-            this.cjsPos = this.cjsPosList[elem] || {
+            this.cjsPos = this.cjsPosList[index] || {
                 x: 0,
                 y: 0
             };
-            this.mortalIndex = this.mortalIndexList[elem];
-            this.cjsNameMortal = this.cjsMortalList[elem].list[this.mortalIndex].cjs;
-            this.isFullScreenMortal = !!this.cjsMortalList[elem].list[this.mortalIndex].full_screen || false;
-            this.isFixedPosOwnerBG = !!this.cjsMortalList[elem].list[this.mortalIndex].fixed_pos_owner_bg || false;
-            this.cjsMortalPos = this.cjsMortalPosList[0][this.mortalIndex] || {
-                x: 0,
-                y: 0
-            };
+            this.mortalIndex = this.mortalIndexList[index];
+            if(this.cjsMortalList.length > 0)
+            {
+                this.cjsNameMortal = this.cjsMortalList[index].list[this.mortalIndex].cjs;
+                this.isFullScreenMortal = !!this.cjsMortalList[index].list[this.mortalIndex].full_screen || false;
+                this.isFixedPosOwnerBG = !!this.cjsMortalList[index].list[this.mortalIndex].fixed_pos_owner_bg || false;
+                this.cjsMortalPos = this.cjsMortalPosList[0][this.mortalIndex] || {
+                    x: 0,
+                    y: 0
+                };
+            }
         },
         startAnim: function(elem, motion)
         {
@@ -361,28 +571,37 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             {
                 me.cjsMortal = new lib[mortal];
                 me.stage.addChild(me.cjsMortal);
-                if(me.isFullScreenMortal)
+                if(is_enemy)
                 {
-                    me.cjsMortal.x = bgOffset.x;
-                    me.cjsMortal.y = bgOffset.y;
+                    me.cjsMortal.x = me.cjsEnemy.x;
+                    me.cjsMortal.y = me.cjsEnemy.y;
+                    me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
                 }
                 else
                 {
-                    if(me.isFixedPosOwnerBG)
+                    if(me.isFullScreenMortal)
                     {
                         me.cjsMortal.x = bgOffset.x;
                         me.cjsMortal.y = bgOffset.y;
-                        me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
                     }
                     else
                     {
-                        me.cjsMortal.x = me.cjsEnemy.x;
-                        me.cjsMortal.y = me.cjsEnemy.y + ougiOffset;
-                        me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
+                        if(me.isFixedPosOwnerBG)
+                        {
+                            me.cjsMortal.x = bgOffset.x;
+                            me.cjsMortal.y = bgOffset.y;
+                            me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
+                        }
+                        else
+                        {
+                            me.cjsMortal.x = me.cjsEnemy.x;
+                            me.cjsMortal.y = me.cjsEnemy.y + ougiOffset;
+                            me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
+                        }
                     }
+                    me.cjsMortal.x += me.cjsMortalPos.x;
+                    me.cjsMortal.y += me.cjsMortalPos.y;
                 }
-                me.cjsMortal.x += me.cjsMortalPos.x;
-                me.cjsMortal.y += me.cjsMortalPos.y;
                 me.cjsMortal.scaleX *= scaling;
                 me.cjsMortal.scaleY *= scaling;
                 if(is_mc && mc_wpn)
@@ -457,7 +676,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             function addEnemyDamage() {
                 let elem = me.cjsEnemy[AnimeEnemy];
                 let duration = elem[AnimeEnemy + "_damage"].timeline.duration;
-                elem.gotoAndPlay("damage"),
+                elem.gotoAndPlay("damage");
                 createjs.Tween.get(me.cjsEnemy, {
                     useTicks: true
                 }).wait(duration).call(function () {
@@ -543,15 +762,20 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.MORTAL_K_1:
                 case animations.MORTAL_K_2:
                 {
-                    this.currentIndex = motion[motion.length-1].charCodeAt()-65
-                    if (this.currentIndex >= this.cjsMortalList.length){
+                    if(this.cjsMortalList.length == 0) // no ougi file
+                    {
+                        animDuration = this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]);
+                        break;
+                    }
+                    this.currentIndex = motion[motion.length-1].charCodeAt()-65;
+                    if(this.currentIndex >= this.cjsMortalList.length){
                         this.currentIndex=0
                     }
                     this.damageTarget = this.cjsMortalList[this.currentIndex].list[this.mortalIndex].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
                     this.updateCjsParams(this.currentIndex);
                     addOugi(this.cjsNameMortal);
                     animDuration = this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]) + ((is_mc && mc_wpn) ? this.getAnimDuration(this.cjsMortal[this.cjsNameMortal][this.cjsNameMortal+"_special"]) : 0);
-                    cycleMortalIndex();
+                    /*if(!is_enemy && !is_mc && !mc_wpn)*/ cycleMortalIndex();
                     break;
                 }
                 case animations.SUMMON_ATTACK: // summon hack
@@ -568,14 +792,16 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.ATTACK_DOUBLE:
                 case animations.ATTACK_TRIPLE:
                 case animations.ATTACK_QUADRUPLE:
+                case animations.SPECIAL_ATTACK:
+                case animations.ENEMY_ATTACK:
                 {
-                    this.damageTarget = targets.ENEMY,
-                        addAtkEffect(this.cjsNameEffect),
-                        createjs.Tween.get(this.cjsEnemy, {
-                            useTicks: true
-                        }).wait(i).call(function () {
-                            addEnemyDamage()
-                        });
+                    this.damageTarget = targets.ENEMY;
+                    addAtkEffect(this.cjsNameEffect);
+                    createjs.Tween.get(this.cjsEnemy, {
+                        useTicks: true
+                    }).wait(i).call(function () {
+                        addEnemyDamage()
+                    });
                     let nmotion = nextMotion();
                     animDuration = _.contains([animations.ATTACK_DOUBLE, animations.ATTACK_TRIPLE, animations.ATTACK_QUADRUPLE], nmotion) ? aniState.COMBO_PROCESS : this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]);
                     break;
@@ -623,7 +849,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             },[i])
         },
         getAnimDuration: function(elem) {
-            return !elem instanceof createjs.MovieClip ? null : +elem.timeline.duration
+            return !elem instanceof createjs.MovieClip ? null : (elem.timeline.duration ? +elem.timeline.duration : +elem.timeline.Id);
         },
         pause: function (a) { // pause
             (a || !this.isPaused) &&

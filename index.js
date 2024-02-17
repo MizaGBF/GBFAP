@@ -1,5 +1,5 @@
 // constant
-const LOCAL = false; // set to true if assets are on the same machine
+const LOCAL = true; // set to true if assets are on the same machine
 const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
 const HISTORY_LENGTH = 20; // size limit of the history
 const PLAYER_ENEMIES = ["enemy_9100211", "enemy_9100221", "enemy_6204152"]; // rotating enemies
@@ -56,6 +56,22 @@ const WEAPONS = [
     ["Harp", "8", "assets/ui/icon/harp.png"],
     ["Katana", "9", "assets/ui/icon/katana.png"]
 ];
+const ENEMIES_CATEGORIES = [
+    ["Beasts and Animals", "1", "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/1300123.png"],
+    ["Plants and Insects", "2", "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/2100543.png"],
+    ["Fishes and Sea Life", "3", "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/3101163.png"],
+    ["Golems and Robots", "4", "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/4300903.png"],
+    ["Undeads and Otherworlders", "5", "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/5200293.png"],
+    ["Humans and Humanoids", "6", "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/6205783.png"],
+    ["Dragons and Wyverns", "7", "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/7300733.png"],
+    ["Primal Beasts", "8", "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/8103063.png"],
+    ["Others", "9", "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/enemy/s/9101463.png"]
+]
+const ENEMIES = [
+    ["1 - Size A", "1"],
+    ["2 - Size B", "2"],
+    ["3 - Size C", "3"]
+];
 const BACKGROUNDS = [
     ["Mains", "main"],
     ["Commons", "common"],
@@ -91,6 +107,7 @@ var lastsearches = []; // history
 var bookmarks = []; // bookmarks
 var intervals = []; // on screen notifications
 var is_mc = false; // set to true if we are dealing with main character animations
+var is_enemy = false; // set to true if we are dealing with enemy animations
 var mc_id = null; // used by classes only
 var mc_wpn = null; // used by weapons and classes
 var mc_summon = null; // used by summons
@@ -288,6 +305,20 @@ function initIndex(unused)
             this.onclick = null;
         };
     }
+    parents = makeIndexSummary(content, "Enemies", true, false, "assets/ui/icon/enemies.png");
+    for(let i of ENEMIES_CATEGORIES)
+    {
+        let inter = makeIndexSummary(parents[0], i[0], true, true, i[2]);
+        for(let j of ENEMIES)
+        {
+            elems = makeIndexSummary(inter[0], j[0], false, true);
+            const tmp = [elems[0], i[1], j[1]];
+            elems[1].onclick = function (){
+                display(tmp[0], 'enemies', tmp[1], tmp[2], false, true);
+                this.onclick = null;
+            };
+        }
+    }
     parents = makeIndexSummary(content, "Backgrounds", true, false, "assets/ui/icon/backgrounds.png");
     parents[0].parentNode.id = "background-index";
     for(let i of BACKGROUNDS)
@@ -314,6 +345,10 @@ function initIndex(unused)
         else if(id.length == 6 && !isNaN(id))
         {
             loadMC(id);
+        }
+        else if(id.length == 7 && !isNaN(id))
+        {
+            loadEnemy(id);
         }
         else
         {
@@ -386,7 +421,10 @@ function loadCharacter(id)
             return
         }
         document.getElementById('output').innerHTML = "Error: Couldn't load ID " + id + style;
-        if(id.length == 10 && id.startsWith("20")) document.getElementById('output').innerHTML += "<br>Note: This summon might be unsupported or with an identical animation on another ID.";
+        if(id.length == 10 && id.startsWith("20"))
+            document.getElementById('output').innerHTML += "<br>Note: This summon might be unsupported or has identical animations on another ID.";
+        else if(id.length == 7)
+            document.getElementById('output').innerHTML += "<br>Note: This enemy might be unsupported or has identical animations on another ID.";
     }
 }
 
@@ -423,6 +461,40 @@ function loadMC(id)
     }
 }
 
+function loadEnemy(id)
+{
+    if(id in index)
+    {
+        updateHistory(id, 4);
+        AnimeData = [];
+        AnimeData.push([]);
+        AnimeData.push([]);
+        AnimeData.push({1: {1: ""},2: {1: ""}});
+        const data = index[id]; // NOTE: format is different
+        console.log(data);
+        is_enemy = true;
+        mc_id = id;
+        AnimeData[0].push(""); // empty name
+        const p = AnimeData[1].length;
+        AnimeData[1].push({});
+        AnimeData[1][p]["cjs"] = ["enemy_" + data['e']]; // cjs
+        AnimeData[1][p]['action_label_list'] = data['sp'].length > 0 ? ['setin', 'wait', 'attack', 'mortal_A', 'dead'] : ['setin', 'wait', 'attack', 'dead'];
+        AnimeData[1][p]['effect'] = [data['ehit']]; // phit
+        AnimeData[1][p]['special'] = [];
+        for(let sp of data['sp'])
+        {
+            AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":sp,"fixed_pos_owner_bg":0,"full_screen":0}]});
+        }
+        AnimeData[1][p]['cjs_pos'] = [{"y":0,"x":0}];
+        AnimeData[1][p]['special_pos'] = [[{"y":0,"x":0}]];
+        successLoading(id);
+    }
+    else // fail
+    {
+        document.getElementById('output').innerHTML = "Error: Couldn't load ID " + id;
+    }
+}
+
 // on success loading the player
 function successLoading(id)
 {
@@ -441,7 +513,7 @@ function failLoading(id)
 
 function startplayer(id)
 {
-    document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/index.php?title=Special:Search&search=' + id + '">Wiki</a><br><a href="https://mizagbf.github.io/GBFAL/?id=' + id + '">Assets</a><div id="AnimationPlayer"></div>';
+    document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/index.php?title=Special:Search&search=' + id + '">Wiki</a><br><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '">Assets</a><div id="AnimationPlayer"></div>';
     
     if(!AnimeDebug)
     {
@@ -452,8 +524,16 @@ function startplayer(id)
             this.id = "character";
         }
         let el = id.split("_");
-        if(el.length == 1 && el[0].length == 6)
-            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
+        if(el.length == 1)
+        {
+            if(el[0].length == 6)
+                img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
+            else
+            {
+                img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img/sp/assets/enemy/s/" + el[0] + ".png";
+                img.classList.add('preview');
+            }
+        }
         else if(id.startsWith("10"))
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
         else if(id.startsWith("20"))
@@ -467,7 +547,7 @@ function startplayer(id)
         }
     }
     // enable favorite
-    favButton(true, id, id.startsWith('10') ? 1 : id.startsWith('20') ? 2 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
+    favButton(true, id, id.length == 7 ? 4 : id.startsWith('10') ? 1 : id.startsWith('20') ? 2 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
 
     // load the player
     require(["createjs"], function (b) {
@@ -527,6 +607,15 @@ function updateList(node, elems) // update a list of elements
                 addIndexImage(node, "GBF/assets_en/img_low/sp/assets/leader/m/" + e[0].split('_')[0] + "_01.jpg", e[0]);
                 break;
             }
+            case 4:
+            {
+                addIndexImage(node, "GBF/assets_en/img/sp/assets/enemy/s/" + e[0] + ".png", e[0]).onload = function() {
+                    this.classList.remove("loading");
+                    this.classList.add("clickable");
+                    this.classList.add("preview");
+                };
+                break;
+            }
         }
     }
 }
@@ -572,6 +661,7 @@ function addIndexImage(node, path, id, is_bg = false) // add an image to an inde
                 setExternalBackground(img.src.replace('img_low/', 'img/').replace('-a1-', '-a-').replace('-a2-', '-a-').replace('-a3-', '-a-').replace('-a4-', '-a-').replace('-a5-', '-a-'));
             };
         };
+        return img;
     }
     else
     {
@@ -593,6 +683,7 @@ function addIndexImage(node, path, id, is_bg = false) // add an image to an inde
         img.src = path.replace("GBF/", idToEndpoint(id));
         img.title = id;
         a.href = "?id="+id;
+        return img;
     }
 }
 
@@ -604,6 +695,7 @@ function display(node, key, argA, argB, pad, reverse) // generic function to dis
     let target = null;
     let start = null;
     let lengths = null;
+    let onload = null;
     switch(key)
     {
         case "characters":
@@ -636,6 +728,17 @@ function display(node, key, argA, argB, pad, reverse) // generic function to dis
             start = "";
             lengths = [6];
             break;
+        case "enemies":
+            callback = display_enemies;
+            target = index;
+            start = "" + argA + argB;
+            lengths = [7];
+            onload = function() {
+                this.classList.remove("loading");
+                this.classList.add("clickable");
+                this.classList.add("preview");
+            };
+            break;
         case "background":
             callback = display_backgrounds;
             target = index["background"];
@@ -661,7 +764,8 @@ function display(node, key, argA, argB, pad, reverse) // generic function to dis
     {
         for(let r of slist[k])
         {
-            addIndexImage(node, r[1], r[0], (key == "background"));
+            let img = addIndexImage(node, r[1], r[0], (key == "background"));
+            if(onload != null) img.onload = onload;
         }
     }
 }
@@ -711,6 +815,11 @@ function display_weapons(id, rarity, proficiency)
 function display_mc(id, unusedA = null, unusedB = null)
 {
     return [[id, "GBF/assets_en/img_low/sp/assets/leader/m/" + id + "_01.jpg"]];
+}
+
+function display_enemies(id, unusedA = null, unusedB = null)
+{
+    return [[id, "GBF/assets_en/img/sp/assets/enemy/s/" + id + ".png"]];
 }
 
 function display_backgrounds(id, key, unused = null)

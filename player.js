@@ -4,7 +4,7 @@ var action_speed=1;
 var action_index=AnimeData[1];
 var action_list={};
 var dispatchStack = new Array;
-var animeVersion='0';
+var animeVersion = 0;
 var stage={
     global:{}
 };
@@ -181,7 +181,7 @@ function versionChange(obj)
     if(!AnimeDebug)
     {
         let el = AnimeID.split('_');
-        if(el.length == 1 && el[0].length == 6)
+        if(el.length == 1 && (el[0].length == 6 || el[0].length == 7)) // mc and enemy
         {
             // do nothing
         }

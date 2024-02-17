@@ -670,6 +670,11 @@ class Updater():
         async with asyncio.TaskGroup() as tg:
             tasks = []
             possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000", "2010{}000", "2020{}000", "2030{}000", "2040{}000", "10100{}00", "10200{}00", "10300{}00", "10400{}00", "10201{}00", "10101{}00", "10301{}00", "10401{}00", "10102{}00", "10202{}00", "10302{}00", "10402{}00", "10103{}00", "10203{}00", "10303{}00", "10403{}00", "10104{}00", "10204{}00", "10304{}00", "10404{}00", "10105{}00", "10205{}00", "10305{}00", "10405{}00", "10106{}00", "10206{}00", "10306{}00", "10406{}00", "10107{}00", "10207{}00", "10307{}00", "10407{}00", "10108{}00", "10208{}00", "10308{}00", "10408{}00", "10209{}00", "10109{}00", "10309{}00", "10409{}00"]
+            # add enemies
+            for a in range(1, 10):
+                for b in range(1, 4):
+                    for d in [1, 2, 3]:
+                        possibles.append(str(a) + str(b) + "{}" + str(d))
             tasks.append(tg.create_task(self.styleProcessing()))
             for i in range(self.MAX_RUN_TASK):
                 tasks.append(tg.create_task(self.run_class(i, self.MAX_RUN_TASK)))
@@ -692,9 +697,12 @@ class Updater():
             eid = start
             errc = 0
             while errc < 20 and self.running:
-                f = file.format(str(eid).zfill(3))
+                is_mob = len(file) == 5
+                f = file.format(str(eid).zfill(4 if is_mob else 3))
                 if self.force_update or f not in self.index:
-                    if file.startswith("10"):
+                    if is_mob:
+                        r = await self.update_mob(f)
+                    elif file.startswith("10"):
                         if f in self.class_ougi.values():
                             errc = 0
                             eid += step
@@ -954,6 +962,63 @@ class Updater():
             print("Error", e, "for id", id)
             return False
 
+    async def update_mob(self, id : str) -> bool:
+        try:
+            if id in self.exclusion: return False
+            
+            try:
+                await self.req(self.IMG + "/sp/assets/enemy/s/" + id + ".png")
+            except:
+                if not self.debug_mode:
+                    return False
+            try:
+                fn = "enemy_{}".format(id)
+                await self.getJS(fn)
+            except:
+                return False
+            ehit = None
+            try:
+                fn = "ehit_{}".format(id)
+                await self.getJS(fn)
+                ehit = fn
+            except:
+                pass
+            if ehit is None:
+                ehit = "phit_0000000000" # generic
+            tasks = []
+            for i in range(0, 20):
+                try:
+                    tasks.append(self.update_mob_sub("esp_{}_{}".format(id, str(i).zfill(2))))
+                except:
+                    pass
+                try:
+                    tasks.append(self.update_mob_sub("esp_{}_{}_all".format(id, str(i).zfill(2))))
+                except:
+                    pass
+            mortals = []
+            for sp in await asyncio.gather(*tasks):
+                if sp is not None:
+                    mortals.append(sp)
+            mortals.sort()
+            character_data = {} # different format to save on space
+            character_data['e'] = id
+            character_data['ehit'] = ehit
+            character_data['sp'] = mortals
+            self.index[id] = character_data
+            self.modified = True
+            self.latest_additions[id] = 4
+            return True
+        except Exception as e:
+            print("Error", e, "for id", id)
+            return False
+
+    async def update_mob_sub(self, fn : str) -> Optional[str]:
+        try:
+            await self.getJS(fn)
+            return fn
+        except:
+            return None
+
     async def update(self, id : str, style : str = "") -> bool: # character
         try:
             if id in self.exclusion: return False
@@ -1151,7 +1216,10 @@ class Updater():
             for i in range(2):
                 tasks.append(tg.create_task(self.styleProcessing()))
             for id in ids:
-                if len(id) == 10:
+                if len(id) == 7:
+                    tasks.append(tg.create_task(self.progress_container(self.update_mob(id))))
+                    tcounter += 1
+                elif len(id) == 10:
                     if id.startswith("10"): tasks.append(tg.create_task(self.progress_container(self.update_weapon(id))))
                     elif id.startswith("20"): tasks.append(tg.create_task(self.progress_container(self.update_summon(id))))
                     else: tasks.append(tg.create_task(self.progress_container(self.update(id, ""))))
