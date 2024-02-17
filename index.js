@@ -522,15 +522,12 @@ function startplayer(id)
             this.id = "character";
         }
         let el = id.split("_");
-        if(el.length == 1)
+        if(id.length == 6)
+            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
+        else if(id.length == 7)
         {
-            if(el[0].length == 6)
-                img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
-            else
-            {
-                img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img/sp/assets/enemy/s/" + el[0] + ".png";
-                img.classList.add('preview');
-            }
+            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img/sp/assets/enemy/s/" + el[0] + ".png";
+            img.classList.add('preview');
         }
         else if(id.startsWith("10"))
             img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
