@@ -41,11 +41,11 @@ function setHTML()
                         </span><br>\
                         <span>\
                             <label for="act-selection">Action</label><select id="act-selection" onchange="actionChange(this)"></select>\
-                        </span>\
-                    </div>\
-                    <div class="controls-outline">\
-                        <span class="act-element">Current:</span><span id="act-name" class="act-element"><img src="assets/ui/loading.gif"></span><br>\
-                        <span class="act-element">Duration:</span><span id="act-duration" class="act-element"><img src="assets/ui/loading.gif"></span><br>\
+                        </span><br>\
+                        <span class="act-element">Current:</span>\
+                        <span id="act-name" class="act-element"><img src="assets/ui/loading.gif"></span><br>\
+                        <span class="act-element">Duration:</span>\
+                        <span id="act-duration" class="act-element"><img src="assets/ui/loading.gif"></span><br>\
                     </div>\
                     <div class="controls-outline">\
                         <input id="speed-input" type="range" min="0.05" max="2" step="0.05" value="1" oninput="changeSpeed(this);"><br>\
