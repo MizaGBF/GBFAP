@@ -546,6 +546,7 @@ function setExternalBackground(url) // change battle background
         rect.left > (window.innerWidth || document.documentElement.clientWidth)
     )
         anibg.scrollIntoView();
+    localStorage.setItem("gbfap-background", url);
 };
 
 function addIndexImage(node, path, id, is_bg = false) // add an image to an index. path must start with "GBF/" if it's not a local asset.

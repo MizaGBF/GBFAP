@@ -1,3 +1,5 @@
+/* Base elements */
+
 html { 
     background: #252526;
 }
@@ -79,6 +81,8 @@ details[open] > .element-detail {
     justify-content: center;
 }
 
+/* Buttons */
+
 .std-button {
     width: 100px;
     height: 40px;
@@ -91,6 +95,25 @@ details[open] > .element-detail {
     color: white;
     margin: 1px;
     font-size: 20px;
+    cursor: pointer;
+}
+
+.btn-paused {
+    background: #bb0000;
+}
+
+.bg-button {
+    width: 50px;
+    height: 50px;
+    background: #2d2d30;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    border: none;
+    outline: none;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     cursor: pointer;
 }
 
@@ -129,6 +152,59 @@ details[open] > .element-detail {
     color: #ffd700;
 }
 
+/* Animation Player */
+
+#canvasLevel1 {
+    min-width: 700px;
+    max-width:700px;
+    margin:auto;
+}
+
+#canvasLevel2 {
+    min-width:453px;
+    max-width:453px;
+    margin:auto;
+}
+
+#canvasLevel3 {
+    width:100%;
+    max-width:calc(83vw - 72px);
+    margin:auto;
+}
+
+#animeCanvas {
+    margin:auto;
+    width:100%;
+    height:0;
+    padding-bottom:92%;
+    border-color: #000000;
+    border:solid;
+    overflow:hidden;
+    position:relative;
+}
+
+.cjs-npc-demo {
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    position: absolute;
+    z-index:0;
+    width:calc(256vw - 218px);
+    max-height:1400px;
+    max-width:1400px;
+}
+
+.anime-bg
+{
+    z-index:-1;
+}
+
+.bg {
+    width:100%;
+}
+
+/* Tab */
+
 .tabbutton {
     width: 200px;
     height: 80px;
@@ -144,7 +220,7 @@ details[open] > .element-detail {
     cursor: pointer;
 }
 
-.tabbutton:hover, .std-button:hover {
+.tabbutton:hover, .std-button:hover, .bg-button:hover {
   outline: solid #ffffff;
 }
 
@@ -158,6 +234,87 @@ details[open] > .element-detail {
     position: relative;
     left: -10px;
 }
+
+/* Player control */
+
+#output {
+    min-width: 720px;
+}
+
+.controls-root {
+    display: flex;
+    flex-direction: row;
+    flex-basis: fit-content;
+}
+
+.controls-part {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.controls-outline {
+    background: #1d1d1d;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.controls-bg {
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 5px;
+    width: 270px;
+    margin:auto;
+}
+
+.controls-text {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#speed-input {
+    min-width: 500px;
+    margin-bottom: 20px;
+    width: 200px;
+    display: inline-block;
+    font-size: 25px;
+}
+
+label {
+    width: 200px;
+    display: inline-block;
+    font-size: 25px;
+}
+
+#speed-label {
+    font-size: 20px;
+    margin: 0px;
+    text-align: left;
+}
+
+select {
+  background-color: #ffffffb0;
+  border: none;
+  margin: 5px;
+  width: 200px;
+  font-size: 25px;
+  display: inline-block;
+}
+
+select:hover {
+  background-color: #ffffff;
+}
+
+.act-element {
+    width: 200px;
+    font-size: 20px;
+    display: inline-block;
+}
+
+/* Other */
 
 footer, #header {
     font-family: sans-serif;
@@ -211,31 +368,6 @@ footer, #header {
     max-width:600px;
 }
 
-label {
-    width: 200px;
-    display: inline-block;
-    font-size: 25px;
-}
-
-select {
-  background-color: #ffffffb0;
-  border: none;
-  margin: 5px;
-  width: 200px;
-  font-size: 25px;
-  display: inline-block;
-}
-
-select:hover {
-  background-color: #ffffff;
-}
-
-#act-name, #act-duration, #act-speed, .act-label {
-    width: 200px;
-    font-size: 20px;
-    display: inline-block;
-}
-
 #titleheader {
     border: 5px solid #000000;
     border-radius: 10px;
@@ -253,6 +385,7 @@ select:hover {
 .clickable {
   cursor: pointer;
 }
+
 .tabcontent {
     padding: 10px;
     font-size: 20px;
@@ -295,7 +428,9 @@ a:active {
     font-size: 1em;
 }
 
-@media (hover: none) { /* mobile stuff */
+/* mobile stuff */
+
+@media (hover: none) {
     body {
         font-size: 50px;
     }
@@ -341,6 +476,16 @@ a:active {
         margin: 10px;
     }
 
+    .bg-button {
+        width: 100px;
+        height: 100px;
+    }
+
+    .bg-button > img {
+        width: 80px;
+        height: 80px;
+    }
+
     #fav-btn {
         width: 80px;
         height: 80px;
@@ -361,6 +506,40 @@ a:active {
     .btn-icon {
         width: 100px;
         left: -20px;
+    }
+
+    #output {
+        min-width: 800px;
+    }
+
+    .controls-bg {
+        grid-gap: 10px;
+        width: 550px;
+    }
+
+    #speed-input {
+        min-width: 500px;
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+    
+    label {
+        font-size: 40px;
+    }
+
+    #speed-label {
+        font-size: 30px;
+    }
+
+    select {
+        margin: 20px;
+        width: 300px;
+        font-size: 40px;
+    }
+
+    .act-element {
+        width: 300px;
+        font-size: 30px;
     }
 
     footer, #header {
@@ -397,20 +576,5 @@ a:active {
         min-width : 278px;
         max-width : 278px;
         height: 158px;
-    }
-    
-    label {
-        font-size: 40px;
-    }
-
-    select {
-      margin: 20px;
-      width: 300px;
-      font-size: 40px;
-    }
-
-    #act-name, #act-duration, #act-speed, .act-label {
-        width: 300px;
-        font-size: 40px;
     }
 }
