@@ -12,10 +12,10 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
             , c = _.flatten(_.map(a, function (a) {
                 return cjsloader.manifest(a)
             }))
-        // mc only fix
-        let melee = AnimeData[1][0]["cjs"][0].includes("_me_");
         if(is_mc && mc_wpn) // set wpn
         {
+            // mc only fix
+            let melee = AnimeData[1][0]["cjs"][0].includes("_me_");
             for(let e of c)
             {
                 if(melee)
