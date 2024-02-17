@@ -471,7 +471,6 @@ function loadEnemy(id)
         AnimeData.push([]);
         AnimeData.push({1: {1: ""},2: {1: ""}});
         const data = index[id]; // NOTE: format is different
-        console.log(data);
         is_enemy = true;
         mc_id = id;
         AnimeData[0].push(""); // empty name
