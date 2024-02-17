@@ -474,18 +474,17 @@ function loadEnemy(id)
         is_enemy = true;
         mc_id = id;
         AnimeData[0].push(""); // empty name
-        const p = AnimeData[1].length;
         AnimeData[1].push({});
-        AnimeData[1][p]["cjs"] = ["enemy_" + data['e']]; // cjs
-        AnimeData[1][p]['action_label_list'] = data['sp'].length > 0 ? ['setin', 'wait', 'attack', 'mortal_A', 'dead'] : ['setin', 'wait', 'attack', 'dead'];
-        AnimeData[1][p]['effect'] = [data['ehit']]; // phit
-        AnimeData[1][p]['special'] = [];
+        AnimeData[1][0]["cjs"] = ["enemy_" + data['e']]; // cjs
+        AnimeData[1][0]['action_label_list'] = data['sp'].length > 0 ? ['setin', 'wait', 'attack', 'mortal_A', 'dead'] : ['setin', 'wait', 'attack', 'dead'];
+        AnimeData[1][0]['effect'] = [data['ehit']]; // phit
+        AnimeData[1][0]['special'] = [];
         for(let sp of data['sp'])
         {
-            AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":sp,"fixed_pos_owner_bg":0,"full_screen":0}]});
+            AnimeData[1][0]['special'].push({"random":0,"list":[{"target":"them","cjs":sp,"fixed_pos_owner_bg":0,"full_screen":0}]});
         }
-        AnimeData[1][p]['cjs_pos'] = [{"y":0,"x":0}];
-        AnimeData[1][p]['special_pos'] = [[{"y":0,"x":0}]];
+        AnimeData[1][0]['cjs_pos'] = [{"y":0,"x":0}];
+        AnimeData[1][0]['special_pos'] = [[{"y":0,"x":0}]];
         successLoading(id);
     }
     else // fail

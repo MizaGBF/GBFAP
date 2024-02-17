@@ -775,7 +775,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     this.updateCjsParams(this.currentIndex);
                     addOugi(this.cjsNameMortal);
                     animDuration = this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]) + ((is_mc && mc_wpn) ? this.getAnimDuration(this.cjsMortal[this.cjsNameMortal][this.cjsNameMortal+"_special"]) : 0);
-                    /*if(!is_enemy && !is_mc && !mc_wpn)*/ cycleMortalIndex();
+                    cycleMortalIndex();
                     break;
                 }
                 case animations.SUMMON_ATTACK: // summon hack
@@ -849,7 +849,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             },[i])
         },
         getAnimDuration: function(elem) {
-            return !elem instanceof createjs.MovieClip ? null : (elem.timeline.duration ? +elem.timeline.duration : +elem.timeline.Id);
+            return !elem instanceof createjs.MovieClip ? null : (elem.timeline.duration ? +elem.timeline.duration : +elem.timeline.Id); // last if check might not be needed
         },
         pause: function (a) { // pause
             (a || !this.isPaused) &&
