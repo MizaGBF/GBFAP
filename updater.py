@@ -942,7 +942,7 @@ class Updater():
                         else: continue
                 uncap_data = []
                 for i, sp in enumerate(calls):
-                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), mc_cjs, '', "phit_sw_0001", sp, ('attack' in sp)] # name, cjs, mortal, phit, sp, fullscreen)
+                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), mc_cjs, '', "phit_sw_0001", sp, ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
                 uncap_data.reverse()
                 character_data['v'] += uncap_data
             character_data['v'].reverse()
