@@ -25,29 +25,30 @@ Simply do `python updater.py` for future updates.
   
 # The updater  
 `updater.py` scours the GBF asset servers to build an index of playable character, along with the data needed for their respective demos.  
-It's currently compatible with all characters (R, SR, SSR, Skins), summons, weapons and classes released up to today.  
+It's currently compatible with characters (R, SR, SSR, Skins), summons, weapons, enemies and classes released up to today.  
 The resulting data will be in the `json` folder.  
   
 There are three main possible command lines:
 * `python updater.py` to simply retrieve unindexed characters.  
-* `python updater.py -update list_of_character_id` to manually fetch the specified characters (You don't need to specify the character style).  
+* `python updater.py -update list_of__id` to manually update the specified elements (You don't need to specify the character style).  
+* `python updater.py -downloadall` will download all the required assets (ONLY USE IT IF YOU'RE PLANNING TO SELF-HOST THE ASSETS).  
   
 You can then add the following options before for more control:
-* `-force` will force a character indexation and, as a result, rebuild its JSON data (No need to use with `-update`).  
-* `-download` will download and save the character assets in their respective folders.  
+* `-force` will force an indexation and, as a result, rebuild its JSON data (No need to use with `-update`).  
+* `-download` will download and save the assets in their respective folders.  
 * `-init` will download the assets needed for the demo enemy and the dummy attack effect, among other things. This command isn't needed if you don't host the assets.  
 * `-nochange` to not update the `changelog.json` recently updated element list.  
   
 And the following if you're using [GBFAL](https://github.com/MizaGBF/GBFAL):
-* `-gbfal` followed by the path to GBFAL `data.json` file.  
+* `-gbfal` followed by the url or path to GBFAL `data.json` file.  
   
 # Element update  
-If a character gets an uncap or a class gets updated, simply do:  
+If something gets updated, simply do:  
 `python updater.py -update THE_ELEMENT_ID` to update the element.  
-Add `-download` if you want/need to download its new assets.  
+Add `-download` before if you want/need to download its new assets.  
   
-# Exceptions  
-Some skins (and rarely some seasonal characters) reuse the Charge Attack or Attack effect of another version.  
+# Exceptions/Quirks  
+* Some skins (and rarely some seasonal characters) reuse the Charge Attack or Attack effect of another version.  
 As there is no way to programmatically find it, at least currently, you'll have to set those exceptions manually in `updater.py`.  
 First, you'll likely get a `No special set` error for characters without corresponding charge attack.  
 Second, characters without corresponding attack effect will use a default one.  
@@ -64,10 +65,16 @@ In a similar fashion, classes must be set in the code too.
 Just look at the full list in `updater.py` for more examples.  
 Once the change is done, run `updater.py` again for the concerned characters.  
   
-In a similar ways, some summons share assets, such as the Arcarum ones.  
+* In a similar ways, some summons share assets, such as the Arcarum ones.  
 The groups must be defined in the `SHARED_SUMMONS` variable.  
   
-There are other weird exceptions, I recommend trying to read the code for more infos.  
+* Classes also requires to be hardcoded (in `class_lookup` and `class_ougi`).  
+`class_lookup` requires the class main ID and a list of its secondary ID along with its proficiencies IDs.  
+For example, `150201` and `dkf` are Dark Fencer IDs. It also uses a sword `sw` and dagger `kn`. So the result is `"150201": ["dkf_sw", "dkf_kn"],`.  
+`class_ougi` is mostly for skins. Some skins use weapon assets for their charge attacks. Those weapons are usually not playable.  
+Using the `-gbfal` flag can fill those gaps for you, if you have access to an up-to-date version.  
+  
+There are other weird exceptions that I probably forgot, I recommend trying to read the code for more infos.  
   
 # Additional Notes  
 Downloaded assets are saved in the following folders:  

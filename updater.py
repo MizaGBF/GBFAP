@@ -453,6 +453,7 @@ class Updater():
         self.index = {}
         self.modified = False
         self.queue = asyncio.Queue()
+        self.disable_save = False
         self.update_changelog = True
         self.force_update = False
         self.download_assets = False
@@ -1311,6 +1312,7 @@ class Updater():
         try:
             if self.modified:
                 self.modified = False
+                if self.disable_save: return
                 with open("json/data.json", 'w') as outfile:
                     self.index = dict(sorted(self.index.items(), reverse=True))
                     json.dump(self.index, outfile)
@@ -1339,7 +1341,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v2.5\n")
+                print("GBFAP updater v2.6\n")
                 start_flags = set(["-force", "-download", "-init", "-nochange", "-debug"])
                 flags = set()
                 extras = []
@@ -1370,14 +1372,34 @@ class Updater():
                 self.debug_mode = ('-debug' in flags)
                 if gbfal is not None:
                     try:
-                        with open(gbfal, mode="r", encoding="utf-8") as f:
-                            self.gbfal = json.load(f)
+                        if gbfal.startswith('https://'):
+                            self.gbfal = json.loads((await self.req(gbfal)).decode('utf-8'))
+                        else:
+                            with open(gbfal, mode="r", encoding="utf-8") as f:
+                                self.gbfal = json.load(f)
                         print("GBFAL data is loaded")
                         self.update_data_from_GBFAL()
                     except Exception as e:
                         print("GBFAL data couldn't be loaded")
                         print(e)
-                if '-init' in flags: await self.initFiles()
+                return
+                if '-downloadall':
+                    print("Are you sure that you want to download the assets of all elements?")
+                    print("It will take time and a lot of disk space.")
+                    if input("Type 'yes' to continue:").lower() == 'yes':
+                        print("Do you want to save changes done to data.json?")
+                        if input("Type 'yes' to accept:").lower() == 'yes':
+                            self.disable_save = True
+                        else:
+                            self.update_changelog = False
+                        self.download_assets = True
+                        await self.initFiles()
+                        await self.manualUpdate(list(self.index.keys()))
+                    else:
+                        print("Operation aborted...")
+                elif '-init' in flags:
+                    await self.initFiles()
+                    if "-update" in flags: await self.manualUpdate(extras)
                 elif "-update" in flags: await self.manualUpdate(extras)
                 else: await self.run()
         except Exception as e:
