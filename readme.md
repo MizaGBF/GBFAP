@@ -83,14 +83,18 @@ Downloaded assets are saved in the following folders:
 * Sheets in img/sp/cjs/
   
 The following files are modified/customized from what GBF uses:  
-* model/cjs-loader.js  
-* view/cjs_npc_demo.js  
-* lib/sound.js  
-* lib/raid/extension.js  
+* view/cjs_npc_demo.js (has been mostly deobfuscated and heavily modified)  
+* model/cjs-loader.js (added some customization related to file paths)   
+* lib/sound.js & lib/raid/extension.js (mostly empty, they are here as placeholders to fill some gaps)  
   
 Along with:  
-* index.js  
-* player.js  
-* script.js  
+* index.js (the page main script)  
+* player.js (loaded in second, add the player to the HTML)  
+* script.js (loaded in third, contains functions to load the assets)  
   
 And possibly more that I forgot.  
+  
+# Possible Improvements  
+* Make a HTML demo to make the project easily embeddable on any website.  
+* Reverse engineer GBF's `lib/raid/extension.js` to make the player more faithful to in-game raid animations.  
+  
