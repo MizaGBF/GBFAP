@@ -65,7 +65,7 @@ In a similar fashion, classes must be set in the code too.
 Just look at the full list in `updater.py` for more examples.  
 Once the change is done, run `updater.py` again for the concerned characters.  
   
-* In a similar ways, some summons share assets, such as the Arcarum ones.  
+* In a similar way, some summons share assets, such as the Arcarum ones.  
 The groups must be defined in the `SHARED_SUMMONS` variable.  
   
 * Classes also requires to be hardcoded (in `class_lookup` and `class_ougi`).  
