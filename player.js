@@ -5,6 +5,8 @@ var action_index=AnimeData[1];
 var action_list={};
 var dispatchStack = new Array;
 var animeVersion = 0;
+var loadTotal = 999999999999;
+var loadNow = 0;
 var stage={
     global:{}
 };
@@ -45,7 +47,7 @@ function setHTML()
                         <span class="act-element">Current:</span>\
                         <span id="act-name" class="act-element"><img src="assets/ui/loading.gif"></span><br>\
                         <span class="act-element">Duration:</span>\
-                        <span id="act-duration" class="act-element"><img src="assets/ui/loading.gif"></span><br>\
+                        <span id="act-duration" class="act-element">Loading: 0%</span><br>\
                     </div>\
                     <div class="controls-outline">\
                         <input id="speed-input" type="range" min="0.05" max="2" step="0.05" value="1" oninput="changeSpeed(this);"><br>\

@@ -79,9 +79,10 @@ Downloaded assets are saved in the following folders:
 * CJS in cjs/
 * Sheets in img/sp/cjs/
   
-The following files are modified/customized from what GBF uses:  
+The following files are modified/customized:  
 * view/cjs_npc_demo.js (has been mostly deobfuscated and heavily modified)  
 * model/cjs-loader.js (added some customization related to file paths)   
+* model/manifest-loader.js (the loading indicator is updated here)   
 * lib/sound.js & lib/raid/extension.js (mostly empty, they are here as placeholders to fill some gaps)  
   
 Along with:  
