@@ -8,7 +8,7 @@ Two possible setups:
   
 ### You want to host the assets  
 1. Copy this repo.  
-2. Run `python updater.py -force -download -init` to download all the assets and new characters (The script will ask you to confirm).  
+2. Run `python updater.py -downloadall` to download all the assets. (The script will ask you to confirm. You can also turn off changes to data.json when asked.).  
 3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
   
 You can now host the project in the way you prefer.  
@@ -16,36 +16,30 @@ You only need to use `-init` and `-force` once. Simply do `python updater.py -do
   
 ### You DON'T want to host the assets  
 1. Copy this repo.  
-2. Run `python updater.py -force` to build a clean character index (The script will ask you to confirm).  
-3. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF.  
-4. Change line 3 of `index.js` with the address of your proxy.  
+2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF.  
+3. Change line 3 of `index.js` with the address of your proxy.  
   
 You can now host the project in the way you prefer.  
 Simply do `python updater.py` for future updates.  
   
 # The updater  
-`updater.py` scours the GBF asset servers to build an index of playable character, along with the data needed for their respective demos.  
+`updater.py` is used to update `json/data.json` with new elements.
 It's currently compatible with characters (R, SR, SSR, Skins), summons, weapons, enemies and classes released up to today.  
-The resulting data will be in the `json` folder.  
   
 There are three main possible command lines:
-* `python updater.py` to simply retrieve unindexed characters.  
-* `python updater.py -update list_of__id` to manually update the specified elements (You don't need to specify the character style).  
+* `python updater.py` to simply retrieve new/unindexed elements.  
+* `python updater.py -update list_of__id` to manually update the specified elements, in case they got an uncap for example (You don't need to specify the character style for characters).  
 * `python updater.py -downloadall` will download all the required assets (ONLY USE IT IF YOU'RE PLANNING TO SELF-HOST THE ASSETS).  
   
-You can then add the following options before for more control:
+You can then add the following options before for more control (except `-downloadall`, it ignores everything):
 * `-force` will force an indexation and, as a result, rebuild its JSON data (No need to use with `-update`).  
 * `-download` will download and save the assets in their respective folders.  
 * `-init` will download the assets needed for the demo enemy and the dummy attack effect, among other things. This command isn't needed if you don't host the assets.  
 * `-nochange` to not update the `changelog.json` recently updated element list.  
   
 And the following if you're using [GBFAL](https://github.com/MizaGBF/GBFAL):
-* `-gbfal` followed by the url or path to GBFAL `data.json` file.  
-  
-# Element update  
-If something gets updated, simply do:  
-`python updater.py -update THE_ELEMENT_ID` to update the element.  
-Add `-download` before if you want/need to download its new assets.  
+* `-gbfal` followed by the url or path to GBFAL `data.json` file. You can also set it to `https://raw.githubusercontent.com/MizaGBF/GBFAL/main/json/data.json`.  
+
   
 # Exceptions/Quirks  
 * Some skins (and rarely some seasonal characters) reuse the Charge Attack or Attack effect of another version.  
@@ -73,6 +67,9 @@ The groups must be defined in the `SHARED_SUMMONS` variable.
 For example, `150201` and `dkf` are Dark Fencer IDs. It also uses a sword `sw` and dagger `kn`. So the result is `"150201": ["dkf_sw", "dkf_kn"],`.  
 `class_ougi` is mostly for skins. Some skins use weapon assets for their charge attacks. Those weapons are usually not playable.  
 Using the `-gbfal` flag can fill those gaps for you, if you have access to an up-to-date version.  
+  
+* Weapons with multiple versions (currently, only the Dark Opus are affected) are separate based on their uncaps. Example `1040212500`, `1040212500_02` and `1040212500_03`.  
+This is due to the fact the game doesn't support two different weapons loaded at the same time on different entities.  
   
 There are other weird exceptions that I probably forgot, I recommend trying to read the code for more infos.  
   
