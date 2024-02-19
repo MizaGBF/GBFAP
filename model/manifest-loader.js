@@ -13,7 +13,7 @@ define(["underscore", "backbone", "util/backbone-singleton", "model/manifest-loa
                 if (e.item.type === createjs.LoadQueue.IMAGE) t = e.result, i[n] = t;
                 this.trigger("fileload", e);
                 loadNow++; // increase loaded file count
-                document.getElementById('act-duration').innerHTML = "Loading: " + Math.floor(100*loadNow/loadTotal) + "% (" + loadNow + "/" + loadTotal + ")"; // update indicator
+                document.getElementById('act-duration').innerHTML = "" + loadNow + " / " + loadTotal + " (" + Math.floor(100*loadNow/loadTotal) + "%)"; // update indicator
             },
             handleComplete: function(e) {
                 window.CreateJsShell && 1 == Game.setting.cjs_mode && (this.loadQueue._progress = 0), this.trigger("complete", e)
