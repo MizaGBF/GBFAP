@@ -6,6 +6,7 @@ var custom_choices = {}
 var demo_list = null;
 var action_list = {};
 var dispatchStack = new Array;
+var loopingState = true;
 var animeVersion = 0;
 var loadTotal = 999999999999;
 var loadNow = 0;
@@ -56,6 +57,7 @@ function setHTML()
                         <label id="speed-label" for="speed-input" class="controls-text">100% Speed</label>\
                         <button class="small-button" onclick="let elem = document.getElementById(\'speed-input\'); elem.value=1; changeSpeed(elem);"><img src="assets/ui/controls/reset.png"></button>\
                         <button class="small-button" onclick="togglePause();" id="pause-btn"><img src="assets/ui/controls/pause.png"></button>\
+                        <button class="small-button btn-looping" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
                         <button class="small-button" onclick="openCustom()")"><img src="assets/ui/controls/edit.png"></button>\
                     </div>\
                     <div class="controls-outline">\
@@ -213,6 +215,24 @@ function togglePause()
     {
         document.getElementById("pause-btn").classList.add("btn-paused");
         this.cjsViewList[animeVersion].pause();
+    }
+}
+
+function toggleLoop()
+{
+    let name = document.getElementById("act-name");
+    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    let loop_btn = document.getElementById("loop-btn");
+    if(loop_btn.classList.contains('btn-looping'))
+    {
+        loop_btn.classList.remove("btn-looping");
+        loopingState = false;
+    }
+    else
+    {
+        document.getElementById("loop-btn").classList.add("btn-looping");
+        loopingState = true;
+        this.cjsViewList[animeVersion].nextLoop();
     }
 }
 

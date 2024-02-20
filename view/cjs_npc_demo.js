@@ -241,6 +241,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         isFixedPosOwnerBG: false,
         animChanger: null,
         damageTarget: null,
+        loopIndex: null,
+        npc: null,
         initialize: function (a) {
             content.prototype._destroyStage(this.stage);
             this.stage = null;
@@ -697,14 +699,15 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             // start
             if (!elem instanceof createjs.MovieClip)
                 return null;
-            let npc = elem[this.cjsNameNpc];
+            this.loopIndex = null;
+            this.npc = elem[this.cjsNameNpc];
             let animDuration = 0;
             let me = this;
             switch(motion)
             {
                 default:
                 {
-                    animDuration = this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]);
+                    animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
                     break;
                 }
                 case animations.MORTAL:
@@ -744,7 +747,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 {
                     if(this.cjsMortalList.length == 0) // no ougi file
                     {
-                        animDuration = this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]);
+                        animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
                         break;
                     }
                     this.currentIndex = motion[motion.length-1].charCodeAt()-65;
@@ -754,7 +757,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     this.damageTarget = this.cjsMortalList[this.currentIndex].list[this.mortalIndex].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
                     this.updateCjsParams(this.currentIndex);
                     addOugi(this.cjsNameMortal);
-                    animDuration = this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]) + ((is_mc && mc_wpn) ? this.getAnimDuration(this.cjsMortal[this.cjsNameMortal][this.cjsNameMortal+"_special"]) : 0);
+                    animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]) + ((is_mc && mc_wpn) ? this.getAnimDuration(this.cjsMortal[this.cjsNameMortal][this.cjsNameMortal+"_special"]) : 0);
                     cycleMortalIndex();
                     break;
                 }
@@ -778,7 +781,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     this.damageTarget = targets.ENEMY;
                     addAtkEffect(this.cjsNameEffect);
                     let nmotion = nextMotion();
-                    animDuration = _.contains([animations.ATTACK_DOUBLE, animations.ATTACK_TRIPLE, animations.ATTACK_QUADRUPLE], nmotion) ? aniState.COMBO_PROCESS : this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]);
+                    animDuration = _.contains([animations.ATTACK_DOUBLE, animations.ATTACK_TRIPLE, animations.ATTACK_QUADRUPLE], nmotion) ? aniState.COMBO_PROCESS : this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
                     break;
                 }
                 case animations.CHANGE:
@@ -787,8 +790,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 {
                     toggleForm();
                     elem = this.cjsNpc;
-                    npc = elem[this.cjsNameNpc];
-                    animDuration = this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]);
+                    this.npc = elem[this.cjsNameNpc];
+                    animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
                 }
             }
             if (document.getElementById("act-name").innerHTML != this.translateAction(motion)) {
@@ -797,9 +800,9 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             let newDuration=(animDuration / 30).toFixed(2) + 's'; // duration in second
             if (document.getElementById("act-duration").innerHTML != newDuration) // update if needed
                 document.getElementById("act-duration").innerHTML = newDuration;
-            npc.addEventListener(complete, ougiCompleted);
+            this.npc.addEventListener(complete, ougiCompleted);
             if(motion != animations.SUMMON_ATTACK && motion != animations.SUMMON_DAMAGE) // hack to avoid MC moving during summoning
-                npc.gotoAndPlay(motion);
+                this.npc.gotoAndPlay(motion);
             flag = true
             for (i = 0; i < dispatchStack.length; i++) {
                 if (dispatchStack[i] == 0) {
@@ -814,14 +817,24 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             this.animChanger = createjs.Tween.get(this.stage, {
                 useTicks: true,
                 override: true
-            }).wait(animDuration).call(function (index) {
-                if (dispatchStack[index] == _.max(dispatchStack)) {
-                    dispatchStack[index] = 0;
-                    npc.dispatchEvent(complete)
-                } else {
-                    dispatchStack[index] = 0;
+            }).wait(animDuration).call(function (index, p) {
+                p.loopIndex = index;
+                if(loopingState) p.nextLoop();
+            },[i, this])
+        },
+        nextLoop: function() {
+            if(this.loopIndex == null) return;
+            if (dispatchStack[this.loopIndex] == _.max(dispatchStack)) {
+                dispatchStack[this.loopIndex] = 0;
+                this.npc.dispatchEvent(complete);
+            } else {
+                dispatchStack[this.loopIndex] = 0;
+                try { // exception check, just in case...
+                    this.npc.dispatchEvent(complete);
+                } catch(err) {
+                    console.error("Exception thrown", err.stack);
                 }
-            },[i])
+            }
         },
         getAnimDuration: function(elem) {
             return !elem instanceof createjs.MovieClip ? null : (elem.timeline.duration ? +elem.timeline.duration : +elem.timeline.Id); // last if check might not be needed
