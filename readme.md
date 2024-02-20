@@ -10,6 +10,7 @@ Two possible setups:
 1. Copy this repo.  
 2. Run `python updater.py -downloadall` to download all the assets. (The script will ask you to confirm. You can also turn off changes to data.json when asked.).  
 3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
+4. Still in `index.js`, you might need to change line 92 to something else (`/` if your html is at the root of your domain, else the path to it).  
   
 You can now host the project in the way you prefer.  
 You only need to use `-init` and `-force` once. Simply do `python updater.py -download` for future updates.  

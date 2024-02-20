@@ -2,7 +2,9 @@
 var versionList=Array.from(AnimeData[0]);
 var action_speed=1;
 var action_index=AnimeData[1];
-var action_list={};
+var custom_choices = {}
+var demo_list = null;
+var action_list = {};
 var dispatchStack = new Array;
 var animeVersion = 0;
 var loadTotal = 999999999999;
@@ -52,8 +54,9 @@ function setHTML()
                     <div class="controls-outline">\
                         <input id="speed-input" type="range" min="0.05" max="2" step="0.05" value="1" oninput="changeSpeed(this);"><br>\
                         <label id="speed-label" for="speed-input" class="controls-text">100% Speed</label>\
-                        <button class="std-button" onclick="let elem = document.getElementById(\'speed-input\'); elem.value=1; changeSpeed(elem);">Reset</button>\
-                        <button class="std-button" onclick="togglePause();" id="pause-btn">Pause</button>\
+                        <button class="small-button" onclick="let elem = document.getElementById(\'speed-input\'); elem.value=1; changeSpeed(elem);"><img src="assets/ui/controls/reset.png"></button>\
+                        <button class="small-button" onclick="togglePause();" id="pause-btn"><img src="assets/ui/controls/pause.png"></button>\
+                        <button class="small-button" onclick="openCustom()")"><img src="assets/ui/controls/edit.png"></button>\
                     </div>\
                     <div class="controls-outline">\
                         <span class="controls-text">Background</span><br>\
@@ -65,6 +68,25 @@ function setHTML()
                             <button class="bg-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');"><img src="assets/ui/controls/bg_select.png"></button>\
                         </div>\
                     </div>\
+                </div>\
+            </div>\
+            <div id="custom-action" style="display: none;" class="controls-root custom-menu">\
+                <div class="controls-outline"\
+                    <b>Play Actions</b><br>\
+                    <div id="demo-list">\
+                    </div>\
+                </div>\
+                <div class="controls-outline">\
+                    <select id="custom-selection"></select><br>\
+                    <br>\
+                    <button class="std-button" onclick="addCustom()">Add</button><br>\
+                    <br>\
+                    <button class="std-button" onclick="playCustom()")">Play</button><br>\
+                    <br>\
+                    <button class="std-button" onclick="closeCustom()")">Close</button><br>\
+                    <br>\
+                    <button class="std-button" onclick="resetCustom()")">Reset</button><br>\
+                    <br>\
                 </div>\
             </div>\
         </div>';
@@ -88,6 +110,78 @@ function setHTML()
     document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvas).replace('$VERSIONS', versions)
     // set focus
     document.getElementById("animeCanvas").scrollIntoView();
+}
+
+function openCustom()
+{
+    let name = document.getElementById("act-name");
+    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(document.getElementById("custom-action").style.display == null) return;
+    document.getElementById("custom-action").style.display = null;
+    let actionlist = ""
+    for(action in custom_choices[animeVersion]) {
+        actionlist = actionlist.concat('<option value=' + l[action] + '>' + this.cjsViewList[animeVersion].translateAction(l[action]) + '</option>');
+    }
+    document.getElementById("custom-selection").innerHTML = actionlist;
+    if(demo_list == null) // init
+    {
+        demo_list = {}
+        for(const [e, v] of Object.entries(action_index))
+            demo_list[e] = v.action_label_list.slice(0);
+    }
+    updateDemoList();
+}
+
+function playCustom()
+{
+    closeCustom();
+    action_list.motionList = demo_list[animeVersion].slice(0);
+    pushPopup("Your selected actions will play after the current animation");
+}
+
+function closeCustom()
+{
+    document.getElementById("custom-action").style.display = "none";
+}
+
+function addCustom()
+{
+    if(demo_list[animeVersion].length == 50)
+    {
+        pushPopup("You can't add more actions");
+        return;
+    }
+    demo_list[animeVersion].push(document.getElementById("custom-selection").value);
+    updateDemoList();
+}
+
+function delCustom(i)
+{
+    if(demo_list[animeVersion].length == 1)
+    {
+        pushPopup("You can't remove the last action");
+        return;
+    }
+    demo_list[animeVersion].splice(i, 1);
+    updateDemoList();
+}
+
+function resetCustom()
+{
+    demo_list[animeVersion] = action_index[animeVersion].action_label_list.slice(0);
+    updateDemoList();
+}
+
+function updateDemoList()
+{
+    let html = "";
+    let i = 0;
+    for(const action of demo_list[animeVersion])
+    {
+        html += '<span class="act-element">' + this.cjsViewList[animeVersion].translateAction(action) + '</span><button class="small-button" onclick="delCustom(' + i + ')")"><img src="assets/ui/controls/remove.png"></button><br>\n';
+        i++;
+    }
+    document.getElementById('demo-list').innerHTML = html;
 }
 
 function actionChange(obj)

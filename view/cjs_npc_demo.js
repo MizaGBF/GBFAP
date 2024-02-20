@@ -230,7 +230,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         canvasIndex: null,
         stage: null,
         cjsNpc: null,
-        cjsEnemy: null,
         cjsEffect: null,
         cjsMortal: null,
         isPaused: false,
@@ -247,7 +246,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             this.stage = null;
             this.currentIndex = 0;
             this.cjsNpc = null;
-            this.cjsEnemy = null;
             this.cjsEffect = null;
             this.cjsMortal = null;
             this.isPaused = false;
@@ -285,7 +283,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 this.updateCjsParams(this.currentIndex)
         },
         getLoadFiles: function () {
-            var a = _.flatten([this.cjsList, this.cjsEffectList, AnimeEnemy]);
+            var a = _.flatten([this.cjsList, this.cjsEffectList]);
             return _.each(this.cjsMortalList, function (b) {
                 _.each(b.list, function (b) {
                     a.push(b.cjs)
@@ -295,14 +293,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         },
         cjsRender: function () {
             this.stage = new createjs.Stage(this.canvas);
-            this.cjsEnemy = new lib[AnimeEnemy];
-            this.cjsEnemy.name = AnimeEnemy;
-            this.cjsEnemy.x = enemyOffset.x;
-            this.cjsEnemy.y = enemyOffset.y;
-            this.cjsEnemy.scaleX = scaling * (is_enemy ? -1 : 1);
-            this.cjsEnemy.scaleY = scaling;
-            this.cjsEnemy.getChildAt(0).gotoAndPlay("wait");
-            this.stage.addChild(this.cjsEnemy);
             this.cjsNpc = this.generateCjsNpc(this.cjsNameNpc);
             this.cjsNpc.scaleX = scaling;
             this.cjsNpc.scaleY = scaling;
@@ -396,8 +386,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.ATTACK_DOUBLE: return "Attack 2";
                 case animations.ATTACK_TRIPLE: return "Attack 3";
                 case animations.ATTACK_QUADRUPLE: return "Attack 4";
-                case animations.SPECIAL_ATTACK: return "Attack B";
-                case animations.ENEMY_ATTACK: return "Attack C";
+                case animations.SPECIAL_ATTACK: return "Attack B (Alt/OD)";
+                case animations.ENEMY_ATTACK: return "Attack C (Break)";
                 case animations.CHANGE: return "Change Form";
                 case animations.CHANGE_TO: return "Change Form 1";
                 case animations.CHANGE_FROM: return "Change Form 2";
@@ -419,12 +409,12 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.INVISIBLE: return "Invisible";
                 case animations.HIDE: return "Hide";
                 case animations.DOWN: return "Low HP";
-                case animations.WAIT_SPECIAL: return "Idle (Spe.)";
-                case animations.WAIT_SPECIAL_1: return "Idle (Spe.) A";
-                case animations.WAIT_SPECIAL_2: return "Idle (Spe.) B";
-                case animations.WAIT_SPECIAL_3: return "Idle (Spe.) C";
-                case animations.WAIT_SPECIAL_4: return "Idle (Spe.) D";
-                case animations.WAIT_SPECIAL_5: return "Idle (Spe.) E";
+                case animations.WAIT_SPECIAL: return "Idle (Spe)";
+                case animations.WAIT_SPECIAL_1: return "Idle (Spe) A";
+                case animations.WAIT_SPECIAL_2: return "Idle (Spe) B";
+                case animations.WAIT_SPECIAL_3: return "Idle (Spe) C";
+                case animations.WAIT_SPECIAL_4: return "Idle (Spe) D";
+                case animations.WAIT_SPECIAL_5: return "Idle (Spe) E";
                 case animations.MISS:  return "Miss";
                 case animations.SUMMON: return "Summoning";
                 case animations.ABILITY_MOTION_OLD: return "Miss (Old)";
@@ -450,29 +440,29 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.ENEMY_BREAK_STANDBY_A: return "Standby A (Break)";
                 case animations.ENEMY_BREAK_STANDBY_B: return "Standby B (Break)";
                 case animations.ENEMY_BREAK_STANDBY_C: return "Standby C (Break)";
-                case animations.ENEMY_DAMAGE_STANDBY_A: return "Standby A (Damaged)";
-                case animations.ENEMY_DAMAGE_STANDBY_B: return "Standby B (Damaged)";
-                case animations.ENEMY_DAMAGE_STANDBY_C: return "Standby C (Damaged)";
-                case animations.LINK_PHASE_1: return "Phase 1 (Entry)(L.)";
-                case animations.LINK_PHASE_1_2: return "Phase 1B (Entry)(L.)";
-                case animations.LINK_PHASE_1_F2: return "Phase 1C (Entry)(L.)";
-                case animations.LINK_PHASE_1_F2_2: return "Phase 1D (Entry)(L.)";
-                case animations.LINK_PHASE_2: return "Phase 2 (OD.)(L.)";
-                case animations.LINK_PHASE_2_2: return "Phase 2B (OD.)(L.)";
-                case animations.LINK_PHASE_2_F2: return "Phase 2C (OD.)(L.)";
-                case animations.LINK_PHASE_2_F2_2: return "Phase 2D (OD.)(L.)";
-                case animations.LINK_PHASE_3: return "Phase 3 (Break)(L.)";
-                case animations.LINK_PHASE_3_2: return "Phase 3B (Break)(L.)";
-                case animations.LINK_PHASE_3_F2: return "Phase 3C (Break)(L.)";
-                case animations.LINK_PHASE_3_F2_2: return "Phase 3D (Break)(L.)";
-                case animations.LINK_PHASE_4: return "Phase 4 (L.)";
-                case animations.LINK_PHASE_4_2: return "Phase 4B (L.)";
-                case animations.LINK_PHASE_4_F2: return "Phase 4C (L.)";
-                case animations.LINK_PHASE_4_F2_2: return "Phase 4D (L.)";
-                case animations.LINK_PHASE_5: return "Phase 5 (L.)";
-                case animations.LINK_PHASE_5_2: return "Phase 5B (L.)";
-                case animations.LINK_PHASE_5_F2: return "Phase 5C (L.)";
-                case animations.LINK_PHASE_5_F2_2: return "Phase 5D (L.)";
+                case animations.ENEMY_DAMAGE_STANDBY_A: return "Standby A (Dmgd)";
+                case animations.ENEMY_DAMAGE_STANDBY_B: return "Standby B (Dmgd)";
+                case animations.ENEMY_DAMAGE_STANDBY_C: return "Standby C (Dmgd)";
+                case animations.LINK_PHASE_1: return "Phase 1 (Entry)(Lk)";
+                case animations.LINK_PHASE_1_2: return "Phase 1B (Entry)(Lk)";
+                case animations.LINK_PHASE_1_F2: return "Phase 1C (Entry)(Lk)";
+                case animations.LINK_PHASE_1_F2_2: return "Phase 1D (Entry)(Lk)";
+                case animations.LINK_PHASE_2: return "Phase 2 (OD)(Lk)";
+                case animations.LINK_PHASE_2_2: return "Phase 2B (OD)(Lk)";
+                case animations.LINK_PHASE_2_F2: return "Phase 2C (OD)(Lk)";
+                case animations.LINK_PHASE_2_F2_2: return "Phase 2D (OD)(Lk)";
+                case animations.LINK_PHASE_3: return "Phase 3 (Break)(Lk)";
+                case animations.LINK_PHASE_3_2: return "Phase 3B (Break)(Lk)";
+                case animations.LINK_PHASE_3_F2: return "Phase 3C (Break)(Lk)";
+                case animations.LINK_PHASE_3_F2_2: return "Phase 3D (Break)(Lk)";
+                case animations.LINK_PHASE_4: return "Phase 4 (Lk)";
+                case animations.LINK_PHASE_4_2: return "Phase 4B (Lk)";
+                case animations.LINK_PHASE_4_F2: return "Phase 4C (Lk)";
+                case animations.LINK_PHASE_4_F2_2: return "Phase 4D (Lk)";
+                case animations.LINK_PHASE_5: return "Phase 5 (Lk)";
+                case animations.LINK_PHASE_5_2: return "Phase 5B (Lk)";
+                case animations.LINK_PHASE_5_F2: return "Phase 5C (Lk)";
+                case animations.LINK_PHASE_5_F2_2: return "Phase 5D (Lk)";
                 case animations.LINK_DAMAGE: return "Damaged (Link)";
                 case animations.LINK_DAMAGE_2: return "Damaged 2 (Link)";
                 case animations.LINK_DEAD: return "Dead (Link)";
@@ -482,50 +472,50 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.LINK_DEAD_A: return "Dead 1B (Link)";
                 case animations.LINK_DEAD_B: return "Dead 2B (Link)";
                 case animations.LINK_DEAD_C: return "Dead 3B (Link)";
-                case animations.LINK_MORTAL_A: return "Charge Atk. A (L.)";
-                case animations.LINK_MORTAL_A_2: return "Charge Atk. A2 (L.)";
-                case animations.LINK_MORTAL_A_F2: return "Charge Atk. A3 (L.)";
-                case animations.LINK_MORTAL_A_F2_2: return "Charge Atk. A4 (L.)";
-                case animations.LINK_MORTAL_B: return "Charge Atk. B (L.)";
-                case animations.LINK_MORTAL_B_2: return "Charge Atk. B2 (L.)";
-                case animations.LINK_MORTAL_B_F2: return "Charge Atk. B3 (L.)";
-                case animations.LINK_MORTAL_B_F2_2: return "Charge Atk. B4 (L.)";
-                case animations.LINK_MORTAL_C: return "Charge Atk. C (L.)";
-                case animations.LINK_MORTAL_C_2: return "Charge Atk. C2 (L.)";
-                case animations.LINK_MORTAL_C_F2: return "Charge Atk. C3 (L.)";
-                case animations.LINK_MORTAL_C_F2_2: return "Charge Atk. C4 (L.)";
-                case animations.LINK_MORTAL_D: return "Charge Atk. D (L.)";
-                case animations.LINK_MORTAL_D_2: return "Charge Atk. D2 (L.)";
-                case animations.LINK_MORTAL_D_F2: return "Charge Atk. D3 (L.)";
-                case animations.LINK_MORTAL_D_F2_2: return "Charge Atk. D4 (L.)";
-                case animations.LINK_MORTAL_E: return "Charge Atk. E (L.)";
-                case animations.LINK_MORTAL_E_2: return "Charge Atk. E2 (L.)";
-                case animations.LINK_MORTAL_E_F2: return "Charge Atk. E3 (L.)";
-                case animations.LINK_MORTAL_E_F2_2: return "Charge Atk. E4 (L.)";
-                case animations.LINK_MORTAL_F: return "Charge Atk. F (L.)";
-                case animations.LINK_MORTAL_F_2: return "Charge Atk. F2 (L.)";
-                case animations.LINK_MORTAL_F_F2: return "Charge Atk. F3 (L.)";
-                case animations.LINK_MORTAL_F_F2_2: return "Charge Atk. F4 (L.)";
-                case animations.LINK_MORTAL_G: return "Charge Atk. G (L.)";
-                case animations.LINK_MORTAL_G_2: return "Charge Atk. G2 (L.)";
-                case animations.LINK_MORTAL_G_F2: return "Charge Atk. G3 (L.)";
-                case animations.LINK_MORTAL_G_F2_2: return "Charge Atk. G4 (L.)";
-                case animations.LINK_MORTAL_H: return "Charge Atk. H (L.)";
-                case animations.LINK_MORTAL_H_2: return "Charge Atk. H2 (L.)";
-                case animations.LINK_MORTAL_H_F2: return "Charge Atk. H3 (L.)";
-                case animations.LINK_MORTAL_H_F2_2: return "Charge Atk. H4 (L.)";
-                case animations.LINK_MORTAL_I: return "Charge Atk. I (L.)";
-                case animations.LINK_MORTAL_I_2: return "Charge Atk. I2 (L.)";
-                case animations.LINK_MORTAL_I_F2: return "Charge Atk. I3 (L.)";
-                case animations.LINK_MORTAL_I_F2_2: return "Charge Atk. I4 (L.)";
-                case animations.LINK_MORTAL_J: return "Charge Atk. J (L.)";
-                case animations.LINK_MORTAL_J_2: return "Charge Atk. J2 (L.)";
-                case animations.LINK_MORTAL_J_F2: return "Charge Atk. J3 (L.)";
-                case animations.LINK_MORTAL_J_F2_2: return "Charge Atk. J4 (L.)";
-                case animations.LINK_MORTAL_K: return "Charge Atk. K (L.)";
-                case animations.LINK_MORTAL_K_2: return "Charge Atk. K2 (L.)";
-                case animations.LINK_MORTAL_K_F2: return "Charge Atk. K3 (L.)";
-                case animations.LINK_MORTAL_K_F2_2: return "Charge Atk. K4 (L.)";
+                case animations.LINK_MORTAL_A: return "Charge Atk. A (Lk)";
+                case animations.LINK_MORTAL_A_2: return "Charge Atk. A2 (Lk)";
+                case animations.LINK_MORTAL_A_F2: return "Charge Atk. A3 (Lk)";
+                case animations.LINK_MORTAL_A_F2_2: return "Charge Atk. A4 (Lk)";
+                case animations.LINK_MORTAL_B: return "Charge Atk. B (Lk)";
+                case animations.LINK_MORTAL_B_2: return "Charge Atk. B2 (Lk)";
+                case animations.LINK_MORTAL_B_F2: return "Charge Atk. B3 (Lk)";
+                case animations.LINK_MORTAL_B_F2_2: return "Charge Atk. B4 (Lk)";
+                case animations.LINK_MORTAL_C: return "Charge Atk. C (Lk)";
+                case animations.LINK_MORTAL_C_2: return "Charge Atk. C2 (Lk)";
+                case animations.LINK_MORTAL_C_F2: return "Charge Atk. C3 (Lk)";
+                case animations.LINK_MORTAL_C_F2_2: return "Charge Atk. C4 (Lk)";
+                case animations.LINK_MORTAL_D: return "Charge Atk. D (Lk)";
+                case animations.LINK_MORTAL_D_2: return "Charge Atk. D2 (Lk)";
+                case animations.LINK_MORTAL_D_F2: return "Charge Atk. D3 (Lk)";
+                case animations.LINK_MORTAL_D_F2_2: return "Charge Atk. D4 (Lk)";
+                case animations.LINK_MORTAL_E: return "Charge Atk. E (Lk)";
+                case animations.LINK_MORTAL_E_2: return "Charge Atk. E2 (Lk)";
+                case animations.LINK_MORTAL_E_F2: return "Charge Atk. E3 (Lk)";
+                case animations.LINK_MORTAL_E_F2_2: return "Charge Atk. E4 (Lk)";
+                case animations.LINK_MORTAL_F: return "Charge Atk. F (Lk)";
+                case animations.LINK_MORTAL_F_2: return "Charge Atk. F2 (Lk)";
+                case animations.LINK_MORTAL_F_F2: return "Charge Atk. F3 (Lk)";
+                case animations.LINK_MORTAL_F_F2_2: return "Charge Atk. F4 (Lk)";
+                case animations.LINK_MORTAL_G: return "Charge Atk. G (Lk)";
+                case animations.LINK_MORTAL_G_2: return "Charge Atk. G2 (Lk)";
+                case animations.LINK_MORTAL_G_F2: return "Charge Atk. G3 (Lk)";
+                case animations.LINK_MORTAL_G_F2_2: return "Charge Atk. G4 (Lk)";
+                case animations.LINK_MORTAL_H: return "Charge Atk. H (Lk)";
+                case animations.LINK_MORTAL_H_2: return "Charge Atk. H2 (Lk)";
+                case animations.LINK_MORTAL_H_F2: return "Charge Atk. H3 (Lk)";
+                case animations.LINK_MORTAL_H_F2_2: return "Charge Atk. H4 (Lk)";
+                case animations.LINK_MORTAL_I: return "Charge Atk. I (Lk)";
+                case animations.LINK_MORTAL_I_2: return "Charge Atk. I2 (Lk)";
+                case animations.LINK_MORTAL_I_F2: return "Charge Atk. I3 (Lk)";
+                case animations.LINK_MORTAL_I_F2_2: return "Charge Atk. I4 (Lk)";
+                case animations.LINK_MORTAL_J: return "Charge Atk. J (Lk)";
+                case animations.LINK_MORTAL_J_2: return "Charge Atk. J2 (Lk)";
+                case animations.LINK_MORTAL_J_F2: return "Charge Atk. J3 (Lk)";
+                case animations.LINK_MORTAL_J_F2_2: return "Charge Atk. J4 (Lk)";
+                case animations.LINK_MORTAL_K: return "Charge Atk. K (Lk)";
+                case animations.LINK_MORTAL_K_2: return "Charge Atk. K2 (Lk)";
+                case animations.LINK_MORTAL_K_F2: return "Charge Atk. K3 (Lk)";
+                case animations.LINK_MORTAL_K_F2_2: return "Charge Atk. K4 (Lk)";
                 case animations.LINK_ATTACK: return "Attack (Link)";
                 case animations.LINK_ATTACK_2: return "Attack B (Link)";
                 case animations.LINK_ATTACK_F2: return "Attack C (Link)";
@@ -573,8 +563,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 me.stage.addChild(me.cjsMortal);
                 if(is_enemy)
                 {
-                    me.cjsMortal.x = me.cjsEnemy.x;
-                    me.cjsMortal.y = me.cjsEnemy.y;
+                    me.cjsMortal.x = enemyOffset.x;;
+                    me.cjsMortal.y = enemyOffset.y;
                     me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
                 }
                 else
@@ -594,8 +584,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                         }
                         else
                         {
-                            me.cjsMortal.x = me.cjsEnemy.x;
-                            me.cjsMortal.y = me.cjsEnemy.y + ougiOffset;
+                            me.cjsMortal.x = enemyOffset.x;
+                            me.cjsMortal.y = enemyOffset.y + ougiOffset;
                             me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
                         }
                     }
@@ -628,8 +618,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     }
                     else
                     {
-                        me.cjsMortal.x = me.cjsEnemy.x;
-                        me.cjsMortal.y = me.cjsEnemy.y + ougiOffset;
+                        me.cjsMortal.x = enemyOffset.x;
+                        me.cjsMortal.y = enemyOffset.y + ougiOffset;
                         me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
                     }
                 }
@@ -659,8 +649,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             }
             function addAtkEffect(elem) {
                 let atk = new lib[elem];
-                atk.x = me.cjsEnemy.x,
-                atk.y = me.cjsEnemy.y + atkOffset,
+                atk.x = enemyOffset.x,
+                atk.y = enemyOffset.y + atkOffset,
                 atk.scaleX *= scaling,
                 atk.scaleY *= scaling,
                 me.stage.addChild(atk),
@@ -672,16 +662,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 }).wait(duration).call(function () {
                     me.stage.removeChild(atk)
                 })
-            }
-            function addEnemyDamage() {
-                let elem = me.cjsEnemy[AnimeEnemy];
-                let duration = elem[AnimeEnemy + "_damage"].timeline.duration;
-                elem.gotoAndPlay("damage");
-                createjs.Tween.get(me.cjsEnemy, {
-                    useTicks: true
-                }).wait(duration).call(function () {
-                    elem.gotoAndPlay("wait")
-                });
             }
             function toggleForm() {
                 me.currentIndex++;
@@ -797,11 +777,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 {
                     this.damageTarget = targets.ENEMY;
                     addAtkEffect(this.cjsNameEffect);
-                    createjs.Tween.get(this.cjsEnemy, {
-                        useTicks: true
-                    }).wait(i).call(function () {
-                        addEnemyDamage()
-                    });
                     let nmotion = nextMotion();
                     animDuration = _.contains([animations.ATTACK_DOUBLE, animations.ATTACK_TRIPLE, animations.ATTACK_QUADRUPLE], nmotion) ? aniState.COMBO_PROCESS : this.getAnimDuration(npc[this.cjsNameNpc + "_" + motion]);
                     break;

@@ -102,8 +102,20 @@ details[open] > .element-detail {
     cursor: pointer;
 }
 
-.btn-paused {
-    background: #bb0000;
+.small-button {
+    margin: 5px;
+    width: 50px;
+    height: 40px;
+    background: #2d2d30;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    border: none;
+    outline: none;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
 }
 
 .bg-button {
@@ -119,6 +131,10 @@ details[open] > .element-detail {
     align-items: center;
     position: relative;
     cursor: pointer;
+}
+
+.btn-paused {
+    background: #bb0000;
 }
 
 #fav-btn {
@@ -224,7 +240,7 @@ details[open] > .element-detail {
     cursor: pointer;
 }
 
-.tabbutton:hover, .std-button:hover, .bg-button:hover {
+.tabbutton:hover, .std-button:hover, .bg-button:hover, .small-button:hover {
   outline: solid #ffffff;
 }
 
@@ -316,6 +332,25 @@ select:hover {
     width: 200px;
     font-size: 20px;
     display: inline-block;
+}
+
+.custom-menu {
+    width: 700px;
+    height:700px;
+    position: absolute;
+    top:100px;
+    align-items: center;
+    justify-content: center;
+    background: #181818db;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    z-index=50; 
+}
+
+#demo-list {
+    height: 630px;
+    overflow: auto;
 }
 
 /* Other */
@@ -485,9 +520,19 @@ a:active {
         height: 100px;
     }
 
+    .small-button {
+        width: 100px;
+        height: 80px;
+    }
+
     .bg-button > img {
         width: 80px;
         height: 80px;
+    }
+
+    .small-button > img {
+        width: 80px;
+        height: 60px;
     }
 
     #fav-btn {
@@ -544,6 +589,15 @@ a:active {
     .act-element {
         width: 300px;
         font-size: 30px;
+    }
+
+    .custom-menu {
+        width: 700px;
+        height:1400px;
+    }
+
+    #demo-list {
+        height: 1200px;
     }
 
     footer, #header {

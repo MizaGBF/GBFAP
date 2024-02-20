@@ -2,7 +2,6 @@
 const LOCAL = false; // set to true if assets are on the same machine
 const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
 const HISTORY_LENGTH = 20; // size limit of the history
-const PLAYER_ENEMIES = ["enemy_9100211", "enemy_9100221", "enemy_6204152"]; // rotating enemies
 const ENDPOINTS = [ // possible asset endpoints, used for the index
     "https://prd-game-a-granbluefantasy.akamaized.net/",
     "https://prd-game-a1-granbluefantasy.akamaized.net/",
@@ -78,7 +77,6 @@ const BACKGROUNDS = [
 var AnimeID = null; // will contain the Character id
 var AnimeData = null; // will contain the Character data for the player
 var AnimeDebug = false; // debug only, ignore it
-var AnimeEnemy = PLAYER_ENEMIES[Math.floor(Math.random() * PLAYER_ENEMIES.length)];
 var Game = LOCAL ? // Game variable used by GBF scripts
 {
     xjsUri: '',
@@ -492,8 +490,8 @@ function loadEnemy(id)
 // on success loading the player
 function successLoading(id)
 {
-    // try to access CORS proxy by requesting the enemy
-    get(Game.jsUri + "/model/manifest/" + AnimeEnemy + ".js?" + Date.now(), startplayer, playerFail, id);
+    // try to access CORS proxy by requesting the ring icon
+    get(Game.imgUri + "_low/sp/assets/item/article/s/2.jpg?" + Date.now(), startplayer, playerFail, id);
 }
 
 // on error loading the player

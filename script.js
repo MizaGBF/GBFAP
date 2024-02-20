@@ -66,16 +66,18 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
             }).done(function () {
                 _.each(a.cjsViewList, function (b, e) {
                     a.cjsRender(b)
+                    l = b.getActionList();
+                    custom_choices[e] = l.slice(0);
                     if (e > 0) {
                         b.pause()
                     }
-                    else{
-                        l = b.getActionList();
+                    else
+                    {
                         var actionlist = '<option value="default">Demo</option>'
                         for (action in l) {
                             actionlist = actionlist.concat('<option value=' + l[action] + '>' + b.translateAction(l[action]) + '</option>');
                         }
-                        document.getElementById("act-selection").innerHTML = actionlist
+                        document.getElementById("act-selection").innerHTML = actionlist;
                     }
                 })
             })
