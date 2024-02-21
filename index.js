@@ -475,6 +475,8 @@ function loadEnemy(id)
         AnimeData[1][0]['special'] = [];
         for(let sp of data['sp'])
         {
+            let i = parseInt(sp.split('_')[2]);
+            while(AnimeData[1][0]['special'].length < i - 1) AnimeData[1][0]['special'].push({"random":0,"list":[]});
             AnimeData[1][0]['special'].push({"random":0,"list":[{"target":"them","cjs":sp,"fixed_pos_owner_bg":0,"full_screen":0}]});
         }
         AnimeData[1][0]['cjs_pos'] = [{"y":0,"x":0}];

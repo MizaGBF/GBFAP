@@ -552,7 +552,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 y: 0
             };
             this.mortalIndex = this.mortalIndexList[index];
-            if(this.cjsMortalList.length > 0)
+            if(this.cjsMortalList.length > 0 &&  this.cjsMortalList[index].list.length > 0)
             {
                 this.cjsNameMortal = this.cjsMortalList[index].list[this.mortalIndex].cjs;
                 this.isFullScreenMortal = !!this.cjsMortalList[index].list[this.mortalIndex].full_screen || false;
@@ -751,14 +751,13 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.MORTAL_K_1:
                 case animations.MORTAL_K_2:
                 {
-                    if(this.cjsMortalList.length == 0) // no ougi file
+                    this.currentIndex = motion[motion.length-1].charCodeAt()-65;
+                    if(this.currentIndex >= this.cjsMortalList.length)
+                        this.currentIndex=0;
+                    if(this.cjsMortalList.length == 0 || this.cjsMortalList[this.currentIndex].list.length == 0) // no ougi file
                     {
                         animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
                         break;
-                    }
-                    this.currentIndex = motion[motion.length-1].charCodeAt()-65;
-                    if(this.currentIndex >= this.cjsMortalList.length){
-                        this.currentIndex=0
                     }
                     this.damageTarget = this.cjsMortalList[this.currentIndex].list[this.mortalIndex].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
                     this.updateCjsParams(this.currentIndex);
@@ -836,11 +835,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 this.npc.dispatchEvent(complete);
             } else {
                 dispatchStack[this.loopIndex] = 0;
-                try { // exception check, just in case...
-                    this.npc.dispatchEvent(complete);
-                } catch(err) {
-                    console.error("Exception thrown", err.stack);
-                }
             }
         },
         getAnimDuration: function(elem) {
