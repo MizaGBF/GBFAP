@@ -119,12 +119,15 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         ENEMY_STANDBY_A: "standby_A",
         ENEMY_STANDBY_B: "standby_B",
         ENEMY_STANDBY_C: "standby_C",
+        ENEMY_STANDBY_D: "standby_D",
         ENEMY_BREAK_STANDBY_A: "break_standby_A",
         ENEMY_BREAK_STANDBY_B: "break_standby_B",
         ENEMY_BREAK_STANDBY_C: "break_standby_C",
+        ENEMY_BREAK_STANDBY_D: "break_standby_D",
         ENEMY_DAMAGE_STANDBY_A: "damage_standby_A",
         ENEMY_DAMAGE_STANDBY_B: "damage_standby_B",
         ENEMY_DAMAGE_STANDBY_C: "damage_standby_C",
+        ENEMY_DAMAGE_STANDBY_D: "damage_standby_D",
         LINK_PHASE_1: "setin_link",
         LINK_PHASE_1_2: "setin_link_2",
         LINK_PHASE_1_F2: "setin_link_f2",
@@ -439,12 +442,15 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.ENEMY_STANDBY_A: return "Standby A";
                 case animations.ENEMY_STANDBY_B: return "Standby B";
                 case animations.ENEMY_STANDBY_C: return "Standby C";
+                case animations.ENEMY_STANDBY_D: return "Standby D";
                 case animations.ENEMY_BREAK_STANDBY_A: return "Standby A (Break)";
                 case animations.ENEMY_BREAK_STANDBY_B: return "Standby B (Break)";
                 case animations.ENEMY_BREAK_STANDBY_C: return "Standby C (Break)";
+                case animations.ENEMY_BREAK_STANDBY_D: return "Standby D (Break)";
                 case animations.ENEMY_DAMAGE_STANDBY_A: return "Standby A (Dmgd)";
                 case animations.ENEMY_DAMAGE_STANDBY_B: return "Standby B (Dmgd)";
                 case animations.ENEMY_DAMAGE_STANDBY_C: return "Standby C (Dmgd)";
+                case animations.ENEMY_DAMAGE_STANDBY_D: return "Standby D (Dmgd)";
                 case animations.LINK_PHASE_1: return "Phase 1 (Entry)(Lk)";
                 case animations.LINK_PHASE_1_2: return "Phase 1B (Entry)(Lk)";
                 case animations.LINK_PHASE_1_F2: return "Phase 1C (Entry)(Lk)";
