@@ -828,14 +828,19 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 else document.getElementById("act-duration").innerHTML = "Loop paused";
             },[i, this])
         },
-        nextLoop: function(force = false) {
-            if(this.loopIndex == null) return;
-            if (dispatchStack[this.loopIndex] == _.max(dispatchStack)) {
+        nextLoop: function() {
+            if(this.loopIndex == null)
+                return;
+            if(dispatchStack[this.loopIndex] == _.max(dispatchStack))
+            {
                 dispatchStack[this.loopIndex] = 0;
                 this.npc.dispatchEvent(complete);
-            } else {
+            }
+            else
+            {
                 dispatchStack[this.loopIndex] = 0;
-                if(force) this.npc.dispatchEvent(complete);
+                if(document.getElementById("act-duration").innerHTML == "Loop paused")
+                    this.npc.dispatchEvent(complete);
             }
         },
         getAnimDuration: function(elem) {

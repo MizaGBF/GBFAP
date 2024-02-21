@@ -232,7 +232,7 @@ function toggleLoop()
     {
         document.getElementById("loop-btn").classList.add("btn-looping");
         loopingState = true;
-        this.cjsViewList[animeVersion].nextLoop(true);
+        this.cjsViewList[animeVersion].nextLoop();
     }
 }
 
