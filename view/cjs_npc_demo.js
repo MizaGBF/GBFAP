@@ -751,7 +751,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.MORTAL_K_1:
                 case animations.MORTAL_K_2:
                 {
-                    console.log(motion, motion.split('_')[1].charCodeAt()-65);
                     this.currentIndex = motion.split('_')[1].charCodeAt()-65;
                     if(this.currentIndex >= this.cjsMortalList.length)
                         this.currentIndex=0;
