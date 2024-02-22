@@ -6,6 +6,7 @@ var custom_choices = {}
 var demo_list = null;
 var action_list = {};
 var dispatchStack = new Array;
+var sfxState = false;
 var loopingState = true;
 var animeVersion = 0;
 var loadTotal = 999999999999;
@@ -53,11 +54,12 @@ function setHTML()
                         <span id="act-duration" class="act-element">Loading...</span><br>\
                     </div>\
                     <div class="controls-outline">\
-                        <input id="speed-input" type="range" min="0.05" max="2" step="0.05" value="1" oninput="changeSpeed(this);"><br>\
-                        <label id="speed-label" for="speed-input" class="controls-text">100% Speed</label>\
+                        <input id="speed-input" type="range" min="0.05" max="2" step="0.05" value="1" oninput="changeSpeed(this);">\
+                        <label id="speed-label" for="speed-input" class="controls-text">100% Speed</label><br>\
                         <button class="small-button" onclick="let elem = document.getElementById(\'speed-input\'); elem.value=1; changeSpeed(elem);"><img src="assets/ui/controls/reset.png"></button>\
                         <button class="small-button" onclick="togglePause();" id="pause-btn"><img src="assets/ui/controls/pause.png"></button>\
-                        <button class="small-button btn-looping" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
+                        <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
+                        <button class="small-button" onclick="toggleSFX();" id="sfx-btn"><img src="assets/ui/controls/sfx.png"></button>\
                         <button class="small-button" onclick="openCustom()")"><img src="assets/ui/controls/edit.png"></button>\
                     </div>\
                     <div class="controls-outline">\
@@ -223,16 +225,33 @@ function toggleLoop()
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
     let loop_btn = document.getElementById("loop-btn");
-    if(loop_btn.classList.contains('btn-looping'))
+    if(loop_btn.classList.contains('btn-enabled'))
     {
-        loop_btn.classList.remove("btn-looping");
+        loop_btn.classList.remove("btn-enabled");
         loopingState = false;
     }
     else
     {
-        document.getElementById("loop-btn").classList.add("btn-looping");
+        loop_btn.classList.add("btn-enabled");
         loopingState = true;
         this.cjsViewList[animeVersion].nextLoop();
+    }
+}
+
+function toggleSFX()
+{
+    let name = document.getElementById("act-name");
+    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    let sfx_btn = document.getElementById("sfx-btn");
+    if(sfx_btn.classList.contains('btn-enabled'))
+    {
+        sfx_btn.classList.remove("btn-enabled");
+        sfxState = false;
+    }
+    else
+    {
+        sfx_btn.classList.add("btn-enabled");
+        sfxState = true;
     }
 }
 

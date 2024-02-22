@@ -137,7 +137,7 @@ details[open] > .element-detail {
     background: #bb0000;
 }
 
-.btn-looping {
+.btn-enabled {
     background: #004080;
 }
 
@@ -301,7 +301,6 @@ details[open] > .element-detail {
 
 #speed-input {
     min-width: 500px;
-    margin-bottom: 20px;
     width: 200px;
     display: inline-block;
     font-size: 25px;
@@ -316,7 +315,7 @@ label {
 #speed-label {
     font-size: 20px;
     margin: 0px;
-    text-align: left;
+    text-align: center;
 }
 
 select {
@@ -573,7 +572,6 @@ a:active {
     #speed-input {
         min-width: 500px;
         margin-top: 20px;
-        margin-bottom: 50px;
     }
     
     label {

@@ -82,9 +82,10 @@ Downloaded assets are saved in the following folders:
   
 The following files are modified/customized:  
 * view/cjs_npc_demo.js (has been mostly deobfuscated and heavily modified)  
-* model/cjs-loader.js (added some customization related to file paths)   
-* model/manifest-loader.js (the loading indicator is updated here)   
-* lib/sound.js & lib/raid/extension.js (mostly empty, they are here as placeholders to fill some gaps)  
+* model/cjs-loader.js (added some customization related to file paths)  
+* model/manifest-loader.js (the loading indicator is updated here)  
+* lib/sound.js (to play SFX)  
+* lib/raid/extension.js (mostly empty, it serves as a placeholder)  
   
 Along with:  
 * index.js (the page main script)  
