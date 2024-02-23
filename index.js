@@ -1,6 +1,7 @@
 // constant
 const LOCAL = false; // set to true if assets are on the same machine
-const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
+//const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
+const CORS = 'http://localhost:8001/' // CORS Proxy to use (if LOCAL is true)
 const HISTORY_LENGTH = 20; // size limit of the history
 const ENDPOINTS = [ // possible asset endpoints, used for the index
     "https://prd-game-a-granbluefantasy.akamaized.net/",
@@ -396,7 +397,24 @@ function loadCharacter(id)
             else if(!is_old_summon) AnimeData[1][p]['action_label_list'] = ['summon', 'summon_atk', 'summon_dmg'];
             else AnimeData[1][p]['action_label_list'] = ['summon', 'summon_atk'];
             AnimeData[1][p]['effect'] = [d[3]]; // phit
-            AnimeData[1][p]['special'] = [{"random":0,"list":[{"target":"them","cjs":d[4],"fixed_pos_owner_bg":0,"full_screen":+d[5]}]}]; // special, fullscreen
+            if(d[4].constructor == Array)
+            {
+                AnimeData[1][p]['special'] = [];
+                for(let sp of d[4])
+                {
+                    let i = sp[sp.length-1].charCodeAt();
+                    if(i < 'a'.charCodeAt() || i > 'z'.charCodeAt())
+                        i = 0;
+                    else
+                        i -= 'a'.charCodeAt();
+                    while(AnimeData[1][p]['special'].length < i - 1) AnimeData[1][p]['special'].push({"random":0,"list":[]});
+                    AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":sp,"fixed_pos_owner_bg":0,"full_screen":+d[5]}]});
+                }
+            }
+            else
+            {
+                AnimeData[1][p]['special'] = [{"random":0,"list":[{"target":"them","cjs":d[4],"fixed_pos_owner_bg":0,"full_screen":+d[5]}]}]; // special, fullscreen
+            }
             if(mc_summon != null && d[4].includes('attack')) AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":d[4].replace('attack', 'damage'),"fixed_pos_owner_bg":0,"full_screen":0}]});
             AnimeData[1][p]['cjs_pos'] = [{"y":0,"x":0}];
             AnimeData[1][p]['special_pos'] = [[{"y":0,"x":0}]];

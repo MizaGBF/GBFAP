@@ -7,6 +7,8 @@ Based and modified from the chinese wiki player.
 Two possible setups:  
   
 ### You want to host the assets  
+Be sure to have a lot of disk spaces.  
+  
 1. Copy this repo.  
 2. Run `python updater.py -downloadall` to download all the assets. (The script will ask you to confirm. You can also turn off changes to data.json when asked.).  
 3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
@@ -14,6 +16,8 @@ Two possible setups:
   
 You can now host the project in the way you prefer.  
 You only need to use `-init` and `-force` once. Simply do `python updater.py -download` for future updates.  
+  
+Note: Some files will still be accessed remotely (like sound files).  
   
 ### You DON'T want to host the assets  
 1. Copy this repo.  
@@ -43,20 +47,18 @@ And the following if you're using [GBFAL](https://github.com/MizaGBF/GBFAL):
 
   
 # Exceptions/Quirks  
-* Some skins (and rarely some seasonal characters) reuse the Charge Attack or Attack effect of another version.  
+* Some skins and characters reuse the Charge Attack or Attack effect of another version.  
 As there is no way to programmatically find it, at least currently, you'll have to set those exceptions manually in `updater.py`.  
 First, you'll likely get a `No special set` error for characters without corresponding charge attack.  
 Second, characters without corresponding attack effect will use a default one.  
-To fix any of those two issues, find out the ID of the Character that it's supposed to borrow the files from and open `update.py` and look for `PATCHES` around line 31.  
-Simply add a new line in the list (don't forget the comma in the previous one) such as it looks that way:
-`"ID_CHARA_WITHOUT_OUGI" : ("ID_OUGI_BORROWED_FROM", "", "")`.  
+To fix any of those two issues, find out the ID of the Character that it's supposed to borrow the files from and open `update.py` and look for `PATCHES` around line 80.  
+Simply add a new line in the list if the ID of the character isn't present such as it looks that way:
+`"ID_CHARA_WITHOUT_OUGI" : ("ID_OUGI_BORROWED_FROM", "ID_ATTACK_BORROWED_FROM"),`.  
 Example:  
-`"3040232000": ("3040158000", "", "")`.  
-Summer Alexiel (3040232000) is using Grand Alexiel (3040158000) Charge Attack files.  
-The second value (`''`) is, in the future, if a character/skin ends up borrowing a CA with a weird naming convention, such as a full screen Charge Attack.  
-Those have an extra `_s2` or `_s3` in their file names, and will need to be specified at that location.  
-The third value (`''`) is for the matching attack effect.  
-In a similar fashion, classes must be set in the code too.  
+`"3040232000": ("3040158000_UU", "phit_3040158000"),`.  
+Summer Alexiel (3040232000) is using Grand Alexiel (3040158000) Charge Attack and Attack files.  
+`_UU` indicates tells it to use the corresponding level of uncap but you can also set a specific level (like `01`, `02`, `03`, etc...).  
+You can also add `FF` to use the current form in the file name.  
 Just look at the full list in `updater.py` for more examples.  
 Once the change is done, run `updater.py` again for the concerned characters.  
   
