@@ -238,8 +238,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         isPaused: false,
         motionList: null,
         motionListIndex: 0,
-        mortalIndexList: [],
-        mortalIndex: 0,
         isFullScreenMortal: false,
         isFixedPosOwnerBG: false,
         animChanger: null,
@@ -255,8 +253,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             this.cjsMortal = null;
             this.isPaused = false;
             this.motionListIndex = 0;
-            this.mortalIndexList = [];
-            this.mortalIndex = 0;
             this.isFullScreenMortal = false;
             this.isFixedPosOwnerBG = false;
             this.animChanger = null;
@@ -282,7 +278,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                         e.list[k] = g[i[k]],
                             f[k] = h[i[k]]
                 }
-                this.mortalIndexList[d] = 0
             }
             this.canvas = document.querySelector(this.canvasSelector),
                 this.updateCjsParams(this.currentIndex)
@@ -551,13 +546,12 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 x: 0,
                 y: 0
             };
-            this.mortalIndex = this.mortalIndexList[index];
             if(this.cjsMortalList.length > 0 &&  this.cjsMortalList[index].list.length > 0)
             {
-                this.cjsNameMortal = this.cjsMortalList[index].list[this.mortalIndex].cjs;
-                this.isFullScreenMortal = !!this.cjsMortalList[index].list[this.mortalIndex].full_screen || false;
-                this.isFixedPosOwnerBG = !!this.cjsMortalList[index].list[this.mortalIndex].fixed_pos_owner_bg || false;
-                this.cjsMortalPos = this.cjsMortalPosList[0][this.mortalIndex] || {
+                this.cjsNameMortal = this.cjsMortalList[index].list[0].cjs;
+                this.isFullScreenMortal = !!this.cjsMortalList[index].list[0].full_screen || false;
+                this.isFixedPosOwnerBG = !!this.cjsMortalList[index].list[0].fixed_pos_owner_bg || false;
+                this.cjsMortalPos = this.cjsMortalPosList[0][0] || {
                     x: 0,
                     y: 0
                 };
@@ -649,11 +643,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 }
                 //me.cjsMortal[mortal][mortal].gotoAndPlay(mortal.includes('attack') ? 'attack' : 'damage'); // not needed?
                 return me.getAnimDuration(me.cjsMortal[mortal][mortal]);
-            }
-            function cycleMortalIndex() {
-                me.mortalIndexList[me.currentIndex]++;
-                if(me.mortalIndexList[me.currentIndex] >= me.cjsMortalList[me.currentIndex].list.length)
-                    me.mortalIndexList[me.currentIndex] = 0;
             }
             function addAtkEffect(elem) {
                 let atk = new lib[elem];
@@ -759,18 +748,17 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                         animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
                         break;
                     }
-                    this.damageTarget = this.cjsMortalList[this.currentIndex].list[this.mortalIndex].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
+                    this.damageTarget = this.cjsMortalList[this.currentIndex].list[0].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
                     this.updateCjsParams(this.currentIndex);
                     addOugi(this.cjsNameMortal);
                     animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]) + ((is_mc && mc_wpn) ? this.getAnimDuration(this.cjsMortal[this.cjsNameMortal][this.cjsNameMortal+"_special"]) : 0);
-                    cycleMortalIndex();
                     break;
                 }
                 case animations.SUMMON_ATTACK: // summon hack
                 case animations.SUMMON_DAMAGE: // summon hack
                 {
                     this.currentIndex = 0 ;
-                    this.damageTarget = this.cjsMortalList[this.currentIndex].list[this.mortalIndex].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
+                    this.damageTarget = this.cjsMortalList[this.currentIndex].list[0].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
                     this.updateCjsParams(this.currentIndex);
                     animDuration = addSummon(motion == animations.SUMMON_DAMAGE ? this.cjsNameMortal.replace('attack', 'damage') : this.cjsNameMortal);
                     break;
