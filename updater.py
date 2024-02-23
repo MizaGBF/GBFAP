@@ -680,15 +680,18 @@ class Updater():
                 for j in possibles:
                     tasks.append(tg.create_task(self.run_sub(i, self.MAX_RUN_TASK, j)))
             self.progress = Progress(total=len(tasks), silent=False)
+        count = 0
         for t in tasks:
-            t.result()
-        print("Done")
+            count += t.result()
+        if count > 0: print(count, "new entries")
+        else: print("Done")
         self.saveIndex()
 
-    async def run_sub(self, start : int, step : int, file : str) -> None:
+    async def run_sub(self, start : int, step : int, file : str) -> int:
         with self.progress:
             eid = start
             errc = 0
+            count = 0
             while errc < 20:
                 is_mob = len(file) == 5
                 f = file.format(str(eid).zfill(4 if is_mob else 3))
@@ -705,34 +708,38 @@ class Updater():
                         r = await self.update_summon(f)
                     else:
                         r = await self.update(f)
-                    if not r:
+                    if r == 0:
                         errc += 1
                         if errc >= 20:
-                            return
+                            return count
                     else:
                         errc = 0
+                        count += r
                 else:
                     errc = 0
                 eid += step
+            return count
 
-    async def run_class(self, start : int, step : int) -> None:
+    async def run_class(self, start : int, step : int) -> int:
         with self.progress:
             keys = list(self.class_lookup.keys())
             i = start
+            count = 0
             while i < len(keys):
                 f = keys[i]
                 if self.force_update or f not in self.index:
-                    await self.update_class(f)
+                    count += await self.update_class(f)
                 i += step
+            return count
 
-    async def update_class(self, id : str) -> bool:
+    async def update_class(self, id : str) -> int:
         try:
-            if id in self.exclusion: return False
-            if id not in self.class_lookup: return False
+            if id in self.exclusion: return 0
+            if id not in self.class_lookup: return 0
             try:
                 await self.req(self.IMG + "/sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg")
             except:
-                if not self.debug_mode: return False
+                if not self.debug_mode: return 0
             wid = None
             colors = []
             for i in ["01", "02", "03", "04", "05", "80"]:
@@ -742,7 +749,7 @@ class Updater():
                     colors.append(self.class_lookup[id][0] + "_0_{}".format(i))
                 except:
                     pass
-            if len(colors) == 0: return False
+            if len(colors) == 0: return 0
             if id in self.class_ougi: # skin with custom weapon
                 mortal = "mortal_B" # skin with custom ougis use this
                 mc_cjs = colors[0]
@@ -810,19 +817,19 @@ class Updater():
                 self.index[id] = character_data
                 self.modified = True
                 self.latest_additions[id] = 0
-            return True
+            return 1
         except Exception as e:
             sys.stdout.write("\rError {} for id: {}\n".format(e, id))
             sys.stdout.flush()
-            return False
+            return 0
 
-    async def update_weapon(self, id : str) -> bool:
+    async def update_weapon(self, id : str) -> int:
         try:
-            if id in self.exclusion: return False
+            if id in self.exclusion: return 0
             try:
                 await self.req(self.IMG + "/sp/assets/weapon/m/" + id + ".jpg")
             except:
-                if not self.debug_mode: return False
+                if not self.debug_mode: return 0
             # containers
             mc_cjs = self.CLASS[(int(id) // 100000) % 10]
             sid = self.ID_SUBSTITUTE.get(id, None)
@@ -859,7 +866,7 @@ class Updater():
                                 except:
                                     pass
                 if phit is None or sp is None:
-                    if uncap == "": return False
+                    if uncap == "": return 0
                     else: break
                 if self.download_assets: # download asset
                     for i in ([id] if sid is None else [id, sid]):
@@ -879,15 +886,15 @@ class Updater():
                     self.index[id+uncap] = character_data
                     self.modified = True
                     self.latest_additions[id+uncap] = 1
-            return True
+            return 1
         except Exception as e:
             sys.stdout.write("\rError {} for id: {}\n".format(e, id))
             sys.stdout.flush()
-            return False
+            return 0
 
     async def update_summon(self, id : str) -> bool:
         try:
-            if id in self.exclusion: return False
+            if id in self.exclusion: return 0
             # containers
             mc_cjs = "fig_sw_0_01"
             sid = [id]
@@ -907,7 +914,7 @@ class Updater():
                         if uncap != '_01':
                             continue
                         else:
-                            return False
+                            return 0
                 match uncap:
                     case "_04":
                         uns = ["_04", "_03", "_02"]
@@ -943,7 +950,7 @@ class Updater():
                             except:
                                 pass
                     if len(calls) == 0:
-                        if uncap == "_01": return False
+                        if uncap == "_01": return 0
                         else: continue
                 uncap_data = []
                 for i, sp in enumerate(calls):
@@ -955,26 +962,26 @@ class Updater():
                 self.index[id] = character_data
                 self.modified = True
                 self.latest_additions[id] = 2
-            return True
+            return 1
         except Exception as e:
             sys.stdout.write("\rError {} for id: {}\n".format(e, id))
             sys.stdout.flush()
-            return False
+            return 0
 
     async def update_mob(self, id : str) -> bool:
         try:
-            if id in self.exclusion: return False
+            if id in self.exclusion: return 0
             
             try:
                 await self.req(self.IMG + "/sp/assets/enemy/s/" + id + ".png")
             except:
                 if not self.debug_mode:
-                    return False
+                    return 0
             try:
                 fn = "enemy_{}".format(id)
                 await self.getJS(fn)
             except:
-                return False
+                return 0
             ehit = None
             try:
                 fn = "ehit_{}".format(id)
@@ -1007,11 +1014,11 @@ class Updater():
                 self.index[id] = character_data
                 self.modified = True
                 self.latest_additions[id] = 4
-            return True
+            return 1
         except Exception as e:
             sys.stdout.write("\rError {} for id: {}\n".format(e, id))
             sys.stdout.flush()
-            return False
+            return 0
 
     async def update_mob_sub(self, fn : str) -> Optional[str]:
         try:
@@ -1022,11 +1029,11 @@ class Updater():
 
     async def update(self, id : str, style : str = "") -> bool: # character
         try:
-            if id in self.exclusion: return False
+            if id in self.exclusion: return 0
             try:
                 await self.req(self.IMG + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg", head=True)
             except:
-                if not self.debug_mode: return False
+                if not self.debug_mode: return 0
             tid = self.ID_SUBSTITUTE.get(id, id) # fix for bobobo skin
             versions = {}
             genders = {}
@@ -1126,7 +1133,7 @@ class Updater():
                     if found is True and gender != "_0": break
                 if not found: break
             if len(versions.keys()) == 0:
-                return False
+                return 0
             name_table = {}
             for vs in versions:
                 name = ""
@@ -1160,12 +1167,12 @@ class Updater():
                 self.modified = True
                 self.latest_additions[id+style] = 3
             if id == "3040088000" and style == "": # style check for yngwie, change it later if they add more
-                await self.update(id, "_st2")
-            return True
+                return 1 + await self.update(id, "_st2")
+            return 1
         except Exception as e:
             sys.stdout.write("\rError {} for id: {}\n".format(e, id))
             sys.stdout.flush()
-            return False
+            return 0
 
     async def update_sub(self, fn : str) -> Optional[str]:
         try:
@@ -1195,31 +1202,28 @@ class Updater():
         return (True, data)
 
     async def manualUpdate(self, ids : list) -> None:
-        tcounter = 0
         self.progress = Progress()
         async with asyncio.TaskGroup() as tg:
             tasks = []
             for id in ids:
                 if len(id) == 7:
                     tasks.append(tg.create_task(self.progress_container(self.update_mob(id))))
-                    tcounter += 1
                 elif len(id) == 10:
                     if id.startswith("10"): tasks.append(tg.create_task(self.progress_container(self.update_weapon(id))))
                     elif id.startswith("20"): tasks.append(tg.create_task(self.progress_container(self.update_summon(id))))
                     else: tasks.append(tg.create_task(self.progress_container(self.update(id, ""))))
-                    tcounter += 1
                 elif len(id) == 14 and id.startswith("30") and id[10] == '_':
                     tasks.append(tg.create_task(self.progress_container(self.update(id.split('_')[0], id.split('_')[1]))))
-                    tcounter += 1
                 elif id in self.class_lookup:
                     tasks.append(tg.create_task(self.progress_container(self.update_class(id))))
-                    tcounter += 1
-            if tcounter > 0:
-                print("Attempting to update", tcounter, "element(s)")
-                self.progress = Progress(total=tcounter, silent=False)
+            if len(tasks) > 0:
+                print("Attempting to update", len(tasks), "element(s)")
+                self.progress = Progress(total=len(tasks), silent=False)
+        count = 0
         for t in tasks:
-            t.result()
-        print("Done")
+            count += t.result()
+        if count > 0: print(count, "new entries")
+        else: print("Done")
         self.saveIndex()
 
     async def getJS(self, js : str) -> list:
@@ -1322,7 +1326,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v2.7\n")
+                print("GBFAP updater v2.8\n")
                 start_flags = set(["-force", "-download", "-init", "-nochange", "-debug"])
                 flags = set()
                 extras = []
