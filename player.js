@@ -65,10 +65,10 @@ function setHTML()
                     <div class="controls-outline">\
                         <span class="controls-text">Background</span><br>\
                         <div class="controls-bg">\
-                            <button class="bg-button" onclick="setExternalBackground(\'https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img/sp/raid/bg/event_82.jpg\')"><img src="assets/ui/controls/bg_default.png"></button>\
-                            <button class="bg-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/grid.jpg\')"><img src="assets/ui/controls/bg_grid.png"></button>\
-                            <button class="bg-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/black.jpg\')"><img src="assets/ui/controls/bg_black.png"></button>\
-                            <button class="bg-button" onclick="setExternalBackground(Game.gbfapUri + \'img/sp/raid/green.jpg\')"><img src="assets/ui/controls/bg_green.png"></button>\
+                            <button class="bg-button" onclick="setExternalBackground(Game.externUri + \'/img/sp/raid/bg/event_82.jpg\')"><img src="assets/ui/controls/bg_default.png"></button>\
+                            <button class="bg-button" onclick="setExternalBackground(\'./img/sp/raid/grid.jpg\')"><img src="assets/ui/controls/bg_grid.png"></button>\
+                            <button class="bg-button" onclick="setExternalBackground(\'./img/sp/raid/black.jpg\')"><img src="assets/ui/controls/bg_black.png"></button>\
+                            <button class="bg-button" onclick="setExternalBackground(\'./img/sp/raid/green.jpg\')"><img src="assets/ui/controls/bg_green.png"></button>\
                             <button class="bg-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');"><img src="assets/ui/controls/bg_select.png"></button>\
                         </div>\
                     </div>\
@@ -96,7 +96,7 @@ function setHTML()
         </div>';
     // background
     let background = localStorage.getItem("gbfap-background");
-    if(background == null) background = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img/sp/raid/bg/event_82.jpg";
+    if(background == null) background = Game.externUri + "/img/sp/raid/bg/event_82.jpg";
     // canvas content
     let canvas = '<canvas class="cjs-npc-demo cjs-npc-demo-0" width="2000" height="2000" style="display:block;"></canvas>'
     for (var i = 1; i < versionList.length; i++)
@@ -325,20 +325,20 @@ function versionChange(obj)
             let id = AnimeID;
             let u = Math.floor(animeVersion/2);
             if(u > 0) id += "_0" + JSON.stringify(u+1);
-            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
+            document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/weapon/m/" + id + ".jpg";
         }
         else if(AnimeID.startsWith("20"))
         {
             let id = AnimeID;
             let u = parseInt(AnimeData[0][animeVersion][0]) - 3;
             if(u > 0) id += "_0" + JSON.stringify(u+1);
-            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/summon/m/" + id + ".jpg"
+            document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg"
         }
         else
         {
             el = AnimeData[1][animeVersion]['cjs'][0].split('_');
             el[2] += (AnimeID.includes("_st2") ? "_st2" : "");
-            document.getElementById("character").src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg"
+            document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg"
         }
     }
 }

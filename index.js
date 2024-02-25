@@ -82,14 +82,16 @@ var Game = LOCAL ? // Game variable used by GBF scripts
     xjsUri: '',
     jsUri: '',
     imgUri: 'img',
-    gbfapUri: '/',
+    soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound/",
+    externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en', // direct access to GBF
     setting: {}
 } :
 {
     xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     jsUri: CORS + 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
     imgUri: CORS + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
-    gbfapUri: '/GBFAP/',
+    soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound/",
+    externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en', // direct access to GBF
     setting: {}
 };
 var debug_path = null;
@@ -173,7 +175,8 @@ function switchToDebug()
             xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
             jsUri: CORS + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
             imgUri: CORS + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
-            gbfapUri: '/GBFAP/',
+            soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound",
+            externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en',
             setting: {}
         };
         debug_path = d;
@@ -536,20 +539,20 @@ function startplayer(id)
         }
         let el = id.split("_");
         if(id.length == 6)
-            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
+            img.src = Game.externUri + "/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
         else if(id.length == 7)
         {
-            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img/sp/assets/enemy/s/" + el[0] + ".png";
+            img.src = Game.externUri + "/img/sp/assets/enemy/s/" + el[0] + ".png";
             img.classList.add('preview');
         }
         else if(id.startsWith("10"))
-            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/m/" + id + ".jpg";
+            img.src = Game.externUri + "/img_low/sp/assets/weapon/m/" + id + ".jpg";
         else if(id.startsWith("20"))
-            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/summon/m/" + id + ".jpg";
+            img.src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg";
         else if(el.length == 1)
-            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg";
+            img.src = Game.externUri + "/img_low/sp/assets/npc/m/" + id + "_01.jpg";
         else
-            img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
+            img.src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
         img.onerror = function() { // can't be loaded? character doesn't exist
             document.getElementById('output').innerHTML = "Error: The element isn't accessible yet.";
         }
