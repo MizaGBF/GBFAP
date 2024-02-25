@@ -524,7 +524,7 @@ function failLoading(id)
 
 function startplayer(id)
 {
-    document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/index.php?title=Special:Search&search=' + id + '">Wiki</a><br><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '">Assets</a><div id="AnimationPlayer"></div>';
+    document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/index.php?title=Special:Search&search=' + id + '"><img class="img-link" src="assets/ui/icon/wiki.png"></a><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
     
     if(!AnimeDebug)
     {

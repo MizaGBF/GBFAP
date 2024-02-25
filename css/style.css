@@ -450,6 +450,19 @@ img {
     object-fit: contain;
 }
 
+.img-link {
+    width: 60px;
+    height: 60px;
+    border-color: #000000;
+    border-radius: 5px;
+    border-style: solid;
+    margin: 2px;
+}
+
+.img-link:hover {
+    border-color: #ffffff;
+}
+
 a:link {
     color: #00ffff;
     font-size: 1em;
@@ -636,5 +649,11 @@ a:active {
         min-width : 278px;
         max-width : 278px;
         height: 158px;
+    }
+
+    .img-link {
+        width: 120px;
+        height: 120px;
+        margin: 5px;
     }
 }
