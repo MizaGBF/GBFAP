@@ -4,29 +4,31 @@ Click [Here](https://mizagbf.github.io/GBFAP) to access it.
 Based and modified from the chinese wiki player.  
   
 # Setup  
-Two possible setups:  
+There are two possible ways to host this project.  
   
-### You want to host the assets  
-Be sure to have a lot of disk spaces.  
-Note: In both case, you can edit the `Game` variable around line 81 to point towards the proper folder.
-  
-1. Copy this repo.  
-2. Run `python updater.py -downloadall` to download all the assets. (The script will ask you to confirm. You can also turn off changes to data.json when asked.).  
-3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
-4. Still in `index.js`, you might need to change line 90 to something else (`/` if your html is at the root of your domain, else the path to it).  
-  
-You can now host the project in the way you prefer.  
-You only need to use `-init` and `-force` once. Simply do `python updater.py -download` for future updates.  
-  
-Note: Some files will still be accessed remotely (like sound files, which aren't supported by `updater.py`).  
-  
-### You DON'T want to host the assets  
+### First, as it's currently is:
 1. Copy this repo.  
 2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF.  
 3. Change line 3 of `index.js` with the address of your proxy.  
+4. **If needed**, change line 94 of `index.js` (`testUri`) to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code. The corresponding asset is present in the `assets/folder` if needed.  
   
-You can now host the project in the way you prefer.  
-Simply do `python updater.py` for future updates.  
+### The second way, is to host the assets along with the project:
+0. Prepare a lot of free space (10 to 20 GB).  
+1. Copy this repo.  
+2. Run `python updater.py -downloadall` to download all the assets. (The script will ask you to confirm. You can also turn off changes to data.json when asked.).  
+3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
+  
+Note: Some files might still be accessed from GBF servers (like manifests, or sound files which aren't supported by `updater.py`).  
+  
+# Additional Setup  
+You can tinker with the `Game` variable at line 80 of `index.js` if you need to change the path of asset types.  
+If you need to remove the proxy testing mentionned above, look for the function called `successLoading` in  `index.js` and modify it to look this way:
+```javascript
+function successLoading(id)
+{
+    startplayer(id);
+}
+```  
   
 # The updater  
 `updater.py` is used to update `json/data.json` with new elements.

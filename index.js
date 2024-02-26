@@ -84,6 +84,7 @@ var Game = LOCAL ? // Game variable used by GBF scripts
     imgUri: 'img',
     soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound/",
     externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en', // direct access to GBF
+    testUri: 'assets/test.png', // to test if the server is setup
     setting: {}
 } :
 {
@@ -92,6 +93,7 @@ var Game = LOCAL ? // Game variable used by GBF scripts
     imgUri: CORS + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
     soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound/",
     externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en', // direct access to GBF
+    testUri: CORS + 'assets/test.png', // to test if the server is setup
     setting: {}
 };
 var debug_path = null;
@@ -512,8 +514,8 @@ function loadEnemy(id)
 // on success loading the player
 function successLoading(id)
 {
-    // try to access CORS proxy by requesting the ring icon
-    get(Game.imgUri + "_low/sp/assets/item/article/s/2.jpg?" + Date.now(), startplayer, playerFail, id);
+    // try to access CORS proxy by requesting a dummy asset
+    get(Game.testUri + "?" + Date.now(), startplayer, playerFail, id);
 }
 
 // on error loading the player
