@@ -3,6 +3,11 @@ Web page to play GBF animations.
 Click [Here](https://mizagbf.github.io/GBFAP) to access it.  
 Based and modified from the chinese wiki player.  
   
+### Updater Requirements  
+* Python 3.11.
+* Run `pip install -r requirements.txt` in a command prompt.
+* See [requirements.txt](https://github.com/MizaGBF/GBFAP/blob/master/requirements.txt) for a list of third-party modules.  
+  
 # Setup  
 There are two possible ways to host this project.  
   
