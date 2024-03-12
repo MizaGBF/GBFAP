@@ -103,6 +103,7 @@ var timestamp = Date.now(); // timestamp (loaded from changelog.json)
 var lastsearches = []; // history
 var bookmarks = []; // bookmarks
 var intervals = []; // on screen notifications
+var is_partner = false; // set to true for special partner characters
 var is_mc = false; // set to true if we are dealing with main character animations
 var is_enemy = false; // set to true if we are dealing with enemy animations
 var mc_id = null; // used by classes only
@@ -271,6 +272,14 @@ function initIndex(unused)
             this.onclick = null;
         };
     }
+    parents = makeIndexSummary(content, "Partners", false, 0, "assets/ui/icon/partners.png");
+    {
+        const tmp = [parents[0]];
+        parents[1].onclick = function (){
+            display(tmp[0], 'partners', null, null, false, true, "Only some partners have been added, in no particular order.");
+            this.onclick = null;
+        };
+    }
     parents = makeIndexSummary(content, "Summons", true, 0, "assets/ui/icon/summons.png");
     for(let i of SUMMONS)
     {
@@ -337,7 +346,7 @@ function initIndex(unused)
         openTab("view");
         let el = id.split("_");
         AnimeID = id;
-        if(!isNaN(el[0]) && el[0].length >= 10 && ["302", "303", "304", "371", "101", "102", "103", "104", "201", "202", "203", "204"].includes(el[0].slice(0, 3)))
+        if(!isNaN(el[0]) && el[0].length >= 10 && ["389", "388", "382", "383", "384", "302", "303", "304", "371", "101", "102", "103", "104", "201", "202", "203", "204"].includes(el[0].slice(0, 3)))
         {
             loadCharacter(id);
         }
@@ -374,12 +383,13 @@ function loadCharacter(id)
     }
     if(id+style in index)
     {
-        updateHistory(id+style, parseInt(id[0]));
         AnimeData = [];
         AnimeData.push([]);
         AnimeData.push([]);
         AnimeData.push({1: {1: ""},2: {1: ""}});
         const data = index[id+style];
+        if(id.startsWith("38")) is_partner = true;
+        updateHistory(id+style, is_partner ? 6 : parseInt(id[0]));
         if('w' in data)
         {
             is_mc = true;
@@ -529,7 +539,10 @@ function failLoading(id)
 
 function startplayer(id)
 {
-    document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/index.php?title=Special:Search&search=' + id + '"><img class="img-link" src="assets/ui/icon/wiki.png"></a><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
+    if(id.startsWith("38") && id.length >= 10)
+        document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://mizagbf.github.io/GBFAL/?id=' + id.slice(0, 7) + "000" + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
+    else
+        document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/index.php?title=Special:Search&search=' + id + '"><img class="img-link" src="assets/ui/icon/wiki.png"></a><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
     
     if(!AnimeDebug)
     {
@@ -551,6 +564,16 @@ function startplayer(id)
             img.src = Game.externUri + "/img_low/sp/assets/weapon/m/" + id + ".jpg";
         else if(id.startsWith("20"))
             img.src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg";
+        else if(id.startsWith("389"))
+        {
+            img.src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + id + "_01_0.jpg";
+            img.classList.add('preview');
+        }
+        else if(id.startsWith("38"))
+        {
+            img.src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + id + "_01.jpg";
+            img.classList.add('preview');
+        }
         else if(el.length == 1)
             img.src = Game.externUri + "/img_low/sp/assets/npc/m/" + id + "_01.jpg";
         else
@@ -560,7 +583,7 @@ function startplayer(id)
         }
     }
     // enable favorite
-    favButton(true, id, id.length == 7 ? 4 : id.startsWith('10') ? 1 : id.startsWith('20') ? 2 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
+    favButton(true, id, id.length == 7 ? 4 : id.startsWith('10') ? 1 : id.startsWith('20') ? 2 : id.startsWith('38') ? 6 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
 
     // load the player
     require(["createjs"], function (b) {
@@ -623,6 +646,16 @@ function updateList(node, elems) // update a list of elements
             case 4:
             {
                 addIndexImage(node, "GBF/assets_en/img/sp/assets/enemy/s/" + e[0] + ".png", e[0]).onload = function() {
+                    this.classList.remove("loading");
+                    this.classList.add("clickable");
+                    this.classList.add("preview");
+                };
+                break;
+            }
+            case 6:
+            {
+                
+                addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/raid_normal/" + e[0] + "_01" + (e[0].startsWith("389") ? "_0" : "") + ".jpg", e[0]).onload = function() {
                     this.classList.remove("loading");
                     this.classList.add("clickable");
                     this.classList.add("preview");
@@ -702,7 +735,7 @@ function addIndexImage(node, path, id, is_bg = false) // add an image to an inde
 
 // =================================================================================================
 // visual elements management
-function display(node, key, argA, argB, pad, reverse) // generic function to display the index lists
+function display(node, key, argA, argB, pad, reverse, specific_text = null) // generic function to display the index lists
 {
     let callback = null;
     let target = null;
@@ -722,6 +755,17 @@ function display(node, key, argA, argB, pad, reverse) // generic function to dis
             target = index;
             start = "37";
             lengths = [10, 14];
+            break;
+        case "partners":
+            callback = display_partners;
+            target = index;
+            start = "38";
+            lengths = [10];
+            onload = function() {
+                this.classList.remove("loading");
+                this.classList.add("clickable");
+                this.classList.add("preview");
+            };
             break;
         case "summons":
             callback = display_summons;
@@ -771,7 +815,11 @@ function display(node, key, argA, argB, pad, reverse) // generic function to dis
         }
     }
     const keys = reverse ? Object.keys(slist).sort().reverse() : Object.keys(slist).sort();
-    if(keys.length > 0) node.innerHTML = reverse ? "<div>Newest first</div>" : "<div>Oldest first</div>";
+    if(keys.length > 0)
+    {
+        if(specific_text != null) node.innerHTML = "<div>" + specific_text + "</div>";
+        else node.innerHTML = reverse ? "<div>Newest first</div>" : "<div>Oldest first</div>";
+    }
     else node.innerHTML = '<div>Empty</div><img src="assets/ui/sorry.png">'
     for(const k of keys)
     {
@@ -809,6 +857,14 @@ function display_skins(id, range, unused = null)
     let val = parseInt(id.slice(4, 7));
     if(val < range[0] || val >= range[1]) return null;
     return [[id, "GBF/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg"]];
+}
+
+function display_partners(id, prefix, unused = null)
+{
+    if(id.startsWith("389"))
+        return [[id, "GBF/assets_en/img_low/sp/assets/npc/raid_normal/" + id + "_01_0.jpg"]];
+    else
+        return [[id, "GBF/assets_en/img_low/sp/assets/npc/raid_normal/" + id + "_01.jpg"]];
 }
 
 function display_summons(id, rarity, range)

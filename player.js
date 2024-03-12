@@ -334,6 +334,14 @@ function versionChange(obj)
             if(u > 0) id += "_0" + JSON.stringify(u+1);
             document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg"
         }
+        else if(AnimeID.startsWith("389"))
+        {
+             document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + AnimeID + "_01_" + animeVersion + ".jpg";
+        }
+        else if(AnimeID.startsWith("38"))
+        {
+            // do nothing
+        }
         else
         {
             el = AnimeData[1][animeVersion]['cjs'][0].split('_');
