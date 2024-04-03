@@ -1,4 +1,5 @@
 # GBF Animation Player  
+[![pages-build-deployment](https://github.com/MizaGBF/GBFAP/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/MizaGBF/GBFAP/actions/workflows/pages/pages-build-deployment)  
 Web page to play GBF animations.  
 Click [Here](https://mizagbf.github.io/GBFAP) to access it.  
 Based and modified from the chinese wiki player.  
