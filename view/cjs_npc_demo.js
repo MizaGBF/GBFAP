@@ -21,7 +21,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
     const atkOffset = 52;
     const ougiOffset = 138;
     const scaling = .86;
-    const stageObject = {
+    const stageIndex = {
         BG: 0,
         ENEMY: 1,
         CHARACTER: 2
@@ -567,7 +567,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 {
                     me.cjsMortal.x = enemyOffset.x;;
                     me.cjsMortal.y = enemyOffset.y;
-                    me.stage.setChildIndex(me.cjsMortal, stageObject.BG);
+                    me.stage.setChildIndex(me.cjsMortal, stageIndex.BG);
                 }
                 else
                 {
@@ -582,13 +582,13 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                         {
                             me.cjsMortal.x = bgOffset.x;
                             me.cjsMortal.y = bgOffset.y;
-                            me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
+                            me.stage.setChildIndex(me.cjsMortal, stageIndex.CHARACTER);
                         }
                         else
                         {
                             me.cjsMortal.x = enemyOffset.x;
                             me.cjsMortal.y = enemyOffset.y + ougiOffset;
-                            me.stage.setChildIndex(me.cjsMortal, stageObject.BG);
+                            me.stage.setChildIndex(me.cjsMortal, stageIndex.BG);
                         }
                     }
                     me.cjsMortal.x += me.cjsMortalPos.x;
@@ -616,13 +616,13 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     {
                         me.cjsMortal.x = bgOffset.x;
                         me.cjsMortal.y = bgOffset.y;
-                        me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
+                        me.stage.setChildIndex(me.cjsMortal, stageIndex.CHARACTER);
                     }
                     else
                     {
                         me.cjsMortal.x = enemyOffset.x;
                         me.cjsMortal.y = enemyOffset.y + ougiOffset;
-                        me.stage.setChildIndex(me.cjsMortal, stageObject.CHARACTER);
+                        me.stage.setChildIndex(me.cjsMortal, stageIndex.CHARACTER);
                     }
                 }
                 me.cjsMortal.x += me.cjsMortalPos.x;
@@ -651,7 +651,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 atk.scaleX *= scaling,
                 atk.scaleY *= scaling,
                 me.stage.addChild(atk),
-                me.stage.setChildIndex(atk, stageObject.CHARACTER),
+                me.stage.setChildIndex(atk, stageIndex.CHARACTER),
                 atk[elem].gotoAndPlay(atkIndex);
                 let duration = me.getAnimDuration(atk[elem][elem + "_effect"]);
                 createjs.Tween.get(atk, {
