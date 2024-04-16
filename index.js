@@ -542,7 +542,11 @@ function startplayer(id)
     if(id.startsWith("38") && id.length >= 10)
         document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://mizagbf.github.io/GBFAL/?id=' + id.slice(0, 7) + "000" + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
     else
-        document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/index.php?title=Special:Search&search=' + id + '"><img class="img-link" src="assets/ui/icon/wiki.png"></a><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
+    {
+        let sid = id.split('_')[0];
+        let wiki = ('wiki' in index && sid in index['wiki']) ? index['wiki'][sid] : 'index.php?title=Special:Search&search=' + sid;
+        document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/'+ wiki + '"><img class="img-link" src="assets/ui/icon/wiki.png"></a><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
+    }
     
     if(!AnimeDebug)
     {

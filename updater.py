@@ -628,6 +628,7 @@ class Updater():
                 print("Found", count, "classes not present in GBFAP, from GBFAL, consider updating")
         except:
             pass
+        self.class_gbfal = True
         try:
             print("Checking GBFAL data for new backgrounds...")
             if len(list(self.gbfal['background'].keys())) != len(list(self.index.get('background', {}))):
@@ -636,7 +637,21 @@ class Updater():
                 print("Background list updated from GBFAL")
         except:
             pass
-        self.class_gbfal = True
+
+    def update_wiki_from_GBFAL(self) -> None: # same than the above, for wiki lookup
+        try:
+            print("Checking GBFAL data for wiki lookup...")
+            if 'wiki' not in self.index: self.index['wiki'] = {}
+            for k, v in self.gbfal['lookup'].items():
+                if k not in self.index: continue
+                try:
+                    self.index['wiki'][k] = v.split('@@', 1)[1].split(' ')[0]
+                    self.modified = True
+                except:
+                    pass
+        except:
+            pass
+        self.saveIndex()
 
     async def progress_container(self, coroutine : Callable) -> Any:
         with self.progress:
@@ -1326,7 +1341,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v2.8\n")
+                print("GBFAP updater v2.9\n")
                 start_flags = set(["-force", "-download", "-init", "-nochange", "-debug"])
                 flags = set()
                 extras = []
@@ -1386,6 +1401,7 @@ class Updater():
                     if "-update" in flags: await self.manualUpdate(extras)
                 elif "-update" in flags: await self.manualUpdate(extras)
                 else: await self.run()
+                self.update_wiki_from_GBFAL()
         except Exception as e:
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
 
