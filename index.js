@@ -103,6 +103,8 @@ var timestamp = Date.now(); // timestamp (loaded from changelog.json)
 var lastsearches = []; // history
 var bookmarks = []; // bookmarks
 var intervals = []; // on screen notifications
+var wakeInterval = null; // for the proxy wake up message
+var wakeCounter = 110;
 var is_partner = false; // set to true for special partner characters
 var is_mc = false; // set to true if we are dealing with main character animations
 var is_enemy = false; // set to true if we are dealing with enemy animations
@@ -134,7 +136,7 @@ function get(url, callback, err_callback, id) {
         err_callback.apply(xhr, [id]);
     };
     xhr.open("GET", url, true);
-    xhr.timeout = 120000;
+    xhr.timeout = 150000;
     xhr.send(null);
 }
 
@@ -521,10 +523,35 @@ function loadEnemy(id)
     }
 }
 
+function updateWaking() // update waking up message
+{
+    let wake = document.getElementById('wakeup');
+    if(wake)
+    {
+        if(wakeCounter <= 0)
+        {
+            clearInterval(wakeInterval);
+            wakeInterval = null;
+            wake.innerHTML = "The proxy server is waking up.<br>If nothing happens soon, try reloading the page.<br>You can also try CTRL+F5 to reload this page with a clean cache.<br>If the issue persists, try again later or contact me.";
+        }
+        else if(wakeCounter <= 90)
+        {
+            wake.innerHTML = "The proxy server is waking up.<br>Please wait " + wakeCounter + "s before reloading the page.";
+        }
+        --wakeCounter;
+    }
+    else
+    {
+        clearInterval(wakeInterval);
+        wakeInterval = null;
+    }
+}
+
 // on success loading the player
 function successLoading(id)
 {
     // try to access CORS proxy by requesting a dummy asset
+    wakeInterval = setInterval(updateWaking, 1000);
     get(Game.testUri + "?" + Date.now(), startplayer, playerFail, id);
 }
 
