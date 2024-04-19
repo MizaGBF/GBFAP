@@ -645,8 +645,10 @@ class Updater():
             for k, v in self.gbfal['lookup'].items():
                 if k not in self.index: continue
                 try:
-                    self.index['wiki'][k] = v.split('@@', 1)[1].split(' ')[0]
-                    self.modified = True
+                    tmp = v.split('@@', 1)[1].split(' ')[0]
+                    if self.index['wiki'].get(k, None) != tmp:
+                        self.index['wiki'][k] = tmp
+                        self.modified = True
                 except:
                     pass
         except:
@@ -1401,7 +1403,8 @@ class Updater():
                     if "-update" in flags: await self.manualUpdate(extras)
                 elif "-update" in flags: await self.manualUpdate(extras)
                 else: await self.run()
-                self.update_wiki_from_GBFAL()
+                if gbfal is not None:
+                    self.update_wiki_from_GBFAL()
         except Exception as e:
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
 
