@@ -200,8 +200,6 @@ function init()
         hideOutput();
     }
     get("json/changelog.json?" + timestamp, initChangelog, initChangelog, null);
-    updateHistory(null, null);
-    toggleBookmark(null, null);
 }
 
 function hideOutput() // hide output tab
@@ -219,10 +217,6 @@ function initChangelog(unusued)
         if(json.hasOwnProperty("new"))
         {
             updated = json["new"].reverse();
-            if(updated.length > 0) // init Updated list
-            {
-                updateList(document.getElementById('new'), updated);
-            }
         }
         timestamp = json.timestamp;
         clock();
@@ -239,6 +233,13 @@ function initIndex(unused)
     try
     {
         index = JSON.parse(this.response);
+        // init updated, bookmark, history ...
+        if(updated.length > 0) // init Updated list
+        {
+            updateList(document.getElementById('new'), updated);
+        }
+        updateHistory(null, null);
+        toggleBookmark(null, null);
     }
     catch(err)
     {
@@ -653,15 +654,36 @@ function updateList(node, elems) // update a list of elements
         {
             case 3: // character, skin, ...
             {
+                let u = "01";
+                try
+                {
+                    switch(index[e[0]]['v'][index[e[0]]['v'].length - 1][0][0])
+                    {
+                        case "5": u = "03"; break;
+                        case "6": u = "04"; break;
+                        default: break;
+                    }
+                } catch(err) {}
                 if(e[0].includes('_st'))
-                    addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0].split('_')[0] + "_01_" + e[0].split('_')[1] + ".jpg", e[0]);
+                    addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0].split('_')[0] + "_" + u + "_" + e[0].split('_')[1] + ".jpg", e[0]);
                 else
-                    addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0] + "_01.jpg", e[0]);
+                    addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0] + "_" + u + ".jpg", e[0]);
                 break;
             }
             case 2: // summon
             {
-                addIndexImage(node, "GBF/assets_en/img_low/sp/assets/summon/m/" + e[0] + ".jpg", e[0]);
+                let u = "";
+                try
+                {
+                    switch(index[e[0]]['v'][index[e[0]]['v'].length - 1][0][0])
+                    {
+                        case "4": u = "_02"; break;
+                        case "5": u = "_02"; break;
+                        case "6": u = "_04"; break;
+                        default: break;
+                    }
+                } catch(err) {}
+                addIndexImage(node, "GBF/assets_en/img_low/sp/assets/summon/m/" + e[0] + u + ".jpg", e[0]);
                 break;
             }
             case 1: // weapon
@@ -880,7 +902,17 @@ function display_characters(id, range, unused = null)
         default:
             return null;
     }
-    return [[id, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0] + "_01" + (e.length == 2 ? "_"+e[1] : "") + ".jpg"]];
+    let u = "01";
+    try
+    {
+        switch(index[id]['v'][index[id]['v'].length - 1][0][0])
+        {
+            case "5": u = "03"; break;
+            case "6": u = "04"; break;
+            default: break;
+        }
+    } catch(err) {}
+    return [[id, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0] + "_" + u + (e.length == 2 ? "_"+e[1] : "") + ".jpg"]];
 }
 
 function display_skins(id, range, unused = null)
@@ -903,7 +935,18 @@ function display_summons(id, rarity, range)
     if(id[2] != rarity) return null;
     let val = parseInt(id.slice(4, 7));
     if(val < range[0] || val >= range[1]) return null;
-    return [[id, "GBF/assets_en/img_low/sp/assets/summon/m/" + id + ".jpg"]];
+    let u = "";
+    try
+    {
+        switch(index[id]['v'][index[id]['v'].length - 1][0][0])
+        {
+            case "4": u = "_02"; break;
+            case "5": u = "_02"; break;
+            case "6": u = "_04"; break;
+            default: break;
+        }
+    } catch(err) {}
+    return [[id, "GBF/assets_en/img_low/sp/assets/summon/m/" + id + u + ".jpg"]];
 }
 
 function display_weapons(id, rarity, proficiency)
