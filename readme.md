@@ -25,6 +25,7 @@ There are two possible ways to host this project.
 3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
   
 Note: Some files might still be accessed from GBF servers (like manifests, or sound files which aren't supported by `updater.py`).  
+Note²: This method isn't fully tested. It's possibly I overlooked some things in the updater and not all files will be downloaded properly. I recommend the first method if possible. Eventually, I'll add a better "download all" feature.  
   
 # Additional Setup  
 You can tinker with the `Game` variable at line 80 of `index.js` if you need to change the path of asset types.  

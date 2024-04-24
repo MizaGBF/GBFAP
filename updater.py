@@ -867,19 +867,20 @@ class Updater():
                 sp = None
                 phit = None
                 for i in ([id] if sid is None else [id, sid]):
-                    if phit is not None and sp is not None: break
                     for un in uns:
-                        if phit is not None and sp is not None: break
-                        for spu in spus:
-                            if phit is not None and sp is not None: break
-                            for fn in ["phit_{}{}".format(i, un), "sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_s2".format(i)]:
-                                try:
+                        for fn in ["phit_{}{}".format(i, un), "phit_{}{}_0".format(i, un)]:
+                            try:
+                                if phit is None:
                                     await self.getJS(fn)
-                                    if phit is None and fn.startswith('phit'):
-                                        phit = fn
-                                    elif sp is None and fn.startswith('sp'):
+                                    phit = fn
+                            except:
+                                pass
+                        for spu in spus:
+                            for fn in ["sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_s2".format(i)]:
+                                try:
+                                    if sp is None:
+                                        await self.getJS(fn)
                                         sp = fn
-                                        break
                                 except:
                                     pass
                 if phit is None or sp is None:
@@ -898,6 +899,21 @@ class Updater():
                     tmp = [('Gran' if i == 0 else 'Djeeta'), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1])), False] # name, cjs, mortal, phit, sp, fullscreen
                     if '_s2' in tmp[4] or '_s3' in tmp[4]:
                         tmp[5] = True
+                    if i == 1: # djeeta
+                        if id in tmp[3] or (sid is not None and sid in tmp[3]):
+                            try:
+                                fn = tmp[3].replace('_0', '_1')
+                                await self.getJS(fn)
+                                tmp[3] = fn
+                            except:
+                                pass
+                        if id in tmp[4] or (sid is not None and sid in tmp[4]):
+                            try:
+                                fn = tmp[4].replace('_0', '_1')
+                                await self.getJS(fn)
+                                tmp[4] = fn
+                            except:
+                                pass
                     character_data['v'].append(tmp)
                 if str(character_data) != str(self.index.get(id+uncap, None)):
                     self.index[id+uncap] = character_data
@@ -1343,7 +1359,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v2.9\n")
+                print("GBFAP updater v2.10\n")
                 start_flags = set(["-force", "-download", "-init", "-nochange", "-debug"])
                 flags = set()
                 extras = []
