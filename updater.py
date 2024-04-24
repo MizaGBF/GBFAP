@@ -61,7 +61,7 @@ class Updater():
     ### CONSTANT
     # limit
     MAX_NEW = 80
-    MAX_HTTP = 100
+    MAX_HTTP = 90
     MAX_RUN_TASK = 10
     # MC classes
     CLASS = [
@@ -771,33 +771,39 @@ class Updater():
                 mortal = "mortal_B" # skin with custom ougis use this
                 mc_cjs = colors[0]
                 phit = "phit_" + self.class_ougi[id]
+                for s in ["", "_0"]:
+                    try:
+                        await self.getJS(phit+s)
+                        phit = phit+s
+                        break
+                    except:
+                        pass
                 sp = "sp_" + self.class_ougi[id]
-                try:
-                    await self.getJS(phit)
-                except:
-                    phit = None
                 for s in ["", "_0", "_0_s2", "_s2"]:
                     try:
                         await self.getJS(sp+s)
                         sp = sp+s
                         break
                     except:
-                        if s == "_s2":
-                            sp = None
+                        pass
             else: # regular class
                 mortal = "mortal_A"
                 mc_cjs = colors[0]
                 wid = self.class_placeholders[mc_cjs.split('_')[1]]
                 sp = None
                 phit = None
-                for fn in ["phit_{}".format(id), "sp_{}".format(id), "sp_{}_0".format(id), "sp_{}_0_s2".format(id), "sp_{}_s2".format(id)]:
+                for fn in ["phit_{}".format(id), "phit_{}_0".format(id)]:
                     try:
-                        await self.getJS(fn)
-                        if fn.startswith('phit'):
+                        if phit is None:
+                            await self.getJS(fn)
                             phit = fn
-                        elif fn.startswith('sp'):
+                    except:
+                        pass
+                for fn in ["sp_{}".format(id), "sp_{}_0".format(id), "sp_{}_0_s2".format(id), "sp_{}_s2".format(id)]:
+                    try:
+                        if sp is None:
+                            await self.getJS(fn)
                             sp = fn
-                            break
                     except:
                         pass
                 if self.download_assets: # download asset
@@ -819,7 +825,10 @@ class Updater():
                 if c == colors[0]: var = ""
                 else: var = " v"+str(x)
                 for i in range(2):
-                    if i == 1:
+                    if i == 1: # djeeta
+                        if phit.endswith('_0'):
+                            phit = phit[:-2] + '_1'
+                            if self.download_assets: await self.getJS(phit)
                         if sp.endswith('_0'):
                             sp = sp[:-2] + '_1'
                             if self.download_assets: await self.getJS(sp)
@@ -1400,6 +1409,7 @@ class Updater():
                     except Exception as e:
                         print("GBFAL data couldn't be loaded")
                         print(e)
+                
                 if '-downloadall' in flags:
                     print("Are you sure that you want to download the assets of all elements?")
                     print("It will take time and a lot of disk space.")
