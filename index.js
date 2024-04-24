@@ -535,7 +535,7 @@ function updateWaking() // update waking up message
             wakeInterval = null;
             wake.innerHTML = "The proxy server is waking up.<br>If nothing happens soon, try reloading the page.<br>You can also try CTRL+F5 to reload this page with a clean cache.<br>If the issue persists, try again later or contact me.";
         }
-        else if(wakeCounter <= 90)
+        else if(wakeCounter <= 100)
         {
             wake.innerHTML = "The proxy server is waking up.<br>Please wait " + wakeCounter + "s before reloading the page.";
         }
