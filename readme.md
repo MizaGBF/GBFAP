@@ -42,7 +42,7 @@ function successLoading(id)
 It's currently compatible with characters (R, SR, SSR, Skins), summons, weapons, enemies and classes released up to today.  
   
 There are three main possible command lines:
-* `python updater.py` to simply retrieve new/unindexed elements.  
+* `python updater.py -run` to simply retrieve new/unindexed elements.  
 * `python updater.py -update list_of__id` to manually update the specified elements, in case they got an uncap for example (You don't need to specify the character style for characters).  
 * `python updater.py -downloadall` will download all the required assets (ONLY USE IT IF YOU'RE PLANNING TO SELF-HOST THE ASSETS).  
   

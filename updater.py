@@ -1365,10 +1365,26 @@ class Updater():
             print(e)
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
 
+    # Print the help
+    def print_help(self) -> None:
+        print("Usage: python updater.py [START] [MODE]")
+        print("")
+        print("START parameters (Optional):")
+        print("-force       : For an update of all known elements (Deprecated).")
+        print("-download    : Download assets during the usage of -run, -update.")
+        print("-nochange    : Disable the update of changelog.json.")
+        print("-gbfal       : Followed by a path towards GBFAL data.json. Will reuse some data from this JSON file.")
+        print("")
+        print("MODE parameters (One at a time):")
+        print("-run         : Update the data with new content.")
+        print("-update      : Manual data update (Followed by IDs to check).")
+        print("-downloadall : Attempt to download ALL assets (Time consuming, Experimental).")
+        print("-init        : Download necessary files. Can be used before -update.")
+
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v2.10\n")
+                print("GBFAP updater v2.11\n")
                 start_flags = set(["-force", "-download", "-init", "-nochange", "-debug"])
                 flags = set()
                 extras = []
@@ -1428,7 +1444,8 @@ class Updater():
                     await self.initFiles()
                     if "-update" in flags: await self.manualUpdate(extras)
                 elif "-update" in flags: await self.manualUpdate(extras)
-                else: await self.run()
+                elif "-run" in flags: await self.run()
+                else: self.print_help()
                 if gbfal is not None:
                     self.update_wiki_from_GBFAL()
         except Exception as e:
