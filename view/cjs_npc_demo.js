@@ -567,7 +567,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 {
                     me.cjsMortal.x = enemyOffset.x;;
                     me.cjsMortal.y = enemyOffset.y;
-                    me.stage.setChildIndex(me.cjsMortal, stageIndex.BG);
+                    me.stage.setChildIndex(me.cjsMortal, stageIndex.CHARACTER);
                 }
                 else
                 {
