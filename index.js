@@ -576,7 +576,7 @@ function startplayer(id)
     {
         const sid = id.split('_')[0];
         const is_wiki = ('wiki' in index && sid in index['wiki']);
-        document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/'+ (is_wiki ? index['wiki'][sid] : 'index.php?title=Special:Search&search=' + sid) + '" title="' + (is_wiki ? "Wiki page for " + index['wiki'][sid].replaceAll("_", " ") : "Wiki search for " + sid) + '"><img class="img-link" src="assets/ui/icon/wiki.png"></a><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
+        document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/'+ (is_wiki ? index['wiki'][sid] : 'index.php?title=Special:Search&search=' + sid) + '" title="' + (is_wiki ? "Wiki page for " + index['wiki'][sid].replaceAll("_", " ") : "Wiki search for " + sid) + '"><img class="img-link" src="assets/ui/icon/wiki.png"></a><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '" title="Assets for ' + id + "><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
     }
     
     if(!AnimeDebug)
