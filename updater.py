@@ -717,7 +717,7 @@ class Updater():
             while errc < 20:
                 is_mob = len(file) == 5
                 f = file.format(str(eid).zfill(4 if is_mob else 3))
-                if self.force_update or f not in self.index:
+                if self.force_update or self.index.get(f, 0) == 0:
                     if is_mob:
                         r = await self.update_mob(f)
                     elif file.startswith("10"):
