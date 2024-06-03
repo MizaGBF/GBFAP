@@ -11,6 +11,7 @@ var loopingState = true;
 var animeVersion = 0;
 var loadTotal = 999999999999;
 var loadNow = 0;
+var canvas = null;
 var stage={
     global:{}
 };
@@ -98,9 +99,9 @@ function setHTML()
     let background = localStorage.getItem("gbfap-background");
     if(background == null) background = Game.externUri + "/img/sp/raid/bg/event_82.jpg";
     // canvas content
-    let canvas = '<canvas class="cjs-npc-demo cjs-npc-demo-0" width="2000" height="2000" style="display:block;"></canvas>'
+    let canvasContent = '<canvas class="cjs-npc-demo cjs-npc-demo-0" width="2000" height="2000" style="display:block;"></canvas>'
     for (var i = 1; i < versionList.length; i++)
-        canvas += '<canvas class="cjs-npc-demo cjs-npc-demo-' + i + '" width="2000" height="2000" style="display:none;"></canvas>';
+        canvasContent += '<canvas class="cjs-npc-demo cjs-npc-demo-' + i + '" width="2000" height="2000" style="display:none;"></canvas>';
     // version list
     let versions = ''
     if(versionList.length > 1)
@@ -111,7 +112,8 @@ function setHTML()
         }
         versions += '</select>'
     }
-    document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvas).replace('$VERSIONS', versions)
+    document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvasContent).replace('$VERSIONS', versions)
+    canvas = document.querySelector('.cjs-npc-demo-0');
     // set focus
     document.getElementById("animeCanvas").scrollIntoView();
 }
@@ -299,7 +301,7 @@ function versionChange(obj)
 
     //replace version
     for (var i = 0; i < versionList.length; i++) {
-        var canvas = document.querySelector('.cjs-npc-demo-' + i)
+        canvas = document.querySelector('.cjs-npc-demo-' + i);
         if (i == animeVersion) {
             this.cjsViewList[i].resume();
             canvas.style.setProperty('display', 'block');

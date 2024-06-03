@@ -622,7 +622,7 @@ function startplayer(id)
 
     // load the player
     require(["createjs"], function (b) {
-        window.createjs = b
+        window.createjs = b;
     });
     require(['player','lib/common', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader']);
 }
