@@ -1,6 +1,7 @@
 import asyncio
 import aiohttp
 import json
+import os
 import sys
 import traceback
 import time
@@ -456,9 +457,8 @@ class Updater():
         self.modified = False
         self.disable_save = False
         self.update_changelog = True
-        self.force_update = False
-        self.download_assets = False
         self.debug_mode = False
+        self.dl_queue = None # used for download
         self.gbfal = {} # gbfal data
         
         self.class_lookup = {
@@ -680,12 +680,6 @@ class Updater():
                     return await response.content.read()
 
     async def run(self) -> None:
-        if self.force_update:
-            print("Note: All characters will be updated")
-            s = input("Type quit to exit now:").lower()
-            if s == "quit":
-                print("Process aborted")
-                return
         self.debug_mode = False
         print("Updating index...")
         self.progress = Progress()
@@ -717,7 +711,7 @@ class Updater():
             while errc < 20:
                 is_mob = len(file) == 5
                 f = file.format(str(eid).zfill(4 if is_mob else 3))
-                if self.force_update or self.index.get(f, 0) == 0:
+                if self.index.get(f, 0) == 0:
                     if is_mob:
                         r = await self.update_mob(f)
                     elif file.startswith("10"):
@@ -729,7 +723,7 @@ class Updater():
                     elif file.startswith("20"):
                         r = await self.update_summon(f)
                     else:
-                        r = await self.update(f)
+                        r = await self.update_character(f)
                     if r == 0:
                         errc += 1
                         if errc >= 20:
@@ -749,7 +743,7 @@ class Updater():
             count = 0
             while i < len(keys):
                 f = keys[i]
-                if self.force_update or f not in self.index:
+                if f not in self.index:
                     count += await self.update_class(f)
                 i += step
             return count
@@ -767,7 +761,6 @@ class Updater():
             for i in ["01", "02", "03", "04", "05", "80"]:
                 try:
                     await self.getJS(self.class_lookup[id][0] + "_0_{}".format(i))
-                    if self.download_assets: await self.getJS(self.class_lookup[id][0] + "_1_{}".format(i))
                     colors.append(self.class_lookup[id][0] + "_0_{}".format(i))
                 except:
                     pass
@@ -811,14 +804,6 @@ class Updater():
                             sp = fn
                     except:
                         pass
-                if self.download_assets: # download asset
-                    for fn in ["", "_1", "_2"]:
-                        try:
-                            data = await self.req(self.IMG + "/sp/cjs/" + wid + fn + ".png")
-                            with open("img/sp/cjs/" + wid + fn + ".png", "wb") as f:
-                                f.write(data)
-                        except:
-                            pass
             if phit is None:
                 phit = "phit_{}_0001".format(mc_cjs.split('_')[1])
             if sp is None:
@@ -833,14 +818,11 @@ class Updater():
                     if i == 1: # djeeta
                         if phit.endswith('_0'):
                             phit = phit[:-2] + '_1'
-                            if self.download_assets: await self.getJS(phit)
                         if sp.endswith('_0'):
                             sp = sp[:-2] + '_1'
-                            if self.download_assets: await self.getJS(sp)
                         elif sp.endswith('_0_s2'):
                             sp = sp[:-5] + '_1_s2'
-                            if self.download_assets: await self.getJS(sp)
-                    tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', '_{}_'.format(i)), mortal, phit, sp, False] # name, cjs, mortal, phit, sp, fullscreen
+                    tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', '_{}_'.format(i)), mortal, phit, [sp], ('_s2' in sp or '_s3' in sp)] # name, cjs, mortal, phit, sp, fullscreen
                     if '_s2' in tmp[4] or '_s3' in tmp[4]:
                         tmp[5] = True
                     character_data['v'].append(tmp)
@@ -900,19 +882,9 @@ class Updater():
                 if phit is None or sp is None:
                     if uncap == "": return 0
                     else: break
-                if self.download_assets: # download asset
-                    for i in ([id] if sid is None else [id, sid]):
-                        for fn in ["", "_1", "_2", "_3"]:
-                            try:
-                                data = await self.req(self.IMG + "/sp/cjs/" + i + uncap + fn + ".png")
-                                with open("img/sp/cjs/" + i + uncap + fn + ".png", "wb") as f:
-                                    f.write(data)
-                            except:
-                                pass
                 for i in range(2):
-                    tmp = [('Gran' if i == 0 else 'Djeeta'), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1])), False] # name, cjs, mortal, phit, sp, fullscreen
-                    if '_s2' in tmp[4] or '_s3' in tmp[4]:
-                        tmp[5] = True
+                    nsp = (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1]))
+                    tmp = [('Gran' if i == 0 else 'Djeeta'), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), [nsp], ('_s2' in nsp or '_s3' in nsp)] # name, cjs, mortal, phit, sp, fullscreen
                     if i == 1: # djeeta
                         if id in tmp[3] or (sid is not None and sid in tmp[3]):
                             try:
@@ -921,13 +893,15 @@ class Updater():
                                 tmp[3] = fn
                             except:
                                 pass
-                        if id in tmp[4] or (sid is not None and sid in tmp[4]):
+                        if id in nsp or (sid is not None and sid in nsp):
                             try:
-                                fn = tmp[4].replace('_0', '_1')
+                                fn = nsp.replace('_0', '_1')
                                 await self.getJS(fn)
-                                tmp[4] = fn
+                                tmp[4][0] = fn
                             except:
                                 pass
+                    if ('_s2' in nsp or '_s3' in nsp):
+                        print(id)
                     character_data['v'].append(tmp)
                 if str(character_data) != str(self.index.get(id+uncap, None)):
                     self.index[id+uncap] = character_data
@@ -1001,7 +975,7 @@ class Updater():
                         else: continue
                 uncap_data = []
                 for i, sp in enumerate(calls):
-                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), mc_cjs, '', "phit_sw_0001", sp, ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
+                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), mc_cjs, '', "phit_sw_0001", [sp], ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
                 uncap_data.reverse()
                 character_data['v'] += uncap_data
             character_data['v'].reverse()
@@ -1054,7 +1028,6 @@ class Updater():
                     mortals.append(sp)
             mortals.sort()
             character_data = {} # different format to save on space
-            character_data['e'] = id
             character_data['ehit'] = ehit
             character_data['sp'] = mortals
             if str(character_data) != str(self.index.get(id, None)):
@@ -1074,7 +1047,7 @@ class Updater():
         except:
             return None
 
-    async def update(self, id : str, style : str = "") -> bool: # character
+    async def update_character(self, id : str, style : str = "") -> bool: # character
         try:
             if id in self.exclusion: return 0
             try:
@@ -1097,14 +1070,12 @@ class Updater():
                         for form in ["", "_f1", "_f2", "_f"]:
                             try:
                                 fn = "npc_{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype)
-                                ret = await self.getJS(fn)
+                                await self.getJS(fn)
                                 vs = su + gender + ftype + form
                                 versions[vs] = fn
                                 if gender != "": genders[vs] = gender
-                                if not ret[0]:
-                                    data = (await self.req(self.CJS + fn + ".js")).decode('utf-8')
-                                else:
-                                    data = ret[1].decode('utf-8')
+                                # get cjs
+                                data = (await self.req(self.CJS + fn + ".js")).decode('utf-8')
                                 if vs not in mortals: # for characters such as lina
                                     for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
                                         if m in data:
@@ -1138,7 +1109,7 @@ class Updater():
                                     for g in ["", "_0"] if gender == "" else [gender]:
                                         tasks = []
                                         for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
-                                            tasks.append(self.update_sub("nsp_{}_{}{}{}{}{}{}".format(tid, su, style, g, form, s, m)))
+                                            tasks.append(self.update_character_sub("nsp_{}_{}{}{}{}{}{}".format(tid, su, style, g, form, s, m)))
                                         tmp = []
                                         for r in await asyncio.gather(*tasks):
                                             if r is not None:
@@ -1155,7 +1126,7 @@ class Updater():
                                         for s in ["", "_s2", "_s3"]:
                                             tasks = []
                                             for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
-                                                tasks.append(self.update_sub("nsp_{}{}{}".format(pid, s, m)))
+                                                tasks.append(self.update_character_sub("nsp_{}{}{}".format(pid, s, m)))
                                             tmp = []
                                             for r in await asyncio.gather(*tasks):
                                                 if r is not None:
@@ -1214,39 +1185,24 @@ class Updater():
                 self.modified = True
                 self.latest_additions[id+style] = 3
             if id == "3040088000" and style == "": # style check for yngwie, change it later if they add more
-                return 1 + await self.update(id, "_st2")
+                return 1 + await self.update_character(id, "_st2")
             return 1
         except Exception as e:
             sys.stdout.write("\rError {} for id: {}\n".format(e, id))
             sys.stdout.flush()
             return 0
 
-    async def update_sub(self, fn : str) -> Optional[str]:
+    async def update_character_sub(self, fn : str) -> Optional[str]:
         try:
             await self.getJS(fn)
             return fn
         except:
             return None
 
-    async def processManifest(self, filename : str, manifest : str) -> tuple:
-        if not self.download_assets:
-            return (False, None)
+    def manifestToJSON(self, manifest : str) -> dict:
         st = manifest.find('manifest:') + len('manifest:')
         ed = manifest.find(']', st) + 1
-        try: data = json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src:', '"src":').replace('type:', '"type":').replace('id:', '"id":'))
-        except Exception as e:
-            print(e)
-            raise Exception()
-        for l in data:
-            src = l['src'].split('?')[0]
-            if src == '/sp/cjs/nsp_3020005000_01_ef081.png': continue # R deliford base form fix
-            data = await self.req(self.IMG + src)
-            with open("img/sp/cjs/" + src.split('/')[-1], "wb") as f:
-                f.write(data)
-        data = await self.req(self.CJS + filename)
-        with open("cjs/" + filename, "wb") as f:
-            f.write(data)
-        return (True, data)
+        return json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src:', '"src":').replace('type:', '"type":').replace('id:', '"id":'))
 
     async def manualUpdate(self, ids : list) -> None:
         self.progress = Progress()
@@ -1258,9 +1214,9 @@ class Updater():
                 elif len(id) == 10:
                     if id.startswith("10"): tasks.append(tg.create_task(self.progress_container(self.update_weapon(id))))
                     elif id.startswith("20"): tasks.append(tg.create_task(self.progress_container(self.update_summon(id))))
-                    else: tasks.append(tg.create_task(self.progress_container(self.update(id, ""))))
+                    else: tasks.append(tg.create_task(self.progress_container(self.update_character(id, ""))))
                 elif len(id) == 14 and id.startswith("30") and id[10] == '_':
-                    tasks.append(tg.create_task(self.progress_container(self.update(id.split('_')[0], id.split('_')[1]))))
+                    tasks.append(tg.create_task(self.progress_container(self.update_character(id.split('_')[0], id.split('_')[1]))))
                 elif id in self.class_lookup:
                     tasks.append(tg.create_task(self.progress_container(self.update_class(id))))
             if len(tasks) > 0:
@@ -1273,12 +1229,8 @@ class Updater():
         else: print("Done")
         self.saveIndex()
 
-    async def getJS(self, js : str) -> list:
-        data = await self.req(self.MANIFEST + js + ".js")
-        if self.download_assets:
-            with open("model/manifest/" + js + ".js", "wb") as f:
-                f.write(data)
-        return await self.processManifest(js + ".js", data.decode('utf-8'))
+    async def getJS(self, js : str) -> None:
+        await self.req(self.MANIFEST + js + ".js")
 
     async def phitUpdate(self, phit : str) -> None:
         with self.progress:
@@ -1287,44 +1239,121 @@ class Updater():
             except:
                 pass
 
-    async def initFiles(self) -> None:
-        tmp = self.download_assets
-        self.download_assets = True
-        with open("index.js", mode="r", encoding="utf-8") as f:
-            data = f.read()
-            a = 0
-            while True:
-                a = data.find('"enemy_', a)
-                if a == -1: break
-                a += len('"enemy_')
-                enemy_id = data[a:data.find('"', a)]
-                if enemy_id != "":
-                    fn = "enemy_" + enemy_id
-                    await self.getJS(fn)
-            print("Enemies updated")
+    async def download(self, targets : list) -> None:
+        print("Download all assets...")
+        print("Checking directories...")
+        try:
+            for f in ["model/manifest", "cjs", "img/sp/cjs", "img/sp/raid/bg", "img/sp/guild/custom/bg"]:
+                if not os.path.exists(f):
+                    os.makedirs(f)
+                    print("Created missing '"+f+"' folder")
+        except Exception as e:
+            print("Failed to create directories, aborting...")
+            print(e)
+            return
+        
+        # adding basic stuff to queue
+        self.dl_queue = asyncio.Queue()
+        self.dl_queue.put_nowait(("model/manifest/", "phit_0000000000.js"))
+        for p in self.CLASS:
+            self.dl_queue.put_nowait(("model/manifest/", p.format(0)+".js")) # gran
+            self.dl_queue.put_nowait(("model/manifest/", p.format(1)+".js")) # djeeta
+        for w in ["sw", "kn", "sp", "ax", "wa", "gu", "me", "bw", "mc", "kt"]:
+            self.dl_queue.put_nowait(("model/manifest/", "sp_{}_01210001.js".format(w)))
+            for i in range(30):
+                for s in ["", "_silent"]:
+                    self.dl_queue.put_nowait(("model/manifest/", "phit_{}_{}{}.js".format(w, str(i).zfill(4), s)))
+        
+        # start
+        print("Downloading...")
+        if len(targets) > 0:
+            print("Will only download elements from", len(targets), "given matching ID")
+        async with asyncio.TaskGroup() as tg:
+            tasks = [tg.create_task(self.downloader()) for i in range(50)] # 50 tasks
             
-            # weapons stuff
-            to_update = ['fig_sw_0_01', 'phit_0000000000']
-            for p in self.CLASS:
-                to_update.append(p.format(0))
-                to_update.append(p.format(1))
-            weapons = ["sw", "kn", "sp", "ax", "wa", "gu", "me", "bw", "mc", "kt"]
-            for w in weapons:
-                to_update.append("sp_{}_01210001".format(w))
-                for i in range(30):
-                    for s in ["", "_silent"]:
-                        to_update.append("phit_{}_{}{}".format(w, str(i).zfill(4), s))
-            
-            self.progress = Progress()
-            async with asyncio.TaskGroup() as tg:
-                tasks = []
-                for phit in to_update:
-                    tasks.append(tg.create_task(self.phitUpdate(phit)))
-                self.progress = Progress(total=len(tasks), silent=False)
-            for t in tasks:
-                t.result()
-            print("Phit files updated")
-        self.download_assets = tmp
+            # add backgrounds to queue
+            for k, v in self.index["background"].items():
+                p = "img/sp/guild/custom/bg/" if k.startswith("main_") else "img/sp/raid/bg/"
+                ex = ".png" if k.startswith("main_") else ".jpg"
+                if not isinstance(v, list): continue
+                await asyncio.sleep(0)
+                for l in v[0]:
+                    await self.dl_queue.put((p, l + ex))
+            # adding everything else
+            for k, v in self.index.items():
+                if k in ["wiki", "background"] or (len(targets) > 0 and k not in targets): continue
+                await asyncio.sleep(0)
+                # enemy
+                if len(k) == 7:
+                    await self.dl_queue.put(("model/manifest/", "enemy_"+k+".js"))
+                if "ehit" in v:
+                    await self.dl_queue.put(("model/manifest/", v["ehit"]+".js"))
+                if "sp" in v:
+                    for l in v["sp"]:
+                        await self.dl_queue.put(("model/manifest/", l+".js"))
+                # playable
+                if "v" in v:
+                    for l in v["v"]:
+                        await self.dl_queue.put(("model/manifest/", l[1]+".js")) # chara
+                        await self.dl_queue.put(("model/manifest/", l[3]+".js")) # phit
+                        if isinstance(l[4], list): # sp
+                            for sp in l[4]:
+                                await self.dl_queue.put(("model/manifest/", sp+".js"))
+                        else:
+                            await self.dl_queue.put(("model/manifest/", l[4]+".js"))
+                # weapon
+                if "w" in v:
+                    if v["w"][4] == "6": # melee type
+                        await self.dl_queue.put(("img/sp/cjs/", v["w"]+"_1.png"))
+                        await self.dl_queue.put(("img/sp/cjs/", v["w"]+"_2.png"))
+                    else:
+                        await self.dl_queue.put(("img/sp/cjs/", v["w"]+".png"))
+        for t in tasks:
+           t.result()
+        print("Done")
+    
+    async def downloader(self) -> None: # download task
+        err_count = 0
+        while err_count < 3:
+            try:
+                path, file = self.dl_queue.get_nowait()
+                err_count = 0
+                await asyncio.sleep(0)
+            except:
+                err_count += 1
+                await asyncio.sleep(1)
+                continue
+            if os.path.isfile(path + file):
+                if path == "model/manifest/":
+                    with open(path + file, mode="r", encoding="utf-8") as f:
+                        data = f.read()
+            else:
+                try:
+                    match path:
+                        case "model/manifest/": p = self.MANIFEST
+                        case "cjs/": p = self.CJS
+                        case "img/sp/cjs/"|"img/sp/raid/bg/"|"img/sp/guild/custom/bg/": p = self.ENDPOINT + path
+                        case _: raise Exception("Unknown path type " + path)
+                    data = await self.req(p + file)
+                    with open(path + file, "wb") as f:
+                        f.write(data)
+                    print(path + file, "written to disk")
+                except Exception as e:
+                    if str(e).startswith("Unknown path type"):
+                        print("Important error for", path + file, ":", e)
+                    continue
+            if path == "model/manifest/":
+                # add cjs equivalent to queue
+                await self.dl_queue.put(("cjs/", file))
+                # add images to queue
+                try:
+                    if isinstance(data, bytes): data = data.decode('utf-8')
+                    data = self.manifestToJSON(data)
+                    for l in data:
+                        await self.dl_queue.put(("img" + '/'.join(l['src'].split('/')[:-1]) + "/", l['src'].split('/')[-1]))
+                except Exception as e:
+                    print("Error while reading manifest", path + file, ":", e)
+                    continue
 
     def loadIndex(self) -> None:
         try:
@@ -1375,22 +1404,19 @@ class Updater():
         print("Usage: python updater.py [START] [MODE]")
         print("")
         print("START parameters (Optional):")
-        print("-force       : For an update of all known elements (Deprecated).")
-        print("-download    : Download assets during the usage of -run, -update.")
         print("-nochange    : Disable the update of changelog.json.")
         print("-gbfal       : Followed by a path towards GBFAL data.json. Will reuse some data from this JSON file.")
         print("")
         print("MODE parameters (One at a time):")
         print("-run         : Update the data with new content.")
         print("-update      : Manual data update (Followed by IDs to check).")
-        print("-downloadall : Attempt to download ALL assets (Time consuming, Experimental).")
-        print("-init        : Download necessary files. Can be used before -update.")
+        print("-download    : Download ALL assets (Time and disk space consuming).")
 
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v2.11\n")
-                start_flags = set(["-force", "-download", "-init", "-nochange", "-debug"])
+                print("GBFAP updater v3.0\n")
+                start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []
                 gbfal = None
@@ -1415,8 +1441,6 @@ class Updater():
                         return
                     i += 1
                 self.update_changelog = ('-nochange' not in flags)
-                self.force_update = ('-force' in flags)
-                self.download_assets = ('-download' in flags)
                 self.debug_mode = ('-debug' in flags)
                 if gbfal is not None:
                     try:
@@ -1431,23 +1455,14 @@ class Updater():
                         print("GBFAL data couldn't be loaded")
                         print(e)
                 
-                if '-downloadall' in flags:
+                if '-download' in flags:
+                    print("ONLY USE THIS COMMAND IF YOU NEED TO HOST THE ASSETS")
                     print("Are you sure that you want to download the assets of all elements?")
                     print("It will take time and a lot of disk space.")
                     if input("Type 'yes' to continue:").lower() == 'yes':
-                        print("Do you want to save changes done to data.json?")
-                        if input("Type 'yes' to accept:").lower() == 'yes':
-                            self.disable_save = True
-                        else:
-                            self.update_changelog = False
-                        self.download_assets = True
-                        await self.initFiles()
-                        await self.manualUpdate(list(self.index.keys()))
+                        await self.download(extras)
                     else:
                         print("Operation aborted...")
-                elif '-init' in flags:
-                    await self.initFiles()
-                    if "-update" in flags: await self.manualUpdate(extras)
                 elif "-update" in flags: await self.manualUpdate(extras)
                 elif "-run" in flags: await self.run()
                 else: self.print_help()

@@ -66,10 +66,10 @@ function setHTML()
                     <div class="controls-outline">\
                         <span class="controls-text">Background</span><br>\
                         <div class="controls-bg">\
-                            <button class="bg-button" onclick="setExternalBackground(Game.externUri + \'/img/sp/raid/bg/event_82.jpg\')"><img src="assets/ui/controls/bg_default.png"></button>\
-                            <button class="bg-button" onclick="setExternalBackground(\'./img/sp/raid/grid.jpg\')"><img src="assets/ui/controls/bg_grid.png"></button>\
-                            <button class="bg-button" onclick="setExternalBackground(\'./img/sp/raid/black.jpg\')"><img src="assets/ui/controls/bg_black.png"></button>\
-                            <button class="bg-button" onclick="setExternalBackground(\'./img/sp/raid/green.jpg\')"><img src="assets/ui/controls/bg_green.png"></button>\
+                            <button class="bg-button" onclick="setBackground(Game.bgUri + \'img/sp/raid/bg/event_82.jpg\')"><img src="assets/ui/controls/bg_default.png"></button>\
+                            <button class="bg-button" onclick="setBackground(\'./img/sp/raid/grid.jpg\')"><img src="assets/ui/controls/bg_grid.png"></button>\
+                            <button class="bg-button" onclick="setBackground(\'./img/sp/raid/black.jpg\')"><img src="assets/ui/controls/bg_black.png"></button>\
+                            <button class="bg-button" onclick="setBackground(\'./img/sp/raid/green.jpg\')"><img src="assets/ui/controls/bg_green.png"></button>\
                             <button class="bg-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');"><img src="assets/ui/controls/bg_select.png"></button>\
                         </div>\
                     </div>\

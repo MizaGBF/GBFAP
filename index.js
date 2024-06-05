@@ -84,6 +84,7 @@ var Game = LOCAL ? // Game variable used by GBF scripts
     imgUri: 'img',
     soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound/",
     externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en', // direct access to GBF
+    bgUri: './', // for backgrounds
     testUri: 'assets/test.png', // to test if the server is setup
     setting: {}
 } :
@@ -93,6 +94,7 @@ var Game = LOCAL ? // Game variable used by GBF scripts
     imgUri: CORS + 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
     soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound/",
     externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en', // direct access to GBF
+    bgUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/', // for backgrounds
     testUri: CORS + 'assets/test.png', // to test if the server is setup
     setting: {}
 };
@@ -182,6 +184,7 @@ function switchToDebug()
             imgUri: CORS + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
             soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound",
             externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en',
+            bgUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/',
             setting: {}
         };
         debug_path = d;
@@ -414,10 +417,10 @@ function loadCharacter(id)
             else if(!is_old_summon) AnimeData[1][p]['action_label_list'] = ['summon', 'summon_atk', 'summon_dmg'];
             else AnimeData[1][p]['action_label_list'] = ['summon', 'summon_atk'];
             AnimeData[1][p]['effect'] = [d[3]]; // phit
-            if(d[4].constructor == Array)
+            AnimeData[1][p]['special'] = [];
+            for(let sp of d[4])
             {
-                AnimeData[1][p]['special'] = [];
-                for(let sp of d[4])
+                if(sp.startsWith('nsp'))
                 {
                     let i = sp[sp.length-1].charCodeAt();
                     if(i < 'a'.charCodeAt() || i > 'z'.charCodeAt())
@@ -425,12 +428,8 @@ function loadCharacter(id)
                     else
                         i -= 'a'.charCodeAt();
                     while(AnimeData[1][p]['special'].length < i - 1) AnimeData[1][p]['special'].push({"random":0,"list":[]});
-                    AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":sp,"fixed_pos_owner_bg":0,"full_screen":+d[5]}]});
                 }
-            }
-            else
-            {
-                AnimeData[1][p]['special'] = [{"random":0,"list":[{"target":"them","cjs":d[4],"fixed_pos_owner_bg":0,"full_screen":+d[5]}]}]; // special, fullscreen
+                AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":sp,"fixed_pos_owner_bg":0,"full_screen":+d[5]}]});
             }
             if(mc_summon != null && d[4].includes('attack')) AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":d[4].replace('attack', 'damage'),"fixed_pos_owner_bg":0,"full_screen":0}]});
             AnimeData[1][p]['cjs_pos'] = [{"y":0,"x":0}];
@@ -478,7 +477,7 @@ function loadMC(id)
             AnimeData[1][p]["cjs"] = [d[1]]; // cjs
             AnimeData[1][p]['action_label_list'] = ['ability', d[2], 'stbwait', 'short_attack', 'double', 'triple']; // mortal
             AnimeData[1][p]['effect'] = [d[3]]; // phit
-            AnimeData[1][p]['special'] = [{"random":0,"list":[{"target":"them","cjs":d[4],"fixed_pos_owner_bg":0,"full_screen":+d[5]}]}]; // special, fullscreen
+            AnimeData[1][p]['special'] = [{"random":0,"list":[{"target":"them","cjs":d[4][0],"fixed_pos_owner_bg":0,"full_screen":+d[5]}]}]; // special, fullscreen
             AnimeData[1][p]['cjs_pos'] = [{"y":0,"x":0}];
             AnimeData[1][p]['special_pos'] = [[{"y":0,"x":0}]];
         }
@@ -504,7 +503,7 @@ function loadEnemy(id)
         mc_id = id;
         AnimeData[0].push(""); // empty name
         AnimeData[1].push({});
-        AnimeData[1][0]["cjs"] = ["enemy_" + data['e']]; // cjs
+        AnimeData[1][0]["cjs"] = ["enemy_" + id]; // cjs
         AnimeData[1][0]['action_label_list'] = data['sp'].length > 0 ? ['setin', 'wait', 'attack', 'mortal_A', 'dead'] : ['setin', 'wait', 'attack', 'dead'];
         AnimeData[1][0]['effect'] = [data['ehit']]; // phit
         AnimeData[1][0]['special'] = [];
@@ -722,7 +721,7 @@ function updateList(node, elems) // update a list of elements
     }
 }
 
-function setExternalBackground(url) // change battle background
+function setBackground(url) // change battle background
 {
     let anibg = document.getElementById('anime-bg');
     if(anibg == null) return;
@@ -760,7 +759,7 @@ function addIndexImage(node, path, id, is_bg = false) // add an image to an inde
             this.classList.add("preview");
             this.onclick = function()
             {
-                setExternalBackground(img.src.replace('img_low/', 'img/').replace('-a1-', '-a-').replace('-a2-', '-a-').replace('-a3-', '-a-').replace('-a4-', '-a-').replace('-a5-', '-a-'));
+                setBackground(Game.bgUri + img.src.split('assets_en/')[1].replace('img_low', 'img'));
             };
         };
         return img;

@@ -16,19 +16,18 @@ There are two possible ways to host this project.
 1. Copy this repo.  
 2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF.  
 3. Change line 3 of `index.js` with the address of your proxy.  
-4. **If needed**, change line 94 of `index.js` (`testUri`) to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code. The corresponding asset is present in the `assets/folder` if needed.  
+4. **If needed**, change line 98 of `index.js` (`testUri`) to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code. The corresponding asset is present in the `assets/folder` if needed.  
   
 ### The second way, is to host the assets along with the project:
-0. Prepare a lot of free space (10 to 20 GB).  
+0. Prepare a lot of free space (a few ten of GB).  
 1. Copy this repo.  
-2. Run `python updater.py -downloadall` to download all the assets. (The script will ask you to confirm. You can also turn off changes to data.json when asked.).  
+2. Run `python updater.py -download` to download all the assets. (The script will ask you to confirm by typying `yes`).  
 3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
   
-Note: Some files might still be accessed from GBF servers (like manifests, or sound files which aren't supported by `updater.py`).  
-Note²: This method isn't fully tested. It's possibly I overlooked some things in the updater and not all files will be downloaded properly. I recommend the first method if possible. Eventually, I'll add a better "download all" feature.  
+Note: This method isn't fully tested, you might encounter bugs. You'll also need to run `python updater.py -download` after every update but it won't re-download what's already on disk.
   
 # Additional Setup  
-You can tinker with the `Game` variable at line 80 of `index.js` if you need to change the path of asset types.  
+You can tinker with the `Game` variable around the line 80 of `index.js` if you need to change the path of asset types.  
 If you need to remove the proxy testing mentionned above, look for the function called `successLoading` in  `index.js` and modify it to look this way:
 ```javascript
 function successLoading(id)
@@ -44,17 +43,13 @@ It's currently compatible with characters (R, SR, SSR, Skins), summons, weapons,
 There are three main possible command lines:
 * `python updater.py -run` to simply retrieve new/unindexed elements.  
 * `python updater.py -update list_of__id` to manually update the specified elements, in case they got an uncap for example (You don't need to specify the character style for characters).  
-* `python updater.py -downloadall` will download all the required assets (ONLY USE IT IF YOU'RE PLANNING TO SELF-HOST THE ASSETS).  
+* `python updater.py -download` will download all the required assets not present on disk (ONLY USE IT IF YOU'RE PLANNING TO SELF-HOST THE ASSETS).  
   
-You can then add the following options before for more control (except `-downloadall`, it ignores everything):
-* `-force` will force an indexation and, as a result, rebuild its JSON data (No need to use with `-update`).  
-* `-download` will download and save the assets in their respective folders.  
-* `-init` will download the assets needed for the demo enemy and the dummy attack effect, among other things. This command isn't needed if you don't host the assets.  
+You can then add the following options before for more control:
 * `-nochange` to not update the `changelog.json` recently updated element list.  
   
 And the following if you're using [GBFAL](https://github.com/MizaGBF/GBFAL):
 * `-gbfal` followed by the url or path to GBFAL `data.json` file. You can also set it to `https://raw.githubusercontent.com/MizaGBF/GBFAL/main/json/data.json`.  
-
   
 # Exceptions/Quirks  
 * Some skins and characters reuse the Charge Attack or Attack effect of another version.  

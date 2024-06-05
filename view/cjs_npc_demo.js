@@ -757,7 +757,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.SUMMON_ATTACK: // summon hack
                 case animations.SUMMON_DAMAGE: // summon hack
                 {
-                    this.currentIndex = 0 ;
+                    this.currentIndex = 0;
                     this.damageTarget = this.cjsMortalList[this.currentIndex].list[0].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
                     this.updateCjsParams(this.currentIndex);
                     animDuration = addSummon(motion == animations.SUMMON_DAMAGE ? this.cjsNameMortal.replace('attack', 'damage') : this.cjsNameMortal);
