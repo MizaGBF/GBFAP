@@ -570,30 +570,36 @@ class Updater():
             "150401": ["omj_kn", "omj_kt"], # onmyoji
             "470301": ["sld_ax", "sld_gu"] # shieldsworn
         }
-        self.class_ougi = {
-            "320001": "1040115000", # school dancer
-            "340001": "1040315700", # xuanwu
-            "400001": "1040913700", # zhuque
-            "330001": "1040216600", # qinglong
-            "370901": "1040617400", # baihu
+        self.class_weapon = {
+            "310001": "1040009100", # lord of vermillion
+            "310101": None, # anime season 1
+            "310201": None, # summer
+            "310301": "1040014200", # attack on titan
+            "310401": None, # mac do
             "310501": "1040016700", # eternal 1
             "310601": "1040016800", # eternal 2
-            "360101": "1040508600", # platinum sky 2
-            "370801": "1040616000", # belial 2
             "310701": "1040016900", # fallen
-            "370001": "1040610300", # monster 1
-            "310901": "1040019100", # versus
-            "370201": "1040610200", # monster 2
-            "370301": "1040610400", # monster 3
-            "370601": "1040614400", # belial 1
-            "370701": "1040615300", # cook
-            "310001": "1040009100", # lord of vermillion
             "310801": "1040018800", # yukata
+            "310901": "1040019100", # versus
             "311001": "1040020200", # school
-            "310301": "1040014200", # attack on titan
-            "360201": "1040515800", # premium friday
             "311101": "1040025000", # versus rising skin
             "311201": "1040025600", # relink skin
+            "320001": "1040115000", # school dancer
+            "330001": "1040216600", # qinglong
+            "340001": "1040315700", # xuanwu
+            "360001": None, # vyrn suit
+            "360101": "1040508600", # platinum sky 2
+            "360201": "1040515800", # premium friday
+            "370001": "1040610300", # monster 1
+            "370201": "1040610200", # monster 2
+            "370301": "1040610400", # monster 3
+            "370401": None, # bird
+            "370501": None, # anime s2 skin
+            "370601": "1040614400", # belial 1
+            "370701": "1040615300", # cook
+            "370801": "1040616000", # belial 2
+            "370901": "1040617400", # baihu
+            "400001": "1040913700", # zhuque
             "400101": "1040916100" # 2B skin
         }
         self.class_gbfal = False
@@ -613,7 +619,7 @@ class Updater():
         self.loadIndex()
         self.http_sem = asyncio.Semaphore(self.MAX_HTTP) # http semaphore
 
-    def update_data_from_GBFAL(self) -> None: # update class_lookup and class_ougi according to GBFAL data
+    def update_data_from_GBFAL(self) -> None: # update class_lookup and class_weapon according to GBFAL data
         if self.class_gbfal or len(list(self.gbfal.keys())) == 0: return # only run once and if gbfal is loaded
         try:
             print("Checking GBFAL data for new classes...")
@@ -623,7 +629,7 @@ class Updater():
                     self.class_lookup[k] = self.gbfal['job'][k][6] # mh
                     for x, v in self.gbfal['job_wpn'].items():
                         if v == k:
-                            self.class_ougi[k] = x
+                            self.class_weapon[k] = x
                     for x, v in self.gbfal['job_id'].items():
                         if v == k:
                             for i in range(len(self.class_lookup[k])):
@@ -715,7 +721,7 @@ class Updater():
                     if is_mob:
                         r = await self.update_mob(f)
                     elif file.startswith("10"):
-                        if f in self.class_ougi.values():
+                        if f in self.class_weapon.values():
                             errc = 0
                             eid += step
                             continue
@@ -765,25 +771,28 @@ class Updater():
                 except:
                     pass
             if len(colors) == 0: return 0
-            if id in self.class_ougi: # skin with custom weapon
+            if id in self.class_weapon: # skin with custom weapon
                 mortal = "mortal_B" # skin with custom ougis use this
                 mc_cjs = colors[0]
-                phit = "phit_" + self.class_ougi[id]
-                for s in ["", "_0"]:
-                    try:
-                        await self.getJS(phit+s)
-                        phit = phit+s
-                        break
-                    except:
-                        pass
-                sp = "sp_" + self.class_ougi[id]
-                for s in ["", "_0", "_0_s2", "_s2"]:
-                    try:
-                        await self.getJS(sp+s)
-                        sp = sp+s
-                        break
-                    except:
-                        pass
+                sp = None
+                phit = None
+                if self.class_weapon[id] is not None:
+                    for s in ["", "_0"]:
+                        try:
+                            f = "phit_" + self.class_weapon[id] + s
+                            await self.getJS(f)
+                            phit = f
+                            break
+                        except:
+                            pass
+                    for s in ["", "_0", "_0_s2", "_s2"]:
+                        try:
+                            f = "sp_" + self.class_weapon[id] + s
+                            await self.getJS(f)
+                            sp = f
+                            break
+                        except:
+                            pass
             else: # regular class
                 mortal = "mortal_A"
                 mc_cjs = colors[0]
@@ -805,9 +814,8 @@ class Updater():
                     except:
                         pass
             if phit is None:
-                phit = "phit_{}_0001".format(mc_cjs.split('_')[1])
-            if sp is None:
-                sp = 'sp_{}_01210001'.format(mc_cjs.split('_')[1])
+                if id == "360101": phit = "phit_racer" # special exception
+                else: phit = "phit_{}_0001".format(mc_cjs.split('_')[1])
             character_data = {}
             if wid is not None: character_data['w'] = wid
             character_data['v'] = []
@@ -818,13 +826,12 @@ class Updater():
                     if i == 1: # djeeta
                         if phit.endswith('_0'):
                             phit = phit[:-2] + '_1'
-                        if sp.endswith('_0'):
-                            sp = sp[:-2] + '_1'
-                        elif sp.endswith('_0_s2'):
-                            sp = sp[:-5] + '_1_s2'
-                    tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', '_{}_'.format(i)), mortal, phit, [sp], ('_s2' in sp or '_s3' in sp)] # name, cjs, mortal, phit, sp, fullscreen
-                    if '_s2' in tmp[4] or '_s3' in tmp[4]:
-                        tmp[5] = True
+                        if sp is not None:
+                            if sp.endswith('_0'):
+                                sp = sp[:-2] + '_1'
+                            elif sp.endswith('_0_s2'):
+                                sp = sp[:-5] + '_1_s2'
+                    tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', '_{}_'.format(i)), mortal, phit, [] if sp is None else [sp], (sp is not None and ('_s2' in sp or '_s3' in sp))] # name, cjs, mortal, phit, sp, fullscreen
                     character_data['v'].append(tmp)
             if str(character_data) != str(self.index.get(id, None)):
                 self.index[id] = character_data
@@ -1415,7 +1422,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.0\n")
+                print("GBFAP updater v3.1\n")
                 start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []

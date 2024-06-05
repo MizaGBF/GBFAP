@@ -477,7 +477,9 @@ function loadMC(id)
             AnimeData[1][p]["cjs"] = [d[1]]; // cjs
             AnimeData[1][p]['action_label_list'] = ['ability', d[2], 'stbwait', 'short_attack', 'double', 'triple']; // mortal
             AnimeData[1][p]['effect'] = [d[3]]; // phit
-            AnimeData[1][p]['special'] = [{"random":0,"list":[{"target":"them","cjs":d[4][0],"fixed_pos_owner_bg":0,"full_screen":+d[5]}]}]; // special, fullscreen
+            AnimeData[1][p]['special'] = [];
+            if(d[4].length > 0)
+                AnimeData[1][p]['special'].push({"random":0,"list":[{"target":"them","cjs":d[4][0],"fixed_pos_owner_bg":0,"full_screen":+d[5]}]}); // special, fullscreen
             AnimeData[1][p]['cjs_pos'] = [{"y":0,"x":0}];
             AnimeData[1][p]['special_pos'] = [[{"y":0,"x":0}]];
         }
