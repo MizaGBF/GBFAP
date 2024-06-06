@@ -831,6 +831,12 @@ class Updater():
                                 sp = sp[:-2] + '_1'
                             elif sp.endswith('_0_s2'):
                                 sp = sp[:-5] + '_1_s2'
+                            try:
+                                await self.getJS(sp)
+                            except:
+                                print("")
+                                print("Warning:", sp, "not found for", id)
+                                sp = None
                     tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', '_{}_'.format(i)), mortal, phit, [] if sp is None else [sp], (sp is not None and ('_s2' in sp or '_s3' in sp))] # name, cjs, mortal, phit, sp, fullscreen
                     character_data['v'].append(tmp)
             if str(character_data) != str(self.index.get(id, None)):
