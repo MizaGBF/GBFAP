@@ -926,8 +926,6 @@ class Updater():
                                 tmp[4][0] = fn
                             except:
                                 pass
-                    if ('_s2' in nsp or '_s3' in nsp):
-                        print(id)
                     character_data['v'].append(tmp)
                 if str(character_data) != str(self.index.get(id+uncap, None)):
                     self.index[id+uncap] = character_data
