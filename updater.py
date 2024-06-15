@@ -25,7 +25,7 @@ class Progress():
         l = len(s)
         while s[l-1] == '0' or s[l-1] == '.': # remove trailing 0 up to the dot (included)
             l -= 1
-            if s[l-1] == '.':
+            if s[l] == '.':
                 break
         self._prev_percents_ = (s, s[:l]) # cache the result
         return s[:l]
@@ -1439,7 +1439,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.1\n")
+                print("GBFAP updater v3.2\n")
                 start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []
