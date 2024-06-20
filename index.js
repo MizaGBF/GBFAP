@@ -291,7 +291,7 @@ function initIndex(unused)
     {
         const tmp = elems[0];
         elems[1].onclick = function (){
-            display(tmp, 'job', null, null, false, true);
+            display(tmp, 'job', null, null, false, true, "Descending ID Order");
             this.onclick = null;
         };
     }
