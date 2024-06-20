@@ -581,7 +581,8 @@ class Updater():
             "311201": ["tbs_sw"], # relink skin
             "400101": ["nir_kt"], # 2B skin
             "150401": ["omj_kn", "omj_kt"], # onmyoji
-            "470301": ["sld_ax", "sld_gu"] # shieldsworn
+            "470301": ["sld_ax", "sld_gu"], # shieldsworn
+            "311301": ["unf_sw"] # gw
         }
         self.class_weapon = {
             "310001": "1040009100", # lord of vermillion
@@ -597,6 +598,7 @@ class Updater():
             "311001": "1040020200", # school
             "311101": "1040025000", # versus rising skin
             "311201": "1040025600", # relink skin
+            "311301": "1040026400", # gw skin
             "320001": "1040115000", # school dancer
             "330001": "1040216600", # qinglong
             "340001": "1040315700", # xuanwu
