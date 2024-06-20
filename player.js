@@ -315,40 +315,37 @@ function versionChange(obj)
     document.getElementById("pause-btn").classList.remove("btn-paused");
     
     // header image
-    if(!AnimeDebug)
+    let el = AnimeID.split('_');
+    if(el.length == 1 && (el[0].length == 6 || el[0].length == 7)) // mc and enemy
     {
-        let el = AnimeID.split('_');
-        if(el.length == 1 && (el[0].length == 6 || el[0].length == 7)) // mc and enemy
-        {
-            // do nothing
-        }
-        else if(AnimeID.startsWith("10"))
-        {
-            let id = AnimeID;
-            let u = Math.floor(animeVersion/2);
-            if(u > 0) id += "_0" + JSON.stringify(u+1);
-            document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/weapon/m/" + id + ".jpg";
-        }
-        else if(AnimeID.startsWith("20"))
-        {
-            let id = AnimeID;
-            let u = parseInt(AnimeData[0][animeVersion][0]) - 3;
-            if(u > 0) id += "_0" + JSON.stringify(u+1);
-            document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg"
-        }
-        else if(AnimeID.startsWith("389"))
-        {
-             document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + AnimeID + "_01_" + animeVersion + ".jpg";
-        }
-        else if(AnimeID.startsWith("38"))
-        {
-            // do nothing
-        }
-        else
-        {
-            el = AnimeData[1][animeVersion]['cjs'][0].split('_');
-            el[2] += (AnimeID.includes("_st2") ? "_st2" : "");
-            document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg"
-        }
+        // do nothing
+    }
+    else if(AnimeID.startsWith("10"))
+    {
+        let id = AnimeID;
+        let u = Math.floor(animeVersion/2);
+        if(u > 0) id += "_0" + JSON.stringify(u+1);
+        document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/weapon/m/" + id + ".jpg";
+    }
+    else if(AnimeID.startsWith("20"))
+    {
+        let id = AnimeID;
+        let u = parseInt(AnimeData[0][animeVersion][0]) - 3;
+        if(u > 0) id += "_0" + JSON.stringify(u+1);
+        document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg"
+    }
+    else if(AnimeID.startsWith("389"))
+    {
+         document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + AnimeID + "_01_" + animeVersion + ".jpg";
+    }
+    else if(AnimeID.startsWith("38"))
+    {
+        // do nothing
+    }
+    else
+    {
+        el = AnimeData[1][animeVersion]['cjs'][0].split('_');
+        el[2] += (AnimeID.includes("_st2") ? "_st2" : "");
+        document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg"
     }
 }

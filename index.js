@@ -76,7 +76,6 @@ const BACKGROUNDS = [
 // animation player data
 var AnimeID = null; // will contain the Character id
 var AnimeData = null; // will contain the Character data for the player
-var AnimeDebug = false; // debug only, ignore it
 var Game = LOCAL ? // Game variable used by GBF scripts
 {
     xjsUri: '',
@@ -170,28 +169,6 @@ function getDebug()
 function getEndpoint(endpointIndex)
 {
     return endpoints[endpointIndex % endpoints.length];
-}
-
-function switchToDebug()
-{
-    if(!AnimeDebug)
-    {
-        let d = getDebug();
-        if(d == null) return false;
-        Game = {
-            xjsUri: 'https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
-            jsUri: CORS + d +'/debug/https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js',
-            imgUri: CORS + d + '/debug/https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img',
-            soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound",
-            externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en',
-            bgUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/',
-            setting: {}
-        };
-        debug_path = d;
-        AnimeDebug = true;
-        return true;
-    }
-    else return true;
 }
 
 // ========================================================================
@@ -439,15 +416,6 @@ function loadCharacter(id)
     }
     else // fail
     {
-        // DEBUG ONLY
-        document.getElementById('output').innerHTML = '<img src="assets/ui/loading.gif" id="temp"><div id="AnimationPlayer"></div><div class="tips">Loading Debug Data.<br>Wait a minute or two before reloading if it takes too much time.</div>';
-        if(switchToDebug() && id.startsWith('30') && id.length >= 10 && !LOCAL) // call debug mode (can be disabled by setting AnimeDebug to true)
-        {
-            let fav = document.getElementById('fav-btn');
-            if(fav != null) fav.remove();
-            get(CORS + debug_path + "/json/" + id + ".json?" + timestamp, successJSON, failJSON, id);
-            return
-        }
         document.getElementById('output').innerHTML = "Error: Couldn't load ID " + id + style;
         if(id.length == 10 && id.startsWith("20"))
             document.getElementById('output').innerHTML += "<br>Note: This summon might be unsupported or has identical animations on another ID.";
@@ -579,44 +547,40 @@ function startplayer(id)
         const is_wiki = ('wiki' in index && sid in index['wiki']);
         document.getElementById('output').innerHTML = '<button id="fav-btn"></button><br><a href="https://gbf.wiki/'+ (is_wiki ? index['wiki'][sid] : 'index.php?title=Special:Search&search=' + sid) + '" title="' + (is_wiki ? "Wiki page for " + index['wiki'][sid].replaceAll("_", " ") : "Wiki search for " + sid) + '"><img class="img-link" src="assets/ui/icon/wiki.png"></a><a href="https://mizagbf.github.io/GBFAL/?id=' + (id.length == 7 ? 'e'+id : id) + '" title="Assets for ' + id + '"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a><div id="AnimationPlayer"></div>';
     }
-    
-    if(!AnimeDebug)
+    let img = document.createElement("img"); // add character thumbnail on top
+    output.insertBefore(img, output.firstChild);
+    img.id = "loading";
+    img.onload = function() {
+        this.id = "character";
+    }
+    let el = id.split("_");
+    if(id.length == 6)
+        img.src = Game.externUri + "/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
+    else if(id.length == 7)
     {
-        let img = document.createElement("img"); // add character thumbnail on top
-        output.insertBefore(img, output.firstChild);
-        img.id = "loading";
-        img.onload = function() {
-            this.id = "character";
-        }
-        let el = id.split("_");
-        if(id.length == 6)
-            img.src = Game.externUri + "/img_low/sp/assets/leader/m/" + el[0] + "_01.jpg";
-        else if(id.length == 7)
-        {
-            img.src = Game.externUri + "/img/sp/assets/enemy/s/" + el[0] + ".png";
-            img.classList.add('preview');
-        }
-        else if(id.startsWith("10"))
-            img.src = Game.externUri + "/img_low/sp/assets/weapon/m/" + id + ".jpg";
-        else if(id.startsWith("20"))
-            img.src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg";
-        else if(id.startsWith("389"))
-        {
-            img.src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + id + "_01_0.jpg";
-            img.classList.add('preview');
-        }
-        else if(id.startsWith("38"))
-        {
-            img.src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + id + "_01.jpg";
-            img.classList.add('preview');
-        }
-        else if(el.length == 1)
-            img.src = Game.externUri + "/img_low/sp/assets/npc/m/" + id + "_01.jpg";
-        else
-            img.src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
-        img.onerror = function() { // can't be loaded? character doesn't exist
-            document.getElementById('output').innerHTML = "Error: The element isn't accessible yet.";
-        }
+        img.src = Game.externUri + "/img/sp/assets/enemy/s/" + el[0] + ".png";
+        img.classList.add('preview');
+    }
+    else if(id.startsWith("10"))
+        img.src = Game.externUri + "/img_low/sp/assets/weapon/m/" + id + ".jpg";
+    else if(id.startsWith("20"))
+        img.src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg";
+    else if(id.startsWith("389"))
+    {
+        img.src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + id + "_01_0.jpg";
+        img.classList.add('preview');
+    }
+    else if(id.startsWith("38"))
+    {
+        img.src = Game.externUri + "/img_low/sp/assets/npc/raid_normal/" + id + "_01.jpg";
+        img.classList.add('preview');
+    }
+    else if(el.length == 1)
+        img.src = Game.externUri + "/img_low/sp/assets/npc/m/" + id + "_01.jpg";
+    else
+        img.src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[0] + "_01_" + el[1] + ".jpg";
+    img.onerror = function() { // can't be loaded? character doesn't exist
+        document.getElementById('output').innerHTML = "Error: The element isn't accessible yet.";
     }
     // enable favorite
     favButton(true, id, id.length == 7 ? 4 : id.startsWith('10') ? 1 : id.startsWith('20') ? 2 : id.startsWith('38') ? 6 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
