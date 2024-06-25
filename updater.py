@@ -1386,8 +1386,15 @@ class Updater():
             self.modified = False
             with open("json/data.json", mode="r", encoding="utf-8") as f:
                 self.index = json.load(f)
-        except:
-            self.index = {}
+        except OSError as e:
+            print(e)
+            if input("Continue anyway? (type 'y' to continue):").lower() != 'y':
+                os._exit(0)
+        except Exception as e:
+            print("The following error occured while loading data.json:")
+            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+            print(e)
+            os._exit(0)
 
     def saveIndex(self) -> None:
         try:
@@ -1441,7 +1448,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.2\n")
+                print("GBFAP updater v3.3\n")
                 start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []
