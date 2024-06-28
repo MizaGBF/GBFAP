@@ -664,7 +664,7 @@ function updateList(node, elems) // update a list of elements
                 addIndexImage(node, "GBF/assets_en/img_low/sp/assets/leader/m/" + e[0].split('_')[0] + "_01.jpg", e[0]);
                 break;
             }
-            case 4:
+            case 4: // enemy
             {
                 addIndexImage(node, "GBF/assets_en/img/sp/assets/enemy/s/" + e[0] + ".png", e[0]).onload = function() {
                     this.classList.remove("loading");
@@ -673,7 +673,7 @@ function updateList(node, elems) // update a list of elements
                 };
                 break;
             }
-            case 6:
+            case 6: // partner
             {
                 
                 addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/raid_normal/" + e[0] + "_01" + (e[0].startsWith("389") ? "_0" : "") + ".jpg", e[0]).onload = function() {
