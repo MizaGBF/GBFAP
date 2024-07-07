@@ -123,6 +123,7 @@ function openCustom()
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
     if(document.getElementById("custom-action").style.display == null) return;
+    beep();
     document.getElementById("custom-action").style.display = null;
     let actionlist = ""
     for(action in custom_choices[animeVersion]) {
@@ -147,11 +148,13 @@ function playCustom()
 
 function closeCustom()
 {
+    beep();
     document.getElementById("custom-action").style.display = "none";
 }
 
 function addCustom()
 {
+    beep();
     if(demo_list[animeVersion].length == 50)
     {
         pushPopup("You can't add more actions");
@@ -163,6 +166,7 @@ function addCustom()
 
 function delCustom(i)
 {
+    beep();
     if(demo_list[animeVersion].length == 1)
     {
         pushPopup("You can't remove the last action");
@@ -174,6 +178,7 @@ function delCustom(i)
 
 function resetCustom()
 {
+    beep();
     demo_list[animeVersion] = action_index[animeVersion].action_label_list.slice(0);
     updateDemoList();
 }
@@ -194,6 +199,7 @@ function actionChange(obj)
 {
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
+    beep();
     var action = obj.options[obj.selectedIndex].value;
     if (action == 'default')
     {
@@ -210,6 +216,7 @@ function togglePause()
 {
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
+    beep();
     if(this.cjsViewList[animeVersion].isPaused)
     {
         document.getElementById("pause-btn").classList.remove("btn-paused");
@@ -226,6 +233,7 @@ function toggleLoop()
 {
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
+    beep();
     let loop_btn = document.getElementById("loop-btn");
     if(loop_btn.classList.contains('btn-enabled'))
     {
@@ -244,6 +252,7 @@ function toggleSFX()
 {
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
+    beep();
     let sfx_btn = document.getElementById("sfx-btn");
     if(sfx_btn.classList.contains('btn-enabled'))
     {
@@ -270,6 +279,7 @@ function versionChange(obj)
 {
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
+    beep();
 
     animeVersion = obj.options[obj.selectedIndex].value;
     //verify if action exists

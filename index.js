@@ -112,9 +112,15 @@ var is_enemy = false; // set to true if we are dealing with enemy animations
 var mc_id = null; // used by classes only
 var mc_wpn = null; // used by weapons and classes
 var mc_summon = null; // used by summons
+var beepAudio = new Audio("assets/audio/beep.ogg"); // contains last played audio sfx
 
 // ========================================================================
 // utility
+function beep() // play a sound effect
+{
+    if(!beepAudio.paused) return;
+    beepAudio.play();
+}
 
 // generic xhr request function
 // id is passed to the callbacks
@@ -536,6 +542,7 @@ function failLoading(id)
 
 function startplayer(id)
 {
+    beep();
     if(id.startsWith("38") && id.length >= 10)
     {
         const sid = id.slice(0, 7) + "000";
