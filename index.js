@@ -629,36 +629,26 @@ function updateList(node, elems) // update a list of elements
         {
             case 3: // character, skin, ...
             {
-                let u = "01";
-                try
+                let r = display_characters(e[0], [0, 1000, 0, 1000, 0, 1000]);
+                if(r != null)
                 {
-                    switch(index[e[0]]['v'][index[e[0]]['v'].length - 1][0][0])
+                    for(const el of r)
                     {
-                        case "5": u = "03"; break;
-                        case "6": u = "04"; break;
-                        default: break;
+                        addIndexImage(node, el[1], el[0], el[2]);
                     }
-                } catch(err) {}
-                if(e[0].includes('_st'))
-                    addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0].split('_')[0] + "_" + u + "_" + e[0].split('_')[1] + ".jpg", e[0]);
-                else
-                    addIndexImage(node, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0] + "_" + u + ".jpg", e[0]);
+                }
                 break;
             }
             case 2: // summon
             {
-                let u = "";
-                try
+                let r = display_summons(e[0], null, [0, 1000]);
+                if(r != null)
                 {
-                    switch(index[e[0]]['v'][index[e[0]]['v'].length - 1][0][0])
+                    for(const el of r)
                     {
-                        case "4": u = "_02"; break;
-                        case "5": u = "_02"; break;
-                        case "6": u = "_04"; break;
-                        default: break;
+                        addIndexImage(node, el[1], el[0], el[2]);
                     }
-                } catch(err) {}
-                addIndexImage(node, "GBF/assets_en/img_low/sp/assets/summon/m/" + e[0] + u + ".jpg", e[0]);
+                }
                 break;
             }
             case 1: // weapon
@@ -712,7 +702,7 @@ function setBackground(url) // change battle background
     localStorage.setItem("gbfap-background", url);
 };
 
-function addIndexImage(node, path, id, is_bg = false) // add an image to an index. path must start with "GBF/" if it's not a local asset.
+function addIndexImage(node, path, id, onerr, is_bg = false) // add an image to an index. path must start with "GBF/" if it's not a local asset.
 {
     if(is_bg) // two behavior based on is_bg
     {
@@ -721,9 +711,12 @@ function addIndexImage(node, path, id, is_bg = false) // add an image to an inde
         img.title = id;
         img.classList.add("loading");
         img.setAttribute('loading', 'lazy');
-        img.onerror = function() {
-            this.remove();
-        };
+        if(onerr != null)
+            img.onerror = onerr;
+        else
+            img.onerror = function() {
+                this.remove();
+            };
         img.src = path.replace("GBF/", idToEndpoint(id));
         img.onload = function() {
             this.classList.remove("loading");
@@ -750,10 +743,13 @@ function addIndexImage(node, path, id, is_bg = false) // add an image to an inde
             this.classList.add("clickable");
             this.classList.add("index-image");
         };
-        img.onerror = function() {
-            this.parentNode.remove();
-            this.remove();
-        };
+        if(onerr != null)
+            img.onerror = onerr;
+        else
+            img.onerror = function() {
+                this.parentNode.remove();
+                this.remove();
+            };
         img.src = path.replace("GBF/", idToEndpoint(id));
         img.title = id;
         a.href = "?id="+id;
@@ -853,10 +849,16 @@ function display(node, key, argA, argB, pad, reverse, specific_text = null) // g
     {
         for(let r of slist[k])
         {
-            let img = addIndexImage(node, r[1], r[0], (key == "background"));
+            let img = addIndexImage(node, r[1], r[0], r[2], (key == "background"));
             if(onload != null) img.onload = onload;
         }
     }
+}
+
+function default_onerror()
+{
+    this.parentNode.remove()
+    this.remove();
 }
 
 function display_characters(id, range, unused = null)
@@ -886,28 +888,41 @@ function display_characters(id, range, unused = null)
             case "6": u = "04"; break;
             default: break;
         }
-    } catch(err) {}
-    return [[id, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0] + "_" + u + (e.length == 2 ? "_"+e[1] : "") + ".jpg"]];
+    } catch(err) {
+        console.error("Exception thrown", err.stack);
+    }
+    let onerr = default_onerror;
+    if(u != "01")
+    {
+        onerr = function() {
+            this.src = this.src.replace('_'+u, '_'+u+'_01'); // hack for lyria and equivalent
+            this.onerror = function() {
+                this.src.replace('_'+u+'_01', '_01');
+                this.onerror = default_onerror;
+            }
+        }
+    }
+    return [[id, "GBF/assets_en/img_low/sp/assets/npc/m/" + e[0] + "_" + u + (e.length == 2 ? "_"+e[1] : "") + ".jpg", onerr]];
 }
 
 function display_skins(id, range, unused = null)
 {
     let val = parseInt(id.slice(4, 7));
     if(val < range[0] || val >= range[1]) return null;
-    return [[id, "GBF/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg"]];
+    return [[id, "GBF/assets_en/img_low/sp/assets/npc/m/" + id + "_01.jpg", default_onerror]];
 }
 
 function display_partners(id, prefix, unused = null)
 {
     if(id.startsWith("389"))
-        return [[id, "GBF/assets_en/img_low/sp/assets/npc/raid_normal/" + id + "_01_0.jpg"]];
+        return [[id, "GBF/assets_en/img_low/sp/assets/npc/raid_normal/" + id + "_01_0.jpg", default_onerror]];
     else
-        return [[id, "GBF/assets_en/img_low/sp/assets/npc/raid_normal/" + id + "_01.jpg"]];
+        return [[id, "GBF/assets_en/img_low/sp/assets/npc/raid_normal/" + id + "_01.jpg", default_onerror]];
 }
 
 function display_summons(id, rarity, range)
 {
-    if(id[2] != rarity) return null;
+    if(rarity != null && id[2] != rarity) return null;
     let val = parseInt(id.slice(4, 7));
     if(val < range[0] || val >= range[1]) return null;
     let u = "";
@@ -920,24 +935,34 @@ function display_summons(id, rarity, range)
             case "6": u = "_04"; break;
             default: break;
         }
-    } catch(err) {}
-    return [[id, "GBF/assets_en/img_low/sp/assets/summon/m/" + id + u + ".jpg"]];
+    } catch(err) {
+        console.error("Exception thrown", err.stack);
+    }
+    let onerr = default_onerror;
+    if(u != "")
+    {
+        onerr = function() {
+            this.src = this.src.replace(u, "");
+            this.onerror = default_onerror;
+        }
+    }
+    return [[id, "GBF/assets_en/img_low/sp/assets/summon/m/" + id + u + ".jpg", onerr]];
 }
 
 function display_weapons(id, rarity, proficiency)
 {
     if(id[2] != rarity || id[4] != proficiency) return null;
-    return [[id, "GBF/assets_en/img_low/sp/assets/weapon/m/"+id+".jpg"]];
+    return [[id, "GBF/assets_en/img_low/sp/assets/weapon/m/"+id+".jpg", default_onerror]];
 }
 
 function display_mc(id, unusedA = null, unusedB = null)
 {
-    return [[id, "GBF/assets_en/img_low/sp/assets/leader/m/" + id + "_01.jpg"]];
+    return [[id, "GBF/assets_en/img_low/sp/assets/leader/m/" + id + "_01.jpg", default_onerror]];
 }
 
 function display_enemies(id, unusedA = null, unusedB = null)
 {
-    return [[id, "GBF/assets_en/img/sp/assets/enemy/s/" + id + ".png"]];
+    return [[id, "GBF/assets_en/img/sp/assets/enemy/s/" + id + ".png", default_onerror]];
 }
 
 function display_backgrounds(id, key, unused = null)
@@ -963,9 +988,13 @@ function display_backgrounds(id, key, unused = null)
             break;
     };
     let ret = [];
+    let onerr = function()
+    {
+        this.remove();
+    };
     for(let i of index['background'][id][0])
     {
-        ret.push([i, "GBF/assets_en/img_low/" + path[0] + i + path[1]]);
+        ret.push([i, "GBF/assets_en/img_low/" + path[0] + i + path[1], onerr]);
     }
     return ret;
 }
