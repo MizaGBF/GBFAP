@@ -970,7 +970,7 @@ class Updater():
                     case "_02":
                         uns = ["_02"]
                     case "_01":
-                        uns = ["_01"]
+                        uns = ["_01", ""]
                 calls = []
                 for i in sid:
                     for un in uns:
