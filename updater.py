@@ -582,7 +582,8 @@ class Updater():
             "400101": ["nir_kt"], # 2B skin
             "150401": ["omj_kn", "omj_kt"], # onmyoji
             "470301": ["sld_ax", "sld_gu"], # shieldsworn
-            "311301": ["unf_sw"] # gw
+            "311301": ["unf_sw"], # gw
+            "311401": ["unf_sw"] # albacore
         }
         self.class_weapon = {
             "310001": "1040009100", # lord of vermillion
