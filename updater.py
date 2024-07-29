@@ -583,7 +583,7 @@ class Updater():
             "150401": ["omj_kn", "omj_kt"], # onmyoji
             "470301": ["sld_ax", "sld_gu"], # shieldsworn
             "311301": ["unf_sw"], # gw
-            "311401": ["unf_sw"] # albacore
+            "311401": ["alb_sw"] # albacore
         }
         self.class_weapon = {
             "310001": "1040009100", # lord of vermillion
@@ -600,6 +600,7 @@ class Updater():
             "311101": "1040025000", # versus rising skin
             "311201": "1040025600", # relink skin
             "311301": "1040026400", # gw skin
+            "311401": "1040026500", # albacore
             "320001": "1040115000", # school dancer
             "330001": "1040216600", # qinglong
             "340001": "1040315700", # xuanwu
