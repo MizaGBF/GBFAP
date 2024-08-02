@@ -85,7 +85,7 @@ class Updater():
         "bsk_ax_{}_01", # axe
         "wrk_wa_{}_01", # staff
         "rlc_gu_{}_01", # gun
-        "rsr_me_{}_01", # melee
+        "ogr_me_{}_01", # melee
         "rbn_bw_{}_01", # bow
         "els_mc_{}_01", # harp
         "kng_kt_{}_01" # katana
