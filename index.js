@@ -629,7 +629,7 @@ function updateList(node, elems) // update a list of elements
         {
             case 3: // character, skin, ...
             {
-                let r = display_characters(e[0], [0, 1000, 0, 1000, 0, 1000]);
+                let r = ((e[0].slice(0, 3) == "371") ? display_skins(e[0], [0, 1000]) : display_characters(e[0], [0, 1000, 0, 1000, 0, 1000]));
                 if(r != null)
                 {
                     for(const el of r)
