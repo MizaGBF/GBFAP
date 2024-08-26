@@ -596,7 +596,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 }
                 me.cjsMortal.scaleX *= scaling;
                 me.cjsMortal.scaleY *= scaling;
-                console.log(me.cjsMortal.x, me.cjsMortal.y);
                 if(is_mc && mc_wpn)
                     me.cjsMortal[mortal][mortal+"_special"].gotoAndPlay("special");
                 else
