@@ -583,7 +583,8 @@ class Updater():
             "150401": ["omj_kn", "omj_kt"], # onmyoji
             "470301": ["sld_ax", "sld_gu"], # shieldsworn
             "311301": ["unf_sw"], # gw
-            "311401": ["alb_sw"] # albacore
+            "311401": ["alb_sw"], # albacore
+            "390001": ["fes_mc"] # fes
         }
         self.class_weapon = {
             "310001": "1040009100", # lord of vermillion
@@ -616,6 +617,7 @@ class Updater():
             "370701": "1040615300", # cook
             "370801": "1040616000", # belial 2
             "370901": "1040617400", # baihu
+            "390001": "1040816700", # fes
             "400001": "1040913700", # zhuque
             "400101": "1040916100" # 2B skin
         }
