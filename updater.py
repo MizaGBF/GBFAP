@@ -584,7 +584,8 @@ class Updater():
             "470301": ["sld_ax", "sld_gu"], # shieldsworn
             "311301": ["unf_sw"], # gw
             "311401": ["alb_sw"], # albacore
-            "390001": ["fes_mc"] # fes
+            "390001": ["fes_mc"], # fes
+            "160401": ["smh_me"] # sumo
         }
         self.class_weapon = {
             "310001": "1040009100", # lord of vermillion
