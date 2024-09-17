@@ -942,8 +942,20 @@ function display_summons(id, rarity, range)
     if(u != "")
     {
         onerr = function() {
-            this.src = this.src.replace(u, "");
-            this.onerror = default_onerror;
+            if(u == "_04")
+            {
+                u = "_02";
+                this.src = this.src.replace("_04", "_02");
+                this.onerror = function() {
+                    this.src = this.src.replace(u, "");
+                    this.onerror = default_onerror;
+                }
+            }
+            else
+            {
+                this.src = this.src.replace(u, "");
+                this.onerror = default_onerror;
+            }
         }
     }
     return [[id, "GBF/assets_en/img_low/sp/assets/summon/m/" + id + u + ".jpg", onerr]];
