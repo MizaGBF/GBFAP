@@ -24,7 +24,7 @@ There are two possible ways to host this project.
 2. Run `python updater.py -download` to download all the assets. (The script will ask you to confirm by typying `yes`).  
 3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
   
-Note: This method isn't fully tested, you might encounter bugs. You'll also need to run `python updater.py -download` after every update but it won't re-download what's already on disk.
+Note: This method isn't fully tested, you might encounter bugs. You'll also need to run `python updater.py -download` after every update but it won't re-download what's already on disk.  
   
 # Additional Setup  
 You can tinker with the `Game` variable around the line 80 of `index.js` if you need to change the path of asset types.  
@@ -100,6 +100,8 @@ Along with:
 * script.js (loaded in third, contains functions to load the assets)  
   
 And possibly more that I forgot.  
+  
+Finally, you can use one of the `server` scripts to start a Python HTTP Server and test the project locally in your web browser. Tweaks might be needed to make the asset fetching works.
   
 # Possible Improvements  
 * Make a HTML demo to make the project easily embeddable on any website.  
