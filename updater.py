@@ -477,6 +477,7 @@ class Updater():
         self.dl_queue = None # used for download
         self.gbfal = {} # gbfal data
         
+        self.class_ignore_alt = ["311301", "311302"]
         self.class_lookup = {
             "150201": ["dkf_sw", "dkf_kn"], # dark fencer
             "200201": ["acm_kn", "acm_gu"], # alchemist
@@ -588,7 +589,8 @@ class Updater():
             "311301": ["unf_sw"], # gw
             "311401": ["alb_sw"], # albacore
             "390001": ["fes_mc"], # fes
-            "160401": ["smh_me"] # sumo
+            "160401": ["smh_me"], # sumo
+            "311302": ["uf2_sw"] # gw
         }
         self.class_weapon = {
             "310001": "1040009100", # lord of vermillion
@@ -605,6 +607,7 @@ class Updater():
             "311101": "1040025000", # versus rising skin
             "311201": "1040025600", # relink skin
             "311301": "1040026400", # gw skin
+            "311302": "1040027900", # gw skin 2
             "311401": "1040026500", # albacore
             "320001": "1040115000", # school dancer
             "330001": "1040216600", # qinglong
@@ -787,7 +790,7 @@ class Updater():
                 if not self.debug_mode: return 0
             wid = None
             colors = []
-            for i in ["01", "02", "03", "04", "05", "80"]:
+            for i in ["01", "02", "03", "04", "05", "80"] if id not in self.class_ignore_alt else ["01"]:
                 try:
                     await self.getJS(self.class_lookup[id][0] + "_0_{}".format(i))
                     colors.append(self.class_lookup[id][0] + "_0_{}".format(i))
@@ -1456,7 +1459,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.3\n")
+                print("GBFAP updater v3.4\n")
                 start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []
