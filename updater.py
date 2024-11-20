@@ -954,7 +954,7 @@ class Updater():
         try:
             if id in self.exclusion: return 0
             # containers
-            mc_cjs = "fig_sw_0_01"
+            mc_cjs = "thi_gu_0_01"
             sid = [id]
             for k in self.SHARED_SUMMONS:
                 if id in k:
