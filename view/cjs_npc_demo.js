@@ -871,6 +871,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     link.download = 'gbfap_' + Date.now() + '.png';
                     link.click();
                     URL.revokeObjectURL(url);
+                    pushPopup("Image saved to " + link.download);
                 }, "image/png");
             }
         }
