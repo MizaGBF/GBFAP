@@ -1,5 +1,11 @@
 define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], function (cjsloader, manifestloader, cjs_npc_demo) {
     loadCJS = function (a) {
+        // hack to add summon_damage files
+        let al = a.length;
+        for(let i = 0; i < al; ++i)
+            if(a[i].startsWith("summon_") && a[i].endsWith("_attack"))
+                a.push(a[i].replace("attack", "damage"));
+        // end
         var b = $.Deferred();
         return cjsloader.once("complete", function () {
             b.resolve()
