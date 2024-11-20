@@ -1277,7 +1277,7 @@ class Updater():
                 pass
 
     async def download(self, targets : list) -> None:
-        print("Download all assets...")
+        print("Downloading all assets...")
         print("Checking directories...")
         try:
             for f in ["model/manifest", "cjs", "img/sp/cjs", "img/sp/raid/bg", "img/sp/guild/custom/bg"]:
@@ -1336,6 +1336,8 @@ class Updater():
                         if isinstance(l[4], list): # sp
                             for sp in l[4]:
                                 await self.dl_queue.put(("model/manifest/", sp+".js"))
+                                if sp.startswith("summon_") and sp.endswith("_attack"):
+                                    await self.dl_queue.put(("model/manifest/", sp.replace('attack', 'damage')+".js"))
                         else:
                             await self.dl_queue.put(("model/manifest/", l[4]+".js"))
                 # weapon
@@ -1459,7 +1461,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.4\n")
+                print("GBFAP updater v3.5\n")
                 start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []

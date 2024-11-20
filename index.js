@@ -391,7 +391,7 @@ function loadCharacter(id)
         }
         for(let d of data['v'])
         {
-            let is_old_summon = (mc_summon != null && !d[4].includes('attack'));
+            let is_old_summon = mc_summon != null && !d[4][0].includes('attack');
             AnimeData[0].push(d[0]); // name
             const p = AnimeData[1].length;
             AnimeData[1].push({});
