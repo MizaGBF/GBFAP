@@ -51,7 +51,7 @@ function setHTML()
                         <span>\
                             <label for="act-selection">Action</label><select id="act-selection" onchange="actionChange(this)"></select>\
                         </span><br>\
-                        <span class="act-element">Current frame:</span>\
+                        <span class="act-element">Loop frame:</span>\
                         <span id="act-frame" class="act-element">0</span><br>\
                         <span class="act-element">Current:</span>\
                         <span id="act-name" class="act-element"><img src="assets/ui/loading.gif"></span><br>\
@@ -227,7 +227,8 @@ function update_frame_counter()
     }
     else
     {
-        document.getElementById("act-frame").innerHTML = JSON.stringify(this.cjsViewList[animeVersion].animChanger.position);
+        if(document.getElementById("loop-btn").classList.contains('btn-enabled')) document.getElementById("act-frame").innerHTML = JSON.stringify(this.cjsViewList[animeVersion].animChanger.position);
+        else document.getElementById("act-frame").innerHTML = "Loop paused";
     }
     setTimeout(update_frame_counter, 10);
 }

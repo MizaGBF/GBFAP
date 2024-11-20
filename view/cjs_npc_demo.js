@@ -813,7 +813,6 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             }).wait(animDuration).call(function (index, p) {
                 p.loopIndex = index;
                 if(loopingState) p.nextLoop();
-                else document.getElementById("act-duration").innerHTML = "Loop paused";
             },[i, this])
         },
         nextLoop: function() {
@@ -827,7 +826,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             else
             {
                 dispatchStack[this.loopIndex] = 0;
-                if(document.getElementById("act-duration").innerHTML == "Loop paused")
+                if(document.getElementById("act-frame").innerHTML == "Loop paused")
                     this.npc.dispatchEvent(complete);
             }
         },
