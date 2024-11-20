@@ -1,7 +1,6 @@
 // constant
 const LOCAL = false; // set to true if assets are on the same machine
-//const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
-const CORS = 'http://localhost:8001/' // CORS Proxy to use (if LOCAL is true)
+const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
 const HISTORY_LENGTH = 20; // size limit of the history
 const ENDPOINTS = [ // possible asset endpoints, used for the index
     "https://prd-game-a-granbluefantasy.akamaized.net/",
