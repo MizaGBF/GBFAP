@@ -24,6 +24,8 @@ for (i in action_index) {
     action_index[i].action_label_list =Array.from(action_index[i].action_label_list)
 }
 
+setTimeout(update_frame_counter, 10);
+
 // start
 setHTML();
 
@@ -49,6 +51,8 @@ function setHTML()
                         <span>\
                             <label for="act-selection">Action</label><select id="act-selection" onchange="actionChange(this)"></select>\
                         </span><br>\
+                        <span class="act-element">Current frame:</span>\
+                        <span id="act-frame" class="act-element">0</span><br>\
                         <span class="act-element">Current:</span>\
                         <span id="act-name" class="act-element"><img src="assets/ui/loading.gif"></span><br>\
                         <span class="act-element">Duration:</span>\
@@ -213,6 +217,20 @@ function actionChange(obj)
     }
     this.cjsViewList[animeVersion].cjsNpc.children[0].dispatchEvent("animationComplete");
 };
+
+function update_frame_counter()
+{
+    let name = document.getElementById("act-name");
+    if(name == null || name.getElementsByTagName('img').length > 0)
+    {
+        // loading, do nothing
+    }
+    else
+    {
+        document.getElementById("act-frame").innerHTML = JSON.stringify(this.cjsViewList[animeVersion].animChanger.position);
+    }
+    setTimeout(update_frame_counter, 10);
+}
 
 function togglePause()
 {
