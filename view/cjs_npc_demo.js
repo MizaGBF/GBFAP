@@ -845,6 +845,34 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     this.animChanger.setPaused(this.isPaused), createjs.Ticker.addEventListener("tick", this.stage)
                 )
             );
+        },
+        nextFrame : function() {
+            if(this.isPaused)
+            {
+                this.resume(); // resume animation
+                setTimeout(this.nextFrame_wait, 1, this, this.animChanger.position); // each in 1ms if the  frame changed
+            }
+        },
+        nextFrame_wait : function(me, pos) {
+            if(pos != me.animChanger.position)
+                me.pause();
+            else
+                setTimeout(me.nextFrame_wait, 1, me, me.animChanger.position);
+        },
+        download : function() {
+            if(this.isPaused)
+            {
+                this.stage.update();
+                this.stage.canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    console.log(url);
+                    let link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'gbfap_' + Date.now() + '.png';
+                    link.click();
+                    URL.revokeObjectURL(url);
+                }, "image/png");
+            }
         }
     });
 });

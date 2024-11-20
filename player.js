@@ -59,9 +59,11 @@ function setHTML()
                         <label id="speed-label" for="speed-input" class="controls-text">100% Speed</label><br>\
                         <button class="small-button" onclick="let elem = document.getElementById(\'speed-input\'); elem.value=1; changeSpeed(elem);"><img src="assets/ui/controls/reset.png"></button>\
                         <button class="small-button" onclick="togglePause();" id="pause-btn"><img src="assets/ui/controls/pause.png"></button>\
+                        <button class="small-button" onclick="nextframe();" id="next-btn"><img src="assets/ui/controls/next.png"></button>\
                         <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
                         <button class="small-button" onclick="toggleSFX();" id="sfx-btn"><img src="assets/ui/controls/sfx.png"></button>\
                         <button class="small-button" onclick="openCustom()")"><img src="assets/ui/controls/edit.png"></button>\
+                        <button class="small-button" onclick="dlimage();" id="dl-btn"><img src="assets/ui/controls/dl.png"></button>\
                     </div>\
                     <div class="controls-outline">\
                         <span class="controls-text">Background</span><br>\
@@ -273,6 +275,24 @@ function changeSpeed(elem)
     action_speed = elem.value;
     createjs.Ticker.setFPS(30*action_speed);
     document.getElementById("speed-label").innerHTML = JSON.stringify(Math.floor(100*action_speed)) + "% Speed";
+}
+
+function nextframe()
+{
+    let name = document.getElementById("act-name");
+    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!this.cjsViewList[animeVersion].isPaused) togglePause();
+    else beep();
+    this.cjsViewList[animeVersion].nextFrame();
+}
+
+function dlimage()
+{
+    let name = document.getElementById("act-name");
+    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!this.cjsViewList[animeVersion].isPaused) togglePause();
+    else beep();
+    this.cjsViewList[animeVersion].download();
 }
 
 function versionChange(obj)
