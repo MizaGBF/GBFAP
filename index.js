@@ -399,7 +399,8 @@ function loadCharacter(id)
             if(mc_summon == null) AnimeData[1][p]['action_label_list'] = ['ability', d[2], 'stbwait', 'short_attack', 'double', 'triple']; // mortal
             else if(!is_old_summon) AnimeData[1][p]['action_label_list'] = ['summon', 'summon_atk', 'summon_dmg'];
             else AnimeData[1][p]['action_label_list'] = ['summon', 'summon_atk'];
-            AnimeData[1][p]['effect'] = [d[3]]; // phit
+            AnimeData[1][p]['effect'] = []; // phit
+            if(d[3] != null) AnimeData[1][p]['effect'].push(d[3]);
             AnimeData[1][p]['special'] = [];
             for(let sp of d[4])
             {

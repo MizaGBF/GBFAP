@@ -955,7 +955,6 @@ class Updater():
             if id in self.exclusion: return 0
             # containers
             mc_cjs = "thi_gu_0_01"
-            mc_phit = "phit_gu_0001"
             sid = [id]
             for k in self.SHARED_SUMMONS:
                 if id in k:
@@ -1013,7 +1012,7 @@ class Updater():
                         else: continue
                 uncap_data = []
                 for i, sp in enumerate(calls):
-                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), mc_cjs, '', mc_phit, [sp], ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
+                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), mc_cjs, '', None, [sp], ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
                 uncap_data.reverse()
                 character_data['v'] += uncap_data
             character_data['v'].reverse()
