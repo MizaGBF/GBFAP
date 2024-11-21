@@ -607,7 +607,7 @@ function hotfix_createjs()
     createjs_overloaded_func["init"] = window.createjs.Bitmap.prototype.initialize;
     window.createjs.Bitmap.prototype.initialize = function(image) {
         let tmp = this.sourceRect;
-        if(!LOCAL && image.crossOrigin == null) image.crossOrigin = "anonymous"; // set origin
+        if(!LOCAL && image && image.crossOrigin == null) image.crossOrigin = "anonymous"; // set origin
         createjs_overloaded_func["init"].call(this, image);
         if(tmp) this.sourceRect = tmp; // set the source rect AFTER
     };

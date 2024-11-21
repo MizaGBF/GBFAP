@@ -79,7 +79,7 @@ define(["underscore", "backbone", "util/backbone-singleton", "model/manifest-loa
                 var target = my.getLoadingTarget(files);
                 if(target)
                 {
-                    _.defaults(target, {cache: true});
+                    _.defaults(target, {loadTimeout:60000, cache: true});
                     targets.push(target);
                 }
             }));
