@@ -178,29 +178,18 @@ details[open] > .element-detail {
 
 /* Animation Player */
 
-#canvasLevel1 {
+#player-container {
     min-width: 700px;
     max-width:700px;
     margin:auto;
 }
 
-#canvasLevel2 {
-    min-width:453px;
-    max-width:453px;
+#canvas-container {
+    min-width:600px;
+    max-width:600px;
+    min-height:600px;
+    max-height:600px;
     margin:auto;
-}
-
-#canvasLevel3 {
-    width:100%;
-    max-width:calc(83vw - 72px);
-    margin:auto;
-}
-
-#animeCanvas {
-    margin:auto;
-    width:100%;
-    height:0;
-    padding-bottom:92%;
     border-color: #000000;
     border:solid;
     overflow:hidden;
@@ -213,12 +202,11 @@ details[open] > .element-detail {
     transform:translate(-50%,-50%);
     position: absolute;
     z-index:0;
-    width:calc(256vw - 218px);
     max-height:1400px;
     max-width:1400px;
 }
 
-.anime-bg
+.canvas-bg
 {
     z-index:-1;
 }
@@ -491,7 +479,6 @@ a:active {
 }
 
 /* mobile stuff */
-
 @media (hover: none) {
     body {
         font-size: 50px;
@@ -654,6 +641,7 @@ a:active {
     }
 
     .index-image {
+        min-height: 160px;
         max-height: 160px;
     }
 

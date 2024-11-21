@@ -1,74 +1,138 @@
-define(["underscore", "backbone", "util/backbone-singleton", "model/manifest-loader", "lib/common"], (function(e, t) {
-    var i = window.images = window.images || {},
-        n = {},
-        a = t.Model.extend({
-            initialize: function() {
-                this.loadQueue = new createjs.LoadQueue(!1), this.loadQueue.setMaxConnections(5), this.loadQueue.addEventListener("error", e.bind(this.handleError, this)), this.loadQueue.addEventListener("fileload", e.bind(this.handleFileLoad, this)), this.loadQueue.addEventListener("complete", e.bind(this.handleComplete, this)), window.CreateJsShell && 1 == Game.setting.cjs_mode && (this.loadQueue._progress = 1)
-            },
-            setImageAlias: function(e, t) {
-                i[t] = i[e], n[t] = n[e]
-            },
-            handleFileLoad: function(e) {
-                var t, n = e.item.id;
-                if (e.item.type === createjs.LoadQueue.IMAGE) t = e.result, i[n] = t;
-                this.trigger("fileload", e);
-                loadNow++; // increase loaded file count
-                document.getElementById('act-duration').innerHTML = "" + loadNow + " / " + loadTotal + " (" + Math.floor(100*loadNow/loadTotal) + "%)"; // update indicator
-            },
-            handleComplete: function(e) {
-                window.CreateJsShell && 1 == Game.setting.cjs_mode && (this.loadQueue._progress = 0), this.trigger("complete", e)
-            },
-            handleError: function(e) {
-                this.trigger("error", e)
-            },
-            getLoadingTarget: function(t) {
-                if (!t) return null;
-                e.isObject(t) || (t = {
-                    id: t,
-                    src: t
-                });
-                var a = t.id;
-                return e.has(i, a) && n[a] == t.src ? null : (n[a] = t.src, e.defaults({
-                    type: createjs.LoadQueue.IMAGE
-                }, t))
-            },
-            loadManifest: function(t, i, n) {
-                var a = this,
-                    o = [];
-                loadTotal = t.length; // total file to load
-                e.each(t, (function(t) {
-                    var i = a.getLoadingTarget(t);
-                    i && (e.defaults(i, {
-                        cache: !0
-                    }), o.push(i))
-                })), o = e.uniq(o), e.isEmpty(o) ? this.loadQueue.dispatchEvent("complete") : this.loadQueue.loadManifest(o, i, n)
-            },
-            loadFile: function(t, i, n) {
-                var a = this.getLoadingTarget(t);
-                a && (e.defaults(a, {
-                    cache: !0
-                }), this.loadQueue.loadFile(a, i, n))
-            },
-            load: function() {
-                this.loadQueue.load()
-            },
-            close: function() {
-                this.loadQueue.close()
-            },
-            setMaxConnections: function(e) {
-                this.loadQueue.setMaxConnections(e)
-            },
-            addEventListener: function(e, t) {
-                this.once(e, t)
-            },
-            clear: function() {
-                e.each(n, (function(e, t) {
-                    delete i[t]
-                })), n = {}
-            },
-            reset: function() {
-                this.loadQueue.reset()
+define(["underscore", "backbone", "util/backbone-singleton", "model/manifest-loader", "lib/common"], function(_, Backbone) {
+    window.images = window.images || {}; // Image cache
+    var imageSources = {}; // Tracks image source URLs
+
+    // Extend Backbone.Model to create an image loader
+    var ManifestLoader = Backbone.Model.extend({
+        initialize: function() {
+            // Create a LoadQueue for managing image loading
+            this.loadQueue = new createjs.LoadQueue(false);
+            this.loadQueue.setMaxConnections(5);
+
+            // Attach event listeners for load queue events
+            this.loadQueue.addEventListener("error", _.bind(this.handleError, this));
+            this.loadQueue.addEventListener("fileload", _.bind(this.handleFileLoad, this));
+            this.loadQueue.addEventListener("complete", _.bind(this.handleComplete, this));
+
+            // Special handling for CreateJsShell in cjs_mode
+            if (window.CreateJsShell && Game.setting.cjs_mode === 1) {
+                this.loadQueue._progress = 1;
             }
-        });
-    return a.makeSingleton(["loadFile", "loadManifest", "load", "clear", "setImageAlias", "on", "off", "once", "addEventListener", "reset"]), a
-}));
+        },
+        setImageAlias: function(originalKey, aliasKey) {
+            window.images[aliasKey] = window.images[originalKey];
+            imageSources[aliasKey] = imageSources[originalKey];
+        },
+        handleFileLoad: function(event) {
+            var fileId = event.item.id;
+
+            // If the loaded file is an image, cache it
+            if (event.item.type === createjs.Types.IMAGE) {
+                var image = event.result;
+                window.images[fileId] = image;
+            }
+
+            // Trigger "fileload" event for other components
+            this.trigger("fileload", event);
+
+            // Update loading progress (custom logic)
+            loadNow++; // Increment loaded file count
+            let actduration = document.getElementById('act-duration');
+            if(actduration)
+                actduration.innerHTML = "" + loadNow + " / " + loadTotal + " (" + Math.floor(100*loadNow/loadTotal) + "%)"; // update indicator
+        },
+        handleComplete: function(event) {
+            if(window.CreateJsShell && Game.setting.cjs_mode === 1)
+            {
+                this.loadQueue._progress = 0;
+            }
+            this.trigger("complete", event);
+        },
+        handleError: function(event) {
+            this.trigger("error", event);
+        },
+        getLoadingTarget: function(file) {
+            if (!file) return null;
+
+            // Normalize file descriptor
+            if(!_.isObject(file)) {
+                file = {id: file, src: file};
+            }
+            var fileId = file.id;
+            // Check if the file is already loaded or in progress
+            if (_.has(window.images, fileId) && imageSources[fileId] === file.src) {
+                return null;
+            }
+
+            // Track the file source and return the loading target
+            return (imageSources[fileId] = file.src, _.defaults({type:createjs.Types.IMAGE}, file));
+        },
+        loadManifest: function(files, loadSequentially, basePath) {
+            var my = this;
+            var targets = [];
+
+            // Track total files to load
+            loadTotal = files.length;
+
+            // Process each file descriptor in the manifest
+            _.each(files, (function(files) {
+                var target = my.getLoadingTarget(files);
+                if(target)
+                {
+                    _.defaults(target, {cache: true});
+                    targets.push(target);
+                }
+            }));
+            // Ensure unique targets and load them
+            targets = _.uniq(targets);
+            if (_.isEmpty(targets)) {
+                this.loadQueue.dispatchEvent("complete");
+            } else {
+                this.loadQueue.loadManifest(targets, loadSequentially, basePath);
+            }
+        },
+        loadFile: function(file, loadSequentially, basePath) {
+            var target = this.getLoadingTarget(file);
+            if(target)
+            {
+                _.defaults(target, {cache: true});
+                this.loadQueue.loadFile(target, loadSequentially, basePath);
+            }
+        },
+        load: function() {
+            this.loadQueue.load();
+        },
+        close: function() {
+            this.loadQueue.close();
+        },
+        setMaxConnections: function(maxConnections) {
+            this.loadQueue.setMaxConnections(maxConnections);
+        },
+        addEventListener: function(eventType, callback) {
+            this.once(eventType, callback);
+        },
+        clear: function() {
+            _.each(imageSources, function(_, fileId) {
+                delete window.images[fileId];
+            });
+            imageSources = {};
+        },
+        reset: function() {
+            this.loadQueue.reset();
+        },
+    });
+
+    // Make the model a singleton
+    return ManifestLoader.makeSingleton([
+        "loadFile",
+        "loadManifest",
+        "load",
+        "clear",
+        "setImageAlias",
+        "on",
+        "off",
+        "once",
+        "addEventListener",
+        "reset",
+    ]), ManifestLoader;
+});

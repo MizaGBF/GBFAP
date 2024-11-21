@@ -1,6 +1,7 @@
 // constant
 const LOCAL = false; // set to true if assets are on the same machine
-const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
+//const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
+const CORS = 'http://localhost:8001/' // CORS Proxy to use (if LOCAL is true)
 const HISTORY_LENGTH = 20; // size limit of the history
 const ENDPOINTS = [ // possible asset endpoints, used for the index
     "https://prd-game-a-granbluefantasy.akamaized.net/",
@@ -593,11 +594,24 @@ function startplayer(id)
     // enable favorite
     favButton(true, id, id.length == 7 ? 4 : id.startsWith('10') ? 1 : id.startsWith('20') ? 2 : id.startsWith('38') ? 6 : (id.startsWith('30') || id.startsWith('37') ? 3 : 0));
 
-    // load the player
-    require(["createjs"], function (b) {
-        window.createjs = b;
+    // load everything and start!
+    require(['createjs'], function() {
+        hotfix_createjs(); // apply fix (see below)
+        require(['player','lib/common', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader']);
     });
-    require(['player','lib/common', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader']);
+}
+
+// Patch for createjs 1.0
+var createjs_overloaded_func = {}
+function hotfix_createjs()
+{
+    createjs_overloaded_func["init"] = window.createjs.Bitmap.prototype.initialize;
+    window.createjs.Bitmap.prototype.initialize = function(image) {
+        let tmp = this.sourceRect;
+        if(!LOCAL && image.crossOrigin == null) image.crossOrigin = "anonymous"; // set origin
+        createjs_overloaded_func["init"].call(this, image);
+        if(tmp) this.sourceRect = tmp; // set the source rect AFTER
+    };
 }
 
 function playerFail(id)
@@ -687,7 +701,7 @@ function updateList(node, elems) // update a list of elements
 
 function setBackground(url) // change battle background
 {
-    let anibg = document.getElementById('anime-bg');
+    let anibg = document.getElementById('canvas-bg');
     if(anibg == null) return;
     anibg.innerHTML = '<img style="width:100%" src="'+url+'">'
     pushPopup("Battle background set to " + url.split('/').slice(-1));

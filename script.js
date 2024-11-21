@@ -1,28 +1,34 @@
 define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], function (cjsloader, manifestloader, cjs_npc_demo) {
-    loadCJS = function (a) {
-        // hack to add summon_damage files
-        let al = a.length;
-        for(let i = 0; i < al; ++i)
-            if(a[i].startsWith("summon_") && a[i].endsWith("_attack"))
-                a.push(a[i].replace("attack", "damage"));
-        // end
-        var b = $.Deferred();
+    loadCJS = function (fileList) {
+        // Add "summon_damage" files for corresponding "summon_attack" files.
+        let originalLength = fileList.length;
+        for (let i = 0; i < originalLength; ++i) {
+            if (fileList[i].startsWith("summon_") && fileList[i].endsWith("_attack")) {
+                fileList.push(fileList[i].replace("attack", "damage"));
+            }
+        }
+
+        var deferred = $.Deferred();
         return cjsloader.once("complete", function () {
-            b.resolve()
+            deferred.resolve()
         }),
-            cjsloader.loadFiles(a),
-            b
+            cjsloader.loadFiles(fileList),
+            deferred
     };
-    loadManifest = function (a) {
-        var b = $.Deferred()
-            , c = _.flatten(_.map(a, function (a) {
-                return cjsloader.manifest(a)
-            }))
+    loadManifest = function (fileList) {
+        var deferred = $.Deferred();
+
+        // Gather all manifest data related to the given file list.
+        var manifests = _.flatten(
+            _.map(fileList, function(fileList) { return cjsloader.manifest(fileList)})
+        );
+
+        // Modify weapon images if specific conditions are met.
         if(is_mc && mc_wpn) // set wpn
         {
             // mc only fix
             let melee = AnimeData[1][0]["cjs"][0].includes("_me_");
-            for(let e of c)
+            for(let e of manifests)
             {
                 if(melee)
                 {
@@ -35,58 +41,75 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], funct
                 }
             }
         }
-        // end
+        // Resolve and return after loading
         return (function () {}),
             manifestloader.once("complete", function () {
-                b.resolve()
+                deferred.resolve()
             }),
-            manifestloader.loadManifest(c, !0),
-            b
+            manifestloader.loadManifest(manifests, true),
+            deferred
     };
-    cjsRender = function (a) {
-        a.cjsRender()
+    cjsRender = function (view) {
+        view.cjsRender();
     };
     prepareCjs = function () {
-        var a = this
-        a.cjsViewList = new Array();
-        var c = []
-        _.each(action_index, function (b, e) {
-            b.special=Array.from(b.special);
-            var f = new cjs_npc_demo({
-                fps: 30,
-                cjsList: b.cjs,
-                cjsEffectList: b.effect,
-                cjsMortalList: b.special,
-                cjsPosList: b.cjs_pos,
-                cjsMortalPosList: b.special_pos,
-                motionList: b.action_label_list,
-                canvasSelector: ".cjs-npc-demo-" + e,
-                canvasIndex: e,
+        var my = this;
+        my.cjsViewList = []; // List of CJS views.
+        var loadFiles = []; // Aggregate list of files to load.
+
+        // Create CJS views for each action index and collect required files.
+        _.each(action_index, function(action, index) {
+            // Ensure 'special' is converted to an array.
+            action.special = Array.from(action.special);
+            // Create a new CJS NPC demo view.
+            var cjsView = new cjs_npc_demo({
+                cjsList: action.cjs,
+                cjsEffectList: action.effect,
+                cjsMortalList: action.special,
+                cjsPosList: action.cjs_pos,
+                cjsMortalPosList: action.special_pos,
+                motionList: action.action_label_list,
+                canvasSelector: ".cjs-npc-demo-" + index,
+                canvasIndex: index,
             });
-            a.cjsViewList[e] = f,
-                c = c.concat(f.getLoadFiles())
-        }),
-            c = _.uniq(c),
-            this.loadCJS(c).then(function () {
-                return a.loadManifest(c)
-            }).done(function () {
-                _.each(a.cjsViewList, function (b, e) {
-                    a.cjsRender(b)
-                    l = b.getActionList();
-                    custom_choices[e] = l.slice(0);
-                    if (e > 0) {
-                        b.pause()
+
+            // Store the view and collect its loaded files.
+            my.cjsViewList[index] = cjsView;
+            loadFiles = loadFiles.concat(cjsView.getLoadFiles());
+        });
+
+        // Ensure the file list is unique.
+        loadFiles = _.uniq(loadFiles);
+
+        // Load the CJS files and manifests sequentially.
+        this.loadCJS(loadFiles)
+        .then(function () {
+            return my.loadManifest(loadFiles);
+        })
+        .done(function () {
+            // Render each view and handle UI updates.
+            _.each(my.cjsViewList, (view, index) => {
+                my.cjsRender(view);
+                if(index != 0) view.pause(); // Pause non-default views.
+
+                // Get the list of available actions for this view.
+                let actions = view.getActionList();
+                custom_choices[index] = actions.slice();
+
+                if (index == 0)
+                {
+                    // Populate the action selection dropdown for the default view.
+                    let actionlist = '<option value="default">Demo</option>'
+                    for(let action in actions) {
+                        actionlist = actionlist.concat('<option value=' + actions[action] + '>' + view.translateAction(actions[action]) + '</option>');
                     }
-                    else
-                    {
-                        var actionlist = '<option value="default">Demo</option>'
-                        for (action in l) {
-                            actionlist = actionlist.concat('<option value=' + l[action] + '>' + b.translateAction(l[action]) + '</option>');
-                        }
-                        document.getElementById("act-selection").innerHTML = actionlist;
-                    }
-                })
-            })
-    }
-    prepareCjs()
-})
+                    document.getElementById("act-selection").innerHTML = actionlist;
+                    view.reset(); // trick, see cjs_npc_demo.js
+                }
+            });
+        });
+    };
+
+    // Initialize the preparation process.
+    prepareCjs();
+});

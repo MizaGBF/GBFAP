@@ -1,3 +1,5 @@
+// constant
+var CANVAS_SIZE = CANVAS_SIZE || "1400";
 // initialization of important variables
 var versionList=Array.from(AnimeData[0]);
 var action_speed=1;
@@ -33,14 +35,10 @@ setHTML();
 function setHTML()
 {
     let base = 
-        '<div id="canvasLevel1">\
-            <div id="canvasLevel2">\
-                <div id="canvasLevel3">\
-                    <div id="animeCanvas">\
-                        $CANVAS\
-                        <div id="anime-bg"><img class="bg" src="$BACKGROUND"></div>\
-                    </div>\
-                </div>\
+        '<div id="player-container">\
+            <div id="canvas-container">\
+                $CANVAS\
+                <div id="canvas-bg"><img class="bg" src="$BACKGROUND"></div>\
             </div>\
             <div class="controls-root">\
                 <div class="controls-part">\
@@ -61,7 +59,7 @@ function setHTML()
                     <div class="controls-outline">\
                         <input id="speed-input" type="range" min="0.05" max="2" step="0.05" value="1" oninput="changeSpeed(this);">\
                         <label id="speed-label" for="speed-input" class="controls-text">100% Speed</label><br>\
-                        <button class="small-button" onclick="let elem = document.getElementById(\'speed-input\'); elem.value=1; changeSpeed(elem);"><img src="assets/ui/controls/reset.png"></button>\
+                        <button class="small-button" onclick="let elem = document.getElementById(\'speed-input\'); elem.value=\'1\'; changeSpeed(elem);"><img src="assets/ui/controls/reset.png"></button>\
                         <button class="small-button" onclick="togglePause();" id="pause-btn"><img src="assets/ui/controls/pause.png"></button>\
                         <button class="small-button" onclick="nextframe();" id="next-btn"><img src="assets/ui/controls/next.png"></button>\
                         <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
@@ -72,11 +70,16 @@ function setHTML()
                     <div class="controls-outline">\
                         <span class="controls-text">Background</span><br>\
                         <div class="controls-bg">\
-                            <button class="bg-button" onclick="setBackground(Game.bgUri + \'img/sp/raid/bg/event_82.jpg\')"><img src="assets/ui/controls/bg_default.png"></button>\
+                            <button class="bg-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');"><img src="assets/ui/controls/bg_select.png"></button>\
+                            <button class="bg-button" onclick="setBackground(Game.bgUri + \'img/sp/raid/bg/event_82.jpg\')"><img src="assets/ui/controls/bg_default1.png"></button>\
+                            <button class="bg-button" onclick="setBackground(Game.bgUri + \'img/sp/raid/bg/common_011.jpg\')"><img src="assets/ui/controls/bg_default2.png"></button>\
+                            <button class="bg-button" onclick="setBackground(Game.bgUri + \'img/sp/raid/bg/common_025.jpg\')"><img src="assets/ui/controls/bg_default3.png"></button>\
                             <button class="bg-button" onclick="setBackground(\'./img/sp/raid/grid.jpg\')"><img src="assets/ui/controls/bg_grid.png"></button>\
                             <button class="bg-button" onclick="setBackground(\'./img/sp/raid/black.jpg\')"><img src="assets/ui/controls/bg_black.png"></button>\
                             <button class="bg-button" onclick="setBackground(\'./img/sp/raid/green.jpg\')"><img src="assets/ui/controls/bg_green.png"></button>\
-                            <button class="bg-button" onclick="openTab(\'index\'); let bgi = document.getElementById(\'background-index\'); bgi.open = true; bgi.scrollIntoView(); pushPopup(\'Select a background in the list\');"><img src="assets/ui/controls/bg_select.png"></button>\
+                            <button class="bg-button" onclick="setBackground(\'./img/sp/raid/blue.jpg\')"><img src="assets/ui/controls/bg_blue.png"></button>\
+                            <button class="bg-button" onclick="setBackground(\'./img/sp/raid/red.jpg\')"><img src="assets/ui/controls/bg_red.png"></button>\
+                            <button class="bg-button" onclick="setBackground(\'./img/sp/raid/pink.jpg\')"><img src="assets/ui/controls/bg_pink.png"></button>\
                         </div>\
                     </div>\
                 </div>\
@@ -105,9 +108,9 @@ function setHTML()
     let background = localStorage.getItem("gbfap-background");
     if(background == null) background = Game.externUri + "/img/sp/raid/bg/event_82.jpg";
     // canvas content
-    let canvasContent = '<canvas class="cjs-npc-demo cjs-npc-demo-0" width="2000" height="2000" style="display:block;"></canvas>'
+    let canvasContent = '<canvas class="cjs-npc-demo cjs-npc-demo-0" width="'+CANVAS_SIZE+'" height="'+CANVAS_SIZE+'" style="display:block;"></canvas>'
     for (var i = 1; i < versionList.length; i++)
-        canvasContent += '<canvas class="cjs-npc-demo cjs-npc-demo-' + i + '" width="2000" height="2000" style="display:none;"></canvas>';
+        canvasContent += '<canvas class="cjs-npc-demo cjs-npc-demo-' + i + '" width="'+CANVAS_SIZE+'" height="'+CANVAS_SIZE+'" style="display:none;"></canvas>';
     // version list
     let versions = ''
     if(versionList.length > 1)
@@ -121,19 +124,21 @@ function setHTML()
     document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvasContent).replace('$VERSIONS', versions)
     canvas = document.querySelector('.cjs-npc-demo-0');
     // set focus
-    document.getElementById("animeCanvas").scrollIntoView();
+    document.getElementById("canvas-container").scrollIntoView();
 }
 
 function openCustom()
 {
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
-    if(document.getElementById("custom-action").style.display == null) return;
+    let cact = document.getElementById("custom-action");
+    if(cact.style.display == "") return;
     beep();
-    document.getElementById("custom-action").style.display = null;
+    cact.style.display = "";
+    let actions = this.cjsViewList[animeVersion].getActionList();
     let actionlist = ""
     for(action in custom_choices[animeVersion]) {
-        actionlist = actionlist.concat('<option value=' + l[action] + '>' + this.cjsViewList[animeVersion].translateAction(l[action]) + '</option>');
+        actionlist = actionlist.concat('<option value=' + actions[action] + '>' + this.cjsViewList[animeVersion].translateAction(actions[action]) + '</option>');
     }
     document.getElementById("custom-selection").innerHTML = actionlist;
     if(demo_list == null) // init
@@ -233,6 +238,82 @@ function update_frame_counter()
     setTimeout(update_frame_counter, 10);
 }
 
+function spacekey_fix(event) // disabled scrolling when pressing space bar
+{
+    if(event.code == "Space" && event.target == document.body) event.preventDefault();
+}
+document.addEventListener("keydown", spacekey_fix);
+
+function keybind_listener(event)
+{
+    let name = document.getElementById("act-name");
+    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    // return until loading is complete
+    
+    switch(event.code)
+    {
+        case "KeyR": // speed reset
+        {
+            let elem = document.getElementById('speed-input');
+            elem.value="1";
+            changeSpeed(elem);
+            return;
+        }
+        case "NumpadAdd": // speed up
+        {
+            let elem = document.getElementById('speed-input');
+            elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
+            changeSpeed(elem);
+            return;
+        }
+        case "NumpadSubstract": // speed down
+        {
+            let elem = document.getElementById('speed-input');
+            elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
+            changeSpeed(elem);
+            return;
+        }
+        case "Space": // pause toggle
+            if(document.activeElement.id && document.activeElement.id.includes("-btn")) return; // weird case where the user has a button focused and is pressing space
+            togglePause();
+            return;
+        case "KeyL": // loop toggle
+            toggleLoop();
+            return;
+        case "KeyS": // sfx toggle
+            toggleSFX();
+            return;
+        case "KeyC": // open custom playlist
+            openCustom();
+            return;
+        case "KeyF": // frame advance
+            nextframe();
+            return;
+        case "KeyD": // download canvas
+            download();
+            return;
+    }
+    // fallbacks for non qwerty keyboards and lack of numpads
+    switch(event.key)
+    {
+        case "+": // speed up
+        {
+            let elem = document.getElementById('speed-input');
+            elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
+            changeSpeed(elem);
+            return;
+        }
+        case "-": // speed down
+        {
+            let elem = document.getElementById('speed-input');
+            elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
+            changeSpeed(elem);
+            return;
+        }
+    }
+}
+document.addEventListener("keyup", keybind_listener);
+
 function togglePause()
 {
     let name = document.getElementById("act-name");
@@ -267,6 +348,7 @@ function toggleLoop()
         loopingState = true;
         this.cjsViewList[animeVersion].nextLoop();
     }
+    this.cjsViewList[animeVersion].loopPaused = !loopingState;
 }
 
 function toggleSFX()
@@ -291,8 +373,8 @@ function changeSpeed(elem)
 {
     let name = document.getElementById("act-name");
     if(name == null || name.getElementsByTagName('img').length > 0) return;
-    action_speed = elem.value;
-    createjs.Ticker.setFPS(30*action_speed);
+    action_speed = parseFloat(elem.value);
+    createjs.Ticker.framerate = 30*action_speed;
     document.getElementById("speed-label").innerHTML = JSON.stringify(Math.floor(100*action_speed)) + "% Speed";
 }
 

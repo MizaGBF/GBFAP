@@ -1,32 +1,33 @@
 define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
-    let canvasSize = 2000;
-    let realSize = 1400;
-    let windowSize = 453;
-    canvasSize /= 2;
-    let posFix = canvasSize - canvasSize / realSize * windowSize;
-    const npcOffset = {
-        x: is_enemy ? (-180 + canvasSize) : (140 + canvasSize),
-        y: is_enemy ? (310 + canvasSize) : (60 + canvasSize)
+    // settings you can edit:
+    var CANVAS_SIZE = CANVAS_SIZE || "1400"; // 1400px. The syntax is because player.js also needs it, so it might be declared here first, depending on race conditions.
+    const WINDOWSIZE = 600; // Window size on the page. Must match what's defined in style.css, at #canvas-container
+    const SUMMON_FULLSCREEN_SCALING = 0.9; // Additional scaling for fullscreen summon animations
+    // end
+    let realSize = 1400; // default expected size
+    let scaling = CANVAS_SIZE / realSize;
+    let center = CANVAS_SIZE / 2;
+    const npcOffset = { // position of the element
+        x: Math.floor(is_enemy ? center - WINDOWSIZE * 0.35 * scaling : center + WINDOWSIZE * 0.25 * scaling),
+        y: Math.floor(is_enemy ? center + WINDOWSIZE * 0.55 * scaling : center + WINDOWSIZE * 0.15 * scaling)
     };
-    const enemyOffset = {
-        x: is_enemy ? (180 + canvasSize) : (-140 + canvasSize),
-        y: is_enemy ? (170 + canvasSize) : (95 + canvasSize)
+    const enemyOffset = { // position where the element will target its attacks
+        x: Math.floor(is_enemy ? center + WINDOWSIZE * 0.25 * scaling : center - WINDOWSIZE * 0.20 * scaling),
+        y: Math.floor(is_enemy ? center + WINDOWSIZE * 0.40 * scaling : center + WINDOWSIZE * 0.30 * scaling)
     };
-    const bgOffset = {
-        x: 50 + posFix,
-        y: 50 + posFix
+    const fullscreenOffset = { // position of fullscreen animations
+        x: Math.floor(center + WINDOWSIZE * (-1 + 0.45) / scaling), // a tiny bit on the left of the top left corner
+        y: Math.floor(center + WINDOWSIZE * (-1 + 0.45) / scaling)
     };
+    const OUGIOFFSET = Math.floor(0.15 * WINDOWSIZE / scaling); // Y offset for some ougi effects
     const complete = "animationComplete";
     const atkIndex = 6;
-    const atkOffset = 52;
-    const ougiOffset = 138;
-    const scaling = .86;
-    const stageIndex = {
+    const stageZIndex = { // like the name implies, z_index constant used for elements. Higher = Above. In the current version, mostly used for to put elements above or under background ougi effects.
         BG: 0,
         ENEMY: 1,
         CHARACTER: 2
     };
-    const animations = {
+    const animations = { // constant associated with in-game strings. Non exhaustive.
         WAIT: "wait",
         WAIT_2: "wait_2",
         WAIT_3: "wait_3",
@@ -37,8 +38,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         CHARA_OUT: "chara_out",
         ABILITY: "ability",
         ABILITY_WAIT: "ability_wait",
-        SUMMON_ATTACK: "summon_atk", // special for summon use
-        SUMMON_DAMAGE: "summon_dmg", // special for summon use
+        SUMMON_ATTACK: "summon_atk", // doesn't exist in-game, special for summon use
+        SUMMON_DAMAGE: "summon_dmg", // doesn't exist in-game, special for summon use
         MORTAL: "mortal",
         MORTAL_A: "mortal_A",
         MORTAL_A_1: "mortal_A_1",
@@ -94,6 +95,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         DAMAGE_4: "damage_4",
         DAMAGE_5: "damage_5",
         WIN: "win",
+        WIN1: "win1",
+        WIN2: "win2",
         INVISIBLE: "invisible",
         HIDE: "hide",
         DOWN: "down",
@@ -208,19 +211,18 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         LINK_FORM_CHANGE: "form_change_link",
         LINK_FORM_CHANGE_2: "form_change_link_2"
     };
-    const aniState = {
+    const aniState = { // mostly used for double/triple attacks
         WAIT: 10,
         STB_WAIT: 10,
         ABILITY: 30,
         COMBO_PROCESS: 10
     };
-    const targets = {
+    const targets = { // for attack targets
         PLAYER: "player",
         ENEMY: "boss",
         THEM: "them"
     };
-    return cjsview.extend({
-        fps: 30,
+    return cjsview.extend({ // START/ENTRY POINT
         cjsList: null,
         cjsEffectList: null,
         cjsMortalList: null,
@@ -236,6 +238,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         cjsEffect: null,
         cjsMortal: null,
         isPaused: false,
+        loopPaused: false,
         motionList: null,
         motionListIndex: 0,
         isFullScreenMortal: false,
@@ -244,33 +247,32 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         damageTarget: null,
         loopIndex: null,
         npc: null,
-        initialize: function (a) {
+        initialize: function(params) // constructor
+        {
+            params = params || {};
             content.prototype._destroyStage(this.stage);
             this.stage = null;
             this.currentIndex = 0;
             this.cjsNpc = null;
             this.cjsEffect = null;
             this.cjsMortal = null;
-            this.isPaused = false;
             this.motionListIndex = 0;
             this.isFullScreenMortal = false;
             this.isFixedPosOwnerBG = false;
             this.animChanger = null;
-            a = a || {};
-            this.cjsList = a.cjsList || [];
-            this.cjsEffectList = a.cjsEffectList || [];
-            this.cjsMortalList = a.cjsMortalList || [];
-            this.cjsPosList = a.cjsPosList || [];
-            this.cjsMortalPosList = a.cjsMortalPosList || [];
-            action_list.motionList = a.motionList;
-            this.canvasSelector = a.canvasSelector;
-            this.canvasIndex = a.canvasIndex;
-            this.fps = +a.fps || this.fps;
-            for (var c = this.cjsMortalList.length, d = 0; c > d; d++)
+            this.cjsList = params.cjsList || [];
+            this.cjsEffectList = params.cjsEffectList || [];
+            this.cjsMortalList = params.cjsMortalList || [];
+            this.cjsPosList = params.cjsPosList || [];
+            this.cjsMortalPosList = params.cjsMortalPosList || [];
+            action_list.motionList = params.motionList;
+            this.canvasSelector = params.canvasSelector;
+            this.canvasIndex = params.canvasIndex;
+            for(var c = this.cjsMortalList.length, d = 0; c > d; d++) // iterate over ougis in reverse order
             {
                 var e = this.cjsMortalList[d]
                     , f = this.cjsMortalPosList[d];
-                if (e.random) {
+                if(e.random) {
                     for (var g = _.clone(e.list), h = _.clone(f), i = [], j = g.length, k = 0; j > k; k++)
                         i[k] = k;
                     for (i = _.shuffle(i),
@@ -279,19 +281,20 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                             f[k] = h[i[k]]
                 }
             }
-            this.canvas = document.querySelector(this.canvasSelector),
-                this.updateCjsParams(this.currentIndex)
+            this.canvas = document.querySelector(this.canvasSelector);
+            this.updateCjsParams(this.currentIndex);
         },
-        getLoadFiles: function () {
-            var a = _.flatten([this.cjsList, this.cjsEffectList]);
-            return _.each(this.cjsMortalList, function (b) {
-                _.each(b.list, function (b) {
-                    a.push(b.cjs)
+        getLoadFiles: function () { // file loader
+            var files = _.flatten([this.cjsList, this.cjsEffectList]);
+            return _.each(this.cjsMortalList, function (mortal) {
+                _.each(mortal.list, function (mortal) {
+                    files.push(mortal.cjs)
                 })
             }),
-            a;
+            files;
         },
-        cjsRender: function () {
+        cjsRender: function () { // used at the start
+            createjs.Ticker.framerate = 30; // init fps
             this.stage = new createjs.Stage(this.canvas);
             this.cjsNpc = this.generateCjsNpc(this.cjsNameNpc);
             this.cjsNpc.scaleX = scaling;
@@ -299,15 +302,17 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             this.stage.addChild(this.cjsNpc);
             this.startAnim(this.cjsNpc, action_list.motionList[this.motionListIndex]);
             this.stage.update();
-            this.isPaused ? this.pause(true) : createjs.Ticker.addEventListener("tick", this.stage);
-            createjs.Ticker.setFPS(this.fps);
+            this.isPaused ? this.pause() : createjs.Ticker.addEventListener("tick", this.stage);
         },
-        getActionList: function() {
-            if(mc_summon != null)
+        getActionList: function() { // return the list of animations/actions
+            if(this.motionList != null) return this.motionList;
+            if(mc_summon != null) // special exception for summons
             {
                 if(this.cjsMortalList.length >= 1 && this.cjsMortalList[0].list.length >= 1 && this.cjsMortalList[0].list[0].cjs.includes("_attack"))
-                    return ["summon", "summon_atk", "summon_dmg"];
-                return ["summon", "summon_atk"];
+                    this.motionList = ["summon", "summon_atk", "summon_dmg"]; // add damage if file includes _attack
+                else
+                    this.motionList = ["summon", "summon_atk"];
+                return this.motionList;
             }
             let demoList=[];
             let otherList=[];
@@ -336,7 +341,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 this.motionList.push(dic[k]);
             return this.motionList;
         },
-        translateAction: function(action) {
+        translateAction: function(action) { // translate action/animation to more humanly readable names. Unofficial/Made up and Non exhaustive.
             switch(action)
             {
                 case animations.WAIT: return "Idle";
@@ -408,6 +413,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.DAMAGE_4: return "Damaged D";
                 case animations.DAMAGE_5: return "Damaged E";
                 case animations.WIN: return "Win";
+                case animations.WIN1: return "Win 1";
+                case animations.WIN2: return "Win 2";
                 case 'win_1': return "Win Alt. 1";
                 case 'win_2': return "Win Alt. 2";
                 case 'win_3': return "Win Alt. 3";
@@ -533,7 +540,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 default: return "??? (" + action + ")";
             };
         },
-        generateCjsNpc: function(npc)
+        generateCjsNpc: function(npc) // create element
         {
             let elem = new lib[npc];
             return elem.name = npc,
@@ -543,7 +550,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             elem.scaleY *= scaling,
             elem
         },
-        updateCjsParams: function(index)
+        updateCjsParams: function(index) // update element
         {
             this.cjsNameNpc = this.cjsList[0];
             this.cjsNameEffect = this.cjsEffectList[0];
@@ -562,9 +569,9 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 };
             }
         },
-        startAnim: function(elem, motion)
+        startAnim: function(elem, motion) // start given animation (called motion)
         {
-            function addOugi(mortal)
+            function addOugi(mortal) // ougi animations (characters or enemies)
             {
                 me.cjsMortal = new lib[mortal];
                 me.stage.addChild(me.cjsMortal);
@@ -572,28 +579,31 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 {
                     me.cjsMortal.x = enemyOffset.x;;
                     me.cjsMortal.y = enemyOffset.y;
-                    me.stage.setChildIndex(me.cjsMortal, stageIndex.CHARACTER);
+                    me.stage.setChildIndex(me.cjsMortal, stageZIndex.CHARACTER);
                 }
                 else
                 {
                     if(me.isFullScreenMortal)
                     {
-                        me.cjsMortal.x = bgOffset.x;
-                        me.cjsMortal.y = bgOffset.y;
+                    me.cjsMortal.x = fullscreenOffset.x / SUMMON_FULLSCREEN_SCALING;
+                    me.cjsMortal.y = fullscreenOffset.y / SUMMON_FULLSCREEN_SCALING;
+                    
+                    me.cjsMortal.scaleX *= SUMMON_FULLSCREEN_SCALING;
+                    me.cjsMortal.scaleY *= SUMMON_FULLSCREEN_SCALING;
                     }
                     else
                     {
-                        if(me.isFixedPosOwnerBG)
+                        if(me.isFixedPosOwnerBG) // kinda unused ?
                         {
-                            me.cjsMortal.x = bgOffset.x;
-                            me.cjsMortal.y = bgOffset.y;
-                            me.stage.setChildIndex(me.cjsMortal, stageIndex.CHARACTER);
+                            me.cjsMortal.x = fullscreenOffset.x;
+                            me.cjsMortal.y = fullscreenOffset.y;
+                            me.stage.setChildIndex(me.cjsMortal, stageZIndex.CHARACTER);
                         }
                         else
                         {
                             me.cjsMortal.x = enemyOffset.x;
-                            me.cjsMortal.y = enemyOffset.y + ougiOffset;
-                            me.stage.setChildIndex(me.cjsMortal, stageIndex.BG);
+                            me.cjsMortal.y = enemyOffset.y + OUGIOFFSET; // add an offset
+                            me.stage.setChildIndex(me.cjsMortal, stageZIndex.BG);
                         }
                     }
                     me.cjsMortal.x += me.cjsMortalPos.x;
@@ -606,28 +616,31 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 else
                     me.cjsMortal[mortal].gotoAndPlay("special");
             }
-            function addSummon(mortal)
+            function addSummon(mortal) // summon animations (based on the ougi code)
             {
                 me.cjsMortal = new lib[mortal];
                 me.stage.addChild(me.cjsMortal);
                 if(me.isFullScreenMortal)
                 {
-                    me.cjsMortal.x = bgOffset.x;
-                    me.cjsMortal.y = bgOffset.y;
+                    // apply SUMMON_FULLSCREEN_SCALING here
+                    me.cjsMortal.x = fullscreenOffset.x / SUMMON_FULLSCREEN_SCALING;
+                    me.cjsMortal.y = fullscreenOffset.y / SUMMON_FULLSCREEN_SCALING;
+                    me.cjsMortal.scaleX *= SUMMON_FULLSCREEN_SCALING;
+                    me.cjsMortal.scaleY *= SUMMON_FULLSCREEN_SCALING;
                 }
                 else
                 {
-                    if(me.isFixedPosOwnerBG)
+                    if(me.isFixedPosOwnerBG) // kinda unused
                     {
-                        me.cjsMortal.x = bgOffset.x;
-                        me.cjsMortal.y = bgOffset.y;
-                        me.stage.setChildIndex(me.cjsMortal, stageIndex.CHARACTER);
+                        me.cjsMortal.x = fullscreenOffset.x;
+                        me.cjsMortal.y = fullscreenOffset.y;
+                        me.stage.setChildIndex(me.cjsMortal, stageZIndex.CHARACTER);
                     }
                     else
                     {
                         me.cjsMortal.x = enemyOffset.x;
-                        me.cjsMortal.y = enemyOffset.y + ougiOffset;
-                        me.stage.setChildIndex(me.cjsMortal, stageIndex.CHARACTER);
+                        me.cjsMortal.y = enemyOffset.y + OUGIOFFSET;
+                        me.stage.setChildIndex(me.cjsMortal, stageZIndex.CHARACTER);
                     }
                 }
                 me.cjsMortal.x += me.cjsMortalPos.x;
@@ -646,17 +659,16 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     }
                     return 0;
                 }
-                //me.cjsMortal[mortal][mortal].gotoAndPlay(mortal.includes('attack') ? 'attack' : 'damage'); // not needed?
                 return me.getAnimDuration(me.cjsMortal[mortal][mortal]);
             }
-            function addAtkEffect(elem) {
+            function addAtkEffect(elem) { // add auto attack effect (phit file)
                 let atk = new lib[elem];
                 atk.x = enemyOffset.x,
-                atk.y = enemyOffset.y + atkOffset,
+                atk.y = enemyOffset.y,
                 atk.scaleX *= scaling,
                 atk.scaleY *= scaling,
                 me.stage.addChild(atk),
-                me.stage.setChildIndex(atk, stageIndex.CHARACTER),
+                me.stage.setChildIndex(atk, stageZIndex.CHARACTER),
                 atk[elem].gotoAndPlay(atkIndex);
                 let duration = me.getAnimDuration(atk[elem][elem + "_effect"]);
                 createjs.Tween.get(atk, {
@@ -665,7 +677,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     me.stage.removeChild(atk)
                 })
             }
-            function toggleForm() {
+            function toggleForm() { // form change animations
                 me.currentIndex++;
                 if(me.currentIndex >= me.cjsList.length)
                     me.currentIndex = 0;
@@ -675,28 +687,26 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 me.cjsNpc = me.generateCjsNpc(me.cjsNameNpc);
                 me.stage.addChild(me.cjsNpc);
             }
-            function nextMotion() {
+            function nextMotion() { // for double/triple attack
                 let a = me.motionListIndex + 1;
                 if(a >= action_list.motionList.length)
                     a = 0;
                 return action_list.motionList[a]
             }
-            function ougiCompleted(a) {
-                a.target.removeEventListener(complete, ougiCompleted);
-                removeOugi();
-            }
-            function removeOugi() {
-                if(me.stage && me.cjsMortal)
+            function animationCompleted(event) { // when the animation is complete
+                event.target.removeEventListener(complete, animationCompleted);
+                if(me.stage && me.cjsMortal) // remove ougi
                 {
                     me.stage.removeChild(me.cjsMortal);
                     me.cjsMortal = null;
                 }
+                // start next
                 me.motionListIndex++;
                 if(me.motionListIndex >= action_list.motionList.length)
                     me.motionListIndex = 0;
                 me.startAnim(elem, action_list.motionList[me.motionListIndex]);
             }
-            // start
+            // main code
             if (!elem instanceof createjs.MovieClip)
                 return null;
             this.loopIndex = null;
@@ -744,7 +754,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.MORTAL_K:
                 case animations.MORTAL_K_1:
                 case animations.MORTAL_K_2:
-                {
+                { // ougi call
                     this.currentIndex = motion.split('_')[1].charCodeAt()-65;
                     if(this.currentIndex >= this.cjsMortalList.length)
                         this.currentIndex=0;
@@ -759,9 +769,9 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]) + ((is_mc && mc_wpn) ? this.getAnimDuration(this.cjsMortal[this.cjsNameMortal][this.cjsNameMortal+"_special"]) : 0);
                     break;
                 }
-                case animations.SUMMON_ATTACK: // summon hack
-                case animations.SUMMON_DAMAGE: // summon hack
-                {
+                case animations.SUMMON_ATTACK:
+                case animations.SUMMON_DAMAGE:
+                { // summon call
                     this.currentIndex = 0;
                     this.damageTarget = this.cjsMortalList[this.currentIndex].list[0].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
                     this.updateCjsParams(this.currentIndex);
@@ -775,7 +785,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.ATTACK_QUADRUPLE:
                 case animations.SPECIAL_ATTACK:
                 case animations.ENEMY_ATTACK:
-                {
+                { // attack (single/double/triple/quad/etc...)
                     this.damageTarget = targets.ENEMY;
                     addAtkEffect(this.cjsNameEffect);
                     let nmotion = nextMotion();
@@ -785,22 +795,29 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 case animations.CHANGE:
                 case animations.CHANGE_FROM:
                 case animations.CHANGE_FROM_2:
-                {
+                { // form change
                     toggleForm();
                     elem = this.cjsNpc;
                     this.npc = elem[this.cjsNameNpc];
                     animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
                 }
             }
-            if (document.getElementById("act-name").innerHTML != this.translateAction(motion)) {
-                document.getElementById("act-name").innerHTML = this.translateAction(motion);
+            // update animation name on the page
+            let actname = document.getElementById("act-name");
+            if(actname && actname.innerHTML != this.translateAction(motion)) {
+                actname.innerHTML = this.translateAction(motion);
             };
+            // update animation duration on the page
+            let actduration = document.getElementById("act-duration");
             let newDuration=(animDuration / 30).toFixed(2) + 's'; // duration in second
-            if (document.getElementById("act-duration").innerHTML != newDuration) // update if needed
-                document.getElementById("act-duration").innerHTML = newDuration;
-            this.npc.addEventListener(complete, ougiCompleted);
+            if(actduration && actduration.innerHTML != newDuration)
+                actduration.innerHTML = newDuration;
+            // set listener
+            this.npc.addEventListener(complete, animationCompleted);
+            // play animation
             if(motion != animations.SUMMON_ATTACK && motion != animations.SUMMON_DAMAGE) // hack to avoid MC moving during summoning
                 this.npc.gotoAndPlay(motion);
+            // handle dispatch stack
             flag = true
             for (i = 0; i < dispatchStack.length; i++) {
                 if (dispatchStack[i] == 0) {
@@ -812,6 +829,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             if (flag) {
                 dispatchStack[i] = _.max(dispatchStack) + 1
             };
+            // update anim changer
             this.animChanger = createjs.Tween.get(this.stage, {
                 useTicks: true,
                 override: true
@@ -819,8 +837,9 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 p.loopIndex = index;
                 if(loopingState) p.nextLoop();
             },[i, this])
+            if(this.isPaused) this.animChanger.paused = true;
         },
-        nextLoop: function() {
+        nextLoop: function() { // switch to next animation loop (if enabled)
             if(this.loopIndex == null)
                 return;
             if(dispatchStack[this.loopIndex] == _.max(dispatchStack))
@@ -831,45 +850,48 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             else
             {
                 dispatchStack[this.loopIndex] = 0;
-                if(document.getElementById("act-frame").innerHTML == "Loop paused")
+                if(this.loopPaused)
                     this.npc.dispatchEvent(complete);
             }
         },
-        getAnimDuration: function(elem) {
+        getAnimDuration: function(elem) { // return an animation duration (in frames)
             return !elem instanceof createjs.MovieClip ? null : (elem.timeline.duration ? +elem.timeline.duration : +elem.timeline.Id); // last if check might not be needed
         },
-        pause: function (a) { // pause
-            (a || !this.isPaused) &&
-            (this.isPaused = true, this.stage && createjs.Ticker.removeEventListener("tick", this.stage), this.animChanger && this.animChanger.setPaused(this.isPaused));
+        pause: function () { // pause the animation (by stopping the ticker)
+            if(!this.isPaused)
+            {
+                this.isPaused = true;
+                createjs.Ticker.removeEventListener("tick", this.stage);
+                if(this.animChanger) this.animChanger.paused = true;
+            }
         },
-        resume: function () { // resume
-            this.isPaused &&
-            (this.isPaused = false, this.stage && this.stage.canvas &&
-                (this.stage.update(), this.animChanger &&
-                    this.animChanger.setPaused(this.isPaused), createjs.Ticker.addEventListener("tick", this.stage)
-                )
-            );
+        resume: function () { // resume the animation (by restarting the ticker)
+            if(this.isPaused)
+            {
+                this.isPaused = false;
+                createjs.Ticker.addEventListener("tick", this.stage);
+                if(this.animChanger) this.animChanger.paused = false;
+            }
         },
-        nextFrame : function() {
+        nextFrame : function() { // play the animation until the next frame. Must be paused beforehand.
             if(this.isPaused)
             {
                 this.resume(); // resume animation
                 setTimeout(this.nextFrame_wait, 1, this, this.animChanger.position); // each in 1ms if the  frame changed
             }
         },
-        nextFrame_wait : function(me, pos) {
+        nextFrame_wait : function(me, pos) { // subroutine of nextFrame, called every millisecond
             if(pos != me.animChanger.position)
                 me.pause();
             else
                 setTimeout(me.nextFrame_wait, 1, me, me.animChanger.position);
         },
-        download : function() {
+        download : function() { // update the animation and download the canvas content. Must be paused beforehand.
             if(this.isPaused)
             {
                 this.stage.update();
                 this.stage.canvas.toBlob((blob) => {
                     const url = URL.createObjectURL(blob);
-                    console.log(url);
                     let link = document.createElement('a');
                     link.href = url;
                     link.download = 'gbfap_' + Date.now() + '.png';
@@ -878,6 +900,11 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     pushPopup("Image saved to " + link.download);
                 }, "image/png");
             }
+        },
+        reset : function() { // restart the current animation
+            // used as a workaround for a weird bug causing images to not display on the first animation played.
+            this.motionListIndex--;
+            this.npc.dispatchEvent(complete);
         }
     });
 });

@@ -1,87 +1,174 @@
-define(["jquery", "underscore", "backbone", "model/manifest-loader", "util/backbone-singleton"], (function(e, n, t, i) {
-    var r = window.lib = window.lib || {},
-        o = {},
-        a = {},
-        c = {},
-        u = {},
-        f = "cjs/",
-        s = Game.xjsUri + "/" + "model/manifest/",
-        l = t.Model.extend({
-            loadFiles: function(t, l) {
-                var d = this,
-                    m = new e.Deferred,
-                    v = n.reject(t, (function(e) {
-                        return n.has(o, e) || n.has(a, e)
-                    }));
-                n.each(v, (function(e) {
-                    a[e] = 1
-                })), v = n.unique(n.sortBy(v));
-                var h = function() {
-                    m.resolve();
-                    var e = n.difference(n.union(t, n.keys(a)), n.keys(o));
-                    n.isEmpty(e) ? d.trigger("complete") : 1 === Game.isSandbox && d.trigger("failed", e)
-                };
-                if (n.isEmpty(v)) h();
-                else {
-                    var p = new e.Deferred,
-                        j = new createjs.LoadQueue(!1, Game.jsUri + "/", !0);
-                    j.setMaxConnections(5), j.on("complete", (function() {
-                        p.resolve()
-                    })), j.on("fileload", (function(e) {
-                        if (e.item) {
-                            var t = e.item.id;
-                            if (t) {
-                                var i = n.last(t.split("/"));
-                                r[i].prototype.playFunc = function(e) {
-                                    createjs.Tween.get().wait(1).call(e)
-                                }, o[i] = i, c[t] = r[i]
-                            }
-                        }
-                    })), j.on("error", (function(e) {
-                        p.reject()
-                    }));
-                    var w = n.map(v, (function(e) {
-                        var n = f + e;
-                        return {
-                            id: n,
-                            src: n + ".js",
-                            type: createjs.LoadQueue.JAVASCRIPT,
-                            cache: !0
-                        }
-                    }));
-                    j.loadManifest(w);
-                    var y = new e.Deferred,
-                        g = [],
-                        b = v.length || n.size(v),
-                        q = 0;
-                    n.each(v, (function(e) {
-                        var n = s + e;
-                        require([n], (function(e) {
-                            u[n] = e.prototype.defaults.manifest, l && u[n].length > 0 && (g = g.concat(u[n])), q++, b === q && (g.length > 0 ? (i.once("complete", (function() {
-                                y.resolve()
-                            })), i.loadManifest(g, !0)) : y.resolve())
-                        }), (function(e) {}))
-                    })), e.when(p, y).always((function() {
-                        h()
-                    }))
+define(["jquery", "underscore", "backbone", "model/manifest-loader", "util/backbone-singleton"], function($, _, Backbone, ManifestLoader) {
+    // Set up global objects and paths
+    window.lib = window.lib || {};
+    var loadedScripts = {};
+    var loadingScripts = {};
+    var scriptCache = {};
+    var manifestCache = {};
+    var commonScriptPath = "cjs/";
+    var manifestPath = Game.xjsUri + "/model/manifest/";
+
+    // Extend Backbone.Model with asset loading functionality
+    var CJSLoader = Backbone.Model.extend({
+        loadFiles: function(files, callback) {
+            var my = this;
+            var deferred = new $.Deferred();
+
+            // Filter out already loaded or loading files
+            var newFiles = _.reject(files, function(file) {
+                return _.has(loadedScripts, file) || _.has(loadingScripts, file);
+            });
+
+            // Mark these files as being loaded
+            _.each(newFiles, function(file) {
+                loadingScripts[file] = true;
+            });
+
+            // Deduplicate and sort the new files
+            newFiles = _.unique(_.sortBy(newFiles));
+
+            // Helper function to finalize the process
+            var finalize = function() {
+                deferred.resolve();
+                var failedFiles = _.difference(
+                    _.union(files, _.keys(loadingScripts)),
+                    _.keys(loadedScripts)
+                );
+                if (_.isEmpty(failedFiles)) {
+                    my.trigger("complete");
+                } else if (Game.isSandbox === 1) {
+                    my.trigger("failed", failedFiles);
                 }
-                return m
-            },
-            cjs: function(e) {
-                return e ? c[f + e] : n.values(c)
-            },
-            manifest: function(e) {
-                return e ? u[s + e] : n.values(u)
-            },
-            clear: function() {
-                n.each(n.keys(requirejs.s.contexts._.defined), (function(e) {
-                    0 == e.indexOf("") && (require.undef(e), delete r[e])
-                })), n.each(c, (function(e, n) {
-                    require.undef(n), delete r[n]
-                })), n.each(u, (function(e, n) {
-                    require.undef(n), delete r[n]
-                })), o = {}, a = {}, c = {}, u = {}, i.clear()
+            };
+
+            // If there are no new files to load, finish immediately
+            if (_.isEmpty(newFiles)) {
+                finalize();
+            } else {
+                // Load assets
+                var queueDeferred = new $.Deferred();
+                var loadQueue = new createjs.LoadQueue(false, Game.jsUri + "/", true);
+                loadQueue.setMaxConnections(5);
+
+                loadQueue.on("complete", function() {
+                    queueDeferred.resolve();
+                });
+
+                loadQueue.on("fileload", function(event) {
+                    if (event.item) {
+                        var id = event.item.id;
+                        if (id) {
+                            var fileName = _.last(id.split("/"));
+                            window.lib[fileName].prototype.playFunc = function(callback) {
+                                createjs.Tween.get().wait(1).call(callback);
+                            };
+                            loadedScripts[fileName] = fileName;
+                            scriptCache[id] = window.lib[fileName];
+                        }
+                    }
+                });
+
+                loadQueue.on("error", function() {
+                    queueDeferred.reject();
+                });
+
+                // Prepare manifest for loading
+                var manifest = _.map(newFiles, function(file) {
+                    var path = commonScriptPath + file;
+                    return {
+                        id: path,
+                        src: path + ".js",
+                        type: createjs.Types.JAVASCRIPT,
+                        cache: true,
+                    };
+                });
+                loadQueue.loadManifest(manifest);
+
+                // Load dependent manifests
+                var manifestDeferred = new $.Deferred();
+                var allManifests = [];
+                var totalFiles = newFiles.length;
+                var loadedCount = 0;
+
+                _.each(newFiles, function(file) {
+                    var scriptPath = manifestPath + file + ".js";
+                    require(
+                        [scriptPath],
+                        function(module) {
+                            manifestCache[scriptPath] = module.prototype.defaults.manifest;
+                            if (callback && manifestCache[scriptPath].length > 0) {
+                                allManifests = allManifests.concat(manifestCache[scriptPath]);
+                            }
+                            loadedCount++;
+                            if (loadedCount === totalFiles) {
+                                if (allManifests.length > 0) {
+                                    ManifestLoader.once("complete", function() {
+                                        manifestDeferred.resolve();
+                                    });
+                                    ManifestLoader.loadManifest(allManifests, true);
+                                } else {
+                                    manifestDeferred.resolve();
+                                }
+                            }
+                        },
+                        function() {
+                            // Handle errors in require.js
+                        }
+                    );
+                });
+                // When all loading is done, finalize
+                $.when(queueDeferred, manifestDeferred).always(function() {
+                    finalize();
+                });
             }
-        });
-    return l.makeSingleton(["loadFiles", "cjs", "manifest", "clear", "on", "off", "once"]), l
-}));
+            return deferred;
+        },
+
+        // Get cached CommonJS scripts
+        cjs: function(file) {
+            return file ? scriptCache[commonScriptPath + file] : _.values(scriptCache);
+        },
+
+        // Get cached manifests
+        manifest: function(file) {
+            return file ? manifestCache[manifestPath + file + ".js"] : _.values(manifestCache);
+        },
+
+        // Clear all caches
+        clear: function() {
+            _.each(_.keys(requirejs.s.contexts._.defined), function(key) {
+                if (key.startsWith("")) {
+                    require.undef(key);
+                    delete window.lib[key];
+                }
+            });
+
+            _.each(scriptCache, function(value, key) {
+                require.undef(key);
+                delete window.lib[key];
+            });
+
+            _.each(manifestCache, function(value, key) {
+                require.undef(key);
+                delete window.lib[key];
+            });
+
+            loadedScripts = {};
+            loadingScripts = {};
+            scriptCache = {};
+            manifestCache = {};
+            ManifestLoader.clear();
+        },
+    });
+
+    // Make the model a singleton
+    return CJSLoader.makeSingleton([
+        "loadFiles",
+        "cjs",
+        "manifest",
+        "clear",
+        "on",
+        "off",
+        "once",
+    ]), CJSLoader;
+});

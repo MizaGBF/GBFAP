@@ -14,7 +14,7 @@ There are two possible ways to host this project.
   
 ### First, as it's currently is:
 1. Copy this repo.  
-2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF.  
+2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF. I have one for that purpose [here](https://github.com/MizaGBF/GBFCP).  
 3. Change line 3 of `index.js` with the address of your proxy.  
 4. **If needed**, change line 98 of `index.js` (`testUri`) to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code. The corresponding asset is present in the `assets/folder` if needed.  
   
@@ -82,28 +82,31 @@ This is due to the fact the game doesn't support two different weapons loaded at
 There are other weird exceptions that I probably forgot, I recommend trying to read the code for more infos.  
   
 # Additional Notes  
+### Download  
 Downloaded assets are saved in the following folders:  
 * Manifests in model/manifest/
 * CJS in cjs/
 * Sheets in img/sp/cjs/
   
-The following files are modified/customized:  
-* view/cjs_npc_demo.js (has been mostly deobfuscated and heavily modified)  
-* model/cjs-loader.js (added some customization related to file paths)  
-* model/manifest-loader.js (the loading indicator is updated here)  
-* lib/sound.js (to play SFX)  
-* lib/raid/extension.js (mostly empty, it serves as a placeholder)  
-  
-Along with:  
+### Main files  
 * index.js (the page main script)  
 * player.js (loaded in second, add the player to the HTML)  
-* script.js (loaded in third, contains functions to load the assets)  
+* script.js (loaded in third, this is where asset loading starts)  
   
-And possibly more that I forgot.  
+### Changing the canvas/window size  
+Values must be changed at the top, in the following files:
+* player.js  
+* view/cjs_npc_demo.js  
   
-Finally, you can use one of the `server` scripts to start a Python HTTP Server and test the project locally in your web browser. Tweaks might be needed to make the asset fetching works.
+### createjs patch  
+The project uses a more recent version of createjs and must be hotfixed to work with GBF animation files.  
+It can be found in `index.js`, look for `hotfix_createjs`.  
   
-# Possible Improvements  
-* Make a HTML demo to make the project easily embeddable on any website.  
-* Reverse engineer GBF's `lib/raid/extension.js` to make the player more faithful to in-game raid animations.  
+### Cross-Origin  
+When fetching assets from an external source, the Cross-Origin must be set in `hotfix_createjs` (see above).  
+It's automatically set if you set `const LOCAL = false;` `in index.js` (see at the top of this readme for details).  
+  
+### Others
+You can use one of the `server` scripts to start a Python HTTP Server and test the project locally in your web browser. Tweaks might be needed to make the asset fetching works.
+  
   
