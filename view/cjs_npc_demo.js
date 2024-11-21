@@ -303,7 +303,12 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             createjs.Ticker.setFPS(this.fps);
         },
         getActionList: function() {
-            if(mc_summon != null) return this.cjsMortalList.length == 2 ? ["summon", "summon_atk", "summon_dmg"] : ["summon", "summon_atk"]; // change list for summons
+            if(mc_summon != null)
+            {
+                if(this.cjsMortalList.length >= 1 && this.cjsMortalList[0].list.length >= 1 && this.cjsMortalList[0].list[0].cjs.includes("_attack"))
+                    return ["summon", "summon_atk", "summon_dmg"];
+                return ["summon", "summon_atk"];
+            }
             let demoList=[];
             let otherList=[];
             let len=this.cjsNpc['name'].length;
