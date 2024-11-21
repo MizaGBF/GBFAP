@@ -290,7 +290,7 @@ function keybind_listener(event)
             nextframe();
             return;
         case "KeyD": // download canvas
-            download();
+            dlimage();
             return;
     }
     // fallbacks for non qwerty keyboards and lack of numpads
