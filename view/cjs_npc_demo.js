@@ -892,12 +892,15 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             {
                 try
                 {
-                    let url = this.stage.toDataURL("image/png");
-                    let link = document.createElement('a');
-                    link.href = url;
-                    link.download = 'gbfap_' + Date.now() + '.png';
-                    link.click();
-                    pushPopup("Image saved as " + link.download);
+                    this.stage.canvas.toBlob((blob) => {
+                        const url = URL.createObjectURL(blob);
+                        let link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'gbfap_' + Date.now() + '.png';
+                        link.click();
+                        URL.revokeObjectURL(url);
+                        pushPopup("Image saved as " + link.download);
+                    }, "image/png");
                 }
                 catch(err) // error handling
                 {
