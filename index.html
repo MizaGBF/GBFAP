@@ -87,6 +87,17 @@
         </p>
         <h3>&#x2022; The resulting image from the download button is weird...</h3>
         <p>The download button saves the whole canvas, including what's "off-screen". This is the same result as when doing Right Click > Save as.</p>
+        <h3>&#x2022; The video files from the Record feature don't have duration metadatas.</h3>
+        <p>A weird quirk from the MediaRecorder API, as far as I know.<br>It makes impossible to post the resulting files on some websites.<br>If you have access to ffmpeg, here's commands to convert them quickly:<br>
+            <ul>
+                <li><b>Twitter/X:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libx264 -b:v 20M -crf 1 -c:a aac -b:a 128k -threads 2 output_file.mp4</li>
+                <li><b>4chan:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libvpx-vp9 -b:v 8M -an -threads 2 output_file.webm</li>
+            </ul>
+            Adjust bitrates/etc... to fit your needs.<br>
+            Contact me if you have more commands to suggest to add to this list.
+        </p>
+        <h3>&#x2022; The Download and Recording features don't work on Firefox!</h3>
+        <p>Nothing I can do about it, currently.<br>Pull Requests are open if you have a magic solution!</p>
         <h3>&#x2022; Class Champion weapons seem to be bugged</h3>
         <p>For those weapon series, and similar other series, use the first version of the weapon (usually the Fire one) to view the full animations.</p>
         <h3>&#x2022; Restrictions</h3>

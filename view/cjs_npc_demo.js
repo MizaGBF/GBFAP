@@ -878,26 +878,31 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             if(this.isPaused)
             {
                 this.resume(); // resume animation
-                setTimeout(this.nextFrame_wait, 1, this, this.animChanger.position); // each in 1ms if the  frame changed
+                setTimeout(this.nextFrame_wait, 2, this, this.animChanger.position); // check in 2ms if the  frame changed
             }
         },
         nextFrame_wait : function(me, pos) { // subroutine of nextFrame, called every millisecond
             if(pos != me.animChanger.position)
                 me.pause();
             else
-                setTimeout(me.nextFrame_wait, 1, me, me.animChanger.position);
+                setTimeout(me.nextFrame_wait, 2, me, me.animChanger.position);
         },
         download : function() { // update the animation and download the canvas content. Must be paused beforehand.
             if(this.isPaused)
             {
-                let url = this.stage.toDataURL("image/png");
-                if(url)
+                try
                 {
+                    let url = this.stage.toDataURL("image/png");
                     let link = document.createElement('a');
                     link.href = url;
                     link.download = 'gbfap_' + Date.now() + '.png';
                     link.click();
                     pushPopup("Image saved as " + link.download);
+                }
+                catch(err) // error handling
+                {
+                    console.error("Exception thrown", err.stack);
+                    pushPopup("An error occured. This feature might be unavailable on your device/browser.");
                 }
             }
         },
@@ -934,15 +939,18 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     this.recording.stream = this.recording.canvas.captureStream(0);
                     // create and set media recorder
                     this.recording.rec = new MediaRecorder(this.recording.stream, {mimeType: this.recording.mimetype, videoBitsPerSecond:50*1024*1024}); // 50mbps
-                    this.recording.rec.ondataavailable = e => this.recording.chunks.push(e.data);
+                    this.recording.rec.ondataavailable = e => {
+                        if(e.data)
+                            this.recording.chunks.push(e.data);
+                    }
                     const myself = this;
-                    this.recording.rec.onstop = e => function() {
+                    this.recording.rec.onstop = e => {
                         if(!myself.recording.error)
                         {
                             myself.download_video(new Blob(myself.recording.chunks, {type: myself.recording.mimetype}), myself.recording.extension);
                         }
                         myself.recording = null;
-                    }();
+                    };
                     // start (using 1s chunks)
                     this.recording.rec.start(1);
                     // note current position
@@ -951,7 +959,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     pushPopup("Creating the video, be patient...");
                     // resume animation and wait next frame
                     this.resume();
-                    setTimeout(this.record_next_frame, 1, this.recording);
+                    setTimeout(this.record_next_frame, 3, this.recording);
                 }
                 catch(err) // error handling
                 {
@@ -982,7 +990,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     recording.frames++;
                     recording.this.resume(); // resume animation
                 }
-                setTimeout(recording.this.record_next_frame, 1, recording); // wait next frame
+                setTimeout(recording.this.record_next_frame, 3, recording); // wait next frame
             }
             catch(err) // error handling
             {
