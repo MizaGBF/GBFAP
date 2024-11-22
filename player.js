@@ -164,7 +164,7 @@ function playCustom()
 {
     closeCustom();
     action_list.motionList = demo_list[animeVersion].slice(0);
-    pushPopup("Now playing your set of animation");
+    pushPopup("Now playing your set of animations");
     this.cjsViewList[animeVersion].reset();
 }
 
