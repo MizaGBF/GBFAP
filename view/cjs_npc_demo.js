@@ -933,7 +933,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     // set to 0 fps to disable automatic capture
                     this.recording.stream = this.recording.canvas.captureStream(0);
                     // create and set media recorder
-                    this.recording.rec = new MediaRecorder(this.recording.stream, {mimeType: this.recording.mimetype, videoBitsPerSecond:50*1024*1024, videoKeyFrameIntervalDuration: 1}); // 50mbps
+                    this.recording.rec = new MediaRecorder(this.recording.stream, {mimeType: this.recording.mimetype, videoBitsPerSecond:50*1024*1024}); // 50mbps
                     this.recording.rec.ondataavailable = e => this.recording.chunks.push(e.data);
                     const myself = this;
                     this.recording.rec.onstop = e => function() {
