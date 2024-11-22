@@ -59,13 +59,14 @@ function setHTML()
                     <div class="controls-outline">\
                         <input id="speed-input" type="range" min="0.05" max="2" step="0.05" value="1" oninput="changeSpeed(this);">\
                         <label id="speed-label" for="speed-input" class="controls-text">100% Speed</label><br>\
-                        <button class="small-button" onclick="let elem = document.getElementById(\'speed-input\'); elem.value=\'1\'; changeSpeed(elem);"><img src="assets/ui/controls/reset.png"></button>\
+                        <button class="small-button" onclick="resetSpeed();"><img src="assets/ui/controls/reset.png"></button>\
                         <button class="small-button" onclick="togglePause();" id="pause-btn"><img src="assets/ui/controls/pause.png"></button>\
                         <button class="small-button" onclick="nextframe();" id="next-btn"><img src="assets/ui/controls/next.png"></button>\
                         <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
                         <button class="small-button" onclick="toggleSFX();" id="sfx-btn"><img src="assets/ui/controls/sfx.png"></button>\
                         <button class="small-button" onclick="openCustom()")"><img src="assets/ui/controls/edit.png"></button>\
                         <button class="small-button" onclick="dlimage();" id="dl-btn"><img src="assets/ui/controls/dl.png"></button>\
+                        <button class="small-button" onclick="record();" id="record-btn"><img src="assets/ui/controls/record.png"></button>\
                     </div>\
                     <div class="controls-outline">\
                         <span class="controls-text">Background</span><br>\
@@ -127,10 +128,19 @@ function setHTML()
     document.getElementById("canvas-container").scrollIntoView();
 }
 
+function canInteract()
+{
+    // check if it loaded
+    let name = document.getElementById("act-name");
+    if(name == null || name.getElementsByTagName('img').length > 0) return false;
+    // check if it's recording
+    if(this.cjsViewList[animeVersion].recording != null) return false;
+    return true;
+}
+
 function openCustom()
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract()) return;
     let cact = document.getElementById("custom-action");
     if(cact.style.display == "") return;
     beep();
@@ -208,8 +218,7 @@ function updateDemoList()
 
 function actionChange(obj)
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract()) return;
     beep();
     var action = obj.options[obj.selectedIndex].value;
     if (action == 'default')
@@ -246,17 +255,12 @@ document.addEventListener("keydown", spacekey_fix);
 
 function keybind_listener(event)
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
-    // return until loading is complete
-    
+    if(!canInteract()) return;
     switch(event.code)
     {
         case "KeyR": // speed reset
         {
-            let elem = document.getElementById('speed-input');
-            elem.value="1";
-            changeSpeed(elem);
+            resetSpeed();
             return;
         }
         case "NumpadAdd": // speed up
@@ -316,8 +320,7 @@ document.addEventListener("keyup", keybind_listener);
 
 function togglePause()
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract()) return;
     beep();
     if(this.cjsViewList[animeVersion].isPaused)
     {
@@ -333,8 +336,7 @@ function togglePause()
 
 function toggleLoop()
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract()) return;
     beep();
     let loop_btn = document.getElementById("loop-btn");
     if(loop_btn.classList.contains('btn-enabled'))
@@ -351,10 +353,21 @@ function toggleLoop()
     this.cjsViewList[animeVersion].loopPaused = !loopingState;
 }
 
+function enableLoop()
+{
+    let loop_btn = document.getElementById("loop-btn");
+    if(!loop_btn.classList.contains('btn-enabled'))
+    {
+        loop_btn.classList.add("btn-enabled");
+        loopingState = true;
+        this.cjsViewList[animeVersion].nextLoop();
+        this.cjsViewList[animeVersion].loopPaused = !loopingState;
+    }
+}
+
 function toggleSFX()
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract()) return;
     beep();
     let sfx_btn = document.getElementById("sfx-btn");
     if(sfx_btn.classList.contains('btn-enabled'))
@@ -371,17 +384,26 @@ function toggleSFX()
 
 function changeSpeed(elem)
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract())
+    {
+        elem.value = JSON.stringify(action_speed);
+        return;
+    }
     action_speed = parseFloat(elem.value);
     createjs.Ticker.framerate = 30*action_speed;
     document.getElementById("speed-label").innerHTML = JSON.stringify(Math.floor(100*action_speed)) + "% Speed";
 }
 
+function resetSpeed()
+{
+    let elem = document.getElementById('speed-input');
+    elem.value='1';
+    changeSpeed(elem);
+}
+
 function nextframe()
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract()) return;
     if(!this.cjsViewList[animeVersion].isPaused) togglePause();
     else beep();
     this.cjsViewList[animeVersion].nextFrame();
@@ -389,17 +411,26 @@ function nextframe()
 
 function dlimage()
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract()) return;
     if(!this.cjsViewList[animeVersion].isPaused) togglePause();
     else beep();
     this.cjsViewList[animeVersion].download();
 }
 
+function record()
+{
+    if(!canInteract()) return;
+    if(!this.cjsViewList[animeVersion].isPaused) togglePause();
+    else beep();
+    resetSpeed();
+    enableLoop();
+    // start recording
+    this.cjsViewList[animeVersion].record();
+}
+
 function versionChange(obj)
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return;
+    if(!canInteract()) return;
     beep();
 
     animeVersion = obj.options[obj.selectedIndex].value;
