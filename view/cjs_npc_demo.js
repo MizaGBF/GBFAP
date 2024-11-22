@@ -956,7 +956,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     // note current position
                     this.recording.position = this.animChanger.position;
                     // send popup to user
-                    pushPopup("Creating the video, be patient...");
+                    pushPopup("Generating the video, be patient...");
                     // resume animation and wait next frame
                     this.resume();
                     setTimeout(this.record_next_frame, 3, this.recording);
