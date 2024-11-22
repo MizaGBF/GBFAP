@@ -1002,7 +1002,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             URL.revokeObjectURL(url);
         },
         reset : function() { // restart the current animation list
-            // used as a workaround for a weird bug causing images to not display on the first animation played.
+            // also used as a workaround for a weird bug causing images to not display on the first animation played.
             this.motionListIndex = -1;
             this.npc.dispatchEvent(complete);
         }
