@@ -907,8 +907,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 try
                 {
                     let mimetype = null;
-                    // list of format/codecs we are trying. H264 has the priority.
-                    for(let m of ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm;codecs=h264", "video/webm", "video/mp4"])
+                    // list of format/codecs we are trying.
+                    for(let m of ["video/webm;codecs=vp8", "video/webm;codecs=h264", "video/webm", "video/mp4"])
                     {
                         if(MediaRecorder.isTypeSupported(m))
                         {
