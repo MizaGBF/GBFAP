@@ -906,10 +906,25 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             {
                 try
                 {
+                    let mimetype = null;
+                    // list of format/codecs we are trying. H264 has the priority.
+                    for(let m of ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm;codecs=h264", "video/webm", "video/mp4"])
+                    {
+                        if(MediaRecorder.isTypeSupported(m))
+                        {
+                            mimetype = m;
+                            break;
+                        }
+                    }
+                    if(mimetype == null)
+                    {
+                        pushPopup("This feature isn't supported on your device/browser.");
+                        return;
+                    }
                     // restart current animation
                     this.reset(); 
                     // container
-                    this.recording = {this: this, position: 0, frames: 0, canvas: null, ctx: null, stream: null, rec: null, chunks: []};
+                    this.recording = {this: this, position: 0, frames: 0, canvas: null, ctx: null, stream: null, rec: null, chunks: [], mimetype: mimetype, extension: mimetype.split(';')[0].split('/')[1], error: false};
                     // create a canvas on which we'll draw
                     this.recording.canvas = document.createElement("canvas");
                     this.recording.canvas.width = WINDOWSIZE;
@@ -918,18 +933,14 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     // set to 0 fps to disable automatic capture
                     this.recording.stream = this.recording.canvas.captureStream(0);
                     // create and set media recorder
-                    this.recording.rec = new MediaRecorder(this.recording.stream, {videoBitsPerSecond:50*1024*1024}); // 50mbps
+                    this.recording.rec = new MediaRecorder(this.recording.stream, {mimeType: this.recording.mimetype, videoBitsPerSecond:50*1024*1024, videoKeyFrameIntervalDuration: 1}); // 50mbps
                     this.recording.rec.ondataavailable = e => this.recording.chunks.push(e.data);
                     const myself = this;
                     this.recording.rec.onstop = e => function() {
-                        let blob = new Blob(myself.recording.chunks, {type: 'video/webm'});
-                        let url = URL.createObjectURL(blob);
-                        let link = document.createElement('a');
-                        link.href = url;
-                        link.download = 'gbfap_' + Date.now() + '.webm';
-                        link.click();
-                        pushPopup("Video saved as " + link.download);
-                        URL.revokeObjectURL(url)
+                        if(!myself.recording.error)
+                        {
+                            myself.download_video(new Blob(myself.recording.chunks, {type: myself.recording.mimetype}), myself.recording.extension);
+                        }
                         myself.recording = null;
                     }();
                     // start (using 1s chunks)
@@ -944,34 +955,55 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 }
                 catch(err) // error handling
                 {
+                    this.recording.error = true;
                     this.recording = null;
                     this.pause();
                     console.error("Exception thrown", err.stack);
-                    pushPopup("An error occured. This feature might be unavailable on your device.");
+                    pushPopup("An error occured. This feature might be unavailable on your device/browser.");
                 }
             }
         },
         record_next_frame : function(recording) { // on next frame
-            if(recording.position != recording.this.animChanger.position) // check if the frame changed
+            try
             {
-                recording.position = recording.this.animChanger.position; // update position
-                recording.this.pause(); // pause animation
-                if(recording.this.animChanger.position == 0 && recording.frames > 0) // check if we did a whole loop
+                if(recording.position != recording.this.animChanger.position) // check if the frame changed
                 {
-                    recording.rec.stop(); // stop if so
-                    return;
+                    recording.position = recording.this.animChanger.position; // update position
+                    recording.this.pause(); // pause animation
+                    recording.ctx.clearRect(0,0,WINDOWSIZE,WINDOWSIZE); // clear canvas
+                    recording.ctx.drawImage(recording.this.stage.canvas,(CANVAS_SIZE-WINDOWSIZE)/2,(CANVAS_SIZE-WINDOWSIZE)/2,WINDOWSIZE,WINDOWSIZE,0,0,WINDOWSIZE,WINDOWSIZE); // crop stage canvas to our canvas 
+                    recording.stream.getVideoTracks()[0].requestFrame(); // request frame
+                    if(recording.this.motionListIndex == 0 && recording.this.animChanger.position == 0 && recording.frames > 0) // check if we did a whole loop
+                    {
+                        recording.frames++;
+                        recording.rec.stop(); // and stop if so
+                        return;
+                    }
+                    recording.frames++;
+                    recording.this.resume(); // resume animation
                 }
-                recording.ctx.clearRect(0,0,WINDOWSIZE,WINDOWSIZE); // clear canvas
-                recording.ctx.drawImage(recording.this.stage.canvas,(CANVAS_SIZE-WINDOWSIZE)/2,(CANVAS_SIZE-WINDOWSIZE)/2,WINDOWSIZE,WINDOWSIZE,0,0,WINDOWSIZE,WINDOWSIZE); // crop stage canvas to our canvas 
-                recording.stream.getVideoTracks()[0].requestFrame(); // request frame
-                recording.frames++;
-                recording.this.resume(); // resume animation
+                setTimeout(recording.this.record_next_frame, 1, recording); // wait next frame
             }
-            setTimeout(recording.this.record_next_frame, 1, recording); // wait next frame
+            catch(err) // error handling
+            {
+                recording.error = true;
+                recording.rec.stop();
+                console.error("Exception thrown", err.stack);
+                pushPopup("An error occured. This feature might be unavailable on your device/browser.");
+            }
         },
-        reset : function() { // restart the current animation
+        download_video : function(blob, extension) { // download video blob
+            let url = URL.createObjectURL(blob);
+            let link = document.createElement('a');
+            link.href = url;
+            link.download = 'gbfap_' + Date.now() + '.' + extension;
+            link.click();
+            pushPopup("Video saved as " + link.download);
+            URL.revokeObjectURL(url);
+        },
+        reset : function() { // restart the current animation list
             // used as a workaround for a weird bug causing images to not display on the first animation played.
-            this.motionListIndex--;
+            this.motionListIndex = -1;
             this.npc.dispatchEvent(complete);
         }
     });
