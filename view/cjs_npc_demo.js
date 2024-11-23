@@ -930,9 +930,9 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                         return;
                     }
                     // restart current animation
-                    this.reset(); 
+                    this.reset();
                     // container
-                    this.recording = {this: this, position: 0, frames: 0, canvas: null, ctx: null, stream: null, rec: null, chunks: [], mimetype: mimetype, extension: mimetype.split(';')[0].split('/')[1], error: false};
+                    this.recording = {this: this, position: -1, frames: 0, canvas: null, ctx: null, stream: null, rec: null, chunks: [], mimetype: mimetype, extension: mimetype.split(';')[0].split('/')[1], error: false};
                     // create a canvas on which we'll draw
                     this.recording.canvas = document.createElement("canvas");
                     this.recording.canvas.width = WINDOWSIZE;
@@ -958,11 +958,11 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     this.recording.rec.start(1);
                     // note current position
                     this.recording.position = this.animChanger.position;
+                    //this.stage.update();
                     // send popup to user
                     pushPopup("Generating the video, be patient...");
-                    // resume animation and wait next frame
-                    this.resume();
-                    setTimeout(this.record_next_frame, 3, this.recording);
+                    // capture next frame
+                    this.record_next_frame(this.recording);
                 }
                 catch(err) // error handling
                 {
@@ -977,19 +977,19 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         record_next_frame : function(recording) { // on next frame
             try
             {
-                if(recording.position != recording.this.animChanger.position) // check if the frame changed
+                if((recording.position == 0 && recording.frames == 0) || (recording.position != recording.this.animChanger.position)) // check if it's the first frame or if the frame changed
                 {
                     recording.position = recording.this.animChanger.position; // update position
                     recording.this.pause(); // pause animation
+                    if(recording.this.motionListIndex == 0 && recording.this.animChanger.position == 0 && recording.frames > 0) // check if we did a whole loop
+                    {
+                        pushPopup("Finalizing...");
+                        setTimeout(recording.this.record_end, 1000, recording); // introducing a delay to let MediaRecorder finishes what it's doing or frames might be missing
+                        return;
+                    }
                     recording.ctx.clearRect(0,0,WINDOWSIZE,WINDOWSIZE); // clear canvas
                     recording.ctx.drawImage(recording.this.stage.canvas,(CANVAS_SIZE-WINDOWSIZE)/2,(CANVAS_SIZE-WINDOWSIZE)/2,WINDOWSIZE,WINDOWSIZE,0,0,WINDOWSIZE,WINDOWSIZE); // crop stage canvas to our canvas 
                     recording.stream.getVideoTracks()[0].requestFrame(); // request frame
-                    if(recording.this.motionListIndex == 0 && recording.this.animChanger.position == 0 && recording.frames > 0) // check if we did a whole loop
-                    {
-                        recording.frames++;
-                        recording.rec.stop(); // and stop if so
-                        return;
-                    }
                     recording.frames++;
                     recording.this.resume(); // resume animation
                 }
@@ -1002,6 +1002,9 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 console.error("Exception thrown", err.stack);
                 pushPopup("An error occured. This feature might be unavailable on your device/browser.");
             }
+        },
+        record_end : function(recording) {
+            recording.rec.stop();
         },
         download_video : function(blob, extension) { // download video blob
             let url = URL.createObjectURL(blob);
