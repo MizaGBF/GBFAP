@@ -611,6 +611,10 @@ function hotfix_createjs()
         createjs_overloaded_func["init"].call(this, image);
         if(tmp) this.sourceRect = tmp; // set the source rect AFTER
     };
+    
+    window.createjs.DisplayObject.prototype.getStage = function() {
+        return cjsViewList[animeVersion].stage;
+    }
 }
 
 function playerFail(id)
