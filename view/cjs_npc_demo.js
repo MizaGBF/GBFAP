@@ -1,4 +1,4 @@
-define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
+define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _) {
     // settings you can edit:
     var CANVAS_SIZE = CANVAS_SIZE || "1400"; // 1400px. The syntax is because player.js also needs it, so it might be declared here first, depending on race conditions.
     const WINDOWSIZE = 600; // Window size on the page. Must match what's defined in style.css, at #canvas-container
@@ -1038,6 +1038,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             this.tweenElements = [];
             this.childTweens = [];
             this.stage.update();
+            if(window.soundPlayer) window.soundPlayer.clearAll();
             this.motionListIndex = -1;
             this.npc.dispatchEvent(complete);
         }

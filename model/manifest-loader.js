@@ -1,4 +1,4 @@
-define(["underscore", "backbone", "util/backbone-singleton", "model/manifest-loader", "lib/common"], function(_, Backbone) {
+define(["underscore", "backbone", "util/backbone-singleton", "model/manifest-loader"], function(_, Backbone) {
     window.images = window.images || {}; // Image cache
     var imageSources = {}; // Tracks image source URLs
 

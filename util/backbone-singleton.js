@@ -1,21 +1,47 @@
-define(["underscore", "backbone"], (function(n, t) {
-    var e = function(t, e) {
-        return e = e || n.reject(n.keys(t.prototype), (function(n) {
-            return "_" == n[0]
-        })), t.prototype.constructor = function() {
-            return t._instance ? t._instance : (t._instance = this, t.prototype.constructor.apply(this, arguments))
-        }, t.getInstance = function() {
-            return this._instance = this._instance || new t, this._instance
-        }, n.each(e, (function(n) {
-            t[n] = function() {
-                var e = t.getInstance();
-                return e[n].apply(e, arguments)
+define(["underscore", "backbone"], function(_, Backbone) {
+    // Helper function to enforce singleton behavior
+    var makeSingleton = function(Class, methodNames) {
+        // Derive methodNames if not provided, excluding private methods
+        methodNames = methodNames || _.reject(_.keys(Class.prototype), function(key) {
+            return key.startsWith("_"); // Exclude methods starting with '_'
+        });
+
+        // Modify the constructor to implement the singleton pattern
+        Class.prototype.constructor = function() {
+            if (!Class._instance) {
+                Class._instance = this; // Save the instance
+                // Call the original constructor logic
+                Class.prototype.constructor.apply(this, arguments);
             }
-        })), t
+            return Class._instance; // Return the singleton instance
+        };
+
+        // Add a static method to get the singleton instance
+        Class.getInstance = function() {
+            if (!this._instance) {
+                this._instance = new Class(); // Create a new instance if it doesn't exist
+            }
+            return this._instance;
+        };
+
+        // Create static wrappers for each method in methodNames
+        _.each(methodNames, function(methodName) {
+            Class[methodName] = function() {
+                var instance = Class.getInstance(); // Get the singleton instance
+                return instance[methodName].apply(instance, arguments); // Call the instance method
+            };
+        });
+
+        return Class; // Return the modified class
     };
-    return t.Model.makeSingleton = function(n) {
-        e(this, n)
-    }, {
-        makeSingleton: e
-    }
-}));
+
+    // Add a `makeSingleton` method to Backbone.Model
+    Backbone.Model.makeSingleton = function(methodNames) {
+        makeSingleton(this, methodNames);
+    };
+
+    // Export the makeSingleton function for reuse
+    return {
+        makeSingleton: makeSingleton
+    };
+});

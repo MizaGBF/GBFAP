@@ -221,6 +221,7 @@ function actionChange(obj)
 {
     if(!canInteract()) return;
     beep();
+    if(window.soundPlayer) window.soundPlayer.clearAll();
     var action = obj.options[obj.selectedIndex].value;
     if (action == 'default')
     {
@@ -326,11 +327,13 @@ function togglePause()
     if(this.cjsViewList[animeVersion].isPaused)
     {
         document.getElementById("pause-btn").classList.remove("btn-paused");
+        if(window.soundPlayer) window.soundPlayer.resumeAll();
         this.cjsViewList[animeVersion].resume();
     }
     else
     {
         document.getElementById("pause-btn").classList.add("btn-paused");
+        if(window.soundPlayer) window.soundPlayer.pauseAll();
         this.cjsViewList[animeVersion].pause();
     }
 }
@@ -381,6 +384,7 @@ function toggleSFX()
         sfx_btn.classList.add("btn-enabled");
         sfxState = true;
     }
+    if(window.soundPlayer) window.soundPlayer.enableAll(sfxState);
 }
 
 function changeSpeed(elem)
@@ -391,6 +395,7 @@ function changeSpeed(elem)
         return;
     }
     action_speed = parseFloat(elem.value);
+    if(window.soundPlayer) window.soundPlayer.setAllSpeed(action_speed);
     createjs.Ticker.framerate = 30*action_speed;
     document.getElementById("speed-label").innerHTML = JSON.stringify(Math.floor(100*action_speed)) + "% Speed";
 }
@@ -433,6 +438,7 @@ function versionChange(obj)
 {
     if(!canInteract()) return;
     beep();
+    if(window.soundPlayer) window.soundPlayer.clearAll();
 
     animeVersion = obj.options[obj.selectedIndex].value;
     //verify if action exists

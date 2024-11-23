@@ -1,4 +1,4 @@
-define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo"], function (cjsloader, manifestloader, cjs_npc_demo) {
+define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo", "underscore"], function (cjsloader, manifestloader, cjs_npc_demo, _) {
     loadCJS = function (fileList) {
         // Add "summon_damage" files for corresponding "summon_attack" files.
         let originalLength = fileList.length;

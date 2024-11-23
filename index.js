@@ -596,7 +596,7 @@ function startplayer(id)
     // load everything and start!
     require(['createjs'], function() {
         hotfix_createjs(); // apply fix (see below)
-        require(['player','lib/common', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader']);
+        require(["jquery","underscore","backbone", 'player', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader']);
     });
 }
 
