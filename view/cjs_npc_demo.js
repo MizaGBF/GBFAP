@@ -243,7 +243,9 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         motionListIndex: 0,
         isFullScreenMortal: false,
         isFixedPosOwnerBG: false,
-        animChanger: null,
+        mainTween: null,
+        tweenElements: [],
+        childTweens: [],
         damageTarget: null,
         loopIndex: null,
         npc: null,
@@ -260,7 +262,7 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             this.motionListIndex = 0;
             this.isFullScreenMortal = false;
             this.isFixedPosOwnerBG = false;
-            this.animChanger = null;
+            this.mainTween = null;
             this.cjsList = params.cjsList || [];
             this.cjsEffectList = params.cjsEffectList || [];
             this.cjsMortalList = params.cjsMortalList || [];
@@ -672,11 +674,18 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 me.stage.setChildIndex(atk, stageZIndex.CHARACTER),
                 atk[elem].gotoAndPlay(atkIndex);
                 let duration = me.getAnimDuration(atk[elem][elem + "_effect"]);
-                createjs.Tween.get(atk, {
-                    useTicks: true
+                me.tweenElements.push(atk);
+                const childtween = createjs.Tween.get(atk, {
+                    useTicks: true,
+                    paused: me.paused
                 }).wait(duration).call(function () {
-                    me.stage.removeChild(atk)
-                })
+                    let i = me.tweenElements.indexOf(atk);
+                    if(i != -1) me.tweenElements.splice(i, 1);
+                    me.stage.removeChild(atk);
+                    i = me.childTweens.indexOf(childtween);
+                    if(i != -1) me.childTweens.splice(i, 1);
+                });
+                me.childTweens.push(childtween);
             }
             function toggleForm() { // form change animations
                 me.currentIndex++;
@@ -831,14 +840,14 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 dispatchStack[i] = _.max(dispatchStack) + 1
             };
             // update anim changer
-            this.animChanger = createjs.Tween.get(this.stage, {
+            this.mainTween = createjs.Tween.get(this.stage, {
                 useTicks: true,
-                override: true
+                override: true,
+                paused: this.isPaused
             }).wait(animDuration).call(function (index, p) {
                 p.loopIndex = index;
                 if(loopingState) p.nextLoop();
             },[i, this])
-            if(this.isPaused) this.animChanger.paused = true;
         },
         nextLoop: function() { // switch to next animation loop (if enabled)
             if(this.loopIndex == null)
@@ -863,7 +872,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             {
                 this.isPaused = true;
                 createjs.Ticker.removeEventListener("tick", this.stage);
-                if(this.animChanger) this.animChanger.paused = true;
+                if(this.mainTween) this.mainTween.paused = true;
+                for(let i = 0; i < this.childTweens.length; ++i) this.childTweens[i].paused = true;
             }
         },
         resume: function () { // resume the animation (by restarting the ticker)
@@ -871,21 +881,22 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             {
                 this.isPaused = false;
                 createjs.Ticker.addEventListener("tick", this.stage);
-                if(this.animChanger) this.animChanger.paused = false;
+                if(this.mainTween) this.mainTween.paused = false;
+                for(let i = 0; i < this.childTweens.length; ++i) this.childTweens[i].paused = false;
             }
         },
         nextFrame : function() { // play the animation until the next frame. Must be paused beforehand.
             if(this.isPaused)
             {
                 this.resume(); // resume animation
-                setTimeout(this.nextFrame_wait, 2, this, this.animChanger.position); // check in 2ms if the  frame changed
+                setTimeout(this.nextFrame_wait, 2, this, this.mainTween.position); // check in 2ms if the  frame changed
             }
         },
         nextFrame_wait : function(me, pos) { // subroutine of nextFrame, called every millisecond
-            if(pos != me.animChanger.position)
+            if(pos != me.mainTween.position)
                 me.pause();
             else
-                setTimeout(me.nextFrame_wait, 2, me, me.animChanger.position);
+                setTimeout(me.nextFrame_wait, 2, me, me.mainTween.position);
         },
         download : function() { // update the animation and download the canvas content. Must be paused beforehand.
             if(this.isPaused)
@@ -957,8 +968,8 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                     // start (using 1s chunks)
                     this.recording.rec.start(1);
                     // note current position
-                    this.recording.position = this.animChanger.position;
-                    //this.stage.update();
+                    this.recording.position = this.mainTween.position;
+                    this.stage.update();
                     // send popup to user
                     pushPopup("Generating the video, be patient...");
                     // capture next frame
@@ -966,8 +977,11 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
                 }
                 catch(err) // error handling
                 {
-                    this.recording.error = true;
-                    this.recording = null;
+                    if(this.recording)
+                    {
+                        this.recording.error = true;
+                        this.recording = null;
+                    }
                     this.pause();
                     console.error("Exception thrown", err.stack);
                     pushPopup("An error occured. This feature might be unavailable on your device/browser.");
@@ -977,11 +991,11 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
         record_next_frame : function(recording) { // on next frame
             try
             {
-                if((recording.position == 0 && recording.frames == 0) || (recording.position != recording.this.animChanger.position)) // check if it's the first frame or if the frame changed
+                if((recording.position == 0 && recording.frames == 0) || (recording.position != recording.this.mainTween.position)) // check if it's the first frame or if the frame changed
                 {
-                    recording.position = recording.this.animChanger.position; // update position
+                    recording.position = recording.this.mainTween.position; // update position
                     recording.this.pause(); // pause animation
-                    if(recording.this.motionListIndex == 0 && recording.this.animChanger.position == 0 && recording.frames > 0) // check if we did a whole loop
+                    if(recording.this.motionListIndex == 0 && recording.this.mainTween.position == 0 && recording.frames > 0) // check if we did a whole loop
                     {
                         pushPopup("Finalizing...");
                         setTimeout(recording.this.record_end, 1000, recording); // introducing a delay to let MediaRecorder finishes what it's doing or frames might be missing
@@ -1016,7 +1030,14 @@ define(["view/cjs", "view/content", "lib/common"], function (cjsview, content) {
             URL.revokeObjectURL(url);
         },
         reset : function() { // restart the current animation list
-            // also used as a workaround for a weird bug causing images to not display on the first animation played.
+            // NOTE: also used as a workaround for a weird bug causing images to not display on the first animation played.
+            for(let i = 0; i < this.tweenElements.length; ++i)
+            {
+                this.stage.removeChild(this.tweenElements[i]);
+            }
+            this.tweenElements = [];
+            this.childTweens = [];
+            this.stage.update();
             this.motionListIndex = -1;
             this.npc.dispatchEvent(complete);
         }
