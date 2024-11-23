@@ -90,7 +90,7 @@
         <h3>&#x2022; The video files from the Record feature don't have duration metadatas.</h3>
         <p>A weird quirk from the MediaRecorder API, as far as I know.<br>It makes impossible to post the resulting files on some websites.<br>If you have access to ffmpeg, here's commands to convert them quickly:<br>
             <ul>
-                <li><b>Twitter/X:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libx264 -b:v 20M -crf 1 -c:a aac -b:a 128k -threads 2 output_file.mp4</li>
+                <li><b>Twitter/X:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libx264 -b:v 25M -an -threads 2 output_file.mp4</li>
                 <li><b>4chan:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libvpx-vp9 -b:v 8M -an -threads 2 output_file.webm</li>
             </ul>
             Adjust bitrates/etc... to fit your needs.<br>
