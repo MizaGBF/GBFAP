@@ -242,7 +242,7 @@ function update_frame_counter()
     }
     else
     {
-        if(document.getElementById("loop-btn").classList.contains('btn-enabled')) document.getElementById("act-frame").innerHTML = JSON.stringify(this.cjsViewList[animeVersion].animChanger.position);
+        if(document.getElementById("loop-btn").classList.contains('btn-enabled')) document.getElementById("act-frame").innerHTML = JSON.stringify(this.cjsViewList[animeVersion].mainTween.position);
         else document.getElementById("act-frame").innerHTML = "Loop paused";
     }
     setTimeout(update_frame_counter, 10);
