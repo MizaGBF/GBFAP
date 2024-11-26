@@ -1,5 +1,5 @@
 // constant
-var CANVAS_SIZE = CANVAS_SIZE || "1400";
+var CANVAS_SIZE = CANVAS_SIZE || 1400;
 // initialization of important variables
 var versionList=Array.from(AnimeData[0]);
 var action_speed=1;
@@ -110,9 +110,9 @@ function setHTML()
     let background = localStorage.getItem("gbfap-background");
     if(background == null) background = Game.externUri + "/img/sp/raid/bg/event_82.jpg";
     // canvas content
-    let canvasContent = '<canvas class="cjs-npc-demo cjs-npc-demo-0" width="'+CANVAS_SIZE+'" height="'+CANVAS_SIZE+'" style="display:block;"></canvas>'
+    let canvasContent = '<canvas class="cjs-npc-demo cjs-npc-demo-0" width="'+JSON.stringify(CANVAS_SIZE)+'" height="'+JSON.stringify(CANVAS_SIZE)+'" style="display:block;"></canvas>'
     for (var i = 1; i < versionList.length; i++)
-        canvasContent += '<canvas class="cjs-npc-demo cjs-npc-demo-' + i + '" width="'+CANVAS_SIZE+'" height="'+CANVAS_SIZE+'" style="display:none;"></canvas>';
+        canvasContent += '<canvas class="cjs-npc-demo cjs-npc-demo-' + i + '" width="'+JSON.stringify(CANVAS_SIZE)+'" height="'+JSON.stringify(CANVAS_SIZE)+'" style="display:none;"></canvas>';
     // version list
     let versions = ''
     if(versionList.length > 1)

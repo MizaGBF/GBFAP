@@ -1,6 +1,6 @@
 define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _) {
     // settings you can edit:
-    var CANVAS_SIZE = CANVAS_SIZE || "1400"; // 1400px. The syntax is because player.js also needs it, so it might be declared here first, depending on race conditions.
+    var CANVAS_SIZE = CANVAS_SIZE || 1400; // 1400px. The syntax is because player.js also needs it, so it might be declared here first, depending on race conditions.
     const WINDOWSIZE = 600; // Window size on the page. Must match what's defined in style.css, at #canvas-container
     const SUMMON_FULLSCREEN_SCALING = 0.9; // Additional scaling for fullscreen summon animations
     // end
