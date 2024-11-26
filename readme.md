@@ -106,7 +106,8 @@ It can be found in `index.js`, look for `hotfix_createjs`.
 When fetching assets from an external source, the Cross-Origin must be set in `hotfix_createjs` (see above).  
 It's automatically set if you set `const LOCAL = false;` `in index.js` (see at the top of this readme for details).  
   
-### Others
-You can use one of the `server` scripts to start a Python HTTP Server and test the project locally in your web browser. Tweaks might be needed to make the asset fetching works.
+### Others  
+`tester.py` is used to look for specific calls in animation files, to check for crashes.  
+You can use one of the `server` scripts to start a Python HTTP Server and test the project locally in your web browser. Tweaks might be needed to make the asset fetching works.  
   
   
