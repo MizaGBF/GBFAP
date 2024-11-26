@@ -64,7 +64,8 @@ function setHTML()
                         <button class="small-button" onclick="nextframe();" id="next-btn"><img src="assets/ui/controls/next.png"></button>\
                         <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
                         <button class="small-button" onclick="toggleSFX();" id="sfx-btn"><img src="assets/ui/controls/sfx.png"></button>\
-                        <button class="small-button" onclick="openCustom()")"><img src="assets/ui/controls/edit.png"></button>\
+                        <button class="small-button" onclick="openCustom()" id="custom-btn"><img src="assets/ui/controls/edit.png"></button>\
+                        <button class="small-button" onclick="enemyShift()" id="enemy-btn"><img src="assets/ui/controls/enemy.png"></button>\
                         <button class="small-button" onclick="dlimage();" id="dl-btn"><img src="assets/ui/controls/dl.png"></button>\
                         <button class="small-button" onclick="record();" id="record-btn"><img src="assets/ui/controls/record.png"></button>\
                     </div>\
@@ -123,6 +124,10 @@ function setHTML()
         versions += '</select>'
     }
     document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvasContent).replace('$VERSIONS', versions)
+    if(!is_enemy)
+    {
+        document.getElementById("enemy-btn").remove();
+    }
     canvas = document.querySelector('.cjs-npc-demo-0');
     // set focus
     document.getElementById("canvas-container").scrollIntoView();
@@ -385,6 +390,25 @@ function toggleSFX()
         sfxState = true;
     }
     if(window.soundPlayer) window.soundPlayer.enableAll(sfxState);
+}
+
+function enemyShift()
+{
+    if(!canInteract()) return;
+    beep();
+    let sfx_btn = document.getElementById("enemy-btn");
+    if(sfx_btn.classList.contains('btn-enabled'))
+    {
+        sfx_btn.classList.remove("btn-enabled");
+        cjsViewList[0].cjsNpc.x -= 71;
+        cjsViewList[0].cjsNpc.y += 117;
+    }
+    else
+    {
+        sfx_btn.classList.add("btn-enabled");
+        cjsViewList[0].cjsNpc.x += 71;
+        cjsViewList[0].cjsNpc.y -= 117;
+    }
 }
 
 function changeSpeed(elem)
