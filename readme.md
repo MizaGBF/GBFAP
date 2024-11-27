@@ -16,7 +16,14 @@ There are two possible ways to host this project.
 1. Copy this repo.  
 2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF. I have one for that purpose [here](https://github.com/MizaGBF/GBFCP).  
 3. Change line 3 of `index.js` with the address of your proxy.  
-4. **If needed**, change line 98 of `index.js` (`testUri`) to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code. The corresponding asset is present in the `assets/folder` if needed.  
+4. **If needed**, change around the line 97 of `index.js` the value `testUri` to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code. The corresponding asset is present in the `assets/folder` if needed.  
+  
+Example if you wish to run it locally without downloading all assets:  
+- Grab a copy of this repo and [here](https://github.com/MizaGBF/GBFCP). Install the python requirements of the later.  
+- Change line 3 of `index.js` to `const CORS = 'http://localhost:8001/'`.  
+- Start [here](https://github.com/MizaGBF/GBFCP) with the command `python app.py -debug` to run it in local mode.  
+- Start a server in this project folder (you can use one of the server scripts).  
+- Go to [http://localhost:8000/](http://localhost:8001/) to access your local copy of GBFAP.  
   
 ### The second way, is to host the assets along with the project:
 0. Prepare a lot of free space (a few ten of GB).  
@@ -94,9 +101,12 @@ Downloaded assets are saved in the following folders:
 * script.js (loaded in third, this is where asset loading starts)  
   
 ### Changing the canvas/window size  
-Values must be changed at the top, in the following files:
+Values must be changed at the top, in the following files:  
 * player.js  
 * view/cjs_npc_demo.js  
+  
+and in:  
+* css/style.css, under canvas-container (for the player size) and cjs-npc-demo (for the canvas size)  
   
 ### createjs patch  
 The project uses a more recent version of createjs and must be hotfixed to work with GBF animation files.  
