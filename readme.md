@@ -14,12 +14,12 @@ There are two possible ways to host this project.
   
 ### First, as it's currently is:
 1. Copy this repo.  
-2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF. I have one for that purpose [here](https://github.com/MizaGBF/GBFCP).  
+2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF. I have one for that purpose [here, called GBFCP](https://github.com/MizaGBF/GBFCP).  
 3. Change line 3 of `index.js` with the address of your proxy.  
 4. **If needed**, change around the line 97 of `index.js` the value `testUri` to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code. The corresponding asset is present in the `assets/folder` if needed.  
   
 Example if you wish to run it locally without downloading all assets:  
-- Grab a copy of this repo and [here](https://github.com/MizaGBF/GBFCP). Install the python requirements of the later.  
+- Grab a copy of this repo and [GBFCP](https://github.com/MizaGBF/GBFCP). Install the python requirements of the later.  
 - Change line 3 of `index.js` to `const CORS = 'http://localhost:8001/'`.  
 - Start [here](https://github.com/MizaGBF/GBFCP) with the command `python app.py -debug` to run it in local mode.  
 - Start a server in this project folder (you can use one of the server scripts).  
