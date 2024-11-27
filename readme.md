@@ -103,8 +103,8 @@ The project uses a more recent version of createjs and must be hotfixed to work 
 It can be found in `index.js`, look for `hotfix_createjs`.  
   
 ### Cross-Origin  
-When fetching assets from an external source, the Cross-Origin must be set in `hotfix_createjs` (see above).  
-It's automatically set if you set `const LOCAL = false;` `in index.js` (see at the top of this readme for details).  
+When fetching assets from an external source, the Cross-Origin value must be set in `hotfix_createjs` (see above).  
+It's automatically set if you set `const LOCAL = false;` in `index.js` (see at the top of this readme for details).  
   
 ### Others  
 `tester.py` is used to look for specific calls in animation files, to check for crashes.  
