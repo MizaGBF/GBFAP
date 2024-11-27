@@ -21,7 +21,7 @@ There are two possible ways to host this project.
 Example if you wish to run it locally without downloading all assets:  
 - Grab a copy of this repo and [GBFCP](https://github.com/MizaGBF/GBFCP). Install the python requirements of the later.  
 - Change line 3 of `index.js` to `const CORS = 'http://localhost:8001/'`.  
-- Start [here](https://github.com/MizaGBF/GBFCP) with the command `python app.py -debug` to run it in local mode.  
+- Start [GBFCP](https://github.com/MizaGBF/GBFCP) with the command `python app.py -debug` to run it in local mode.  
 - Start a server in this project folder (you can use one of the server scripts).  
 - Go to [http://localhost:8000/](http://localhost:8001/) to access your local copy of GBFAP.  
   
