@@ -11,6 +11,7 @@ var dispatchStack = new Array;
 var sfxState = false;
 var loopingState = true;
 var animeVersion = 0;
+var sub_menu_open = false;
 var loadTotal = 999999999999;
 var loadNow = 0;
 var canvas = null;
@@ -69,6 +70,7 @@ function setHTML()
                         <button class="small-button" onclick="enemyShift()" id="enemy-btn"><img src="assets/ui/controls/enemy.png"></button>\
                         <button class="small-button" onclick="dlimage();" id="dl-btn"><img src="assets/ui/controls/dl.png"></button>\
                         <button class="small-button" onclick="record();" id="record-btn"><img src="assets/ui/controls/record.png"></button>\
+                        <button class="small-button" onclick="openTexture();" id="texture-btn"><img src="assets/ui/controls/texture.png"></button>\
                     </div>\
                     <div class="controls-outline">\
                         <span class="controls-text">Background</span><br>\
@@ -104,6 +106,16 @@ function setHTML()
                     <br>\
                     <button class="std-button" onclick="resetCustom()")">Reset</button><br>\
                     <br>\
+                </div>\
+            </div>\
+            <div id="texture-action" style="display: none;" class="controls-root custom-menu">\
+                <div class="controls-outline"\
+                    <b>Spritesheet List</b><br>\
+                    <div id="texture-list">\
+                    </div>\
+                </div>\
+                <div class="controls-outline">\
+                    <button class="std-button" onclick="closeTexture()")">Close</button>\
                 </div>\
             </div>\
         </div>';
@@ -144,12 +156,43 @@ function canInteract()
     return true;
 }
 
+function openTexture()
+{
+    if(!canInteract()) return;
+    let tact = document.getElementById("texture-action");
+    if(sub_menu_open || tact.style.display == "") return;
+    beep();
+    sub_menu_open = true;
+    tact.style.display = "";
+    let tlist = document.getElementById("texture-list");
+    if(tlist.innerHTML.trim() == "")
+    {
+        for(let k in images)
+        {
+            let a = document.createElement("a");
+            a.innerHTML = k;
+            a.href = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img/sp/cjs/" + k + ".png";
+            a.target="_blank";
+            tlist.appendChild(a);
+            tlist.appendChild(document.createElement("br"));
+        }
+    }
+}
+
+function closeTexture()
+{
+    sub_menu_open = false;
+    beep();
+    document.getElementById("texture-action").style.display = "none";
+}
+
 function openCustom()
 {
     if(!canInteract()) return;
     let cact = document.getElementById("custom-action");
-    if(cact.style.display == "") return;
+    if(sub_menu_open || cact.style.display == "") return;
     beep();
+    sub_menu_open = true;
     cact.style.display = "";
     let actions = this.cjsViewList[animeVersion].getActionList();
     let actionlist = ""
@@ -176,6 +219,7 @@ function playCustom()
 
 function closeCustom()
 {
+    sub_menu_open = false;
     beep();
     document.getElementById("custom-action").style.display = "none";
 }
@@ -312,6 +356,9 @@ function keybind_listener(event)
             return;
         case "KeyW": // record webm
             record();
+            return;
+        case "KeyT": // texture list
+            openTexture();
             return;
     }
     // fallbacks for non qwerty keyboards and lack of numpads

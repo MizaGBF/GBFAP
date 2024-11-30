@@ -610,7 +610,6 @@ function addBoundingBox(displayObject) {
     const boundingBox = new createjs.Shape();
     boundingBox.mouseEnabled = false; // not sure if needed
     boundingBox.visible = boundingBox_enabled;
-    console.log(boundingBox);
 
     // Update the bounding box on tick or bounds change
     function updateBoundingBox() {
