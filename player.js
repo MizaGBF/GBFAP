@@ -65,6 +65,7 @@ function setHTML()
                         <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
                         <button class="small-button" onclick="toggleSFX();" id="sfx-btn"><img src="assets/ui/controls/sfx.png"></button>\
                         <button class="small-button" onclick="openCustom()" id="custom-btn"><img src="assets/ui/controls/edit.png"></button>\
+                        <button class="small-button" onclick="toggleBound()" id="bound-btn"><img src="assets/ui/controls/bound.png"></button>\
                         <button class="small-button" onclick="enemyShift()" id="enemy-btn"><img src="assets/ui/controls/enemy.png"></button>\
                         <button class="small-button" onclick="dlimage();" id="dl-btn"><img src="assets/ui/controls/dl.png"></button>\
                         <button class="small-button" onclick="record();" id="record-btn"><img src="assets/ui/controls/record.png"></button>\
@@ -297,6 +298,12 @@ function keybind_listener(event)
         case "KeyC": // open custom playlist
             openCustom();
             return;
+        case "KeyB": // toggle bounding boxes
+            toggleBound();
+            return;
+        case "KeyS": // shift enemy position
+            if(is_enemy) enemyShift();
+            return;
         case "KeyF": // frame advance
             nextframe();
             return;
@@ -409,6 +416,22 @@ function enemyShift()
         cjsViewList[0].cjsNpc.x += 71;
         cjsViewList[0].cjsNpc.y -= 117;
     }
+}
+
+function toggleBound()
+{
+    if(!canInteract()) return;
+    beep();
+    let bound_btn = document.getElementById("bound-btn");
+    if(boundingBox_enabled)
+    {
+        bound_btn.classList.remove("btn-enabled");
+    }
+    else
+    {
+        bound_btn.classList.add("btn-enabled");
+    }
+    toggle_boundingBox_fireevent();
 }
 
 function changeSpeed(elem)

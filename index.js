@@ -600,16 +600,85 @@ function startplayer(id)
     });
 }
 
-// Patch for createjs 1.0
+// Code to add bounding boxes to the animations
+var boundingBox_enabled = false;
+// Function to add a bounding box to a Bitmap
+function addBoundingBox(displayObject) {
+    if (!displayObject || displayObject._boundingBox) return;
+
+    // Create a Shape for the bounding box
+    const boundingBox = new createjs.Shape();
+    boundingBox.mouseEnabled = false; // not sure if needed
+    boundingBox.visible = boundingBox_enabled;
+    console.log(boundingBox);
+
+    // Update the bounding box on tick or bounds change
+    function updateBoundingBox() {
+        if(boundingBox.visible)
+        {
+            const bounds = displayObject.getBounds?.();
+            if(bounds) {
+                boundingBox.graphics
+                    .clear()
+                    .setStrokeStyle(1)
+                    .beginStroke("green")
+                    .drawRect(bounds.x, bounds.y, bounds.width, bounds.height)
+                    .endStroke();
+            }
+        }
+    }
+
+    displayObject.on("tick", updateBoundingBox);
+    displayObject._boundingBox = boundingBox;
+
+    // Add the bounding box as a child (it won't affect visual stacking order)
+    if(displayObject.parent) {
+        displayObject.parent.addChild(boundingBox);
+        boundingBox.x = displayObject.x;
+        boundingBox.y = displayObject.y;
+    }
+
+    // Keep the bounding box synchronized with the displayObject's position
+    displayObject.on("added", () => {
+        if(displayObject.parent) {
+            displayObject.parent.addChild(boundingBox);
+            boundingBox.x = displayObject.x;
+            boundingBox.y = displayObject.y;
+        }
+    });
+
+    displayObject.on("removed", () => {
+        if(boundingBox.parent)
+            boundingBox.parent.removeChild(boundingBox);
+    });
+    
+    displayObject.on("boundtoggle", () => {
+        console.log("hi");
+        if(boundingBox.parent)
+            boundingBox.visible = boundingBox_enabled;
+    });
+    createjs.Ticker.on("boundingBoxToggle", event => {
+        boundingBox.visible = boundingBox_enabled;
+    });
+}
+// Function to fire the boundingBoxToggle, to toggle the visible states of our bounding boxes
+function toggle_boundingBox_fireevent()
+{
+    boundingBox_enabled = !boundingBox_enabled;
+    createjs.Ticker.dispatchEvent(new createjs.Event("boundingBoxToggle")); 
+}
+
+// Code to patch the createjs 1.0 functions. Some are missing or behave differently from what GBF animations expect.
 var createjs_overloaded_func = {}
 function hotfix_createjs()
 {
-    createjs_overloaded_func["init"] = window.createjs.Bitmap.prototype.initialize;
+    createjs_overloaded_func["bitmap_init"] = window.createjs.Bitmap.prototype.initialize;
     window.createjs.Bitmap.prototype.initialize = function(image) {
         let tmp = this.sourceRect;
         if(!LOCAL && image && image.crossOrigin == null) image.crossOrigin = "anonymous"; // set origin
-        createjs_overloaded_func["init"].call(this, image);
+        createjs_overloaded_func["bitmap_init"].call(this, image);
         if(tmp) this.sourceRect = tmp; // set the source rect AFTER
+        addBoundingBox(this);
     };
     
     window.createjs.DisplayObject.prototype.getStage = function() {
