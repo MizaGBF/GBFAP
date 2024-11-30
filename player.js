@@ -93,7 +93,7 @@ function setHTML()
             <div id="custom-action" style="display: none;" class="controls-root custom-menu">\
                 <div class="controls-outline"\
                     <b>Play Actions</b><br>\
-                    <div id="demo-list">\
+                    <div id="demo-list" class="scroll-list">\
                     </div>\
                 </div>\
                 <div class="controls-outline">\
@@ -112,7 +112,7 @@ function setHTML()
             <div id="texture-action" style="display: none;" class="controls-root custom-menu">\
                 <div class="controls-outline"\
                     <b>Spritesheet List</b><br>\
-                    <div id="texture-list">\
+                    <div id="texture-list" class="scroll-list">\
                     </div>\
                 </div>\
                 <div class="controls-outline">\

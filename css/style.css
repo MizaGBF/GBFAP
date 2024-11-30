@@ -339,7 +339,7 @@ select:hover {
     z-index=50; 
 }
 
-#demo-list {
+.scroll-list {
     height: 630px;
     overflow: auto;
 }
