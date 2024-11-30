@@ -163,30 +163,38 @@ function uploadTexture(name)
     input.type = 'file';
     input.accept = 'image/png'; // Accept only PNG
     input.addEventListener('change', (event) => {
-        const file = event.target.files[0]; // Get the selected file
-        if (file) {
-            let obj = {
-                orig: null,
-                blob: null,
-                url: null
+        try
+        {
+            const file = event.target.files[0]; // Get the selected file
+            if (file) {
+                let obj = {
+                    orig: null,
+                    blob: null,
+                    url: null
+                }
+                let old_url = null;
+                if(name in textureSwapCache)
+                {
+                    obj.orig = textureSwapCache[name].orig;
+                    old_url = textureSwapCache[name].url;
+                }
+                else
+                {
+                    obj.orig = images[name].src;
+                }
+                obj.blob = new Blob([file], { type: file.type });
+                obj.url = URL.createObjectURL(obj.blob);
+                images[name].src = obj.url;
+                textureSwapCache[name] = obj;
+                if(old_url != null)
+                    URL.revokeObjectURL(old_url);
+                pushPopup(name + " has been replaced by your texture.");
             }
-            let old_url = null;
-            if(name in textureSwapCache)
-            {
-                obj.orig = textureSwapCache[name].orig;
-                old_url = textureSwapCache[name].url;
-            }
-            else
-            {
-                obj.orig = images[name].src;
-            }
-            obj.blob = new Blob([file], { type: file.type });
-            obj.url = URL.createObjectURL(obj.blob);
-            images[name].src = obj.url;
-            textureSwapCache[name] = obj;
-            if(old_url != null)
-                URL.revokeObjectURL(old_url);
-            pushPopup(name + " has been replaced by your texture.");
+        }
+        catch(err)
+        {
+            pushPopup("An error occured. Report it if it persists.");
+            console.error("Exception thrown", err.stack);
         }
     });
     // trigger
