@@ -72,22 +72,28 @@
         <p>In some cases, characters might reuse animations from another.<br>As such, when an animation is missing, some guesswork is involved, which might lead to disparity between the game and what you see on this page.<br>Default animations are also used in some cases when no animations at all exist, like for Sakura's auto attack for example.</p>
         <h3>&#x2022; When does it get updated?</h3>
         <p>Updates to this page require manual interventions.<br>As such, you can expect them to occur between 15:00 and 08:00 JST, when I'm available.</p>
-        <h3>&#x2022; The animation is stuck!</h3>
-        <p>If you noticed a problem or bug on this page, you can open an issue in the <a href="https://github.com/MizaGBF/GBFAP/issues">GitHub repository</a> or contact me directly.<br>Try to explain clearly what the problem is and provide screenshots, plus the ID of the element, if possible.</p>
-        <h3>&#x2022; Keyboard shortcuts</h3>
-        <p>The following keyboard shortcuts are available:<br>
+        <h3>&#x2022; Controls and Keyboard Shortcuts</h3>
+        <p>The following controls are available under the player:<br>
             <ul>
-                <li><b>R</b> to reset the speed, <b>+</b> and <b>-</b> to speed up or down by 5%.</li>
-                <li><b>Space</b> to toggle the pause.</li>
-                <li><b>L</b> to toggle the loop.</li>
-                <li><b>S</b> to toggle the sound effects.</li>
-                <li><b>C</b> to open the custom list menu.</li>
-                <li><b>B</b> to toggle the bounding boxes.</li>
-                <li><b>E</b> to shift an enemy position (Only for enemies).</li>
-                <li><b>F</b> to frame advance.</li>
-                <li><b>D</b> to update and download the canvas.</li>
+                <li><button class="small-button"><img src="assets/ui/controls/reset.png"></button> Reset the speed scale to 100%. (<b>Keyboard shortcut: R</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/pause.png"></button> Pause the animation. (<b>Keyboard shortcut: Space</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/next.png"></button> Pause and advance by a single frame. (<b>Keyboard shortcut: F</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/loop.png"></button> If disabled, the animation won't loop. (<b>Keyboard shortcut: L</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/sfx.png"></button> To play the sound files present in the animation file. (<b>Keyboard shortcut: S</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/edit.png"></button> Open the custom animation playlist menu. (<b>Keyboard shortcut: C</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/bound.png"></button> Toggle the bounding boxes visibility. (<b>Keyboard shortcut: B</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/enemy.png"></button> (Enemy only) Shift an enemy by 71x117 px to the top right. Useful for small enemies that are set too low on the screen. (<b>Keyboard shortcut: E</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/dl.png"></button> Pause and download the player canvas as a PNG file (includes off-screen elements). (<b>Keyboard shortcut: D</b>)</li>
+                <li><button class="small-button"><img src="assets/ui/controls/record.png"></button> (Chrome Only) Reset and make a WEBM of the current animation list. (<b>Keyboard shortcut: W</b>)</li>
+            </ul><br>
+            Other shortcuts:<br>
+            <ul>
+                <li><b>+</b> to speed up by 5%.</li>
+                <li><b>-</b> to speed down by 5%.</li>
             </ul>
         </p>
+        <h3>&#x2022; The animation is stuck!</h3>
+        <p>If you noticed a problem or bug on this page, you can open an issue in the <a href="https://github.com/MizaGBF/GBFAP/issues">GitHub repository</a> or contact me directly.<br>Try to explain clearly what the problem is and provide screenshots, plus the ID of the element, if possible.</p>
         <h3>&#x2022; The resulting image from the download button is weird...</h3>
         <p>The download button saves the whole canvas, including what's "off-screen". This is the same result as when doing Right Click > Save as.</p>
         <h3>&#x2022; The video files from the Record feature don't have duration metadatas.</h3>

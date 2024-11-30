@@ -310,6 +310,9 @@ function keybind_listener(event)
         case "KeyD": // download canvas
             dlimage();
             return;
+        case "KeyW": // record webm
+            record();
+            return;
     }
     // fallbacks for non qwerty keyboards and lack of numpads
     switch(event.key)
