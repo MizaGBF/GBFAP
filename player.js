@@ -216,7 +216,7 @@ function openTexture()
     let tlist = document.getElementById("texture-list");
     if(tlist.innerHTML.trim() == "")
     {
-        let keys = images.keys();
+        let keys = Object.keys(images);
         keys.sort();
         for(let k of keys)
         {
