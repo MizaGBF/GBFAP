@@ -301,7 +301,7 @@ function keybind_listener(event)
         case "KeyB": // toggle bounding boxes
             toggleBound();
             return;
-        case "KeyS": // shift enemy position
+        case "KeyE": // shift enemy position
             if(is_enemy) enemyShift();
             return;
         case "KeyF": // frame advance
