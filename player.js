@@ -202,6 +202,7 @@ function resetTexture(name)
         delete textureSwapCache[name];
         pushPopup(name + " has been reset.");
     }
+    else pushPopup(name + " is already set to its original image.");
 }
 
 function openTexture()
