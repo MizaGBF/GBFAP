@@ -12,6 +12,7 @@ var sfxState = false;
 var loopingState = true;
 var animeVersion = 0;
 var sub_menu_open = false;
+var textureSwapCache = {};
 var loadTotal = 999999999999;
 var loadNow = 0;
 var canvas = null;
@@ -156,6 +157,53 @@ function canInteract()
     return true;
 }
 
+function uploadTexture(name)
+{
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/png'; // Accept only PNG
+    input.addEventListener('change', (event) => {
+        const file = event.target.files[0]; // Get the selected file
+        if (file) {
+            let obj = {
+                orig: null,
+                blob: null,
+                url: null
+            }
+            let old_url = null;
+            if(name in textureSwapCache)
+            {
+                obj.orig = textureSwapCache[name].orig;
+                old_url = textureSwapCache[name].url;
+            }
+            else
+            {
+                obj.orig = images[name].src;
+            }
+            obj.blob = new Blob([file], { type: file.type });
+            obj.url = URL.createObjectURL(obj.blob);
+            images[name].src = obj.url;
+            textureSwapCache[name] = obj;
+            if(old_url != null)
+                URL.revokeObjectURL(old_url);
+            pushPopup(name + " has been replaced by your texture.");
+        }
+    });
+    // trigger
+    input.click();
+}
+
+function resetTexture(name)
+{
+    if(name in textureSwapCache)
+    {
+        images[name].src = textureSwapCache[name].orig;
+        URL.revokeObjectURL(textureSwapCache[name].url);
+        delete textureSwapCache[name];
+        pushPopup(name + " has been reset.");
+    }
+}
+
 function openTexture()
 {
     if(!canInteract()) return;
@@ -169,11 +217,29 @@ function openTexture()
     {
         for(let k in images)
         {
+            const name = k;
             let a = document.createElement("a");
-            a.innerHTML = k;
-            a.href = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img/sp/cjs/" + k + ".png";
+            a.innerHTML = name;
+            a.href = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img/sp/cjs/" + name + ".png";
             a.target="_blank";
             tlist.appendChild(a);
+            
+            let btn = document.createElement("button");
+            btn.classList.add("small-button");
+            btn.innerHTML = '<img src="assets/ui/controls/upload.png">';
+            btn.onclick = function() {
+                uploadTexture(name);
+            };
+            tlist.appendChild(btn);
+            
+            btn = document.createElement("button");
+            btn.classList.add("small-button");
+            btn.innerHTML = '<img src="assets/ui/controls/remove.png">';
+            btn.onclick = function() {
+                resetTexture(name);
+            };
+            tlist.appendChild(btn);
+            
             tlist.appendChild(document.createElement("br"));
         }
     }
