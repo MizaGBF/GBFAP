@@ -49,9 +49,6 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo", "under
             manifestloader.loadManifest(manifests, true),
             deferred
     };
-    cjsRender = function (view) {
-        view.cjsRender();
-    };
     prepareCjs = function () {
         var my = this;
         my.cjsViewList = []; // List of CJS views.
@@ -89,7 +86,7 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo", "under
         .done(function () {
             // Render each view and handle UI updates.
             _.each(my.cjsViewList, (view, index) => {
-                my.cjsRender(view);
+                view.cjsRender();
                 if(index != 0) view.pause(); // Pause non-default views.
 
                 // Get the list of available actions for this view.

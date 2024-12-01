@@ -725,11 +725,6 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
             let me = this;
             switch(motion)
             {
-                default:
-                {
-                    animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
-                    break;
-                }
                 case animations.MORTAL:
                 case animations.MORTAL_A:
                 case animations.MORTAL_A_1:
@@ -810,6 +805,11 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
                     elem = this.cjsNpc;
                     this.npc = elem[this.cjsNameNpc];
                     animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
+                }
+                default:
+                {
+                    animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
+                    break;
                 }
             }
             // update animation name on the page
