@@ -1,41 +1,77 @@
 # GBF Animation Player  
 [![pages-build-deployment](https://github.com/MizaGBF/GBFAP/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/MizaGBF/GBFAP/actions/workflows/pages/pages-build-deployment)  
-Web page to play GBF animations.  
+Web page to play Granblue Fantasy Animations.  
 Click [Here](https://mizagbf.github.io/GBFAP) to access it.  
-Based and modified from the chinese wiki player.  
+Originally based and modified from the [chinese wiki](https://gbf.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5) animation player, itself based on the [Granblue Fantasy Gacha page preview](https://game.granbluefantasy.jp/#gacha/selected).  
+> [!IMPORTANT]  
+> It can, in theory, play every animations of the game but the scope of this project has been narrowed to:  
+> Characters (including their outfits), Summons, Weapons, Main characters (classes and outfits), Enemies and some Partner Characters (from events)  
   
 ### Updater Requirements  
 * Python 3.11.
 * Run `pip install -r requirements.txt` in a command prompt.
 * See [requirements.txt](https://github.com/MizaGBF/GBFAP/blob/master/requirements.txt) for a list of third-party modules.  
   
-# Setup  
+# Hosting  
 There are two possible ways to host this project.  
   
-### First, as it's currently is:
-1. Copy this repo.  
-2. Setup your [CORS Proxy](https://github.com/Rob--W/cors-anywhere) of choice to be able to fetch the assets directly from GBF. I have one for that purpose [here, called GBFCP](https://github.com/MizaGBF/GBFCP).  
+### With a Proxy:  
+> [!TIP]  
+> This is the current way I'm using to host it on Github Pages.  
+  
+With this method:  
+- No GBF Assets is hosted.  
+- A proxy server is used to work around [CORS policies](https://developer.mozilla.org/fr/docs/Web/HTTP/CORS).  
+  
+**Pros:**  
+- Requires little effort to maintain.  
+- Little bandwidth and space requirement for the page itself.  
+  
+**Cons:**  
+- Requires an extra server.  
+- Add extra latency.  
+- The bandwidth cost will take effect on this server.  
+  
+**Setup:**  
+1. Copy/Clone this repo.  
+2. Setup your CORS Proxy of choise. Make sure its own CORS policy only allows access from your website.  [CORS Anywhere](https://github.com/Rob--W/cors-anywhere) is an option, or you can use my custom solution, [GBFCP](https://github.com/MizaGBF/GBFCP) (Be sure to modify its CORS Url).  
 3. Change line 3 of `index.js` with the address of your proxy.  
-4. **If needed**, change around the line 97 of `index.js` the value `testUri` to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code. The corresponding asset is present in the `assets/folder` if needed.  
+4. **If needed**, change, around the line 97 of `index.js`, the value `testUri`. It's expected to redirect to `assets/test.png` or something else. This endpoint is used to test if the Proxy is alive and must return a HTTP 200 code.
+
+### Without a Proxy:  
+> [!CAUTION]  
+> This is the current way I'm using to host it on Github Pages.  
   
-Example if you wish to run it locally without downloading all assets:  
-- Grab a copy of this repo and [GBFCP](https://github.com/MizaGBF/GBFCP). Install the python requirements of the later.  
-- Change line 3 of `index.js` to `const CORS = 'http://localhost:8001/'`.  
-- Start [GBFCP](https://github.com/MizaGBF/GBFCP) with the command `python app.py -debug` to run it in local mode.  
-- Start a server in this project folder (you can use one of the server scripts).  
-- Go to [http://localhost:8000/](http://localhost:8001/) to access your local copy of GBFAP.  
+**Pros:**  
+- Faster and not reliant on GBF being available (it will persist even after an eventual EoS).  
   
-### The second way, is to host the assets along with the project:
-0. Prepare a lot of free space (a few ten of GB).  
-1. Copy this repo.  
+**Cons:**  
+- Requires lost of disk space.  
+- Not fully tested.  
+- In particular, sound files aren't downloaded by the updater, currently.  
+  
+**Setup:**  
+1. Copy/Clone this repo.  
 2. Run `python updater.py -download` to download all the assets. (The script will ask you to confirm by typying `yes`).  
-3. Change line 2 of `index.js`: From `const LOCAL = false;` to `const LOCAL = true;`  
+3. Change line 2 of `index.js` from `const LOCAL = false;` to `const LOCAL = true;`  
+4. **If needed**, change, around the line 81 of `index.js`, the various Uris. `testUri` in particular must redirect to `assets/test.png` or something else.  
   
-Note: This method isn't fully tested, you might encounter bugs. You'll also need to run `python updater.py -download` after every update but it won't re-download what's already on disk.  
+> [!CAUTION]  
+> You'll need to run `python updater.py -download` after every update, but it won't re-download what's already on disk.  
+  
+### For local use:  
+> [!CAUTION]  
+> This one if for testing or use locally on your own computer.  
+  
+1. Copy/Clone this repo, along [GBFCP](https://github.com/MizaGBF/GBFCP). Install the python requirements of the later.  
+2. Change line 3 of `index.js` to `const CORS = 'http://localhost:8001/'`.  
+3. Start [GBFCP](https://github.com/MizaGBF/GBFCP) with the command `python app.py -debug` to run it in local mode.  
+4. Start a server in this project folder (you can use one of the server scripts).  
+5. Go to [http://localhost:8000/](http://localhost:8001/) to access your local copy of GBFAP.  
   
 # Additional Setup  
 You can tinker with the `Game` variable around the line 80 of `index.js` if you need to change the path of asset types.  
-If you need to remove the proxy testing mentionned above, look for the function called `successLoading` in  `index.js` and modify it to look this way:
+If you wish to remove the proxy testing mentionned above, look for the function called `successLoading` in  `index.js` and modify it to look this way:
 ```javascript
 function successLoading(id)
 {
@@ -45,79 +81,82 @@ function successLoading(id)
   
 # The updater  
 `updater.py` is used to update `json/data.json` with new elements.
-It's currently compatible with characters (R, SR, SSR, Skins), summons, weapons, enemies and classes released up to today.  
+It's currently compatible with most characters (R, SR, SSR, Skins), summons, weapons, enemies and classes released up to today.  
   
 There are three main possible command lines:
 * `python updater.py -run` to simply retrieve new/unindexed elements.  
 * `python updater.py -update list_of__id` to manually update the specified elements, in case they got an uncap for example (You don't need to specify the character style for characters).  
-* `python updater.py -download` will download all the required assets not present on disk (ONLY USE IT IF YOU'RE PLANNING TO SELF-HOST THE ASSETS).  
+* `python updater.py -download` will download all the required assets not present on disk (Only use it if you're planning to host the assets).  
   
-You can then add the following options before for more control:
+You can then add the following options before the ones above for more control:
 * `-nochange` to not update the `changelog.json` recently updated element list.  
   
 And the following if you're using [GBFAL](https://github.com/MizaGBF/GBFAL):
 * `-gbfal` followed by the url or path to GBFAL `data.json` file. You can also set it to `https://raw.githubusercontent.com/MizaGBF/GBFAL/main/json/data.json`.  
   
+It'll use the [GBFAL](https://github.com/MizaGBF/GBFAL) `data.json` file to update the list of backgrounds, wiki links and also classes if possible.
+  
 # Exceptions/Quirks  
-* Some skins and characters reuse the Charge Attack or Attack effect of another version.  
-As there is no way to programmatically find it, at least currently, you'll have to set those exceptions manually in `updater.py`.  
-First, you'll likely get a `No special set` error for characters without corresponding charge attack.  
-Second, characters without corresponding attack effect will use a default one.  
-To fix any of those two issues, find out the ID of the Character that it's supposed to borrow the files from and open `update.py` and look for `PATCHES` around line 80.  
-Simply add a new line in the list if the ID of the character isn't present such as it looks that way:
-`"ID_CHARA_WITHOUT_OUGI" : ("ID_OUGI_BORROWED_FROM", "ID_ATTACK_BORROWED_FROM"),`.  
-Example:  
-`"3040232000": ("3040158000_UU", "phit_3040158000"),`.  
-Summer Alexiel (3040232000) is using Grand Alexiel (3040158000) Charge Attack and Attack files.  
-`_UU` indicates tells it to use the corresponding level of uncap but you can also set a specific level (like `01`, `02`, `03`, etc...).  
-You can also add `FF` to use the current form in the file name.  
-Just look at the full list in `updater.py` for more examples.  
-Once the change is done, run `updater.py` again for the concerned characters.  
+* Missing animations  
+Some skins/characters/weapons/weapons reuse animations of another version and, as a result, don't have their own.  
+You'll likely get an error message to signal those (for charge attacks and attack effects, at least), during the update process.  
+The solution is to manually set exceptions in `updater.py`, in their corresponding sections:  
+- `PATCHES` is for ID substitutions of certain elements (used by characters/skins). The format is `"ID_CHARA_WITHOUT_OUGI" : ("ID_OUGI_BORROWED_FROM", "ID_ATTACK_BORROWED_FROM"),`.  
+- `ID_SUBSTITUTE` is also for ID substitutions but on a global scope (used by characters/skins/weapons). The format is `"ID_WITHOUT_ANIMATION" : "ID_WITH_ANIMATION"`.  
+- `SHARED_SUMMONS` is a similar system but for summon sharing animations. They must be grouped together in a set: `set(["ID_1", "ID_2", ..., "ID_N"])`.  
   
-* In a similar way, some summons share assets, such as the Arcarum ones.  
-The groups must be defined in the `SHARED_SUMMONS` variable.  
-  
-* Classes also requires to be hardcoded (in `class_lookup` and `class_ougi`).  
-`class_lookup` requires the class main ID and a list of its secondary ID along with its proficiencies IDs.  
+* Classes  
+Classes also requires to be hardcoded to be updated properly (in `class_lookup` and `class_ougi`, in the `__init__` function).  
+- `class_lookup` requires the class main ID and a list of its secondary ID along with its proficiencies IDs.  
 For example, `150201` and `dkf` are Dark Fencer IDs. It also uses a sword `sw` and dagger `kn`. So the result is `"150201": ["dkf_sw", "dkf_kn"],`.  
-`class_ougi` is mostly for skins. Some skins use weapon assets for their charge attacks. Those weapons are usually not playable.  
-Using the `-gbfal` flag can fill those gaps for you, if you have access to an up-to-date version.  
+- `class_ougi` is mostly for skins. Some skins have weapon assets for their charge attacks. Those weapons are usually not playable.  
   
-* Weapons with multiple versions (currently, only the Dark Opus are affected) are separate based on their uncaps. Example `1040212500`, `1040212500_02` and `1040212500_03`.  
+> [!TIP]  
+> To avoid duplicates, only the first proficiency of a class is used in the player itself.  
+  
+> [!TIP]  
+> Using the `-gbfal` flag should help to fill those gaps for you, if you have access to an up-to-date version.  
+  
+* Multiple version weapons.  
+(Currently, only the Dark Opus are affected)  
+Weapons with multiple versions are separated based on their uncaps. Example `1040212500`, `1040212500_02` and `1040212500_03`.  
 This is due to the fact the game doesn't support two different weapons loaded at the same time on different entities.  
-  
-There are other weird exceptions that I probably forgot, I recommend trying to read the code for more infos.  
+
+As another exception, the skin **Honing Seeker: Nova** and its upgrades also work this way, to avoid a few headhaches related to its ID.  
   
 # Additional Notes  
-### Download  
+### Download Folders  
 Downloaded assets are saved in the following folders:  
-* Manifests in model/manifest/
-* CJS in cjs/
-* Sheets in img/sp/cjs/
+* Manifests in model/manifest/  
+* CJS animations in cjs/  
+* Spritesheets in img/sp/cjs/  
+* Raid backgrounds in img/sp/raid/ (Custom backgrounds are also inside, be careful if you want to delete the folder)  
   
-### Main files  
-* index.js (the page main script)  
-* player.js (loaded in second, add the player to the HTML)  
-* script.js (loaded in third, this is where asset loading starts)  
+### Program logic  
+Here's a simplified view of the file interactions:  
+![Flow](https://raw.githubusercontent.com/MizaGBF/GBFAP/main/assets/readme/01.png)  
+  
+* `index.js` is the page main script. This is where the page logic is handled (index, tabs, bookmarks, etc...).  
+* `script.js` handles the loading.  
+* `player.js` adds the player HTML and handles the various buttons/controls under the player. Those interact with `view/cjs_npc_demo.js` when needed.  
+* `view/cjs_npc_demo.js` is the player logic. There is one loaded instance by version (uncaps, etc...) of the element.  
   
 ### Changing the canvas/window size  
-Values must be changed at the top, in the following files:  
-* player.js  
-* view/cjs_npc_demo.js  
-  
-and in:  
-* css/style.css, under canvas-container (for the player size) and cjs-npc-demo (for the canvas size)  
+The following must be changed:  
+* `player.js`: CANVAS_SIZE near the top. It's size of the underneath canvas, i.e. the internal resolution, if you will.  
+* `view/cjs_npc_demo.js`: Also CANVAS_SIZE near the top. It must be the same as in `player.js`.  
+* `css/style.css`: Under canvas-container (The player size, what's visible on the page) and cjs-npc-demo (Must be equal to CANVAS_SIZE).  
   
 ### createjs patch  
-The project uses a more recent version of createjs and must be hotfixed to work with GBF animation files.  
+The project uses a more recent version of createjs than GBF, and must be hotfixed to work with GBF animation files.  
 It can be found in `index.js`, look for `hotfix_createjs`.  
+There is also a small change included to allow the bounding box feature.  
   
 ### Cross-Origin  
-When fetching assets from an external source, the Cross-Origin value must be set in `hotfix_createjs` (see above).  
-It's automatically set if you set `const LOCAL = false;` in `index.js` (see at the top of this readme for details).  
+When fetching assets from an external source (such as a Proxy), the Cross-Origin value must be set in `hotfix_createjs` (see above).  
+It's automatically set if you set `const LOCAL = false;` in `index.js` but, if you encounter cross-origin issues, this is where to look for.  
   
 ### Others  
-`tester.py` is used to look for specific calls in animation files, to check for crashes.  
-You can use one of the `server` scripts to start a Python HTTP Server and test the project locally in your web browser. Tweaks might be needed to make the asset fetching works.  
-  
+* `tester.py` is used to look for specific calls in animation files, to check for crashes.  
+* You can use one of the `server` scripts to start a Python HTTP Server and test the project locally in your web browser. Tweaks might be needed to make the asset fetching works.  
   

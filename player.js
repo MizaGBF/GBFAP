@@ -231,7 +231,7 @@ function openTexture()
             const name = k;
             let a = document.createElement("a");
             a.innerHTML = name;
-            a.href = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img/sp/cjs/" + name + ".png";
+            a.href = Game.externUri + "/img/sp/cjs/" + name + ".png";
             a.target="_blank";
             tlist.appendChild(a);
             

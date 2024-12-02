@@ -919,8 +919,10 @@ class Updater():
                                 except:
                                     pass
                 if phit is None or sp is None:
-                    if uncap == "": return 0
-                    else: break
+                    if uncap == "":
+                        raise Exception("No attack effect or charge attack")
+                    else:
+                        break
                 for i in range(2):
                     nsp = (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1]))
                     tmp = [('Gran' if i == 0 else 'Djeeta'), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), [nsp], ('_s2' in nsp or '_s3' in nsp)] # name, cjs, mortal, phit, sp, fullscreen
@@ -1181,7 +1183,7 @@ class Updater():
                                             nsp[vs] = nsp[svs]
                                             fullscreen[vs] = fullscreen.get(svs, False)
                                 if vs not in nsp:
-                                    raise Exception("No special")
+                                    raise Exception("No charge attack")
                             except:
                                 pass
                         if found is True: break
@@ -1461,7 +1463,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.5\n")
+                print("GBFAP updater v3.6\n")
                 start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []

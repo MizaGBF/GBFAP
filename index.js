@@ -82,7 +82,7 @@ var Game = LOCAL ? // Game variable used by GBF scripts
     jsUri: '',
     imgUri: 'img',
     soundUri: "https://prd-game-a5-granbluefantasy.akamaized.net/assets_en/sound/",
-    externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en', // direct access to GBF
+    externUri: 'https://prd-game-a1-granbluefantasy.akamaized.net/assets_en', // direct access to GBF, replace if you want to direct to your server
     bgUri: './', // for backgrounds
     testUri: 'assets/test.png', // to test if the server is setup
     setting: {}
