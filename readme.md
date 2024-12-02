@@ -13,7 +13,7 @@ Originally based and modified from the [chinese wiki](https://gbf.huijiwiki.com/
 * See [requirements.txt](https://github.com/MizaGBF/GBFAP/blob/master/requirements.txt) for a list of third-party modules.  
   
 # Hosting  
-There are two possible ways to host this project.  
+There are a few possible ways to host this project.  
   
 ### With a Proxy:  
 > [!TIP]  
