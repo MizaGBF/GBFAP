@@ -40,15 +40,15 @@ With this method:
 
 ### Without a Proxy:  
 > [!CAUTION]  
-> This is the current way I'm using to host it on Github Pages.  
+> Prepare at least 20 GB of disk space, to be safe.  
   
 **Pros:**  
-- Faster and not reliant on GBF being available (it will persist even after an eventual EoS).  
+- Faster and not reliant on GBF being available (It will persist even after an eventual EoS).  
   
 **Cons:**  
-- Requires lost of disk space.  
+- Requires lot of disk space.  
+- **Sound files aren't downloaded by the updater, currently**.  
 - Not fully tested.  
-- In particular, sound files aren't downloaded by the updater, currently.  
   
 **Setup:**  
 1. Copy/Clone this repo.  
@@ -58,9 +58,10 @@ With this method:
   
 > [!CAUTION]  
 > You'll need to run `python updater.py -download` after every update, but it won't re-download what's already on disk.  
+> This also means if, for whatever reason, an old file is updated on the game side, the updater won't update it.  
   
 ### For local use:  
-> [!CAUTION]  
+> [!TIP]  
 > This one if for testing or use locally on your own computer.  
   
 1. Copy/Clone this repo, along [GBFCP](https://github.com/MizaGBF/GBFCP). Install the python requirements of the later.  
@@ -115,7 +116,7 @@ For example, `150201` and `dkf` are Dark Fencer IDs. It also uses a sword `sw` a
 > To avoid duplicates, only the first proficiency of a class is used in the player itself.  
   
 > [!TIP]  
-> Using the `-gbfal` flag should help to fill those gaps for you, if you have access to an up-to-date version.  
+> Using the `-gbfal` flag should remove the needs to manually hardcore the class details.  
   
 * Multiple version weapons.  
 (Currently, only the Dark Opus are affected)  
@@ -143,18 +144,18 @@ Here's a simplified view of the file interactions:
   
 ### Changing the canvas/window size  
 The following must be changed:  
-* `player.js`: CANVAS_SIZE near the top. It's size of the underneath canvas, i.e. the internal resolution, if you will.  
-* `view/cjs_npc_demo.js`: Also CANVAS_SIZE near the top. It must be the same as in `player.js`.  
-* `css/style.css`: Under canvas-container (The player size, what's visible on the page) and cjs-npc-demo (Must be equal to CANVAS_SIZE).  
+* `player.js`: `CANVAS_SIZE` near the top. It's size of the underneath canvas, i.e. the internal resolution, if you will.  
+* `view/cjs_npc_demo.js`: Also `CANVAS_SIZE` near the top. It must be the same as in `player.js`.  
+* `css/style.css`: Under canvas-container (The player size, what's visible on the page) and cjs-npc-demo (Must be equal to `CANVAS_SIZE`).  
   
 ### createjs patch  
-The project uses a more recent version of createjs than GBF, and must be hotfixed to work with GBF animation files.  
+The project uses a more recent version of [CreateJS](https://createjs.com/) than GBF, and must be hotfixed to work with GBF animation files.  
 It can be found in `index.js`, look for `hotfix_createjs`.  
 There is also a small change included to allow the bounding box feature.  
   
 ### Cross-Origin  
-When fetching assets from an external source (such as a Proxy), the Cross-Origin value must be set in `hotfix_createjs` (see above).  
-It's automatically set if you set `const LOCAL = false;` in `index.js` but, if you encounter cross-origin issues, this is where to look for.  
+When fetching assets from an external source (such as a Proxy), the Cross-Origin value is set to `anonymous` in `hotfix_createjs`.  
+It's automatically set if you set `const LOCAL = false;` in `index.js` but, if you encounter cross-origin issues with `const LOCAL = true;`, this is where to look for.  
   
 ### Others  
 * `tester.py` is used to look for specific calls in animation files, to check for crashes.  
