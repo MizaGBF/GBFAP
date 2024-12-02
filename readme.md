@@ -68,7 +68,7 @@ With this method:
 2. Change line 3 of `index.js` to `const CORS = 'http://localhost:8001/'`.  
 3. Start [GBFCP](https://github.com/MizaGBF/GBFCP) with the command `python app.py -debug` to run it in local mode.  
 4. Start a server in this project folder (you can use one of the server scripts).  
-5. Go to [http://localhost:8000/](http://localhost:8001/) to access your local copy of GBFAP.  
+5. Go to [http://localhost:8000/](http://localhost:8000/) to access your local copy of GBFAP.  
   
 # Additional Setup  
 You can tinker with the `Game` variable around the line 80 of `index.js` if you need to change the path of asset types.  
