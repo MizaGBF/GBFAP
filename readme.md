@@ -127,11 +127,11 @@ As another exception, the skin **Honing Seeker: Nova** and its upgrades also wor
   
 # Additional Notes  
 ### Download Folders  
-Downloaded assets are saved in the following folders:  
-* Manifests in model/manifest/  
-* CJS animations in cjs/  
-* Spritesheets in img/sp/cjs/  
-* Raid backgrounds in img/sp/raid/ (Custom backgrounds are also inside, be careful if you want to delete the folder)  
+Downloaded assets are saved in the following folders, mimicking GBF folder structure:  
+* Manifests in `model/manifest/`  
+* CJS animations in `cjs/`  
+* Spritesheets in `img/sp/cjs/`  
+* Raid backgrounds in `img/sp/raid/` (Custom backgrounds are also inside, be careful if you want to delete the folder)  
   
 ### Program logic  
 Here's a simplified view of the file interactions:  
