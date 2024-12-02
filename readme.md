@@ -29,7 +29,7 @@ With this method:
   
 **Cons:**  
 - Requires an extra server.  
-- Add extra latency.  
+- Adds extra latency.  
 - The bandwidth cost will take effect on this server.  
   
 **Setup:**  
