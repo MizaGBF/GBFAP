@@ -40,14 +40,13 @@ With this method:
 
 ### Without a Proxy:  
 > [!CAUTION]  
-> Prepare at least 20 GB of disk space, to be safe.  
+> Prepare at least 30~40 GB of disk space, to be safe (I might even be underestimating it).  
   
 **Pros:**  
 - Faster and not reliant on GBF being available (It will persist even after an eventual EoS).  
   
 **Cons:**  
 - Requires lot of disk space.  
-- **Sound files aren't downloaded by the updater, currently**.  
 - Not fully tested.  
   
 **Setup:**  
@@ -132,6 +131,7 @@ Downloaded assets are saved in the following folders, mimicking GBF folder struc
 * CJS animations in `cjs/`  
 * Spritesheets in `img/sp/cjs/`  
 * Raid backgrounds in `img/sp/raid/` (Custom backgrounds are also inside, be careful if you want to delete the folder)  
+* Audio files in `audio/`  
   
 ### Program logic  
 Here's a simplified view of the file interactions:  

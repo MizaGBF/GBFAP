@@ -1,6 +1,7 @@
 import asyncio
 import aiohttp
 import json
+import re
 import os
 import sys
 import traceback
@@ -464,6 +465,8 @@ class Updater():
     MANIFEST = JS + "model/manifest/"
     CJS = JS + "cjs/"
     IMG = ENDPOINT + "img" # no trailing /
+    # for mp3 download
+    MP3_SEARCH = re.compile('"[a-zA-Z0-9_\\/]+\.mp3"')
 
     def __init__(self) -> None:
         self.client = None
@@ -1282,7 +1285,7 @@ class Updater():
         print("Downloading all assets...")
         print("Checking directories...")
         try:
-            for f in ["model/manifest", "cjs", "img/sp/cjs", "img/sp/raid/bg", "img/sp/guild/custom/bg"]:
+            for f in ["model/manifest", "cjs", "img/sp/cjs", "img/sp/raid/bg", "img/sp/guild/custom/bg", "sound/se", "sound/voice"]:
                 if not os.path.exists(f):
                     os.makedirs(f)
                     print("Created missing '"+f+"' folder")
@@ -1373,6 +1376,7 @@ class Updater():
                     match path:
                         case "model/manifest/": p = self.MANIFEST
                         case "cjs/": p = self.CJS
+                        case "sound/se/"|"sound/voice/": p = self.ENDPOINT + path
                         case "img/sp/cjs/"|"img/sp/raid/bg/"|"img/sp/guild/custom/bg/": p = self.ENDPOINT + path
                         case _: raise Exception("Unknown path type " + path)
                     data = await self.req(p + file)
@@ -1395,6 +1399,15 @@ class Updater():
                 except Exception as e:
                     print("Error while reading manifest", path + file, ":", e)
                     continue
+            elif path == "cjs/":
+                # extract mp3 paths from cjs
+                audios = self.MP3_SEARCH.findall(data.decode('utf-8'))
+                for a in audios:
+                    s = a[1:-1].split('/', 1)
+                    if len(s) == 2:
+                        await self.dl_queue.put(('sound/'+s[0]+'/', s[1]))
+                    else:
+                        print("Warning: Skipped the following potential sound:", a)
 
     def loadIndex(self) -> None:
         try:
@@ -1463,7 +1476,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.6\n")
+                print("GBFAP updater v3.7\n")
                 start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []
