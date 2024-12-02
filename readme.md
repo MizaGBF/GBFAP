@@ -62,7 +62,7 @@ With this method:
   
 ### For local use:  
 > [!TIP]  
-> This one if for testing or use locally on your own computer.  
+> This one is for testing or use locally on your own computer.  
   
 1. Copy/Clone this repo, along [GBFCP](https://github.com/MizaGBF/GBFCP). Install the python requirements of the later.  
 2. Change line 3 of `index.js` to `const CORS = 'http://localhost:8001/'`.  
