@@ -20,7 +20,7 @@ There are two possible ways to host this project.
 > This is the current way I'm using to host it on Github Pages.  
   
 With this method:  
-- No GBF Assets is hosted.  
+- No GBF Assets are hosted.  
 - A proxy server is used to work around [CORS policies](https://developer.mozilla.org/fr/docs/Web/HTTP/CORS).  
   
 **Pros:**  
