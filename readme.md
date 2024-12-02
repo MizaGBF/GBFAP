@@ -146,7 +146,7 @@ Here's a simplified view of the file interactions:
 The following must be changed:  
 * `player.js`: `CANVAS_SIZE` near the top. It's size of the underneath canvas, i.e. the internal resolution, if you will.  
 * `view/cjs_npc_demo.js`: Also `CANVAS_SIZE` near the top. It must be the same as in `player.js`.  
-* `css/style.css`: Under canvas-container (The player size, what's visible on the page) and cjs-npc-demo (Must be equal to `CANVAS_SIZE`).  
+* `css/style.css`: Under `canvas-container` (The player size, what's visible on the page) and `cjs-npc-demo` (Must be equal to `CANVAS_SIZE`).  
   
 ### createjs patch  
 The project uses a more recent version of [CreateJS](https://createjs.com/) than GBF, and must be hotfixed to work with GBF animation files.  
