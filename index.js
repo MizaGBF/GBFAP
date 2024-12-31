@@ -12,7 +12,7 @@ const ENDPOINTS = [ // possible asset endpoints, used for the index
 ];
 // html index related (copied from GBFAL)
 const CHARACTERS = [
-    ["Year 2025 (Snake)", "assets/ui/index_icon/year_2024_(dragon).png", [0, -1, 0, -1, 571, 999]],
+    ["Year 2025 (Snake)", "assets/ui/index_icon/year_2025_(snake).png", [0, -1, 0, -1, 571, 999]],
     ["Year 2024 (Dragon)", "assets/ui/index_icon/year_2024_(dragon).png", [75, 76, 0, -1, 504, 571]],
     ["Year 2023 (Rabbit)", "assets/ui/index_icon/year_2023_(rabbit).png", [0, -1, 0, -1, 443, 504]],
     ["Year 2022 (Tiger)", "assets/ui/index_icon/year_2022_(tiger).png", [0, -1, 0, -1, 379, 443]],
