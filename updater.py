@@ -466,7 +466,7 @@ class Updater():
     CJS = JS + "cjs/"
     IMG = ENDPOINT + "img" # no trailing /
     # for mp3 download
-    MP3_SEARCH = re.compile('"[a-zA-Z0-9_\\/]+\.mp3"')
+    MP3_SEARCH = re.compile('"[a-zA-Z0-9_\\/]+\\.mp3"')
 
     def __init__(self) -> None:
         self.client = None
