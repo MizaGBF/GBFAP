@@ -724,8 +724,7 @@ class Updater():
             # add enemies
             for a in range(1, 10):
                 for b in range(1, 4):
-                    for d in [1, 2, 3]:
-                        possibles.append(str(a) + str(b) + "{}" + str(d))
+                    possibles.append(str(a) + str(b) + "{}")
             for i in range(self.MAX_RUN_TASK):
                 tasks.append(tg.create_task(self.run_class(i, self.MAX_RUN_TASK)))
                 for j in possibles:
@@ -743,31 +742,51 @@ class Updater():
             eid = start
             errc = 0
             count = 0
+            is_mob = (len(file) == 4 and file.endswith('{}'))
             while errc < 20:
-                is_mob = len(file) == 5
                 f = file.format(str(eid).zfill(4 if is_mob else 3))
-                if self.index.get(f, 0) == 0:
-                    if is_mob:
-                        r = await self.update_mob(f)
-                    elif file.startswith("10"):
-                        if f in self.class_weapon.values():
-                            errc = 0
-                            eid += step
-                            continue
-                        r = await self.update_weapon(f)
-                    elif file.startswith("20"):
-                        r = await self.update_summon(f)
-                    else:
-                        r = await self.update_character(f)
+                if is_mob:
+                    r = 0
+                    tasks = []
+                    for i in range(1, 4):
+                        fi = f+str(i)
+                        if self.index.get(fi, 0) == 0:
+                            tasks.append(self.update_mob(fi))
+                        else:
+                            r += 1
+                    if len(tasks) > 0:
+                        for tr in await asyncio.gather(*tasks):
+                            if tr is not None:
+                                r += tr
+                                if tr:
+                                    count += 1
                     if r == 0:
                         errc += 1
                         if errc >= 20:
                             return count
                     else:
                         errc = 0
-                        count += r
                 else:
-                    errc = 0
+                    if self.index.get(f, 0) == 0:
+                        if file.startswith("10"):
+                            if f in self.class_weapon.values():
+                                errc = 0
+                                eid += step
+                                continue
+                            r = await self.update_weapon(f)
+                        elif file.startswith("20"):
+                            r = await self.update_summon(f)
+                        else:
+                            r = await self.update_character(f)
+                        if r == 0:
+                            errc += 1
+                            if errc >= 20:
+                                return count
+                        else:
+                            errc = 0
+                            count += r
+                    else:
+                        errc = 0
                 eid += step
             return count
 
@@ -1476,7 +1495,7 @@ class Updater():
     async def boot(self, argv : list) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.7\n")
+                print("GBFAP updater v3.8\n")
                 start_flags = set(["-nochange", "-debug"])
                 flags = set()
                 extras = []
