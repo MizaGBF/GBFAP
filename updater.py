@@ -75,7 +75,7 @@ class Progress():
 # main class
 class Updater():
     ### CONSTANT
-    VERSION = '3.9'
+    VERSION = '3.10'
     # limit
     MAX_NEW = 80
     MAX_HTTP = 90
@@ -138,7 +138,8 @@ class Updater():
         self.dl_queue = None # used for download
         self.gbfal = {} # gbfal data
         self.class_gbfal = False
-        self.exclusion = set([])
+        self.exclusion = set()
+        self.uncap_check = set()
         self.loadIndex()
         self.http_sem = asyncio.Semaphore(self.MAX_HTTP) # http semaphore
 
@@ -171,6 +172,72 @@ class Updater():
                 print("Background list updated from GBFAL")
         except:
             pass
+        try:
+            print("Checking GBFAL data for uncaps...")
+            possible_uncap = set()
+            table = {}
+            for k, v in self.gbfal['characters'].items():
+                if isinstance(v, list):
+                    max_uncap = 0
+                    for e in v[6]: # seventh index
+                        u = int(e.split('_')[1])
+                        if u < 10 and u > max_uncap:
+                            max_uncap = u
+                    if max_uncap > 0:
+                        table[k] = max_uncap
+            for k, v in self.gbfal['summons'].items():
+                if isinstance(v, list):
+                    max_uncap = 0
+                    
+                    for e in v[0]: # first index
+                        try:
+                            u = int(e.split('_')[1])
+                        except:
+                            u = 1
+                        if u < 10 and u > max_uncap:
+                            max_uncap = u
+                    if max_uncap > 0:
+                        table[k] = max_uncap
+            for k, v in self.index.items():
+                if k in table:
+                    if 'v' in v:
+                        max_uncap = 0
+                        if k[0] == '3':
+                            for e in v['v']:
+                                u = 0
+                                match e[0].split('★')[0]:
+                                    case '0':
+                                        u = 1
+                                    case '4':
+                                        u = 2
+                                    case '5':
+                                        u = 3
+                                    case '6':
+                                        u = 4
+                                if u < 10 and u > max_uncap:
+                                    max_uncap = u
+                        elif k[0] == '2':
+                            for e in v['v']:
+                                u = 0
+                                match e[0].split('★')[0]:
+                                    case '3':
+                                        u = 1
+                                    case '4':
+                                        u = 2
+                                    case '5':
+                                        u = 3
+                                    case '6':
+                                        u = 4
+                                if u < 10 and u > max_uncap:
+                                    max_uncap = u
+                        if table[k] > max_uncap:
+                            possible_uncap.add(k)
+            if len(possible_uncap) > 0:
+                print(len(possible_uncap), "possible uncap(s) found")
+                self.uncap_check = possible_uncap
+        except Exception as e:
+            pass
+            print(e)
 
     def update_wiki_from_GBFAL(self) -> None: # same than the above, for wiki lookup
         try:
@@ -187,7 +254,6 @@ class Updater():
                     pass
         except:
             pass
-        self.saveIndex()
 
     async def progress_container(self, coroutine : Callable) -> Any:
         with self.progress:
@@ -228,7 +294,6 @@ class Updater():
             count += t.result()
         if count > 0: print(count, "new entries")
         else: print("Done")
-        self.saveIndex()
 
     async def run_sub(self, start : int, step : int, file : str) -> int:
         with self.progress:
@@ -260,7 +325,7 @@ class Updater():
                     else:
                         errc = 0
                 else:
-                    if self.index.get(f, 0) == 0:
+                    if self.index.get(f, 0) == 0 or f in self.uncap_check:
                         if file.startswith("10"):
                             if f in self.CLASS_WEAPON_LIST.values():
                                 errc = 0
@@ -779,7 +844,6 @@ class Updater():
             count += t.result()
         if count > 0: print(count, "new entries")
         else: print("Done")
-        self.saveIndex()
 
     async def getJS(self, js : str) -> None:
         await self.req(self.MANIFEST + js + ".js")
@@ -1023,6 +1087,7 @@ class Updater():
                     parser.print_help()
                 if len(self.gbfal) > 0:
                     self.update_wiki_from_GBFAL()
+                self.saveIndex()
         except Exception as e:
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
 

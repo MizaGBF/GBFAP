@@ -102,7 +102,8 @@ settings:
   
 > [!NOTE]  
 > It's recommended to use this project in combination with [GBFAL](https://github.com/MizaGBF/GBFAL), using the `-al` argument.  
-> If you don't wish to, you can still use `-al` with an url instead of a path.  
+> It's useful to auto-detect character uncaps (along with summons to some extent) and new classes.  
+> If you don't wish to bother with keeping an up-to-date version of GBFAL, you can still use `-al` with an url instead of a path.  
 > `-al https://raw.githubusercontent.com/MizaGBF/GBFAL/refs/heads/main/json/data.json` should work just fine.  
   
 # Hosting  
