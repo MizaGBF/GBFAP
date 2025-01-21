@@ -8,13 +8,13 @@ It's composed of a single HTML page, plus the javascript, CSS and various assets
 This section will provide informations on this part of the project.  
   
 > [!NOTE]  
-> These page is static and is currently hosted on [Github Pages](https://pages.github.com/), but it can technically be hosted anywhere.  
+> The page is static and is currently hosted on [Github Pages](https://pages.github.com/), but it can technically be hosted anywhere.  
   
 ## General informations  
   
 This animation player is originally based and modified from the [chinese wiki](https://gbf.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5) animation player, itself based on the [Granblue Fantasy Gacha page preview](https://game.granbluefantasy.jp/#gacha/selected).  
   
-It can, in theory, play every animations of the game but the scope of this project has been narrowed to Characters (including their outfits), Summons, Weapons, Main characters (classes and outfits), Enemies and some Partner Characters (from events)  
+It can, in theory, play every animations of the game but the scope of this project has been narrowed to Characters (including their outfits), Summons, Weapons, Main characters (classes and outfits), Enemies and some Partner Characters (from events).  
   
 ## Asset Folder structure  
 > [!NOTE]  
@@ -38,12 +38,12 @@ Here's a simplified view of the file interactions:
   
 ## Changing the canvas/window size  
 The following must be changed:  
-* `player.js`: `CANVAS_SIZE` near the top. It's size of the underneath canvas, i.e. the internal resolution, if you will.  
-* `view/cjs_npc_demo.js`: Also `CANVAS_SIZE` near the top. It must be the same as in `player.js`.  
-* `css/style.css`: Under `canvas-container` (The player size, what's visible on the page) and `cjs-npc-demo` (Must be equal to `CANVAS_SIZE`).  
+* In `player.js`: `CANVAS_SIZE` near the top. It's size of the underneath canvas, i.e. the internal resolution, if you will.  
+* In `view/cjs_npc_demo.js`: Also `CANVAS_SIZE` near the top. It must be the same as in `player.js`.  
+* In `css/style.css`: Under `canvas-container` (The player size, what's visible on the page) and `cjs-npc-demo` (Must be equal to `CANVAS_SIZE`).  
   
 ## createjs patch  
-The project uses a more recent version of [CreateJS](https://createjs.com/) than GBF, and must be hotfixed to work with GBF animation files.  
+The project uses a more recent version of [CreateJS](https://createjs.com/) than GBF, and must be hotfixed to work with GBF animation files properly.  
 It can be found in `index.js`, look for `hotfix_createjs`.  
 There is also a small change included to allow the bounding box feature.  
   
@@ -173,7 +173,7 @@ function successLoading(id)
 ```  
   
 # Exceptions/Quirks  
-* Missing animations  
+* **Missing animations**  
 Some skins/characters/weapons/weapons reuse animations of another version and, as a result, don't have their own.  
 You'll likely get an error message to signal those (for charge attacks and attack effects, at least), during the update process.  
   
@@ -182,8 +182,8 @@ You can manually set exceptions in `json/manual_constants.json`, in the correspo
 - `ID_SUBSTITUTE` is also for ID substitutions but on a global scope (used by characters/skins/weapons). The format is `"ID_WITHOUT_ANIMATION" : "ID_WITH_ANIMATION"`.  
 - `SHARED_SUMMONS` is a similar system but for summon sharing animations. They must be grouped together in: `["ID_1", "ID_2", ..., "ID_N"]`.  
   
-* Classes  
-Classes also requires to be set in `json/manual_constants.json`.  
+* **Classes**  
+Classes requires to be set in `json/manual_constants.json` under the **following**:  
 - `CLASS_LIST` requires the class main ID and a list of its secondary ID along with its proficiencies IDs.  
 For example, `150201` and `dkf` are Dark Fencer IDs. It also uses a sword `sw` and dagger `kn`. So the result is `"150201": ["dkf_sw", "dkf_kn"],`.  
 - `CLASS_WEAPON_LIST` is mostly for skins. Some skins have weapon assets for their charge attacks. Those weapons are usually not playable.  
@@ -194,12 +194,12 @@ For example, `150201` and `dkf` are Dark Fencer IDs. It also uses a sword `sw` a
 > [!TIP]  
 > Using the `-al` flag should remove the needs to manually update the class details, but this solution isn't perfect.  
   
-* Multiple version weapons.  
+* **Multiple version weapons**  
 (Currently, only the Dark Opus are affected)  
 Weapons with multiple versions are separated based on their uncaps. Example `1040212500`, `1040212500_02` and `1040212500_03`.  
 This is due to the fact the game doesn't support two different weapons loaded at the same time on different entities.  
   
-* Unite & Fight skin.  
+* **Unite & Fight skin**  
 The skin **Honing Seeker: Nova** and its upgrades are also separated, to avoid a few headhaches related to their ID.  
 The related IDs must be set in `json/manual_constants.json`, under `UNIQUE_SKIN`.  
   
