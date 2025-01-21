@@ -8,6 +8,7 @@ import traceback
 import time
 from datetime import datetime, timezone
 from typing import Optional, Callable, Any
+import argparse
 
 # progress bar class
 class Progress():
@@ -74,6 +75,7 @@ class Progress():
 # main class
 class Updater():
     ### CONSTANT
+    VERSION = '3.9'
     # limit
     MAX_NEW = 80
     MAX_HTTP = 90
@@ -91,374 +93,18 @@ class Updater():
         "els_mc_{}_01", # harp
         "kng_kt_{}_01" # katana
     ]
-    # character patches
-    PATCHES = { # tuple: substitute ougi id, substitute atk file
-        # attack fixes
-        # R
-        "3020000000": ("", "phit_ax_0001"),
-        "3020001000": ("", "phit_sw_0003"),
-        "3020002000": ("", "phit_ax_0004"),
-        "3020004000": ("", "phit_ax_0001"),
-        "3020005000": ("", "phit_sp_0002"),
-        "3020006000": ("", "phit_sw_0003"),
-        "3020007000": ("", "phit_sw_0003"),
-        "3020008000": ("", "phit_wa_0001"),
-        "3020009000": ("", "phit_me_0004"),
-        "3020010000": ("", "phit_sw_0006"),
-        "3020011000": ("", "phit_wa_0004"),
-        "3020012000": ("", "phit_sp_0003"),
-        "3020013000": ("", "phit_kn_0003"),
-        "3020014000": ("", "phit_gu_0002"),
-        "3020015000": ("", "phit_kn_0006"),
-        "3020016000": ("", "phit_gu_0001"),
-        "3020017000": ("", "phit_kn_0006"),
-        "3020018000": ("", "phit_sw_0005"),
-        "3020019000": ("", "phit_sw_0004"),
-        "3020020000": ("", "phit_me_0005"),
-        "3020021000": ("", "phit_wa_0001"),
-        "3020022000": ("", "phit_kn_0003"),
-        "3020023000": ("", "phit_gu_0001"),
-        "3020024000": ("", "phit_ax_0005"),
-        "3020025000": ("", "phit_ax_0001"),
-        "3020026000": ("", "phit_kn_0004"),
-        "3020027000": ("", "phit_sw_0003"),
-        "3020028000": ("", "phit_kn_0003"),
-        "3020030000": ("", "phit_kn_0002"),
-        "3020031000": ("", "phit_kn_0006"),
-        "3020033000": ("", "phit_me_0003"),
-        "3020034000": ("", "phit_gu_0001"),
-        "3020036000": ("", "phit_gu_0001"),
-        "3020037000": ("", "phit_me_0003"),
-        "3020038000": ("", "phit_me_0001"),
-        "3020039000": ("", "phit_wa_0005"),
-        "3020040000": ("", "phit_sp_0002"),
-        "3020041000": ("", "phit_kn_0006"),
-        "3020045000": ("", "phit_kn_0004"),
-        "3020046000": ("", "phit_ax_0001"),
-        "3020048000": ("", "phit_sw_0002"),
-        "3020049000": ("", "phit_bw_0001"),
-        "3020050000": ("", "phit_0000000000"),
-        "3020051000": ("", "phit_me_0003"),
-        "3020052000": ("", "phit_me_0001_silent"),
-        "3020053000": ("", "phit_sw_0002"),
-        "3020054000": ("", "phit_kn_0005"),
-        "3020056000": ("", "phit_sw_0004"),
-        "3020057000": ("", "phit_sp_0001"),
-        "3020058000": ("", "phit_sw_0003"),
-        "3020059000": ("", "phit_me_0004"),
-        "3020060000": ("", "phit_me_0001"),
-        "3020061000": ("", "phit_wa_0006"),
-        "3020062000": ("", "phit_me_0002"),
-        "3020063000": ("", "phit_kn_0001"),
-        "3020064000": ("", "phit_sw_0003"),
-        "3020070000": ("", "phit_me_0002"),
-        # SR
-        "3030000000": ("", "phit_sp_0015"),
-        "3030001000": ("", "phit_sw_0012"),
-        "3030002000": ("", "phit_wa_0012"),
-        "3030003000": ("", "phit_wa_0011"),
-        "3030004000": ("", "phit_sw_0014"),
-        "3030009000": ("", "phit_sw_0013"),
-        "3030010000": ("", "phit_kn_0014"),
-        "3030011000": ("", "phit_ax_0011"),
-        "3030012000": ("", "phit_sw_0012"),
-        "3030013000": ("", "phit_me_0013"),
-        "3030014000": ("", "phit_sp_0012"),
-        "3030015000": ("", "phit_me_0011"),
-        "3030016000": ("", "phit_gu_0011"),
-        "3030018000": ("", "phit_bw_0014"),
-        "3030020000": ("", "phit_me_0013"),
-        "3030024000": ("", "phit_bw_0014"),
-        "3030026000": ("", "phit_mc_0014"),
-        "3030027000": ("", "phit_kn_0011"),
-        "3030028000": ("", "phit_sp_0012"),
-        "3030029000": ("", "phit_sw_0012"),
-        "3030030000": ("", "phit_gu_0011"),
-        "3030031000": ("", "phit_sw_0014"),
-        "3030032000": ("", "phit_3030101000"),
-        "3030033000": ("", "phit_sw_0016"),
-        "3030034000": ("", "phit_wa_0011"),
-        "3030035000": ("", "phit_bw_0014"),
-        "3030036000": ("", "phit_wa_0015"),
-        "3030037000": ("", "phit_sw_0013"),
-        "3030038000": ("", "phit_sw_0013"),
-        "3030039000": ("", "phit_wa_0015"),
-        "3030040000": ("", "phit_sw_0015"),
-        "3030041000": ("", "phit_sw_0012"),
-        "3030042000": ("", "phit_sw_0016"),
-        "3030043000": ("", "phit_mc_0014"),
-        "3030044000": ("", "phit_bw_0014"),
-        "3030045000": ("", "phit_sp_0013"),
-        "3030046000": ("", "phit_sw_0011"),
-        "3030047000": ("", "phit_sp_0012"),
-        "3030048000": ("", "phit_gu_0013"),
-        "3030049000": ("", "phit_sw_0015"),
-        "3030050000": ("", "phit_wa_0015"),
-        "3030053000": ("", "phit_sw_0015"),
-        "3030054000": ("", "phit_3710177000"),
-        "3030055000": ("", "phit_me_0013"),
-        "3030056000": ("", "phit_sw_0013"),
-        "3030057000": ("", "phit_me_0013"),
-        "3030058000": ("", "phit_wa_0011"),
-        "3030059000": ("", "phit_ax_0016"),
-        "3030062000": ("", "phit_sw_0011"),
-        "3030063000": ("", "phit_gu_0011"),
-        "3030064000": ("", "phit_bw_0012"),
-        "3030066000": ("", "phit_wa_0014"),
-        "3030067000": ("", "phit_bw_0014"),
-        "3030068000": ("", "phit_gu_0011"),
-        "3030072000": ("", "phit_sw_0014"),
-        "3030075000": ("", "phit_mc_0015"),
-        "3030077000": ("", "phit_sw_0012"),
-        "3030081000": ("", "phit_kt_0026"),
-        "3030082000": ("", "phit_me_0025"),
-        "3030084000": ("", "phit_kn_0016"),
-        "3030085000": ("", "phit_gu_0013"),
-        "3030090000": ("", "phit_wa_0016"),
-        "3030092000": ("", "phit_wa_0016"),
-        "3030096000": ("", "phit_sp_0011"),
-        "3030097000": ("", "phit_sw_0011"),
-        "3030100000": ("", "phit_wa_0014"),
-        "3030102000": ("", "phit_wa_0013"),
-        "3030103000": ("", "phit_sw_0013"),
-        "3030106000": ("", "phit_wa_0013"),
-        "3030107000": ("", "phit_sp_0012"),
-        "3030108000": ("", "phit_3040023000"),
-        "3030109000": ("", "phit_me_0015"),
-        "3030110000": ("", "phit_sp_0011"),
-        "3030112000": ("", "phit_gu_0013"),
-        "3030113000": ("", "phit_bw_0011"),
-        "3030116000": ("", "phit_ax_0015"),
-        "3030117000": ("", "phit_me_0015"),
-        "3030118000": ("", "phit_kt_0014"),
-        "3030119000": ("", "phit_ax_0011"),
-        "3030121000": ("", "phit_sw_0013"),
-        "3030122000": ("", "phit_me_0013"),
-        "3030123000": ("", "phit_kn_0012"),
-        "3030127000": ("", "phit_me_0011"),
-        "3030128000": ("", "phit_ax_0014"),
-        "3030129000": ("", "phit_sw_0016"),
-        "3030133000": ("", "phit_sp_0013"),
-        "3030134000": ("", "phit_kn_0013"),
-        "3030139000": ("", "phit_ax_0013"),
-        "3030140000": ("", "phit_wa_0015"),
-        "3030147000": ("", "phit_me_0013"),
-        "3030149000": ("", "phit_mc_0013"),
-        "3030151000": ("", "phit_3030022000"),
-        "3030154000": ("", "phit_gu_0021_silent"),
-        "3030155000": ("", "phit_gu_0011_silent"),
-        "3030157000": ("", "phit_sw_0003"),
-        "3030158000": ("", "phit_3020065000"),
-        "3030159000": ("", "phit_gu_0013"),
-        "3030161000": ("", "phit_wa_0011"),
-        "3030163000": ("", "phit_3040070000"),
-        "3030165000": ("", "phit_3040007000"),
-        "3030168000": ("", "phit_3040050000"),
-        "3030169000": ("", "phit_me_0014"),
-        "3030170000": ("", "phit_3040071000"),
-        "3030175000": ("", "phit_sw_0013"),
-        "3030176000": ("", "phit_sw_0012"),
-        "3030178000": ("", "phit_kt_0013"),
-        "3030179000": ("", "phit_bw_0014"),
-        "3030181000": ("", "phit_gu_0014"),
-        "3030182000": ("", "phit_3040098000"),
-        "3030183000": ("", "phit_kn_0015"),
-        "3030184000": ("", "phit_kt_0013"),
-        "3030185000": ("", "phit_gu_0016"),
-        "3030186000": ("", "phit_me_0012_silent"),
-        "3030187000": ("", "phit_bw_0011"),
-        "3030191000": ("", "phit_sw_0014"),
-        "3030195000": ("", "phit_sw_0015"),
-        "3030199000": ("", "phit_3040084000"),
-        "3030200000": ("", "phit_sw_0011"),
-        "3030201000": ("", "phit_3040052000"),
-        "3030202000": ("", "phit_me_0004"),
-        "3030203000": ("", "phit_3030083000"),
-        "3030206000": ("", "phit_kt_0013"),
-        "3030221000": ("", "phit_3040057000"),
-        "3030223000": ("", "phit_3040006000"),
-        "3030225000": ("", "phit_3040024000"),
-        "3030230000": ("", "phit_gu_0001"),
-        "3030233000": ("", "phit_3040078000"),
-        "3030239000": ("", "phit_gu_0015"),
-        "3030246000": ("", "phit_3040145000"),
-        "3030250000": ("", "phit_ax_0013"),
-        "3030268000": ("", "phit_bw_0011"),
-        "3030272000": ("", "phit_3040191000"),
-        "3030273000": ("", "phit_3030262000"),
-        # SSR
-        "3040014000": ("", "phit_3040004000"),
-        "3040056000": ("", "phit_3040028000"),
-        "3040073000": ("", "phit_3030101000"),
-        "3040090000": ("", "phit_3040050000"),
-        "3040091000": ("", "phit_3040060000"),
-        "3040110000": ("", "phit_3040070000"),
-        "3040126000": ("", "phit_3040100000"),
-        "3040127000": ("", "phit_3040081000"),
-        "3040128000": ("", "phit_3040025000"),
-        "3040136000": ("", "phit_wa_0001"),
-        "3040151000": ("", "phit_3040123000"),
-        "3040154000": ("", "phit_sw_0015"),
-        "3040176000": ("", "phit_3040068000"),
-        "3040177000": ("", "phit_3040148000"),
-        "3040210000": ("", "phit_3040138000"),
-        "3040224000": ("", "phit_3040153000"),
-        # skins
-        "3710001000": ("", "phit_3040054000_03"),
-        "3710002000": ("", "phit_3030008000_03"),
-        "3710003000": ("", "phit_3040065000_03"),
-        "3710004000": ("", "phit_3040227000"),
-        "3710005000": ("", "phit_3030253000"),
-        "3710006000": ("", "phit_3040027000"),
-        "3710007000": ("", "phit_3040141000"),
-        "3710008000": ("", "phit_3040143000"),
-        "3710009000": ("", "phit_3040237000"),
-        "3710010000": ("", "phit_3040237000"),
-        "3710011000": ("", "phit_3040209000"),
-        "3710013000": ("", "phit_3040141000"),
-        "3710014000": ("", "phit_3040255000"),
-        "3710017000": ("", "phit_3040013000"),
-        "3710018000": ("", "phit_3040071000_03"),
-        "3710021000": ("", "phit_3040227000"),
-        "3710022000": ("", "phit_3040083000"),
-        "3710023000": ("", "phit_3040077000_03"),
-        "3710030000": ("", "phit_3040050000"),
-        "3710031000": ("", "phit_3040237000"),
-        "3710032000": ("", "phit_3040023000"),
-        "3710035000": ("", "phit_3040054000_03"),
-        "3710036000": ("", "phit_3040141000"),
-        "3710037000": ("", "phit_3040077000_03"),
-        "3710038000": ("", "phit_3040068000_03"),
-        "3710039000": ("", "phit_3040101000"),
-        "3710040000": ("", "phit_3040117000"),
-        "3710045000": ("", "phit_3040209000"),
-        "3710046000": ("", "phit_3040257000"),
-        "3710047000": ("", "phit_3040054000_03"),
-        "3710048000": ("", "phit_3040092000"),
-        "3710050000": ("", "phit_3030008000_03"),
-        "3710052000": ("", "phit_3040077000_03"),
-        "3710053000": ("", "phit_3040068000_03"),
-        "3710054000": ("", "phit_wa_0001"),
-        "3710055000": ("", "phit_wa_0001"),
-        "3710058000": ("", "phit_3040120000"),
-        "3710060000": ("", "phit_3040140000"),
-        "3710061000": ("", "phit_3030231000"),
-        "3710062000": ("", "phit_3040010000"),
-        "3710063000": ("", "phit_3040001000_03"),
-        "3710064000": ("", "phit_3040060000_03"),
-        "3710067000": ("", "phit_3040120000"),
-        "3710068000": ("", "phit_3040035000"),
-        "3710069000": ("", "phit_3030235000"),
-        "3710070000": ("", "phit_3040172000_03"),
-        "3710071000": ("", "phit_3040147000_03"),
-        "3710072000": ("", "phit_3040031000"),
-        "3710074000": ("", "phit_3040036000"),
-        "3710076000": ("", "phit_3040159000"),
-        "3710078000": ("", "phit_3040098000"),
-        "3710080000": ("", "phit_3040030000"),
-        "3710081000": ("", "phit_3040070000"),
-        "3710082000": ("", "phit_3040147000"),
-        "3710083000": ("", "phit_3040098000"),
-        "3710087000": ("", "phit_3040187000_02"),
-        "3710088000": ("", "phit_3040153000"),
-        "3710089000": ("", "phit_3840153000"),
-        "3710092000": ("", "phit_3040098000"),
-        "3710097000": ("", "phit_3030196000"),
-        "3710105000": ("", "phit_3040098000"),
-        "3710106000": ("", "phit_3040033000"),
-        "3710107000": ("", "phit_3040039000"),
-        "3710112000": ("", "phit_1040612000"),
-        "3710117000": ("", "phit_3030172000_03"),
-        "3710125000": ("", "phit_3040196000"),
-        "3710130000": ("", "phit_3040192000"),
-        "3710134000": ("", "phit_3040155000"),
-        "3710139000": ("", "phit_3040098000"),
-        "3710167000": ("", "phit_3040331000"),
-        # special fixes
-        # Malinda
-        "3030093000": ("3030093000_UUFF_1", "phit_3030093001"),
-        # Vira
-        "3030019000": ("3040043000_UU", "phit_sw_0016"),
-        "3040053000": ("3040043000_UU", "phit_3040043000"),
-        "3040116000": ("3040043000_UU", ""),
-        "3040141000": ("3040043000_UU", ""),
-        "3040211000": ("3040043000_UU", ""),
-        "3040243000": ("3040043000_UU", ""),
-        "3040385000": ("3040043000_UU", ""),
-        "3710012000": ("3040043000_01", "phit_3040209000"),
-        # Alexiel
-        "3040232000": ("3040158000_UU", "phit_3040158000"),
-        # Magisa
-        "3040247000": ("3040011000_UU", ""),
-        "3040412000": ("3040011000_UU", ""),
-        # Amira
-        "3030065000": ("3040051000_UUFF", ""),
-        "3040051000": ("3040051000_02FF", ""),
-        "3040287000": ("3040051000_UU", ""),
-        # Zeta
-        "3710019000": ("3040028000_02", "phit_3040028000_03"),
-        # Lancelot
-        "3710020000": ("3040023000_02", "phit_3040023000"),
-        # Vira (Skin)
-        "3710024000": ("3030019000_02", "phit_3040141000"),
-        # Vampy
-        "3710025000": ("3040057000_02", "phit_3040057000"),
-        # Percival
-        "3710026000": ("3040050000_02", "phit_3040050000"),
-        # Jeanne d'Arc
-        "3710033000": ("3040040000_02", "phit_3040040000"),
-        # Seruel
-        "3710034000": ("3040013000_02", "phit_3040013000"),
-        # Cagliostro
-        "3710042000": ("3040009000_02", "phit_3040009000"),
-        # Nezahualpilli
-        "3710043000": ("3040003000_03", "phit_3040003000"),
+    CLASS_DEFAULT_WEAPON = {
+        "sw": "1010000000",
+        "kn": "1010100000",
+        "sp": "1010200000",
+        "ax": "1010300000",
+        "wa": "1010400000",
+        "gu": "1010500000",
+        "me": "1010600000",
+        "bw": "1010700000",
+        "mc": "1010800000",
+        "kt": "1010900000"
     }
-    # substitute id
-    ID_SUBSTITUTE = {
-        "3710171000":"3710167000","3710170000":"3710167000","3710169000":"3710167000","3710168000":"3710167000", # bobobo
-        "1040017100":"1040017000","1040212600":"1040212500","1040809500":"1040809400","1040911100":"1040911000","1040415100":"1040415000","1040310700":"1040310600", # opus
-        "1040317600":"1040317500", "1040317700":"1040317500", "1040317800":"1040317500", "1040317900":"1040317500", "1040318000":"1040317500", # shieldsworn axe ccw
-        "1040318600":"1040318500","1040318700":"1040318500","1040318800":"1040318500","1040318900":"1040318500","1040319000":"1040318500",# viking ccw
-        "1040027100":"1040027000","1040027200":"1040027000","1040027300":"1040027000","1040027400":"1040027000","1040027500":"1040027000",# paladin ccw
-        "1040120400":"1040120300","1040120500":"1040120300","1040120600":"1040120300","1040120700":"1040120300","1040120800":"1040120300" # street king ccw
-    }
-    SHARED_SUMMONS = [
-        set(["2030081000", "2030082000", "2030083000", "2030084000", "2040236000", "2040313000", "2040145000"]), # justice
-        set(["2030085000", "2030086000", "2030087000", "2030088000", "2040237000", "2040314000", "2040146000"]), # hanged man
-        set(["2030089000", "2030090000", "2030091000", "2030092000", "2040238000", "2040315000", "2040147000"]), # death
-        set(["2030093000", "2030094000", "2030095000", "2030096000", "2040239000", "2040316000", "2040148000"]), # temperance
-        set(["2030097000", "2030098000", "2030099000", "2030100000", "2040240000", "2040317000", "2040149000"]), # devil
-        set(["2030101000", "2030102000", "2030103000", "2030104000", "2040241000", "2040318000", "2040150000"]), # tower
-        set(["2030105000", "2030106000", "2030107000", "2030108000", "2040242000", "2040319000", "2040151000"]), # star
-        set(["2030109000", "2030110000", "2030111000", "2030112000", "2040243000", "2040320000", "2040152000"]), # moon
-        set(["2030113000", "2030114000", "2030115000", "2030116000", "2040244000", "2040321000", "2040153000"]), # sun
-        set(["2030117000", "2030118000", "2030119000", "2030120000", "2040245000", "2040322000", "2040154000"]), # judgement
-        # some N/R ones
-        set(["2010001000", "2020003000"]),
-        set(["2010004000", "2020001000"]),
-        set(["2010011000", "2020002000"]),
-        # alter
-        set(["2030001000", "2030063000"]), # colo
-        set(["2030011000", "2030064000"]), # levi
-        set(["2030015000", "2030065000"]), # yggdrasil
-        set(["2030032000", "2030066000"]), # lumi
-        set(["2030041000", "2030067000"]), # celeste
-        # carbuncles
-        set(["2030016000", "2030076000"]),
-        set(["2030031000", "2030073000"]),
-        set(["2030021000", "2030074000"]),
-        set(["2030024000", "2030075000"]),
-        set(["2030042000", "2030077000"]),
-        set(["2030039000", "2030078000"]),
-        # optimus
-        set(["2040094000", "2040269000"]), # agni
-        set(["2040100000", "2040270000"]), # varuna
-        set(["2040084000", "2040271000"]), # titan
-        set(["2040098000", "2040272000"]), # zeph
-        set(["2040080000", "2040273000"]), # zeus
-        set(["2040090000", "2040274000"]), # hades
-    ]
     # CDN endpoints
     ENDPOINT = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/"
     JS = ENDPOINT + "js/"
@@ -469,6 +115,19 @@ class Updater():
     MP3_SEARCH = re.compile('"[a-zA-Z0-9_\\/]+\\.mp3"')
 
     def __init__(self) -> None:
+        # load constants
+        try:
+            with open("json/manual_constants.json", mode="r", encoding="utf-8") as f:
+                data : dict[str, Any] = json.load(f)
+                k : str
+                for k, v in data.items():
+                    setattr(self, k, v)
+        except Exception as e:
+            print("Failed to load and set json/manual_constants.json")
+            print("Please fix the file content and try again")
+            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+            os._exit(0)
+        # other init
         self.client = None
         self.progress = Progress() # initialized with a silent progress bar
         self.latest_additions = {}
@@ -476,193 +135,28 @@ class Updater():
         self.modified = False
         self.disable_save = False
         self.update_changelog = True
-        self.debug_mode = False
         self.dl_queue = None # used for download
         self.gbfal = {} # gbfal data
-        
-        self.class_ignore_alt = ["311301", "311302"]
-        self.class_lookup = {
-            "150201": ["dkf_sw", "dkf_kn"], # dark fencer
-            "200201": ["acm_kn", "acm_gu"], # alchemist
-            "310401": ["mcd_sw"], # mac do
-            "130201": ["hrm_wa", "hrm_kn"], # hermit
-            "120401": ["hlr_wa", "hlr_sp"], # iatromantis
-            "150301": ["csr_sw", "csr_kn"], # chaos ruler
-            "170201": ["sdw_bw", "sdw_gu"], # sidewinder
-            "240201": ["gns_gu"], # gunslinger
-            "360001": ["vee_me"], # vyrn suit
-            "310701": ["fal_sw"], # fallen
-            "400001": ["szk_kt"], # zhuque
-            "450301": ["rlc_sw", "rlc_gu"], # relic buster
-            "140301": ["gzk_kn", "gzk_gu"], # bandit tycoon
-            "110001": ["kni_sw", "kni_sp"], # knight
-            "270301": ["ris_mc"], # rising force
-            "290201": ["kks_gu"], # mechanic
-            "190101": ["drg_sp", "drg_ax"], # dragoon
-            "140201": ["hky_kn", "hky_gu"], # hawkeye
-            "240301": ["sol_gu"], # soldier
-            "120301": ["sag_wa", "sag_sp"], # sage
-            "120101": ["cle_wa", "cle_sp"], # cleric
-            "150101": ["ars_sw", "ars_kn"], # arcana dueler
-            "130301": ["wrk_wa", "wrk_kn"], # warlock
-            "130401": ["mnd_wa", "mnd_kn"], # manadiver
-            "310601": ["edg_sw"], # eternal 2
-            "120001": ["pri_wa", "pri_sp"], # priest
-            "180101": ["mst_kn", "mst_mc"], # bard
-            "200301": ["dct_kn", "dct_gu"], # doctor
-            "220201": ["smr_bw", "smr_kt"], # samurai
-            "140001": ["thi_kn", "thi_gu"], # thief
-            "370601": ["bel_me"], # belial 1
-            "370701": ["ngr_me"], # cook
-            "330001": ["sry_sp"], # qinglong
-            "370501": ["phm_me"], # anime s2 skin
-            "440301": ["rbn_bw"], # robin hood
-            "160201": ["ogr_me"], # ogre
-            "210301": ["mhs_me", "mhs_kt"], # runeslayer
-            "310001": ["lov_sw"], # lord of vermillion
-            "370801": ["frb_me"], # belial 2
-            "180201": ["sps_kn", "sps_mc"], # superstar
-            "310301": ["chd_sw"], # attack on titan
-            "125001": ["snt_wa"], # santa
-            "110301": ["spt_sw", "spt_sp"], # spartan
-            "310801": ["ykt_sw"], # yukata
-            "110201": ["hsb_sw", "hsb_sp"], # holy saber
-            "230301": ["glr_sw", "glr_kt"], # glorybringer
-            "130101": ["srr_wa", "srr_kn"], # sorcerer
-            "430301": ["mnk_wa", "mnk_me"], # monk
-            "280301": ["msq_kn"], # masquerade
-            "250201": ["wmn_wa"], # mystic
-            "160001": ["grp_me"], # grappler
-            "110101": ["frt_sw", "frt_sp"], # sentinel
-            "270201": ["drm_mc"], # taiko
-            "300301": ["crs_sw", "crs_kt"], # chrysaor
-            "360101": ["rac_gu"], # platinum sky 2
-            "300201": ["gda_sw", "gda_kt"], # gladiator
-            "100101": ["wrr_sw", "wrr_ax"], # warrior
-            "170001": ["rng_bw", "rng_gu"], # ranger
-            "280201": ["dnc_kn"], # dancer
-            "410301": ["lmb_ax", "lmb_mc"],
-            "100001": ["fig_sw", "fig_ax"], # fighter
-            "180301": ["els_kn", "els_mc"], # elysian
-            "250301": ["knd_wa"], # nekomancer
-            "260201": ["asa_kn"], # assassin
-            "370301": ["kjm_me"], # monster 3
-            "140101": ["rdr_kn", "rdr_gu"], # raider
-            "180001": ["hpt_kn", "hpt_mc"], # superstar
-            "370001": ["kjt_me"], # monster 1
-            "165001": ["stf_me"], # street fighter
-            "160301": ["rsr_me"], # luchador
-            "100201": ["wms_sw", "wms_ax"], # weapon master
-            "170301": ["hdg_bw", "hdg_gu"], # nighthound
-            "230201": ["sdm_sw", "sdm_kt"], # swordmaster
-            "310201": ["swm_sw"], # summer
-            "190301": ["aps_sp", "aps_ax"], # apsaras
-            "100401": ["vkn_sw", "vkn_ax"], # viking
-            "150001": ["enh_sw", "enh_kn"], # enhancer
-            "220301": ["kng_bw", "kng_kt"], # kengo
-            "120201": ["bis_wa", "bis_sp"], # bishop
-            "310101": ["ani_sw"], # anime season 1
-            "130001": ["wiz_wa", "wiz_kn"], # wizard
-            "185001": ["idl_kn", "idl_mc"], # idol
-            "100301": ["bsk_sw", "bsk_ax"], # berserker
-            "160101": ["kun_me"], # kung fu artist
-            "370201": ["kjb_me"], # monster 2
-            "110401": ["pld_sw", "pld_sp"], # paladin
-            "310501": ["cnq_sw"], # eternal 1
-            "310901": ["vss_sw"], # versus skin
-            "190001": ["lnc_sp", "lnc_ax"], # lancer
-            "420301": ["cav_sp", "cav_gu"], # cavalier
-            "190201": ["vkr_sp", "vkr_ax"], # valkyrie
-            "260301": ["tmt_kn"], # tormentor
-            "210201": ["nnj_me", "nnj_kt"], # ninja
-            "370401": ["ybk_me"], # bird
-            "320001": ["sut_kn"], # story dancer
-            "170101": ["mrk_bw", "mrk_gu"], # archer
-            "311001": ["gkn_sw"], # school
-            "340001": ["gnb_ax"], # xuanwu
-            "360201": ["ebi_gu"], # premium friday
-            "370901": ["byk_me"], # baihu
-            "460301": ["ymt_sw", "ymt_kt"], # yamato
-            "140401": ["kig_kn", "kig_gu"], # king
-            "311101": ["vs2_sw"], # versus rising skin
-            "311201": ["tbs_sw"], # relink skin
-            "400101": ["nir_kt"], # 2B skin
-            "150401": ["omj_kn", "omj_kt"], # onmyoji
-            "470301": ["sld_ax", "sld_gu"], # shieldsworn
-            "311301": ["unf_sw"], # gw
-            "311401": ["alb_sw"], # albacore
-            "390001": ["fes_mc"], # fes
-            "160401": ["smh_me"], # sumo
-            "311302": ["uf2_sw"] # gw
-        }
-        self.class_weapon = {
-            "310001": "1040009100", # lord of vermillion
-            "310101": None, # anime season 1
-            "310201": None, # summer
-            "310301": "1040014200", # attack on titan
-            "310401": None, # mac do
-            "310501": "1040016700", # eternal 1
-            "310601": "1040016800", # eternal 2
-            "310701": "1040016900", # fallen
-            "310801": "1040018800", # yukata
-            "310901": "1040019100", # versus
-            "311001": "1040020200", # school
-            "311101": "1040025000", # versus rising skin
-            "311201": "1040025600", # relink skin
-            "311301": "1040026400", # gw skin
-            "311302": "1040027900", # gw skin 2
-            "311401": "1040026500", # albacore
-            "320001": "1040115000", # school dancer
-            "330001": "1040216600", # qinglong
-            "340001": "1040315700", # xuanwu
-            "360001": None, # vyrn suit
-            "360101": "1040508600", # platinum sky 2
-            "360201": "1040515800", # premium friday
-            "370001": "1040610300", # monster 1
-            "370201": "1040610200", # monster 2
-            "370301": "1040610400", # monster 3
-            "370401": None, # bird
-            "370501": "1040614000", # anime s2 skin
-            "370601": "1040614400", # belial 1
-            "370701": "1040615300", # cook
-            "370801": "1040616000", # belial 2
-            "370901": "1040617400", # baihu
-            "390001": "1040816700", # fes
-            "400001": "1040913700", # zhuque
-            "400101": "1040916100" # 2B skin
-        }
         self.class_gbfal = False
-        self.class_placeholders = {
-            "sw": "1010000000",
-            "kn": "1010100000",
-            "sp": "1010200000",
-            "ax": "1010300000",
-            "wa": "1010400000",
-            "gu": "1010500000",
-            "me": "1010600000",
-            "bw": "1010700000",
-            "mc": "1010800000",
-            "kt": "1010900000"
-        }
         self.exclusion = set([])
         self.loadIndex()
         self.http_sem = asyncio.Semaphore(self.MAX_HTTP) # http semaphore
 
-    def update_data_from_GBFAL(self) -> None: # update class_lookup and class_weapon according to GBFAL data
+    def update_data_from_GBFAL(self) -> None: # update CLASS_LIST and CLASS_WEAPON_LIST according to GBFAL data
         if self.class_gbfal or len(list(self.gbfal.keys())) == 0: return # only run once and if gbfal is loaded
         try:
             print("Checking GBFAL data for new classes...")
             count = 0
             for k in self.gbfal['job']:
-                if k not in self.class_lookup:
-                    self.class_lookup[k] = self.gbfal['job'][k][6] # mh
+                if k not in self.CLASS_LIST:
+                    self.CLASS_LIST[k] = self.gbfal['job'][k][6] # mh
                     for x, v in self.gbfal['job_wpn'].items():
                         if v == k:
-                            self.class_weapon[k] = x
+                            self.CLASS_WEAPON_LIST[k] = x
                     for x, v in self.gbfal['job_id'].items():
                         if v == k:
-                            for i in range(len(self.class_lookup[k])):
-                                self.class_lookup[k] = x + "_" + self.class_lookup[k]
+                            for i in range(len(self.CLASS_LIST[k])):
+                                self.CLASS_LIST[k] = x + "_" + self.CLASS_LIST[k]
                     count += 1
             if count > 0:
                 print("Found", count, "classes not present in GBFAP, from GBFAL, consider updating")
@@ -715,7 +209,6 @@ class Updater():
                     return await response.content.read()
 
     async def run(self) -> None:
-        self.debug_mode = False
         print("Updating index...")
         self.progress = Progress()
         async with asyncio.TaskGroup() as tg:
@@ -769,7 +262,7 @@ class Updater():
                 else:
                     if self.index.get(f, 0) == 0:
                         if file.startswith("10"):
-                            if f in self.class_weapon.values():
+                            if f in self.CLASS_WEAPON_LIST.values():
                                 errc = 0
                                 eid += step
                                 continue
@@ -792,7 +285,7 @@ class Updater():
 
     async def run_class(self, start : int, step : int) -> int:
         with self.progress:
-            keys = list(self.class_lookup.keys())
+            keys = list(self.CLASS_LIST.keys())
             i = start
             count = 0
             while i < len(keys):
@@ -805,29 +298,29 @@ class Updater():
     async def update_class(self, id : str) -> int:
         try:
             if id in self.exclusion: return 0
-            if id not in self.class_lookup: return 0
+            if id not in self.CLASS_LIST: return 0
             try:
                 await self.req(self.IMG + "/sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg")
             except:
-                if not self.debug_mode: return 0
+                return 0
             wid = None
             colors = []
-            for i in ["01", "02", "03", "04", "05", "80"] if id not in self.class_ignore_alt else ["01"]:
+            for i in ["01", "02", "03", "04", "05", "80"] if id not in self.UNIQUE_SKIN else ["01"]:
                 try:
-                    await self.getJS(self.class_lookup[id][0] + "_0_{}".format(i))
-                    colors.append(self.class_lookup[id][0] + "_0_{}".format(i))
+                    await self.getJS(self.CLASS_LIST[id][0] + "_0_{}".format(i))
+                    colors.append(self.CLASS_LIST[id][0] + "_0_{}".format(i))
                 except:
                     pass
             if len(colors) == 0: return 0
-            if id in self.class_weapon: # skin with custom weapon
+            if id in self.CLASS_WEAPON_LIST: # skin with custom weapon
                 mortal = "mortal_B" # skin with custom ougis use this
                 mc_cjs = colors[0]
                 sp = None
                 phit = None
-                if self.class_weapon[id] is not None:
+                if self.CLASS_WEAPON_LIST[id] is not None:
                     for s in ["", "_0"]:
                         try:
-                            f = "phit_" + self.class_weapon[id] + s
+                            f = "phit_" + self.CLASS_WEAPON_LIST[id] + s
                             await self.getJS(f)
                             phit = f
                             break
@@ -835,7 +328,7 @@ class Updater():
                             pass
                     for s in ["", "_0", "_0_s2", "_s2"]:
                         try:
-                            f = "sp_" + self.class_weapon[id] + s
+                            f = "sp_" + self.CLASS_WEAPON_LIST[id] + s
                             await self.getJS(f)
                             sp = f
                             break
@@ -844,7 +337,7 @@ class Updater():
             else: # regular class
                 mortal = "mortal_A"
                 mc_cjs = colors[0]
-                wid = self.class_placeholders[mc_cjs.split('_')[1]]
+                wid = self.CLASS_DEFAULT_WEAPON[mc_cjs.split('_')[1]]
                 sp = None
                 phit = None
                 for fn in ["phit_{}".format(id), "phit_{}_0".format(id)]:
@@ -903,7 +396,7 @@ class Updater():
             try:
                 await self.req(self.IMG + "/sp/assets/weapon/m/" + id + ".jpg")
             except:
-                if not self.debug_mode: return 0
+                return 0
             # containers
             mc_cjs = self.CLASS[(int(id) // 100000) % 10]
             sid = self.ID_SUBSTITUTE.get(id, None)
@@ -992,11 +485,10 @@ class Updater():
                 try:
                     await self.req(self.IMG + "/sp/assets/summon/m/" + id + uncap.replace('_01', '') + ".jpg")
                 except:
-                    if not self.debug_mode: 
-                        if uncap != '_01':
-                            continue
-                        else:
-                            return 0
+                    if uncap != '_01':
+                        continue
+                    else:
+                        return 0
                 match uncap:
                     case "_04":
                         uns = ["_04", "_03", "_02"]
@@ -1057,8 +549,7 @@ class Updater():
             try:
                 await self.req(self.IMG + "/sp/assets/enemy/s/" + id + ".png")
             except:
-                if not self.debug_mode:
-                    return 0
+                return 0
             try:
                 fn = "enemy_{}".format(id)
                 await self.getJS(fn)
@@ -1114,7 +605,7 @@ class Updater():
             try:
                 await self.req(self.IMG + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg", head=True)
             except:
-                if not self.debug_mode: return 0
+                return 0
             tid = self.ID_SUBSTITUTE.get(id, id) # fix for bobobo skin
             versions = {}
             genders = {}
@@ -1278,7 +769,7 @@ class Updater():
                     else: tasks.append(tg.create_task(self.progress_container(self.update_character(id, ""))))
                 elif len(id) == 14 and id.startswith("30") and id[10] == '_':
                     tasks.append(tg.create_task(self.progress_container(self.update_character(id.split('_')[0], id.split('_')[1]))))
-                elif id in self.class_lookup:
+                elif id in self.CLASS_LIST:
                     tasks.append(tg.create_task(self.progress_container(self.update_class(id))))
             if len(tasks) > 0:
                 print("Attempting to update", len(tasks), "element(s)")
@@ -1479,63 +970,48 @@ class Updater():
             print(e)
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
 
-    # Print the help
-    def print_help(self) -> None:
-        print("Usage: python updater.py [START] [MODE]")
-        print("")
-        print("START parameters (Optional):")
-        print("-nochange    : Disable the update of changelog.json.")
-        print("-gbfal       : Followed by a path towards GBFAL data.json. Will reuse some data from this JSON file.")
-        print("")
-        print("MODE parameters (One at a time):")
-        print("-run         : Update the data with new content.")
-        print("-update      : Manual data update (Followed by IDs to check).")
-        print("-download    : Download ALL assets (Time and disk space consuming).")
-
-    async def boot(self, argv : list) -> None:
+    async def start(self) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP updater v3.8\n")
-                start_flags = set(["-nochange", "-debug"])
-                flags = set()
-                extras = []
-                gbfal = None
-                i = 0
-                while i < len(argv):
-                    k = argv[i]
-                    if k in start_flags:
-                        flags.add(k) # continue...
-                    elif k == "-gbfal":
-                        try:
-                            gbfal = argv[i+1]
-                            i += 1
-                        except:
-                            print("GBFAL parameter error")
-                            return
-                    elif k.startswith("-"):
-                        flags.add(k)
-                        extras = argv[i+1:]
-                        break
-                    else:
-                        print("Unknown parameter:", k)
-                        return
-                    i += 1
-                self.update_changelog = ('-nochange' not in flags)
-                self.debug_mode = ('-debug' in flags)
-                if gbfal is not None:
+                print("GBFAP Updater v{}".format(self.VERSION))
+                # parse parameters
+                prog_name : str
+                try: prog_name = sys.argv[0].replace('\\', '/').split('/')[-1]
+                except: prog_name = "updater.py" # fallback to default
+                # Set Argument Parser
+                parser : argparse.ArgumentParser = argparse.ArgumentParser(prog=prog_name, description="Animation Updater v{} for GBFAP https://mizagbf.github.io/GBFAP/".format(self.VERSION))
+                primary = parser.add_argument_group('primary', 'main commands.')
+                primary.add_argument('-r', '--run', help="search for new content.", action='store_const', const=True, default=False, metavar='')
+                primary.add_argument('-u', '--update', help="update given elements.", nargs='+', default=None)
+                primary.add_argument('-d', '--download', help="download all assets. Time and Disk space consuming.", action='store_const', const=True, default=False, metavar='')
+                
+                settings = parser.add_argument_group('settings', 'commands to alter the update behavior.')
+                settings.add_argument('-nc', '--nochange', help="disable update of the New category of changelog.json.", action='store_const', const=True, default=False, metavar='')
+                settings.add_argument('-al', '--gbfal', help="import data.json from GBFAL.", action='store', nargs=1, type=str, metavar='PATH')
+                args : argparse.Namespace = parser.parse_args()
+                # settings
+                run_help : bool = True
+                if args.nochange:
+                    self.update_changelog = False
+                if args.gbfal is not None:
                     try:
-                        if gbfal.startswith('https://'):
-                            self.gbfal = json.loads((await self.req(gbfal)).decode('utf-8'))
+                        if args.gbfal[0].startswith('https://'):
+                            self.gbfal = json.loads((await self.req(args.gbfal[0])).decode('utf-8'))
                         else:
-                            with open(gbfal, mode="r", encoding="utf-8") as f:
+                            with open(args.gbfal[0], mode="r", encoding="utf-8") as f:
                                 self.gbfal = json.load(f)
                         print("GBFAL data is loaded")
                         self.update_data_from_GBFAL()
                     except Exception as e:
                         print("GBFAL data couldn't be loaded")
                         print(e)
-                
-                if '-download' in flags:
+                    run_help = False
+                # run
+                if args.run:
+                    await self.run()
+                elif args.update is not None and len(args.update) > 0:
+                    await self.manualUpdate(args.update)
+                elif args.download:
                     print("ONLY USE THIS COMMAND IF YOU NEED TO HOST THE ASSETS")
                     print("Are you sure that you want to download the assets of all elements?")
                     print("It will take time and a lot of disk space.")
@@ -1543,16 +1019,12 @@ class Updater():
                         await self.download(extras)
                     else:
                         print("Operation aborted...")
-                elif "-update" in flags: await self.manualUpdate(extras)
-                elif "-run" in flags: await self.run()
-                else: self.print_help()
-                if gbfal is not None:
+                elif run_help:
+                    parser.print_help()
+                if len(self.gbfal) > 0:
                     self.update_wiki_from_GBFAL()
         except Exception as e:
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
 
-    def start(self, argv : list) -> None:
-        asyncio.run(self.boot(argv))
-
 if __name__ == "__main__":
-    Updater().start(sys.argv[1:])
+    asyncio.run(Updater().start())
