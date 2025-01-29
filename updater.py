@@ -7,7 +7,7 @@ import sys
 import traceback
 import time
 from datetime import datetime, timezone
-from typing import Optional, Callable, Any
+from typing import Callable, Any
 import argparse
 
 # progress bar class
@@ -75,7 +75,7 @@ class Progress():
 # main class
 class Updater():
     ### CONSTANT
-    VERSION = '3.10'
+    VERSION = '3.11'
     # limit
     MAX_NEW = 80
     MAX_HTTP = 90
@@ -262,7 +262,7 @@ class Updater():
             except Exception as e:
                 print(e)
 
-    async def req(self, url, headers={}, head=False) -> Optional[bytes]:
+    async def req(self, url, headers={}, head=False) -> bytes|bool:
         async with self.http_sem:
             if head:
                 response = await self.client.head(url, headers={'connection':'keep-alive'} | headers)
@@ -657,7 +657,7 @@ class Updater():
             sys.stdout.flush()
             return 0
 
-    async def update_mob_sub(self, fn : str) -> Optional[str]:
+    async def update_mob_sub(self, fn : str) -> str|None:
         try:
             await self.getJS(fn)
             return fn
@@ -809,7 +809,7 @@ class Updater():
             sys.stdout.flush()
             return 0
 
-    async def update_character_sub(self, fn : str) -> Optional[str]:
+    async def update_character_sub(self, fn : str) -> str|None:
         try:
             await self.getJS(fn)
             return fn
@@ -1047,7 +1047,7 @@ class Updater():
                 primary = parser.add_argument_group('primary', 'main commands.')
                 primary.add_argument('-r', '--run', help="search for new content.", action='store_const', const=True, default=False, metavar='')
                 primary.add_argument('-u', '--update', help="update given elements.", nargs='+', default=None)
-                primary.add_argument('-d', '--download', help="download all assets. Time and Disk space consuming.", action='store_const', const=True, default=False, metavar='')
+                primary.add_argument('-d', '--download', help="download all assets. Can specific IDs. Time and Disk space consuming.", nargs='*', default=None)
                 
                 settings = parser.add_argument_group('settings', 'commands to alter the update behavior.')
                 settings.add_argument('-nc', '--nochange', help="disable update of the New category of changelog.json.", action='store_const', const=True, default=False, metavar='')
@@ -1075,12 +1075,12 @@ class Updater():
                     await self.run()
                 elif args.update is not None and len(args.update) > 0:
                     await self.manualUpdate(args.update)
-                elif args.download:
+                elif args.download is not None:
                     print("ONLY USE THIS COMMAND IF YOU NEED TO HOST THE ASSETS")
                     print("Are you sure that you want to download the assets of all elements?")
                     print("It will take time and a lot of disk space.")
                     if input("Type 'yes' to continue:").lower() == 'yes':
-                        await self.download(extras)
+                        await self.download(args.download)
                     else:
                         print("Operation aborted...")
                 elif run_help:

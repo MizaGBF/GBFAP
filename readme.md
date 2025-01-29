@@ -71,10 +71,10 @@ This script is in charge of updating the JSON files.
   
 ### Usage
 ```
-GBFAP Updater v3.9
-usage: updater.py [-h] [-r] [-u UPDATE [UPDATE ...]] [-d] [-nc] [-al PATH]
+GBFAP Updater v3.11
+usage: updater.py [-h] [-r] [-u UPDATE [UPDATE ...]] [-d [DOWNLOAD ...]] [-nc] [-al PATH]
 
-Animation Updater v3.9 for GBFAP https://mizagbf.github.io/GBFAP/
+Animation Updater v3.11 for GBFAP https://mizagbf.github.io/GBFAP/
 
 options:
   -h, --help            show this help message and exit
@@ -85,7 +85,8 @@ primary:
   -r, --run             search for new content.
   -u, --update UPDATE [UPDATE ...]
                         update given elements.
-  -d, --download        download all assets. Time and Disk space consuming.
+  -d, --download [DOWNLOAD ...]
+                        download all assets. Can specific IDs. Time and Disk space consuming.
 
 settings:
   commands to alter the update behavior.
