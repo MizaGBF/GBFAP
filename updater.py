@@ -1049,7 +1049,7 @@ class Updater():
                 primary.add_argument('-u', '--update', help="update given elements.", nargs='+', default=None)
                 primary.add_argument('-d', '--download', help="download all assets. Can specific IDs. Time and Disk space consuming.", nargs='*', default=None)
                 
-                settings = parser.add_argument_group('settings', 'commands to alter the update behavior.')
+                settings = parser.add_argument_group('settings', 'commands to alter the updater behavior.')
                 settings.add_argument('-nc', '--nochange', help="disable update of the New category of changelog.json.", action='store_const', const=True, default=False, metavar='')
                 settings.add_argument('-al', '--gbfal', help="import data.json from GBFAL.", action='store', nargs=1, type=str, metavar='PATH')
                 args : argparse.Namespace = parser.parse_args()
