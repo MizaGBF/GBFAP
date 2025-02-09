@@ -256,6 +256,12 @@ function openTexture()
     }
 }
 
+function textureIsOpen()
+{
+    let tact = document.getElementById("texture-action");
+    return sub_menu_open && tact.style.display == "";
+}
+
 function closeTexture()
 {
     sub_menu_open = false;
@@ -284,6 +290,12 @@ function openCustom()
             demo_list[e] = v.action_label_list.slice(0);
     }
     updateDemoList();
+}
+
+function customIsOpen()
+{
+    let cact = document.getElementById("custom-action");
+    return sub_menu_open && cact.style.display == "";
 }
 
 function playCustom()
@@ -385,116 +397,94 @@ document.addEventListener("keydown", spacekey_fix);
 function keybind_listener(event)
 {
     if(!canInteract() || event.ctrlKey || event.altKey) return;
-    switch(event.code)
+    switch(event.key)
     {
-        case "KeyR": // speed reset
+        case "r": case "R": // speed reset
         {
             if(!event.shiftKey)
                 resetSpeed();
-            return;
+            break;
         }
-        case "NumpadAdd": // speed up
+        case "+": // speed up
         {
-            if(!event.shiftKey)
-            {
-                let elem = document.getElementById('speed-input');
-                elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
-                changeSpeed(elem);
-            }
-            return;
+            let elem = document.getElementById('speed-input');
+            elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
+            changeSpeed(elem);
+            break;
         }
-        case "NumpadSubstract": // speed down
+        case "-": // speed down
         {
-            if(!event.shiftKey)
-            {
-                let elem = document.getElementById('speed-input');
-                elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
-                changeSpeed(elem);
-            }
-            return;
+            let elem = document.getElementById('speed-input');
+            elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
+            changeSpeed(elem);
+            break;
         }
-        case "Space": // pause toggle
+        case " ": // pause
         {
             if(document.activeElement.id && document.activeElement.id.includes("-btn")) return; // weird case where the user has a button focused and is pressing space
-            if(!event.shiftKey)
-                togglePause();
-            return;
+            togglePause();
         }
-        case "KeyL": // loop toggle
+        case "l": case "L": // loop toggle
         {
             if(!event.shiftKey)
                 toggleLoop();
             return;
         }
-        case "KeyS": // sfx toggle
+        case "s": case "S": // sfx toggle
         {
             if(!event.shiftKey)
                 toggleSFX();
             return;
         }
-        case "KeyC": // open custom playlist
+        case "c": case "C": // open custom playlist
         {
             if(!event.shiftKey)
-                openCustom();
+            {
+                if(!customIsOpen())
+                    openCustom();
+                else
+                    closeCustom();
+            }
             return;
         }
-        case "KeyB": // toggle bounding boxes
+        case "b": case "B": // toggle bounding boxes
         {
             if(!event.shiftKey)
-            toggleBound();
+                toggleBound();
             return;
         }
-        case "KeyE": // shift enemy position
+        case "e": case "E": // shift enemy position
         {
             if(!event.shiftKey && is_enemy)
                 enemyShift();
             return;
         }
-        case "KeyF": // frame advance
+        case "f": case "F": // frame advance
         {
             if(!event.shiftKey) 
                 nextframe();
             return;
         }
-        case "KeyD": // download canvas
+        case "d": case "D": // download canvas
         {
-            if(event.shiftKey)
+            if(event.shiftKey) // use shift key!
                 dlimage();
             return;
         }
-        case "KeyW": // record webm
+        case "w": case "W": // record webm
         {
-            if(event.shiftKey)
+            if(event.shiftKey) // use shift key!
                 record();
             return;
         }
-        case "KeyT": // texture list
-        {
-            if(!event.shiftKey)
-                openTexture();
-            return;
-        }
-    }
-    // fallbacks for non qwerty keyboards and lack of numpads
-    switch(event.key)
-    {
-        case "+": // speed up
+        case "t": case "T": // texture list
         {
             if(!event.shiftKey)
             {
-                let elem = document.getElementById('speed-input');
-                elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
-                changeSpeed(elem);
-            }
-            return;
-        }
-        case "-": // speed down
-        {
-            if(!event.shiftKey)
-            {
-                let elem = document.getElementById('speed-input');
-                elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
-                changeSpeed(elem);
+                if(!textureIsOpen())
+                    openTexture();
+                else
+                    closeTexture();
             }
             return;
         }
