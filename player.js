@@ -61,17 +61,17 @@ function setHTML()
                     <div class="controls-outline">\
                         <input id="speed-input" type="range" min="0.05" max="2" step="0.05" value="1" oninput="changeSpeed(this);">\
                         <label id="speed-label" for="speed-input" class="controls-text">100% Speed</label><br>\
-                        <button class="small-button" onclick="resetSpeed();"><img src="assets/ui/controls/reset.png"></button>\
-                        <button class="small-button" onclick="togglePause();" id="pause-btn"><img src="assets/ui/controls/pause.png"></button>\
-                        <button class="small-button" onclick="nextframe();" id="next-btn"><img src="assets/ui/controls/next.png"></button>\
-                        <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn"><img src="assets/ui/controls/loop.png"></button>\
-                        <button class="small-button" onclick="toggleSFX();" id="sfx-btn"><img src="assets/ui/controls/sfx.png"></button>\
-                        <button class="small-button" onclick="openCustom()" id="custom-btn"><img src="assets/ui/controls/edit.png"></button>\
-                        <button class="small-button" onclick="toggleBound()" id="bound-btn"><img src="assets/ui/controls/bound.png"></button>\
-                        <button class="small-button" onclick="enemyShift()" id="enemy-btn"><img src="assets/ui/controls/enemy.png"></button>\
-                        <button class="small-button" onclick="dlimage();" id="dl-btn"><img src="assets/ui/controls/dl.png"></button>\
-                        <button class="small-button" onclick="record();" id="record-btn"><img src="assets/ui/controls/record.png"></button>\
-                        <button class="small-button" onclick="openTexture();" id="texture-btn"><img src="assets/ui/controls/texture.png"></button>\
+                        <button class="small-button" onclick="resetSpeed();" title="Reset the Speed to 100%\n(Shortcut: R)"><img src="assets/ui/controls/reset.png"></button>\
+                        <button class="small-button" onclick="togglePause();" id="pause-btn" title="Toggle the Pause\n(Shortcut: Space)"><img src="assets/ui/controls/pause.png"></button>\
+                        <button class="small-button" onclick="nextframe();" id="next-btn" title="Frame Advance\n(Shortcut: F)"><img src="assets/ui/controls/next.png"></button>\
+                        <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn" title="Toggle the Animation Loop\n(Shortcut: L)"><img src="assets/ui/controls/loop.png"></button>\
+                        <button class="small-button" onclick="toggleSFX();" id="sfx-btn" title="Toggle the Sound Effects\n(Shortcut: S)"><img src="assets/ui/controls/sfx.png"></button>\
+                        <button class="small-button" onclick="openCustom()" id="custom-btn" title="Open the Custom Playlist menu\n(Shortcut: C)"><img src="assets/ui/controls/edit.png"></button>\
+                        <button class="small-button" onclick="toggleBound()" id="bound-btn" title="Toggle the Bounding boxes\n(Shortcut: B)"><img src="assets/ui/controls/bound.png"></button>\
+                        <button class="small-button" onclick="enemyShift()" id="enemy-btn" title="Shift the Enemy position\n(Shortcut: E)"><img src="assets/ui/controls/enemy.png"></button>\
+                        <button class="small-button" onclick="dlimage();" id="dl-btn" title="Download the Canvas\n(Shortcut: Shift+D)"><img src="assets/ui/controls/dl.png"></button>\
+                        <button class="small-button" onclick="record();" id="record-btn" title="Save the current playlist as a WEBM file\n(Shortcut: Shift+W)"><img src="assets/ui/controls/record.png"></button>\
+                        <button class="small-button" onclick="openTexture();" id="texture-btn" title="Open the Texture/Spritesheet menu\n(Shortcut: T)"><img src="assets/ui/controls/texture.png"></button>\
                     </div>\
                     <div class="controls-outline">\
                         <span class="controls-text">Background</span><br>\
@@ -384,75 +384,118 @@ document.addEventListener("keydown", spacekey_fix);
 
 function keybind_listener(event)
 {
-    if(!canInteract()) return;
+    if(!canInteract() || event.ctrlKey || event.altKey) return;
     switch(event.code)
     {
         case "KeyR": // speed reset
         {
-            resetSpeed();
+            if(!event.shiftKey)
+                resetSpeed();
             return;
         }
         case "NumpadAdd": // speed up
         {
-            let elem = document.getElementById('speed-input');
-            elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
-            changeSpeed(elem);
+            if(!event.shiftKey)
+            {
+                let elem = document.getElementById('speed-input');
+                elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
+                changeSpeed(elem);
+            }
             return;
         }
         case "NumpadSubstract": // speed down
         {
-            let elem = document.getElementById('speed-input');
-            elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
-            changeSpeed(elem);
+            if(!event.shiftKey)
+            {
+                let elem = document.getElementById('speed-input');
+                elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
+                changeSpeed(elem);
+            }
             return;
         }
         case "Space": // pause toggle
+        {
             if(document.activeElement.id && document.activeElement.id.includes("-btn")) return; // weird case where the user has a button focused and is pressing space
-            togglePause();
+            if(!event.shiftKey)
+                togglePause();
             return;
+        }
         case "KeyL": // loop toggle
-            toggleLoop();
+        {
+            if(!event.shiftKey)
+                toggleLoop();
             return;
+        }
         case "KeyS": // sfx toggle
-            toggleSFX();
+        {
+            if(!event.shiftKey)
+                toggleSFX();
             return;
+        }
         case "KeyC": // open custom playlist
-            openCustom();
+        {
+            if(!event.shiftKey)
+                openCustom();
             return;
+        }
         case "KeyB": // toggle bounding boxes
+        {
+            if(!event.shiftKey)
             toggleBound();
             return;
+        }
         case "KeyE": // shift enemy position
-            if(is_enemy) enemyShift();
+        {
+            if(!event.shiftKey && is_enemy)
+                enemyShift();
             return;
+        }
         case "KeyF": // frame advance
-            nextframe();
+        {
+            if(!event.shiftKey) 
+                nextframe();
             return;
+        }
         case "KeyD": // download canvas
-            dlimage();
+        {
+            if(event.shiftKey)
+                dlimage();
             return;
+        }
         case "KeyW": // record webm
-            record();
+        {
+            if(event.shiftKey)
+                record();
             return;
+        }
         case "KeyT": // texture list
-            openTexture();
+        {
+            if(!event.shiftKey)
+                openTexture();
             return;
+        }
     }
     // fallbacks for non qwerty keyboards and lack of numpads
     switch(event.key)
     {
         case "+": // speed up
         {
-            let elem = document.getElementById('speed-input');
-            elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
-            changeSpeed(elem);
+            if(!event.shiftKey)
+            {
+                let elem = document.getElementById('speed-input');
+                elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
+                changeSpeed(elem);
+            }
             return;
         }
         case "-": // speed down
         {
-            let elem = document.getElementById('speed-input');
-            elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
-            changeSpeed(elem);
+            if(!event.shiftKey)
+            {
+                let elem = document.getElementById('speed-input');
+                elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
+                changeSpeed(elem);
+            }
             return;
         }
     }
