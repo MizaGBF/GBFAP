@@ -396,7 +396,7 @@ document.addEventListener("keydown", spacekey_fix);
 
 function keybind_listener(event)
 {
-    if(!canInteract() || event.ctrlKey || event.altKey) return;
+    if(!canInteract() || event.ctrlKey || event.altKey || event.metaKey) return;
     switch(event.key)
     {
         case "r": case "R": // speed reset
