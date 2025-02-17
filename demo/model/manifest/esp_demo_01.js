@@ -1,0 +1,1 @@
+define(["jquery","backbone"],function(a,b){var c=b.Model.extend({defaults:{manifest:[{src:Game.imgUri+"/sp/cjs/esp_demo_01.png",id:"esp_demo_01",type:"image"}]}});return c});

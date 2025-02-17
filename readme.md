@@ -174,6 +174,10 @@ function successLoading(id)
 }
 ```  
   
+# Embed in a HTML page  
+Check the [demo](https://github.com/MizaGBF/GBFAP/blob/main/demo.html) page and the [demo folder](https://github.com/MizaGBF/GBFAP/tree/main/demo) for a minimal example of how to include the player in another page.  
+Do note you'll have to set the `AnimeData` accordingly to the element you wish to load.  
+  
 # Exceptions/Quirks  
 * **Missing animations**  
 Some skins/characters/weapons/weapons reuse animations of another version and, as a result, don't have their own.  

@@ -733,7 +733,7 @@ function versionChange(obj)
         let id = AnimeID;
         let u = parseInt(AnimeData[0][animeVersion][0]) - 3;
         if(u > 0) id += "_0" + JSON.stringify(u+1);
-        document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg"
+        document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/summon/m/" + id + ".jpg";
     }
     else if(AnimeID.startsWith("389"))
     {
@@ -747,6 +747,6 @@ function versionChange(obj)
     {
         el = AnimeData[1][animeVersion]['cjs'][0].split('_');
         el[2] += (AnimeID.includes("_st2") ? "_st2" : "");
-        document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg"
+        document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg";
     }
 }

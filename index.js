@@ -673,7 +673,7 @@ function toggle_boundingBox_fireevent()
 }
 
 // Code to patch the createjs 1.0 functions. Some are missing or behave differently from what GBF animations expect.
-var createjs_overloaded_func = {}
+var createjs_overloaded_func = {};
 function hotfix_createjs()
 {
     createjs_overloaded_func["bitmap_init"] = window.createjs.Bitmap.prototype.initialize;
