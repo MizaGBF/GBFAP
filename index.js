@@ -113,14 +113,18 @@ var is_enemy = false; // set to true if we are dealing with enemy animations
 var mc_id = null; // used by classes only
 var mc_wpn = null; // used by weapons and classes
 var mc_summon = null; // used by summons
+var muteBeep = false;
 var beepAudio = new Audio("assets/audio/beep.ogg"); // contains last played audio sfx
 
 // ========================================================================
 // utility
 function beep() // play a sound effect
 {
-    if(!beepAudio.paused) return;
-    beepAudio.play();
+    if(!muteBeep)
+    {
+        if(!beepAudio.paused) return;
+        beepAudio.play();
+    }
 }
 
 // generic xhr request function

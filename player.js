@@ -66,6 +66,7 @@ function setHTML()
                         <button class="small-button" onclick="nextframe();" id="next-btn" title="Frame Advance\n(Shortcut: F)"><img src="assets/ui/controls/next.png"></button>\
                         <button class="small-button btn-enabled" onclick="toggleLoop();" id="loop-btn" title="Toggle the Animation Loop\n(Shortcut: L)"><img src="assets/ui/controls/loop.png"></button>\
                         <button class="small-button" onclick="toggleSFX();" id="sfx-btn" title="Toggle the Sound Effects\n(Shortcut: S)"><img src="assets/ui/controls/sfx.png"></button>\
+                        <button class="small-button" onclick="toggleMute();" id="mute-btn" title="Mute the beep\n(Shortcut: M)"><img src="assets/ui/controls/beep.png"></button>\
                         <button class="small-button" onclick="openCustom()" id="custom-btn" title="Open the Custom Playlist menu\n(Shortcut: C)"><img src="assets/ui/controls/edit.png"></button>\
                         <button class="small-button" onclick="toggleBound()" id="bound-btn" title="Toggle the Bounding boxes\n(Shortcut: B)"><img src="assets/ui/controls/bound.png"></button>\
                         <button class="small-button" onclick="enemyShift()" id="enemy-btn" title="Shift the Enemy position\n(Shortcut: E)"><img src="assets/ui/controls/enemy.png"></button>\
@@ -436,6 +437,12 @@ function keybind_listener(event)
                 toggleSFX();
             return;
         }
+        case "m": case "M": // beep toggle
+        {
+            if(!event.shiftKey)
+                toggleMute();
+            return;
+        }
         case "c": case "C": // open custom playlist
         {
             if(!event.shiftKey)
@@ -557,6 +564,23 @@ function toggleSFX()
         sfxState = true;
     }
     if(window.soundPlayer) window.soundPlayer.enableAll(sfxState);
+}
+
+function toggleMute()
+{
+    if(!canInteract()) return;
+    let mute_btn = document.getElementById("mute-btn");
+    if(mute_btn.classList.contains('btn-enabled'))
+    {
+        mute_btn.classList.remove("btn-enabled");
+        muteBeep = false;
+        beep();
+    }
+    else
+    {
+        mute_btn.classList.add("btn-enabled");
+        muteBeep = true;
+    }
 }
 
 function enemyShift()
