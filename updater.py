@@ -75,7 +75,7 @@ class Progress():
 # main class
 class Updater():
     ### CONSTANT
-    VERSION = '3.11'
+    VERSION = '3.12'
     # limit
     MAX_NEW = 80
     MAX_HTTP = 90
@@ -173,22 +173,27 @@ class Updater():
         except:
             pass
         try:
-            print("Checking GBFAL data for uncaps...")
+            print("Checking GBFAL data for uncaps and styles...")
             possible_uncap = set()
             table = {}
             for k, v in self.gbfal['characters'].items():
                 if isinstance(v, list):
                     max_uncap = 0
                     for e in v[6]: # seventh index
-                        u = int(e.split('_')[1])
-                        if u < 10 and u > max_uncap:
-                            max_uncap = u
+                        try:
+                            u = int(e.split('_')[1])
+                            if u < 10 and u > max_uncap:
+                                max_uncap = u
+                        except:
+                            pass
+                        if "_st2" in e:
+                            if k + "_st2" not in self.index:
+                                possible_uncap.add(k + "_st2")
                     if max_uncap > 0:
                         table[k] = max_uncap
             for k, v in self.gbfal['summons'].items():
                 if isinstance(v, list):
                     max_uncap = 0
-                    
                     for e in v[0]: # first index
                         try:
                             u = int(e.split('_')[1])
@@ -233,7 +238,7 @@ class Updater():
                         if table[k] > max_uncap:
                             possible_uncap.add(k)
             if len(possible_uncap) > 0:
-                print(len(possible_uncap), "possible uncap(s) found")
+                print(len(possible_uncap), "possible uncap/style(s) found")
                 self.uncap_check = possible_uncap
         except Exception as e:
             pass
