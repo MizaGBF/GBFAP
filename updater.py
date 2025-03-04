@@ -75,7 +75,7 @@ class Progress():
 # main class
 class Updater():
     ### CONSTANT
-    VERSION = '3.12'
+    VERSION = '3.13'
     # limit
     MAX_NEW = 80
     MAX_HTTP = 90
@@ -285,10 +285,13 @@ class Updater():
         async with asyncio.TaskGroup() as tg:
             tasks = []
             possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000", "2010{}000", "2020{}000", "2030{}000", "2040{}000", "10100{}00", "10200{}00", "10300{}00", "10400{}00", "10201{}00", "10101{}00", "10301{}00", "10401{}00", "10102{}00", "10202{}00", "10302{}00", "10402{}00", "10103{}00", "10203{}00", "10303{}00", "10403{}00", "10104{}00", "10204{}00", "10304{}00", "10404{}00", "10105{}00", "10205{}00", "10305{}00", "10405{}00", "10106{}00", "10206{}00", "10306{}00", "10406{}00", "10107{}00", "10207{}00", "10307{}00", "10407{}00", "10108{}00", "10208{}00", "10308{}00", "10408{}00", "10209{}00", "10109{}00", "10309{}00", "10409{}00"]
+            # add uncap checks
+            tasks.append(tg.create_task(self.check_uncaps()))
             # add enemies
             for a in range(1, 10):
                 for b in range(1, 4):
                     possibles.append(str(a) + str(b) + "{}")
+            # add possibles
             for i in range(self.MAX_RUN_TASK):
                 tasks.append(tg.create_task(self.run_class(i, self.MAX_RUN_TASK)))
                 for j in possibles:
@@ -299,6 +302,22 @@ class Updater():
             count += t.result()
         if count > 0: print(count, "new entries")
         else: print("Done")
+
+    async def check_uncaps(self) -> int:
+        count = 0
+        for f in self.uncap_check:
+            if f.startswith("10"):
+                if f in self.CLASS_WEAPON_LIST.values():
+                    continue
+                count += await self.update_weapon(f)
+            elif f.startswith("20"):
+                count += await self.update_summon(f)
+            else:
+                if "_st" in f:
+                    count += await self.update_character(f.split('_', 1)[0], "_"+f.split('_', 1)[1])
+                else:
+                    count += await self.update_character(f)
+        return count
 
     async def run_sub(self, start : int, step : int, file : str) -> int:
         with self.progress:
@@ -330,7 +349,7 @@ class Updater():
                     else:
                         errc = 0
                 else:
-                    if self.index.get(f, 0) == 0 or f in self.uncap_check:
+                    if self.index.get(f, 0) == 0 and f not in self.uncap_check:
                         if file.startswith("10"):
                             if f in self.CLASS_WEAPON_LIST.values():
                                 errc = 0
