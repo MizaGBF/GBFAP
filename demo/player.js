@@ -1,6 +1,7 @@
 // constant
-var CANVAS_SIZE = CANVAS_SIZE || 1400;
+var CANVAS_SIZE = CANVAS_SIZE || 1000;
 // initialization of important variables
+var ui = {};
 var versionList=Array.from(AnimeData[0]);
 var action_speed=1;
 var action_index=AnimeData[1];
@@ -47,6 +48,10 @@ function setHTML()
         }
         document.getElementById("version-selection").innerHTML = versions;
     }
+    
+    ui.act_select = document.getElementById("act-selection");
+    ui.act_name = document.getElementById("act-name");
+    ui.act_duration = document.getElementById("act-duration");
     canvas = document.querySelector('.cjs-npc-demo-0');
 }
 

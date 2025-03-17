@@ -1,6 +1,7 @@
 // constant
-var CANVAS_SIZE = CANVAS_SIZE || 1400;
+var CANVAS_SIZE = CANVAS_SIZE || 1000;
 // initialization of important variables
+var ui = {};
 var versionList=Array.from(AnimeData[0]);
 var action_speed=1;
 var action_index=AnimeData[1];
@@ -28,7 +29,7 @@ for (i in action_index) {
     action_index[i].action_label_list =Array.from(action_index[i].action_label_list)
 }
 
-setTimeout(update_frame_counter, 10);
+setInterval(update_frame_counter, 30);
 
 // start
 setHTML();
@@ -95,7 +96,7 @@ function setHTML()
             <div id="custom-action" style="display: none;" class="controls-root custom-menu">\
                 <div class="controls-outline"\
                     <b>Play Actions</b><br>\
-                    <div id="demo-list" class="scroll-list">\
+                    <div id="custom-list" class="scroll-list">\
                     </div>\
                 </div>\
                 <div class="controls-outline">\
@@ -140,10 +141,35 @@ function setHTML()
         versions += '</select>'
     }
     document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvasContent).replace('$VERSIONS', versions)
+    // init UI
+    
+    ui.act_select = document.getElementById("act-selection");
+    ui.act_frame = document.getElementById("act-frame");
+    ui.act_name = document.getElementById("act-name");
+    ui.act_duration = document.getElementById("act-duration");
+    ui.speed_input = document.getElementById("speed-input");
+    ui.speed_label = document.getElementById("speed-label");
+    ui.btn_pause = document.getElementById("pause-btn");
+    ui.btn_next = document.getElementById("next-btn");
+    ui.btn_loop = document.getElementById("loop-btn");
+    ui.btn_sfx = document.getElementById("sfx-btn");
+    ui.btn_custom = document.getElementById("custom-btn");
+    ui.btn_mute = document.getElementById("mute-btn");
+    ui.btn_bound = document.getElementById("bound-btn");
     if(!is_enemy)
-    {
         document.getElementById("enemy-btn").remove();
-    }
+    else
+        ui.btn_enemy = document.getElementById("enemy-btn");
+    ui.btn_dl = document.getElementById("dl-btn");
+    ui.btn_record = document.getElementById("record-btn");
+    ui.btn_texture = document.getElementById("texture-btn");
+    ui.custom_action = document.getElementById("custom-action");
+    ui.custom_list = document.getElementById("custom-list");
+    ui.custom_select = document.getElementById("custom-selection");
+    ui.texture_action = document.getElementById("texture-action");
+    ui.texture_list = document.getElementById("texture-list");
+    
+    // select first canvas
     canvas = document.querySelector('.cjs-npc-demo-0');
     // set focus
     document.getElementById("canvas-container").scrollIntoView();
@@ -152,8 +178,7 @@ function setHTML()
 function canInteract()
 {
     // check if it loaded
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0) return false;
+    if(ui.act_name == null || ui.act_name.getElementsByTagName('img').length > 0) return false;
     // check if it's recording
     if(this.cjsViewList[animeVersion].recording != null) return false;
     return true;
@@ -217,12 +242,11 @@ function resetTexture(name)
 
 function openTexture()
 {
-    if(!canInteract()) return;
-    let tact = document.getElementById("texture-action");
-    if(sub_menu_open || tact.style.display == "") return;
+    if(!!canInteract()) return;
+    if(sub_menu_open || ui.texture_action.style.display == "") return;
     beep();
     sub_menu_open = true;
-    tact.style.display = "";
+    ui.texture_action.style.display = "";
     let tlist = document.getElementById("texture-list");
     if(tlist.innerHTML.trim() == "")
     {
@@ -260,25 +284,23 @@ function openTexture()
 
 function textureIsOpen()
 {
-    let tact = document.getElementById("texture-action");
-    return sub_menu_open && tact.style.display == "";
+    return sub_menu_open && ui.texture_action.style.display == "";
 }
 
 function closeTexture()
 {
     sub_menu_open = false;
     beep();
-    document.getElementById("texture-action").style.display = "none";
+    ui.texture_action.style.display = "none";
 }
 
 function openCustom()
 {
     if(!canInteract()) return;
-    let cact = document.getElementById("custom-action");
-    if(sub_menu_open || cact.style.display == "") return;
+    if(sub_menu_open || ui.custom_action.style.display == "") return;
     beep();
     sub_menu_open = true;
-    cact.style.display = "";
+    ui.custom_action.style.display = "";
     let actions = this.cjsViewList[animeVersion].getActionList();
     let actionlist = ""
     for(action in custom_choices[animeVersion]) {
@@ -296,8 +318,7 @@ function openCustom()
 
 function customIsOpen()
 {
-    let cact = document.getElementById("custom-action");
-    return sub_menu_open && cact.style.display == "";
+    return sub_menu_open && ui.custom_action.style.display == "";
 }
 
 function playCustom()
@@ -312,7 +333,7 @@ function closeCustom()
 {
     sub_menu_open = false;
     beep();
-    document.getElementById("custom-action").style.display = "none";
+    ui.custom_action.style.display = "none";
 }
 
 function addCustom()
@@ -323,7 +344,7 @@ function addCustom()
         pushPopup("You can't add more actions");
         return;
     }
-    demo_list[animeVersion].push(document.getElementById("custom-selection").value);
+    demo_list[animeVersion].push(ui.custom_select.value);
     updateDemoList();
 }
 
@@ -355,7 +376,7 @@ function updateDemoList()
         html += '<span class="act-element">' + this.cjsViewList[animeVersion].translateAction(action) + '</span><button class="small-button" onclick="delCustom(' + i + ')")"><img src="assets/ui/controls/remove.png"></button><br>\n';
         i++;
     }
-    document.getElementById('demo-list').innerHTML = html;
+    ui.custom_list.innerHTML = html;
 }
 
 function actionChange(obj)
@@ -377,17 +398,17 @@ function actionChange(obj)
 
 function update_frame_counter()
 {
-    let name = document.getElementById("act-name");
-    if(name == null || name.getElementsByTagName('img').length > 0)
+    if(ui.act_name == null || ui.act_name.getElementsByTagName('img').length > 0)
     {
         // loading, do nothing
     }
     else
     {
-        if(document.getElementById("loop-btn").classList.contains('btn-enabled')) document.getElementById("act-frame").innerHTML = JSON.stringify(this.cjsViewList[animeVersion].mainTween.position);
-        else document.getElementById("act-frame").innerHTML = "Loop paused";
+        if(ui.btn_loop.classList.contains('btn-enabled'))
+            ui.act_frame.textContent = JSON.stringify(this.cjsViewList[animeVersion].mainTween.position);
+        else
+            ui.act_frame.textContent = "Loop paused";
     }
-    setTimeout(update_frame_counter, 10);
 }
 
 function spacekey_fix(event) // disabled scrolling when pressing space bar
@@ -409,16 +430,14 @@ function keybind_listener(event)
         }
         case "+": // speed up
         {
-            let elem = document.getElementById('speed-input');
-            elem.value = JSON.stringify(parseFloat(elem.value) + parseFloat(elem.step));
-            changeSpeed(elem);
+            ui.speed_input.value = JSON.stringify(parseFloat(ui.speed_input.value) + parseFloat(ui.speed_input.step));
+            changeSpeed(ui.speed_input);
             break;
         }
         case "-": // speed down
         {
-            let elem = document.getElementById('speed-input');
-            elem.value = JSON.stringify(parseFloat(elem.value) - parseFloat(elem.step));
-            changeSpeed(elem);
+            ui.speed_input.value = JSON.stringify(parseFloat(ui.speed_input.value) - parseFloat(ui.speed_input.step));
+            changeSpeed(ui.speed_input);
             break;
         }
         case " ": // pause
@@ -506,15 +525,16 @@ function togglePause()
     beep();
     if(this.cjsViewList[animeVersion].isPaused)
     {
-        document.getElementById("pause-btn").classList.remove("btn-paused");
+        ui.btn_pause.classList.remove("btn-paused");
         if(window.soundPlayer) window.soundPlayer.resumeAll();
         this.cjsViewList[animeVersion].resume();
     }
     else
     {
-        document.getElementById("pause-btn").classList.add("btn-paused");
+        ui.btn_pause.classList.add("btn-paused");
         if(window.soundPlayer) window.soundPlayer.pauseAll();
         this.cjsViewList[animeVersion].pause();
+        
     }
 }
 
@@ -522,15 +542,14 @@ function toggleLoop()
 {
     if(!canInteract()) return;
     beep();
-    let loop_btn = document.getElementById("loop-btn");
-    if(loop_btn.classList.contains('btn-enabled'))
+    if(ui.btn_loop.classList.contains('btn-enabled'))
     {
-        loop_btn.classList.remove("btn-enabled");
+        ui.btn_loop.classList.remove("btn-enabled");
         loopingState = false;
     }
     else
     {
-        loop_btn.classList.add("btn-enabled");
+        ui.btn_loop.classList.add("btn-enabled");
         loopingState = true;
         this.cjsViewList[animeVersion].nextLoop();
     }
@@ -539,10 +558,9 @@ function toggleLoop()
 
 function enableLoop()
 {
-    let loop_btn = document.getElementById("loop-btn");
-    if(!loop_btn.classList.contains('btn-enabled'))
+    if(!ui.btn_loop.classList.contains('btn-enabled'))
     {
-        loop_btn.classList.add("btn-enabled");
+        ui.btn_loop.classList.add("btn-enabled");
         loopingState = true;
         this.cjsViewList[animeVersion].nextLoop();
         this.cjsViewList[animeVersion].loopPaused = !loopingState;
@@ -553,15 +571,14 @@ function toggleSFX()
 {
     if(!canInteract()) return;
     beep();
-    let sfx_btn = document.getElementById("sfx-btn");
-    if(sfx_btn.classList.contains('btn-enabled'))
+    if(ui.btn_sfx.classList.contains('btn-enabled'))
     {
-        sfx_btn.classList.remove("btn-enabled");
+        ui.btn_sfx.classList.remove("btn-enabled");
         sfxState = false;
     }
     else
     {
-        sfx_btn.classList.add("btn-enabled");
+        ui.btn_sfx.classList.add("btn-enabled");
         sfxState = true;
     }
     if(window.soundPlayer) window.soundPlayer.enableAll(sfxState);
@@ -570,16 +587,15 @@ function toggleSFX()
 function toggleMute()
 {
     if(!canInteract()) return;
-    let mute_btn = document.getElementById("mute-btn");
-    if(mute_btn.classList.contains('btn-enabled'))
+    if(ui.btn_mute.classList.contains('btn-enabled'))
     {
-        mute_btn.classList.remove("btn-enabled");
+        ui.btn_mute.classList.remove("btn-enabled");
         muteBeep = false;
         beep();
     }
     else
     {
-        mute_btn.classList.add("btn-enabled");
+        ui.btn_mute.classList.add("btn-enabled");
         muteBeep = true;
     }
 }
@@ -588,16 +604,15 @@ function enemyShift()
 {
     if(!canInteract()) return;
     beep();
-    let sfx_btn = document.getElementById("enemy-btn");
-    if(sfx_btn.classList.contains('btn-enabled'))
+    if(ui.btn_enemy.classList.contains('btn-enabled'))
     {
-        sfx_btn.classList.remove("btn-enabled");
+        ui.btn_enemy.classList.remove("btn-enabled");
         cjsViewList[0].cjsNpc.x -= 71;
         cjsViewList[0].cjsNpc.y += 117;
     }
     else
     {
-        sfx_btn.classList.add("btn-enabled");
+        ui.btn_enemy.classList.add("btn-enabled");
         cjsViewList[0].cjsNpc.x += 71;
         cjsViewList[0].cjsNpc.y -= 117;
     }
@@ -607,14 +622,13 @@ function toggleBound()
 {
     if(!canInteract()) return;
     beep();
-    let bound_btn = document.getElementById("bound-btn");
     if(boundingBox_enabled)
     {
-        bound_btn.classList.remove("btn-enabled");
+        ui.btn_bound.classList.remove("btn-enabled");
     }
     else
     {
-        bound_btn.classList.add("btn-enabled");
+        ui.btn_bound.classList.add("btn-enabled");
     }
     toggle_boundingBox_fireevent();
 }
@@ -629,14 +643,13 @@ function changeSpeed(elem)
     action_speed = parseFloat(elem.value);
     if(window.soundPlayer) window.soundPlayer.setAllSpeed(action_speed);
     createjs.Ticker.framerate = 30*action_speed;
-    document.getElementById("speed-label").innerHTML = JSON.stringify(Math.floor(100*action_speed)) + "% Speed";
+    ui.speed_label.textContent = JSON.stringify(Math.floor(100*action_speed)) + "% Speed";
 }
 
 function resetSpeed()
 {
-    let elem = document.getElementById('speed-input');
-    elem.value='1';
-    changeSpeed(elem);
+    ui.speed_input.value='1';
+    changeSpeed(ui.speed_input);
 }
 
 function nextframe()
@@ -674,8 +687,7 @@ function versionChange(obj)
 
     animeVersion = obj.options[obj.selectedIndex].value;
     //verify if action exists
-    var actionLabel=document.getElementById("act-selection")
-    var action = actionLabel.options[actionLabel.selectedIndex].value;
+    var action = ui.act_select.options[ui.act_select.selectedIndex].value;
     var defaultAction = action
     if (!action in action_index[animeVersion].action_label_list) {
         defaultAction="default"
@@ -698,7 +710,7 @@ function versionChange(obj)
     if (actionUpdate){
         action_list.motionList = action_index[animeVersion].action_label_list
     }
-    document.getElementById("act-selection").innerHTML = actionlist
+    ui.act_select.innerHTML = actionlist
 
     //replace version
     for (var i = 0; i < versionList.length; i++) {
@@ -713,7 +725,7 @@ function versionChange(obj)
         }
     };
     // unpause
-    document.getElementById("pause-btn").classList.remove("btn-paused");
+    ui.btn_pause.classList.remove("btn-paused");
     
     // header image
     let el = AnimeID.split('_');

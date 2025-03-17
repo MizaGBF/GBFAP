@@ -1,10 +1,10 @@
 define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _) {
     // settings you can edit:
-    var CANVAS_SIZE = CANVAS_SIZE || 1400; // 1400px. The syntax is because player.js also needs it, so it might be declared here first, depending on race conditions.
+    var CANVAS_SIZE = CANVAS_SIZE || 1000; // 1000px. The syntax is because player.js also needs it, so it might be declared here first, depending on race conditions.
+    let realSize = 1000; // default expected size
     const WINDOWSIZE = 600; // Window size on the page. Must match what's defined in style.css, at #canvas-container
     const SUMMON_FULLSCREEN_SCALING = 0.9; // Additional scaling for fullscreen summon animations
     // end
-    let realSize = 1400; // default expected size
     let scaling = CANVAS_SIZE / realSize;
     let center = CANVAS_SIZE / 2;
     const npcOffset = { // position of the element
@@ -813,15 +813,13 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
                 }
             }
             // update animation name on the page
-            let actname = document.getElementById("act-name");
-            if(actname && actname.innerHTML != this.translateAction(motion)) {
-                actname.innerHTML = this.translateAction(motion);
+            if(ui && ui.act_name && ui.act_name.textContent != this.translateAction(motion)) {
+                ui.act_name.textContent = this.translateAction(motion);
             };
             // update animation duration on the page
-            let actduration = document.getElementById("act-duration");
             let newDuration=(animDuration / 30).toFixed(2) + 's'; // duration in second
-            if(actduration && actduration.innerHTML != newDuration)
-                actduration.innerHTML = newDuration;
+            if(ui && ui.act_duration && ui.act_duration.textContent != newDuration)
+                ui.act_duration.textContent = newDuration;
             // set listener
             this.npc.addEventListener(complete, animationCompleted);
             // play animation

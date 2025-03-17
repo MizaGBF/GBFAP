@@ -1,6 +1,7 @@
 // constant
 const LOCAL = false; // set to true if assets are on the same machine
-const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
+//const CORS = 'https://gbfcp2.onrender.com/' // CORS Proxy to use (if LOCAL is true)
+const CORS = 'http://localhost:8001/' // CORS Proxy to use (if LOCAL is true)
 const HISTORY_LENGTH = 20; // size limit of the history
 const ENDPOINTS = [ // possible asset endpoints, used for the index
     "https://prd-game-a-granbluefantasy.akamaized.net/",
@@ -210,7 +211,7 @@ function initChangelog(unusued)
             updated = json["new"].reverse();
         }
         timestamp = json.timestamp;
-        clock();
+        setInterval(clock, 1000);
     }
     catch(err)
     {
@@ -657,7 +658,6 @@ function addBoundingBox(displayObject) {
     });
     
     displayObject.on("boundtoggle", () => {
-        console.log("hi");
         if(boundingBox.parent)
             boundingBox.visible = boundingBox_enabled;
     });
@@ -1374,8 +1374,7 @@ function clock() // update the "last updated" clock
     else if(elapsed < 5270400) msg = Math.trunc(elapsed / 86400) + " days ago.";
     else if(elapsed < 63115200) msg = Math.trunc(elapsed / 2635200) + " months ago.";
     else msg = Math.trunc(elapsed / 31557600) + " years ago.";
-    document.getElementById('timestamp').innerHTML = "Last update: " + msg;
-    setTimeout(clock, now.getTime() % 1000 + 1);
+    document.getElementById('timestamp').textContent = "Last update: " + msg;
 }
 
 function resetTabs() // reset the tab state

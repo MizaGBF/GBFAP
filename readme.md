@@ -39,7 +39,7 @@ Here's a simplified view of the file interactions:
 ## Changing the canvas/window size  
 The following must be changed:  
 * In `player.js`: `CANVAS_SIZE` near the top. It's size of the underneath canvas, i.e. the internal resolution, if you will.  
-* In `view/cjs_npc_demo.js`: Also `CANVAS_SIZE` near the top. It must be the same as in `player.js`.  
+* In `view/cjs_npc_demo.js`: Also `CANVAS_SIZE` near the top. It must be the same as in `player.js`. Optional, but you can also change `DEFAULT_SIZE`.  
 * In `css/style.css`: Under `canvas-container` (The player size, what's visible on the page) and `cjs-npc-demo` (Must be equal to `CANVAS_SIZE`).  
   
 ## createjs patch  

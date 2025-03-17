@@ -100,7 +100,7 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo", "under
                     for(let action in actions) {
                         actionlist = actionlist.concat('<option value=' + actions[action] + '>' + view.translateAction(actions[action]) + '</option>');
                     }
-                    document.getElementById("act-selection").innerHTML = actionlist;
+                    ui.act_select.innerHTML = actionlist;
                     view.reset(); // trick, see cjs_npc_demo.js
                 }
             });

@@ -37,9 +37,8 @@ define(["underscore", "backbone", "util/backbone-singleton", "model/manifest-loa
 
             // Update loading progress (custom logic)
             loadNow++; // Increment loaded file count
-            let actduration = document.getElementById('act-duration');
-            if(actduration)
-                actduration.innerHTML = "" + loadNow + " / " + loadTotal + " (" + Math.floor(100*loadNow/loadTotal) + "%)"; // update indicator
+            if(ui && ui.act_duration)
+                ui.act_duration.textContent = "" + loadNow + " / " + loadTotal + " (" + Math.floor(100*loadNow/loadTotal) + "%)"; // update indicator
         },
         handleComplete: function(event) {
             if(window.CreateJsShell && Game.setting.cjs_mode === 1)
