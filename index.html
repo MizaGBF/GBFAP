@@ -1,138 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>GBF Animation Player</title>
-    <meta name="title" content="Granblue Fantasy Animation Player">
-    <meta name="description" content="The Granblue Fantasy Animation Player project (GBFAP). This is an animation viewer for GBF characters, outfits, summons, classes, bosses and weapons.">
-    <meta name="theme-color" content="#5217b0">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mizagbf.github.io/GBFAP/">
-    <meta property="og:title" content="Granblue Fantasy Animation Player">
-    <meta property="og:description" content="The Granblue Fantasy Animation Player project (GBFAP). This is an animation viewer for GBF characters, outfits, summons, classes, bosses and weapons.">
-    <meta property="og:image" content="https://mizagbf.github.io/GBFAP/assets/ui/card.png">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://mizagbf.github.io/GBFAP/">
-    <meta property="twitter:title" content="Granblue Fantasy Animation Player">
-    <meta property="twitter:description" content="The Granblue Fantasy Animation Player project (GBFAP). This is an animation viewer for GBF characters, outfits, summons, classes, bosses and weapons.">
-    <meta property="twitter:image" content="https://mizagbf.github.io/GBFAP/assets/ui/card.png">
-    <link rel="icon" type="image/png" href="assets/icon.png">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="require.js"></script>
-    <script src="index.js"></script>
-    <link rel="dns-prefetch" href="https://prd-game-a-granbluefantasy.akamaized.net/" />
-    <link rel="dns-prefetch" href="https://prd-game-a1-granbluefantasy.akamaized.net/" />
-    <link rel="dns-prefetch" href="https://prd-game-a2-granbluefantasy.akamaized.net/" />
-    <link rel="dns-prefetch" href="https://prd-game-a3-granbluefantasy.akamaized.net/" />
-    <link rel="dns-prefetch" href="https://prd-game-a4-granbluefantasy.akamaized.net/" />
-    <link rel="dns-prefetch" href="https://prd-game-a5-granbluefantasy.akamaized.net/" />
+	<meta charset="utf-8">
+	<title>GBF Animation Player</title>
+	<meta name="title" content="Granblue Fantasy Animation Player">
+	<meta name="description" content="The Granblue Fantasy Animation Player project (GBFAP). This is an animation viewer for GBF characters, outfits, summons, classes, bosses and weapons.">
+	<meta name="theme-color" content="#5217b0">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://mizagbf.github.io/GBFAP/">
+	<meta property="og:title" content="Granblue Fantasy Animation Player">
+	<meta property="og:description" content="The Granblue Fantasy Animation Player project (GBFAP). This is an animation viewer for GBF characters, outfits, summons, classes, bosses and weapons.">
+	<meta property="og:image" content="https://mizagbf.github.io/GBFAP/assets/ui/card.png">
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://mizagbf.github.io/GBFAP/">
+	<meta property="twitter:title" content="Granblue Fantasy Animation Player">
+	<meta property="twitter:description" content="The Granblue Fantasy Animation Player project (GBFAP). This is an animation viewer for GBF characters, outfits, summons, classes, bosses and weapons.">
+	<meta property="twitter:image" content="https://mizagbf.github.io/GBFAP/assets/ui/card.png">
+	<link rel="icon" type="image/png" href="assets/icon.png">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="require.js"></script>
+	<script src="index.js"></script>
+	<link rel="dns-prefetch" href="https://prd-game-a-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a1-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a2-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a3-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a4-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a5-granbluefantasy.akamaized.net/" />
 </head>
 <body onload="init()">
-    <a href="index.html"><img id="titleheader" src="assets/ui/header.png" alt="header"></a>
-    <div id="header">
-        <div>v7.10</div>
-        <div id="timestamp"></div>
-    </div>
-    <div id="issues" style="display:none">
-        <h3>Known Issues</h3>
-    </div>
-    <br>
-    <div>
-        <button class="tabbutton" id="tab-index" onclick="openTab('index')"><img class="btn-icon" src="assets/ui/icon/index.png" />Index</button>
-        <button class="tabbutton" id="tab-view" onclick="openTab('view')" style="display:none"><img class="btn-icon" src="assets/ui/icon/view.png" />Player</button>
-        <button class="tabbutton" id="tab-new" onclick="openTab('new')"><img class="btn-icon" src="assets/ui/icon/new.png" />Newest</button>
-        <button class="tabbutton" id="tab-history" onclick="openTab('history')"><img class="btn-icon" src="assets/ui/icon/history.png" />History</button>
-        <button class="tabbutton" id="tab-bookmark" onclick="openTab('bookmark')"><img class="btn-icon" src="assets/ui/icon/bookmark.png" />Bookmarks</button>
-        <button class="tabbutton" id="tab-about" onclick="openTab('about')"><img class="btn-icon" src="assets/ui/icon/about.png" />About</button>
-    </div>
-    <br>
-    <div id="index" class="tabcontent" style="display:none">
-        <div class="element-detail" onclick="location.href='https://mizagbf.github.io/GBFAL'"><img class="detail-icon" src="assets/ui/icon/GBFAL.png">Search on GBFAL</div>
-    </div>
-    <div id="view" class="tabcontent" style="display:none">
-        <div id="output" class="container container-header">
-            <img src="assets/ui/loading.gif" id="temp">
-            <div class="tips" id="wakeup">
-                Loading...
-            </div>
-        </div>
-    </div>
-    <div id="new" class="tabcontent container" style="display:none">
-    </div>
-    <div id="history" class="tabcontent container" style="display:none">
-    </div>
-    <div id="bookmark" class="tabcontent container" style="display:none">
-    </div>
-    <div id="about" class="tabcontent container" style="display:none">
-        <h3>&#x2022; What is this?</h3>
-        <p>This page allows the playback of animations featuring characters, outfits, summons, weapons, and main characters from the mobile game <a href="https://game.granbluefantasy.jp/">Granblue Fantasy</a>.This project is derived from the animation player found within the <a href="https://gbf.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5">Chinese Wiki</a>, itself based on the preview of the <a href="https://game.granbluefantasy.jp/#gacha/selected">Gacha page</a>.<br>Please acknowledge that assets could potentially become inaccessible or undergo modifications at the discretion of Cygames.</p>
-        <h3>&#x2022; Why is the loading so slow?</h3>
-        <p>Because of the existence of <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/CORS">Cross-origin resource sharing policies</a> and because no assets are hosted here, javascript and sprite sheet files used for the animations must be fetched via a proxy.<br>This proxy can take a few minutes to wake up, if it hasn't be used recently.<br>In doubt, refresh the page if it's still loading after a minute or two.<br>It also has a limit on the number of hours it can run per month, for cost reasons, so please use this page with parsimony.</p>
-        <h3>&#x2022; Animations differ between the player and in-game.</h3>
-        <p>In some cases, characters might reuse animations from another.<br>As such, when an animation is missing, some guesswork is involved, which might lead to disparity between the game and what you see on this page.<br>Default animations are also used in some cases when no animations at all exist, like for Sakura's auto attack for example.</p>
-        <h3>&#x2022; When does it get updated?</h3>
-        <p>Updates to this page require manual interventions.<br>As such, you can expect them to occur between 15:00 and 08:00 JST, when I'm available.</p>
-        <h3>&#x2022; Controls and Keyboard Shortcuts</h3>
-        <p>The following controls are available under the player:<br>
-            <ul>
-                <li><button class="small-button"><img src="assets/ui/controls/reset.png"></button> Reset the speed scale to 100%. (<b>Keyboard shortcut: R</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/pause.png"></button> Pause the animation. (<b>Keyboard shortcut: Space</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/next.png"></button> Pause and advance by a single frame. (<b>Keyboard shortcut: F</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/loop.png"></button> If disabled, the animation won't loop. (<b>Keyboard shortcut: L</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/sfx.png"></button> To play the sound files present in the animation file. (<b>Keyboard shortcut: S</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/edit.png"></button> Open the custom animation playlist menu. (<b>Keyboard shortcut: C</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/beep.png"></button> To mute the beep when pressing buttons. (<b>Keyboard shortcut: M</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/bound.png"></button> Toggle the bounding boxes visibility. (<b>Keyboard shortcut: B</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/enemy.png"></button> (Enemy only) Shift an enemy by 71x117 px to the top right. Useful for small enemies that are set too low on the screen. (<b>Keyboard shortcut: E</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/dl.png"></button> Pause and download the player canvas as a PNG file (includes off-screen elements). (<b>Keyboard shortcut: Shift+D</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/record.png"></button> (Chrome Only) Reset and make a WEBM of the current animation list. (<b>Keyboard shortcut: Shift+W</b>)</li>
-                <li><button class="small-button"><img src="assets/ui/controls/texture.png"></button> Open the list of loaded textures/spritesheets. Let you replace them on the fly. (<b>Keyboard shortcut: T</b>)</li>
-            </ul><br>
-            Other shortcuts:<br>
-            <ul>
-                <li><b>+</b> to speed up by 5%.</li>
-                <li><b>-</b> to speed down by 5%.</li>
-            </ul>
-        </p>
-        <h3>&#x2022; The animation is stuck!</h3>
-        <p>If you noticed a problem or bug on this page, you can open an issue in the <a href="https://github.com/MizaGBF/GBFAP/issues">GitHub repository</a> or contact me directly.<br>Try to explain clearly what the problem is and provide screenshots, plus the ID of the element, if possible.</p>
-        <h3>&#x2022; The resulting image from the download button is weird...</h3>
-        <p>The download button saves the whole canvas, including what's "off-screen". This is the same result as when doing Right Click > Save as.</p>
-        <h3>&#x2022; The video files from the Record feature don't have duration metadatas.</h3>
-        <p>A weird quirk from the MediaRecorder API, as far as I know.<br>It makes impossible to post the resulting files on some websites.<br>If you have access to ffmpeg, here's commands to convert them quickly:<br>
-            <ul>
-                <li><b>Twitter/X:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libx264 -b:v 25M -an -threads 2 output_file.mp4</li>
-                <li><b>4chan:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libvpx-vp9 -b:v 8M -an -threads 2 output_file.webm</li>
-            </ul>
-            Adjust bitrates/etc... to fit your needs.<br>
-            Contact me if you have more commands to suggest to add to this list.
-        </p>
-        <h3>&#x2022; The Download and Recording features don't work on Firefox!</h3>
-        <p>Nothing I can do about it, currently.<br>Pull Requests are open if you have a magic solution!</p>
-        <h3>&#x2022; Class Champion weapons seem to be bugged</h3>
-        <p>For those weapon series, and similar other series, use the first version of the weapon (usually the Fire one) to view the full animations.</p>
-        <h3>&#x2022; Restrictions</h3>
-        <p>Because the game can't handle different weapons loaded at the same time, classe animations only show one of the two proficiencies.<br>In a similar fashion, weapons with multiple forms (currently, only Dark Opus) are on separate IDs.<br>And for space reasons, SR Malinda 4★ is only using the Fire themed animations.</p>
-        <h3>&#x2022; Can you add voice lines ?</h3>
-        <p>I can't. If you find out how, however, feel free to tell me.</p>
-        <h3>&#x2022; Unreleased asset policy</h3>
-        <p>Concerning unreleased assets, there are instances where Cygames inadvertently makes assets from upcoming content accessible to the general public.<br>In such occurrences, to prevent any potential complications, you can expect me to promptly delist related elements, if it's apparent that they were intended to remain concealed and if Cygames hasn't already addressed the situation.</p>
-        <h3>&#x2022; Can I use this project?</h3>
-        <p>The project is open source, under the <a href="https://github.com/MizaGBF/GBFAP/blob/main/license">MIT License</a>.<br>In the advent that I quit or disappear, you can do whatever you want, within the license scopes, with this project.<br>Alternatively, you could setup your own local version, if you have the knowledge to do so.</p>
-        <h3>&#x2022; How can I support you?</h3>
-        <p>You can leave a star on the <a href="https://github.com/MizaGBF/GBFAP">GitHub repository</a>.<br>
-        No need to advertise this page, bandwidth isn't unlimited.</p>
-    </div>
-    <br>
+	<a href="index.html"><img id="titleheader" src="assets/ui/header.png" alt="header"></a>
+	<div id="header">
+		<div>v7.10</div>
+		<div id="timestamp"></div>
+	</div>
+	<div id="issues" style="display:none">
+		<h3>Known Issues</h3>
+	</div>
+	<br>
+	<div>
+		<button class="tabbutton" id="tab-index" onclick="openTab('index')"><img class="btn-icon" src="assets/ui/icon/index.png" />Index</button>
+		<button class="tabbutton" id="tab-view" onclick="openTab('view')" style="display:none"><img class="btn-icon" src="assets/ui/icon/view.png" />Player</button>
+		<button class="tabbutton" id="tab-new" onclick="openTab('new')"><img class="btn-icon" src="assets/ui/icon/new.png" />Newest</button>
+		<button class="tabbutton" id="tab-history" onclick="openTab('history')"><img class="btn-icon" src="assets/ui/icon/history.png" />History</button>
+		<button class="tabbutton" id="tab-bookmark" onclick="openTab('bookmark')"><img class="btn-icon" src="assets/ui/icon/bookmark.png" />Bookmarks</button>
+		<button class="tabbutton" id="tab-about" onclick="openTab('about')"><img class="btn-icon" src="assets/ui/icon/about.png" />About</button>
+	</div>
+	<br>
+	<div id="index" class="tabcontent" style="display:none">
+		<div class="element-detail" onclick="location.href='https://mizagbf.github.io/GBFAL'"><img class="detail-icon" src="assets/ui/icon/GBFAL.png">Search on GBFAL</div>
+	</div>
+	<div id="view" class="tabcontent" style="display:none">
+		<div id="output" class="container container-header">
+			<img src="assets/ui/loading.gif" id="temp">
+			<div class="tips" id="wakeup">
+				Loading...
+			</div>
+		</div>
+	</div>
+	<div id="new" class="tabcontent container" style="display:none">
+	</div>
+	<div id="history" class="tabcontent container" style="display:none">
+	</div>
+	<div id="bookmark" class="tabcontent container" style="display:none">
+	</div>
+	<div id="about" class="tabcontent container" style="display:none">
+		<h3>&#x2022; What is this?</h3>
+		<p>This page allows the playback of animations featuring characters, outfits, summons, weapons, and main characters from the mobile game <a href="https://game.granbluefantasy.jp/">Granblue Fantasy</a>.This project is derived from the animation player found within the <a href="https://gbf.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5">Chinese Wiki</a>, itself based on the preview of the <a href="https://game.granbluefantasy.jp/#gacha/selected">Gacha page</a>.<br>Please acknowledge that assets could potentially become inaccessible or undergo modifications at the discretion of Cygames.</p>
+		<h3>&#x2022; Why is the loading so slow?</h3>
+		<p>Because of the existence of <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/CORS">Cross-origin resource sharing policies</a> and because no assets are hosted here, javascript and sprite sheet files used for the animations must be fetched via a proxy.<br>This proxy can take a few minutes to wake up, if it hasn't be used recently.<br>In doubt, refresh the page if it's still loading after a minute or two.<br>It also has a limit on the number of hours it can run per month, for cost reasons, so please use this page with parsimony.</p>
+		<h3>&#x2022; Animations differ between the player and in-game.</h3>
+		<p>In some cases, characters might reuse animations from another.<br>As such, when an animation is missing, some guesswork is involved, which might lead to disparity between the game and what you see on this page.<br>Default animations are also used in some cases when no animations at all exist, like for Sakura's auto attack for example.</p>
+		<h3>&#x2022; When does it get updated?</h3>
+		<p>Updates to this page require manual interventions.<br>As such, you can expect them to occur between 15:00 and 08:00 JST, when I'm available.</p>
+		<h3>&#x2022; Controls and Keyboard Shortcuts</h3>
+		<p>The following controls are available under the player:<br>
+			<ul>
+				<li><button class="small-button"><img src="assets/ui/controls/reset.png"></button> Reset the speed scale to 100%. (<b>Keyboard shortcut: R</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/pause.png"></button> Pause the animation. (<b>Keyboard shortcut: Space</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/next.png"></button> Pause and advance by a single frame. (<b>Keyboard shortcut: F</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/loop.png"></button> If disabled, the animation won't loop. (<b>Keyboard shortcut: L</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/sfx.png"></button> To play the sound files present in the animation file. (<b>Keyboard shortcut: S</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/edit.png"></button> Open the custom animation playlist menu. (<b>Keyboard shortcut: C</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/beep.png"></button> To mute the beep when pressing buttons. (<b>Keyboard shortcut: M</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/bound.png"></button> Toggle the bounding boxes visibility. (<b>Keyboard shortcut: B</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/enemy.png"></button> (Enemy only) Shift an enemy by 71x117 px to the top right. Useful for small enemies that are set too low on the screen. (<b>Keyboard shortcut: E</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/dl.png"></button> Pause and download the player canvas as a PNG file (includes off-screen elements). (<b>Keyboard shortcut: Shift+D</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/record.png"></button> (Chrome Only) Reset and make a WEBM of the current animation list. (<b>Keyboard shortcut: Shift+W</b>)</li>
+				<li><button class="small-button"><img src="assets/ui/controls/texture.png"></button> Open the list of loaded textures/spritesheets. Let you replace them on the fly. (<b>Keyboard shortcut: T</b>)</li>
+			</ul><br>
+			Other shortcuts:<br>
+			<ul>
+				<li><b>+</b> to speed up by 5%.</li>
+				<li><b>-</b> to speed down by 5%.</li>
+			</ul>
+		</p>
+		<h3>&#x2022; The animation is stuck!</h3>
+		<p>If you noticed a problem or bug on this page, you can open an issue in the <a href="https://github.com/MizaGBF/GBFAP/issues">GitHub repository</a> or contact me directly.<br>Try to explain clearly what the problem is and provide screenshots, plus the ID of the element, if possible.</p>
+		<h3>&#x2022; The resulting image from the download button is weird...</h3>
+		<p>The download button saves the whole canvas, including what's "off-screen". This is the same result as when doing Right Click > Save as.</p>
+		<h3>&#x2022; The video files from the Record feature don't have duration metadatas.</h3>
+		<p>A weird quirk from the MediaRecorder API, as far as I know.<br>It makes impossible to post the resulting files on some websites.<br>If you have access to ffmpeg, here's commands to convert them quickly:<br>
+			<ul>
+				<li><b>Twitter/X:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libx264 -b:v 25M -an -threads 2 output_file.mp4</li>
+				<li><b>4chan:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libvpx-vp9 -b:v 8M -an -threads 2 output_file.webm</li>
+			</ul>
+			Adjust bitrates/etc... to fit your needs.<br>
+			Contact me if you have more commands to suggest to add to this list.
+		</p>
+		<h3>&#x2022; The Download and Recording features don't work on Firefox!</h3>
+		<p>Nothing I can do about it, currently.<br>Pull Requests are open if you have a magic solution!</p>
+		<h3>&#x2022; Class Champion weapons seem to be bugged</h3>
+		<p>For those weapon series, and similar other series, use the first version of the weapon (usually the Fire one) to view the full animations.</p>
+		<h3>&#x2022; Restrictions</h3>
+		<p>Because the game can't handle different weapons loaded at the same time, classe animations only show one of the two proficiencies.<br>In a similar fashion, weapons with multiple forms (currently, only Dark Opus) are on separate IDs.<br>And for space reasons, SR Malinda 4★ is only using the Fire themed animations.</p>
+		<h3>&#x2022; Can you add voice lines ?</h3>
+		<p>I can't. If you find out how, however, feel free to tell me.</p>
+		<h3>&#x2022; Unreleased asset policy</h3>
+		<p>Concerning unreleased assets, there are instances where Cygames inadvertently makes assets from upcoming content accessible to the general public.<br>In such occurrences, to prevent any potential complications, you can expect me to promptly delist related elements, if it's apparent that they were intended to remain concealed and if Cygames hasn't already addressed the situation.</p>
+		<h3>&#x2022; Can I use this project?</h3>
+		<p>The project is open source, under the <a href="https://github.com/MizaGBF/GBFAP/blob/main/license">MIT License</a>.<br>In the advent that I quit or disappear, you can do whatever you want, within the license scopes, with this project.<br>Alternatively, you could setup your own local version, if you have the knowledge to do so.</p>
+		<h3>&#x2022; How can I support you?</h3>
+		<p>You can leave a star on the <a href="https://github.com/MizaGBF/GBFAP">GitHub repository</a>.<br>
+		No need to advertise this page, bandwidth isn't unlimited.</p>
+	</div>
+	<br>
 </body>
 <footer>
-    <div id="footer">
-        <a href="https://github.com/MizaGBF/GBFAP" title="Source Code"><img class="img-link" src="assets/ui/icon/github.png"></a>
-        <a href="https://mizagbf.github.io/GBFAL" title="GBF Asset Lookup"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a>
-        <a href="https://mizagbf.github.io/" title="Home Page"><img class="img-link" src="assets/ui/mypage.png"></a>
-    </div>
-    <div id="copyright">
-        Granblue Fantasy content and materials are trademarks and copyrights of Cygames, Inc. or its licensors. All rights reserved.
-    </div>
+	<div id="footer">
+		<a href="https://github.com/MizaGBF/GBFAP" title="Source Code"><img class="img-link" src="assets/ui/icon/github.png"></a>
+		<a href="https://mizagbf.github.io/GBFAL" title="GBF Asset Lookup"><img class="img-link" src="assets/ui/icon/GBFAL.png"></a>
+		<a href="https://mizagbf.github.io/" title="Home Page"><img class="img-link" src="assets/ui/mypage.png"></a>
+	</div>
+	<div id="copyright">
+		Granblue Fantasy content and materials are trademarks and copyrights of Cygames, Inc. or its licensors. All rights reserved.
+	</div>
 </footer>
 </html>
