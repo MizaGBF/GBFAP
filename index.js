@@ -104,7 +104,6 @@ var index = {} // data index (loaded from data.json)
 var timestamp = Date.now(); // timestamp (loaded from changelog.json)
 var lastsearches = []; // history
 var bookmarks = []; // bookmarks
-var intervals = []; // on screen notifications
 var wakeInterval = null; // for the proxy wake up message
 var wakeCounter = 110;
 var is_partner = false; // set to true for special partner characters
@@ -1232,14 +1231,12 @@ function pushPopup(string) // display a popup on the top left corner
 	div.className = 'popup';
 	div.textContent = string;
 	document.body.appendChild(div);
-	intervals.push(setInterval(rmPopup, 2500, div));
+	setTimeout(rmPopup, 2500, div);
 }
 
 function rmPopup(popup) // remove a popup
 {
 	popup.parentNode.removeChild(popup);
-	clearInterval(intervals[0]);
-	intervals.shift();
 }
 
 function toggleBookmark(id = null, search_type = null) // toggle bookmark state
