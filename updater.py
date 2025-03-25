@@ -300,7 +300,9 @@ class Updater():
         count = 0
         for t in tasks:
             count += t.result()
-        if count > 0: print(count, "new entries")
+        if count > 0:
+            print("")
+            print(count, "new entries")
         else: print("Done")
 
     async def check_uncaps(self) -> int:
