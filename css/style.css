@@ -434,11 +434,12 @@ select:hover {
 }
 
 .preview {
-	min-width : 138px;
-	max-width : 138px;
-	height: 78px;
+	min-width : 140px;
+	max-width : 140px;
+	height: 80px;
 	border: 2px solid #808080;
 	border-radius: 10px;
+	box-sizing: border-box;
 }
 
 img {
