@@ -75,7 +75,7 @@ class Progress():
 # main class
 class Updater():
     ### CONSTANT
-    VERSION = '3.13'
+    VERSION = '3.14'
     # limit
     MAX_NEW = 80
     MAX_HTTP = 90
@@ -148,15 +148,15 @@ class Updater():
         try:
             print("Checking GBFAL data for new classes...")
             count = 0
-            for k in self.gbfal['job']:
+            for k in self.gbfal['job']: # go over jobs
                 if k not in self.CLASS_LIST:
-                    self.CLASS_LIST[k] = self.gbfal['job'][k][6] # mh
+                    self.CLASS_LIST[k] = self.gbfal['job'][k][6] # add mh
                     for x, v in self.gbfal['job_wpn'].items():
                         if v == k:
-                            self.CLASS_WEAPON_LIST[k] = x
+                            self.CLASS_WEAPON_LIST[k] = x # add class weapon
                     for x, v in self.gbfal['job_id'].items():
                         if v == k:
-                            for i in range(len(self.CLASS_LIST[k])):
+                            for i in range(len(self.CLASS_LIST[k])): # add missing classes
                                 self.CLASS_LIST[k] = x + "_" + self.CLASS_LIST[k]
                     count += 1
             if count > 0:
@@ -166,7 +166,7 @@ class Updater():
         self.class_gbfal = True
         try:
             print("Checking GBFAL data for new backgrounds...")
-            if len(list(self.gbfal['background'].keys())) != len(list(self.index.get('background', {}))):
+            if len(list(self.gbfal['background'].keys())) != len(list(self.index.get('background', {}))): # simply copy over background table if different
                 self.index['background'] = self.gbfal['background']
                 self.modified = True
                 print("Background list updated from GBFAL")
@@ -179,22 +179,22 @@ class Updater():
             for k, v in self.gbfal['characters'].items():
                 if isinstance(v, list):
                     max_uncap = 0
-                    for e in v[6]: # seventh index
+                    for e in v[6]: # seventh index for general ids
                         try:
                             u = int(e.split('_')[1])
-                            if u < 10 and u > max_uncap:
+                            if u < 10 and u > max_uncap: # store the highest uncap
                                 max_uncap = u
                         except:
                             pass
-                        if "_st2" in e:
+                        if "_st2" in e: # check if it's a style
                             if k + "_st2" not in self.index:
                                 possible_uncap.add(k + "_st2")
-                    if max_uncap > 0:
+                    if max_uncap > 0: # add to table if not 0
                         table[k] = max_uncap
-            for k, v in self.gbfal['summons'].items():
+            for k, v in self.gbfal['summons'].items(): # do the same for summons
                 if isinstance(v, list):
                     max_uncap = 0
-                    for e in v[0]: # first index
+                    for e in v[0]: # first index for general ids
                         try:
                             u = int(e.split('_')[1])
                         except:
@@ -203,11 +203,11 @@ class Updater():
                             max_uncap = u
                     if max_uncap > 0:
                         table[k] = max_uncap
-            for k, v in self.index.items():
+            for k, v in self.index.items(): # now go over our items and our uncap table and comapre
                 if k in table:
                     if 'v' in v:
                         max_uncap = 0
-                        if k[0] == '3':
+                        if k[0] == '3': # character
                             for e in v['v']:
                                 u = 0
                                 match e[0].split('★')[0]:
@@ -221,7 +221,7 @@ class Updater():
                                         u = 4
                                 if u < 10 and u > max_uncap:
                                     max_uncap = u
-                        elif k[0] == '2':
+                        elif k[0] == '2': # summon
                             for e in v['v']:
                                 u = 0
                                 match e[0].split('★')[0]:
@@ -235,6 +235,8 @@ class Updater():
                                         u = 4
                                 if u < 10 and u > max_uncap:
                                     max_uncap = u
+                        else: # failsafe
+                            continue
                         if table[k] > max_uncap:
                             possible_uncap.add(k)
             if len(possible_uncap) > 0:
@@ -247,9 +249,11 @@ class Updater():
     def update_wiki_from_GBFAL(self) -> None: # same than the above, for wiki lookup
         try:
             print("Checking GBFAL data for wiki lookup...")
-            if 'wiki' not in self.index: self.index['wiki'] = {}
-            for k, v in self.gbfal['lookup'].items():
-                if k not in self.index: continue
+            if 'wiki' not in self.index: # init if missing
+                self.index['wiki'] = {}
+            for k, v in self.gbfal['lookup'].items(): # more or less copy the wiki link from GBFAL if present
+                if k not in self.index:
+                    continue
                 try:
                     tmp = v.split('@@', 1)[1].split(' ')[0]
                     if self.index['wiki'].get(k, None) != tmp:
@@ -260,21 +264,21 @@ class Updater():
         except:
             pass
 
-    async def progress_container(self, coroutine : Callable) -> Any:
+    async def progress_container(self, coroutine : Callable) -> Any: # to track progress of tasks
         with self.progress:
             try:
                 return await coroutine
             except Exception as e:
                 print(e)
 
-    async def req(self, url, headers={}, head=False) -> bytes|bool:
+    async def req(self, url, head=False) -> bytes|bool: # to request (GET or HEAD), return True on success for GET
         async with self.http_sem:
             if head:
-                response = await self.client.head(url, headers={'connection':'keep-alive'} | headers)
+                response = await self.client.head(url, headers={'connection':'keep-alive'})
                 if response.status != 200: raise Exception()
                 return True
             else:
-                response = await self.client.get(url, headers={'connection':'keep-alive'} | headers)
+                response = await self.client.get(url, headers={'connection':'keep-alive'})
                 if response.status != 200: raise Exception()
                 async with response:
                     return await response.content.read()
@@ -284,6 +288,7 @@ class Updater():
         self.progress = Progress()
         async with asyncio.TaskGroup() as tg:
             tasks = []
+            # list of ID to check
             possibles = ["3020{}000", "3030{}000", "3040{}000", "3710{}000", "2010{}000", "2020{}000", "2030{}000", "2040{}000", "10100{}00", "10200{}00", "10300{}00", "10400{}00", "10201{}00", "10101{}00", "10301{}00", "10401{}00", "10102{}00", "10202{}00", "10302{}00", "10402{}00", "10103{}00", "10203{}00", "10303{}00", "10403{}00", "10104{}00", "10204{}00", "10304{}00", "10404{}00", "10105{}00", "10205{}00", "10305{}00", "10405{}00", "10106{}00", "10206{}00", "10306{}00", "10406{}00", "10107{}00", "10207{}00", "10307{}00", "10407{}00", "10108{}00", "10208{}00", "10308{}00", "10408{}00", "10209{}00", "10109{}00", "10309{}00", "10409{}00"]
             # add uncap checks
             tasks.append(tg.create_task(self.check_uncaps()))
@@ -305,7 +310,7 @@ class Updater():
             print(count, "new entries")
         else: print("Done")
 
-    async def check_uncaps(self) -> int:
+    async def check_uncaps(self) -> int: # update items with uncap detected during GBFAL import
         count = 0
         for f in self.uncap_check:
             if f.startswith("10"):
@@ -321,16 +326,16 @@ class Updater():
                     count += await self.update_character(f)
         return count
 
-    async def run_sub(self, start : int, step : int, file : str) -> int:
+    async def run_sub(self, start : int, step : int, file : str) -> int: # subroutine of run()
         with self.progress:
-            eid = start
-            errc = 0
-            count = 0
-            is_mob = (len(file) == 4 and file.endswith('{}'))
+            eid = start # element id
+            errc = 0 # err count
+            count = 0 # succerss count
+            is_mob = (len(file) == 4 and file.endswith('{}')) # is an enemy? flag
             while errc < 20:
-                f = file.format(str(eid).zfill(4 if is_mob else 3))
-                if is_mob:
-                    r = 0
+                f = file.format(str(eid).zfill(4 if is_mob else 3)) # format id
+                if is_mob: # different logic for enemy, we have 4 types to check
+                    r = 0 # store return values of our update_mob tasks
                     tasks = []
                     for i in range(1, 4):
                         fi = f+str(i)
@@ -338,19 +343,19 @@ class Updater():
                             tasks.append(self.update_mob(fi))
                         else:
                             r += 1
-                    if len(tasks) > 0:
+                    if len(tasks) > 0: # run the tasks in parallel for speed
                         for tr in await asyncio.gather(*tasks):
                             if tr is not None:
-                                r += tr
+                                r += tr # add return value
                                 if tr:
                                     count += 1
-                    if r == 0:
+                    if r == 0: # if all 4 returned 0, it's a miss, increase error
                         errc += 1
                         if errc >= 20:
                             return count
                     else:
                         errc = 0
-                else:
+                else: # anything else
                     if self.index.get(f, 0) == 0 and f not in self.uncap_check:
                         if file.startswith("10"):
                             if f in self.CLASS_WEAPON_LIST.values():
@@ -362,7 +367,7 @@ class Updater():
                             r = await self.update_summon(f)
                         else:
                             r = await self.update_character(f)
-                        if r == 0:
+                        if r == 0: # function returned 0, it's a miss
                             errc += 1
                             if errc >= 20:
                                 return count
@@ -371,12 +376,12 @@ class Updater():
                             count += r
                     else:
                         errc = 0
-                eid += step
+                eid += step # increase ID by step
             return count
 
-    async def run_class(self, start : int, step : int) -> int:
+    async def run_class(self, start : int, step : int) -> int: # function to update class
         with self.progress:
-            keys = list(self.CLASS_LIST.keys())
+            keys = list(self.CLASS_LIST.keys()) # go over our class list and update missing ones
             i = start
             count = 0
             while i < len(keys):
@@ -396,7 +401,7 @@ class Updater():
                 return 0
             wid = None
             colors = []
-            for i in ["01", "02", "03", "04", "05", "80"] if id not in self.UNIQUE_SKIN else ["01"]:
+            for i in ["01", "02", "03", "04", "05", "80"] if id not in self.UNIQUE_SKIN else ["01"]: # check colors/alts
                 try:
                     await self.getJS(self.CLASS_LIST[id][0] + "_0_{}".format(i))
                     colors.append(self.CLASS_LIST[id][0] + "_0_{}".format(i))
@@ -408,7 +413,7 @@ class Updater():
                 mc_cjs = colors[0]
                 sp = None
                 phit = None
-                if self.CLASS_WEAPON_LIST[id] is not None:
+                if self.CLASS_WEAPON_LIST[id] is not None: # check class weapon spritesheets
                     for s in ["", "_0"]:
                         try:
                             f = "phit_" + self.CLASS_WEAPON_LIST[id] + s
@@ -431,14 +436,14 @@ class Updater():
                 wid = self.CLASS_DEFAULT_WEAPON[mc_cjs.split('_')[1]]
                 sp = None
                 phit = None
-                for fn in ["phit_{}".format(id), "phit_{}_0".format(id)]:
+                for fn in ["phit_{}".format(id), "phit_{}_0".format(id)]: # check attack spritesheet
                     try:
                         if phit is None:
                             await self.getJS(fn)
                             phit = fn
                     except:
                         pass
-                for fn in ["sp_{}".format(id), "sp_{}_0".format(id), "sp_{}_0_s2".format(id), "sp_{}_s2".format(id)]:
+                for fn in ["sp_{}".format(id), "sp_{}_0".format(id), "sp_{}_0_s2".format(id), "sp_{}_s2".format(id)]: # check ougi spritesheet
                     try:
                         if sp is None:
                             await self.getJS(fn)
@@ -446,16 +451,22 @@ class Updater():
                     except:
                         pass
             if phit is None:
-                if id == "360101": phit = "phit_racer" # special exception
-                else: phit = "phit_{}_0001".format(mc_cjs.split('_')[1])
+                if id == "360101":
+                    phit = "phit_racer" # special exception
+                else:
+                    phit = "phit_{}_0001".format(mc_cjs.split('_')[1]) # default animation used on the player
             character_data = {}
-            if wid is not None: character_data['w'] = wid
+            if wid is not None: # set class weapon id
+                character_data['w'] = wid
             character_data['v'] = []
             for x, c in enumerate(colors):
-                if c == colors[0]: var = ""
-                else: var = " v"+str(x)
+                if c == colors[0]:
+                    var = ""
+                else:
+                    var = " v"+str(x)
                 for i in range(2):
                     if i == 1: # djeeta
+                        # for djeeta, we copy and edit the _0 of gran to _1
                         if phit.endswith('_0'):
                             phit = phit[:-2] + '_1'
                         if sp is not None:
@@ -491,11 +502,11 @@ class Updater():
             # containers
             mc_cjs = self.CLASS[(int(id) // 100000) % 10]
             sid = self.ID_SUBSTITUTE.get(id, None)
-            for uncap in ["", "_02", "_03"]:
+            for uncap in ["", "_02", "_03"]: # check uncaps (only for Opus right now)
                 character_data = {}
                 character_data['w'] = id + uncap
                 character_data['v'] = []
-                match uncap:
+                match uncap: # identifiers to check
                     case "_03":
                         uns = ["_03", "_02"]
                         spus = [3, 2, 0]
@@ -509,7 +520,7 @@ class Updater():
                 phit = None
                 for i in ([id] if sid is None else [id, sid]):
                     for un in uns:
-                        for fn in ["phit_{}{}".format(i, un), "phit_{}{}_0".format(i, un)]:
+                        for fn in ["phit_{}{}".format(i, un), "phit_{}{}_0".format(i, un)]: # check attack
                             try:
                                 if phit is None:
                                     await self.getJS(fn)
@@ -517,7 +528,7 @@ class Updater():
                             except:
                                 pass
                         for spu in spus:
-                            for fn in ["sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_s2".format(i)]:
+                            for fn in ["sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_s2".format(i)]: # check ougi
                                 try:
                                     if sp is None:
                                         await self.getJS(fn)
@@ -529,10 +540,12 @@ class Updater():
                         raise Exception("No attack effect or charge attack")
                     else:
                         break
+                # update for gran (0) and djeeta (1)
                 for i in range(2):
                     nsp = (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1]))
                     tmp = [('Gran' if i == 0 else 'Djeeta'), mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), [nsp], ('_s2' in nsp or '_s3' in nsp)] # name, cjs, mortal, phit, sp, fullscreen
                     if i == 1: # djeeta
+                        # replace gran _0 by _1 for djeeta
                         if id in tmp[3] or (sid is not None and sid in tmp[3]):
                             try:
                                 fn = tmp[3].replace('_0', '_1')
@@ -562,7 +575,6 @@ class Updater():
         try:
             if id in self.exclusion: return 0
             # containers
-            mc_cjs = "thi_gu_0_01"
             sid = [id]
             for k in self.SHARED_SUMMONS:
                 if id in k:
@@ -574,13 +586,13 @@ class Updater():
             call_found = set()
             for uncap in ["_04", "_03", "_02", "_01"]:
                 try:
-                    await self.req(self.IMG + "/sp/assets/summon/m/" + id + uncap.replace('_01', '') + ".jpg")
+                    await self.req(self.IMG + "/sp/assets/summon/m/" + id + uncap.replace('_01', '') + ".jpg") # try to guess uncap level based on existing portrait
                 except:
                     if uncap != '_01':
                         continue
                     else:
                         return 0
-                match uncap:
+                match uncap: # identifiers to check according to uncap
                     case "_04":
                         uns = ["_04", "_03", "_02"]
                     case "_03":
@@ -592,8 +604,9 @@ class Updater():
                 calls = []
                 for i in sid:
                     for un in uns:
-                        if un in call_found: break
-                        for m in ["", "_a", "_b", "_c", "_d", "_e"]:
+                        if un in call_found:
+                            break
+                        for m in ["", "_a", "_b", "_c", "_d", "_e"]: # look for call animations (they can have multiples)
                             fn = "summon_{}{}{}_attack".format(i, un, m)
                             try:
                                 await self.getJS(fn)
@@ -601,10 +614,13 @@ class Updater():
                                 calls.append(fn)
                                 call_found.add(un)
                             except:
-                                if m != "": break
-                        if len(calls) != 0: break
-                    if len(calls) != 0: break
-                if len(calls) == 0:
+                                if m != "":
+                                    break
+                        if len(calls) != 0:
+                            break
+                    if len(calls) != 0:
+                        break
+                if len(calls) == 0: # no call, it might be an old summon with the call embedded in the base cjs
                     if uncap == '_01':
                         for i in sid:
                             try:
@@ -618,8 +634,8 @@ class Updater():
                         if uncap == "_01": return 0
                         else: continue
                 uncap_data = []
-                for i, sp in enumerate(calls):
-                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), mc_cjs, '', None, [sp], ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
+                for i, sp in enumerate(calls): # for each call
+                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), self.SUMMON_CLASS, '', None, [sp], ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
                 uncap_data.reverse()
                 character_data['v'] += uncap_data
             character_data['v'].reverse()
@@ -636,27 +652,27 @@ class Updater():
     async def update_mob(self, id : str) -> bool:
         try:
             if id in self.exclusion: return 0
-            
+            # Check if exists
             try:
                 await self.req(self.IMG + "/sp/assets/enemy/s/" + id + ".png")
             except:
                 return 0
-            try:
+            try: # base cjs
                 fn = "enemy_{}".format(id)
                 await self.getJS(fn)
             except:
                 return 0
             ehit = None
-            try:
+            try: # attack cjs
                 fn = "ehit_{}".format(id)
                 await self.getJS(fn)
                 ehit = fn
             except:
                 pass
             if ehit is None:
-                ehit = "phit_0000000000" # generic
+                ehit = "phit_0000000000" # set generic attack if missing
             tasks = []
-            for i in range(0, 20):
+            for i in range(0, 20): # look for ougis (can be single or AOE)
                 try:
                     tasks.append(self.update_mob_sub("esp_{}_{}".format(id, str(i).zfill(2))))
                 except:
@@ -706,35 +722,37 @@ class Updater():
             nsp = {}
             fullscreen = {}
             for uncap in range(1, 6):
-                su = str(uncap).zfill(2)
+                su = str(uncap).zfill(2) # uncap string, i.e. 01, 02, etc...
                 found = False
-                for gender in ["", "_0", "_1"]:
-                    for ftype in ["", "_s2"]:
-                        for form in ["", "_f1", "_f2", "_f"]:
+                for gender in ["", "_0", "_1"]: # gender check (vgrim, catura, etc..)
+                    for ftype in ["", "_s2"]: # version (s2 is newer)
+                        for form in ["", "_f1", "_f2", "_f"]: # alternate stance/form (rosetta, nicholas, etc...)
                             try:
-                                fn = "npc_{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype)
-                                await self.getJS(fn)
+                                fn = "npc_{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype) # create full filename
+                                await self.getJS(fn) # check if exists, exception is raised otherwise
                                 vs = su + gender + ftype + form
-                                versions[vs] = fn
-                                if gender != "": genders[vs] = gender
+                                versions[vs] = fn # add in found versions
+                                if gender != "":
+                                    genders[vs] = gender # add in gender versions
                                 # get cjs
-                                data = (await self.req(self.CJS + fn + ".js")).decode('utf-8')
+                                data = (await self.req(self.CJS + fn + ".js")).decode('utf-8') # retrieve the content for the following
                                 if vs not in mortals: # for characters such as lina
                                     for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
-                                        if m in data:
+                                        if m in data: # we check which mortal (i.e. ougi) is found in the file, as some don't have the mortal_A
                                             mortals[vs] = m
                                             break
-                                if form == "": found = True
-                                try:
+                                if form == "":
+                                    found = True
+                                try: # check attacks
                                     fn = "phit_{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype).replace("_01", "")
                                     await self.getJS(fn)
                                     phits[vs] = fn
                                 except:
-                                    try:
+                                    try: # check simpler attack if not found
                                         fn = "phit_{}_{}{}".format(tid, su, style).replace("_01", "")
                                         await self.getJS(fn)
                                         phits[vs] = fn
-                                    except:
+                                    except: # if still not found, retrieve from lower uncaps
                                         for sub_uncap in range(uncap-1, 0, -1):
                                             ssu = str(sub_uncap).zfill(2)
                                             for k in phits:
@@ -743,15 +761,15 @@ class Updater():
                                                     break
                                             if vs in phits:
                                                 break
-                                        if vs not in phits:
+                                        if vs not in phits: # if STILL not found, apply patch if any
                                             if tid in self.PATCHES and self.PATCHES[tid][1] != "":
                                                 phits[vs] = self.PATCHES[tid][1].replace('UU', su).replace('FF', form)
-                                            else:
+                                            else: # else use default axe animation
                                                 phits[vs] = 'phit_ax_0001'
-                                for s in ["", "_s2", "_s3"]:
-                                    for g in ["", "_0"] if gender == "" else [gender]:
+                                for s in ["", "_s2", "_s3"]: # check ougi
+                                    for g in ["", "_0"] if gender == "" else [gender]: # and gender
                                         tasks = []
-                                        for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
+                                        for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]: # and variations for multiple ougi like shiva grand
                                             tasks.append(self.update_character_sub("nsp_{}_{}{}{}{}{}{}".format(tid, su, style, g, form, s, m)))
                                         tmp = []
                                         for r in await asyncio.gather(*tasks):
@@ -760,8 +778,9 @@ class Updater():
                                         if len(tmp) != 0:
                                             nsp[vs] = tmp
                                             if gender == "" and g != "": gender_ougis[vs] = True
-                                            if s != "": fullscreen[vs] = True
+                                            if s != "": fullscreen[vs] = True # s2 and s3 seems to use the fullscreen flag set to true
                                             break
+                                # apply patches if any and no ougi found
                                 if vs not in nsp and tid in self.PATCHES and self.PATCHES[tid][0] != "":
                                     for sub_uncap in range(uncap, 0, -1):
                                         ssu = str(sub_uncap).zfill(2)
@@ -780,49 +799,61 @@ class Updater():
                                                 break
                                         if vs in nsp:
                                             break
-                                if vs not in nsp:
+                                if vs not in nsp: # if still no ougi found, check base form if it's an alt form
                                     if form != "":
                                         svs = su + gender + ftype
                                         if svs in nsp:
                                             nsp[vs] = nsp[svs]
                                             fullscreen[vs] = fullscreen.get(svs, False)
-                                if vs not in nsp:
+                                if vs not in nsp: # else raise error
                                     raise Exception("No charge attack")
-                            except:
-                                pass
-                        if found is True: break
-                    if found is True and gender != "_0": break
-                if not found: break
-            if len(versions.keys()) == 0:
+                            except Exception as se:
+                                if str(se) == "No charge attack":
+                                    raise se
+                        if found is True: # stop loop
+                            break
+                    if found is True and gender != "_0": # stop loop
+                        break
+                if not found: # stop loop if this uncap found nothing
+                    break
+            if len(versions.keys()) == 0: # stop if nothing found
                 return 0
             name_table = {}
-            for vs in versions:
+            for vs in versions: # now add all versions to tab
                 name = ""
-                star = int(vs[:2])
-                if star == 1: star = 0
-                else: star += 2
-                name += "{}★".format(star)
+                star = int(vs[:2]) # star number used in the name
+                if star == 1:
+                    star = 0
+                else:
+                    star += 2
+                name += "{}★".format(star) # format it
+                # add gender if needed
                 if vs in genders:
-                    name += " P1" if genders[vs] == "_0" else " P2"
+                    name += " Gran" if genders[vs] == "_0" else " Djeeta"
                 elif vs in gender_ougis:
-                    name += " P1"
-                if "_f1" in vs: name += " B"
-                elif "_f2" in vs: name += " C"
-                elif "_f" in vs: name += " T"
+                    name += " Gran"
+                # add extra character for alt versions
+                if "_f1" in vs:
+                    name += " B"
+                elif "_f2" in vs:
+                    name += " C"
+                elif "_f" in vs:
+                    name += " T"
                 name_table[name] = vs
-                if vs in gender_ougis:
-                    name_table[name.replace('P1', 'P2')] = vs
+                if vs in gender_ougis: # add djeeta ougis by copying gran
+                    name_table[name.replace('Gran', 'Djeeta')] = vs
+            # sort this stuff
             keys = list(name_table.keys())
             keys.sort()
             character_data = {'v':[]}
             for name in keys:
                 vs = name_table[name]
                 sp = nsp[vs]
-                if vs in gender_ougis and 'P2' in name:
+                if vs in gender_ougis and 'Djeeta' in name:
                     sp = nsp[vs].copy()
                     for i in range(len(sp)):
-                        sp[i] = sp[i][:17] + sp[i][17:].replace('_0', '_1')
-                character_data['v'].append([name.replace('P1', 'Gran').replace('P2', 'Djeeta'), versions[vs], mortals[vs], phits[vs], sp, fullscreen.get(vs, False)])
+                        sp[i] = sp[i][:17] + sp[i][17:].replace('_0', '_1') # replace _0 by _1 for djeeta
+                character_data['v'].append([name, versions[vs], mortals[vs], phits[vs], sp, fullscreen.get(vs, False)])
             if str(character_data) != str(self.index.get(id+style, None)):
                 self.index[id+style] = character_data
                 self.modified = True
@@ -842,12 +873,12 @@ class Updater():
         except:
             return None
 
-    def manifestToJSON(self, manifest : str) -> dict:
+    def manifestToJSON(self, manifest : str) -> dict: # extra manifest content into json
         st = manifest.find('manifest:') + len('manifest:')
         ed = manifest.find(']', st) + 1
         return json.loads(manifest[st:ed].replace('Game.imgUri+', '').replace('src:', '"src":').replace('type:', '"type":').replace('id:', '"id":'))
 
-    async def manualUpdate(self, ids : list) -> None:
+    async def manualUpdate(self, ids : list) -> None: # manual update command
         self.progress = Progress()
         async with asyncio.TaskGroup() as tg:
             tasks = []
@@ -955,6 +986,14 @@ class Updater():
         for t in tasks:
            t.result()
         print("Done")
+    
+    def fixsummon(self) -> None:
+        for k in self.index:
+            if len(k) == 10 and k[:2] == "20" and "v" in self.index[k]:
+                for i in range(len(self.index[k]["v"])):
+                    if self.index[k]["v"][i][1] != self.SUMMON_CLASS:
+                        self.index[k]["v"][i][1] = self.SUMMON_CLASS
+                        self.modified = True
     
     async def downloader(self) -> None: # download task
         err_count = 0
@@ -1077,12 +1116,16 @@ class Updater():
                 
                 settings = parser.add_argument_group('settings', 'commands to alter the updater behavior.')
                 settings.add_argument('-nc', '--nochange', help="disable update of the New category of changelog.json.", action='store_const', const=True, default=False, metavar='')
+                settings.add_argument('-fs', '--fixsummon', help="update all summons default classes.", action='store_const', const=True, default=False, metavar='')
                 settings.add_argument('-al', '--gbfal', help="import data.json from GBFAL.", action='store', nargs=1, type=str, metavar='PATH')
                 args : argparse.Namespace = parser.parse_args()
                 # settings
                 run_help : bool = True
                 if args.nochange:
                     self.update_changelog = False
+                if args.fixsummon:
+                    self.fixsummon()
+                    run_help = False
                 if args.gbfal is not None:
                     try:
                         if args.gbfal[0].startswith('https://'):
