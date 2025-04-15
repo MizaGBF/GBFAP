@@ -74,7 +74,7 @@ This script is in charge of updating the JSON files.
 GBFAP Updater v3.14
 usage: updater.py [-h] [-r] [-u UPDATE [UPDATE ...]] [-d [DOWNLOAD ...]] [-nc] [-al PATH]
 
-Animation Updater v3.11 for GBFAP https://mizagbf.github.io/GBFAP/
+Animation Updater v3.14 for GBFAP https://mizagbf.github.io/GBFAP/
 
 options:
   -h, --help            show this help message and exit
