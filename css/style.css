@@ -479,6 +479,13 @@ a:active {
 	font-size: 1em;
 }
 
+.updated-header {
+	min-width: 100%;
+	max-width: 100%;
+	text-align: center;
+	font-size: 25px;
+}
+
 /* mobile stuff */
 @media (hover: none) {
 	body {
@@ -656,5 +663,9 @@ a:active {
 		width: 120px;
 		height: 120px;
 		margin: 5px;
+	}
+
+	.updated-header {
+		font-size: 40px;
 	}
 }

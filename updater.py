@@ -6,7 +6,7 @@ import os
 import sys
 import traceback
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone, UTC
 from typing import Callable, Any
 import argparse
 
@@ -75,9 +75,8 @@ class Progress():
 # main class
 class Updater():
     ### CONSTANT
-    VERSION = '3.14'
+    VERSION = '3.15'
     # limit
-    MAX_NEW = 80
     MAX_HTTP = 90
     MAX_RUN_TASK = 10
     # MC classes
@@ -1079,22 +1078,39 @@ class Updater():
                     outfile.write("}")
                 try:
                     with open('json/changelog.json', mode='r', encoding='utf-8') as f:
-                        existing = {}
-                        for e in json.load(f).get('new', []):
-                            existing[e[0]] = e[1]
+                        data = json.load(f)
+                    new = {}
+                    if isinstance(data.get('new', {}), list): # Retrocompatibility with old format
+                        new[str((datetime.now(UTC) - timedelta(days=1)).strftime('%Y-%m-%d'))] = data['new'] # use yesterday for the key
+                    else:
+                        new = data.get('new', {})
                 except:
-                    existing = {}
-                new = []
-                if self.update_changelog:
-                    existing = existing | self.latest_additions
-                self.latest_additions = {}
-                for k, v in existing.items():
-                    new.append([k, v])
-                if len(new) > self.MAX_NEW: new = new[len(new)-self.MAX_NEW:]
+                    new = {}
+                if self.update_changelog and len(self.latest_additions) > 0: # update new content
+                    # get date of today
+                    now : str = datetime.now(UTC).strftime('%Y-%m-%d')
+                    if now in new: # if date present
+                        temp : dict[str, Any] = {e[0]:e[1] for e in new[now]} # get old data
+                        for k, v in self.latest_additions.items(): # put new data after
+                            if k in temp:
+                                temp.pop(k)
+                            temp[k] = v
+                        new[now] = [[k, v] for k, v in temp.items()] # replace by new data
+                    else:
+                        new[now] = [[k, v] for k, v in self.latest_additions.items()] # else just set new data
+                    # sort keys
+                    keys : list[str]= list(new.keys())
+                    keys.sort(reverse=True)
+                    if len(keys) > 5: # and remove oldest
+                        keys = keys[:5]
+                    new = {k:new[k] for k in keys}
+                    self.latest_additions = {} # clear self.addition
                 with open('json/changelog.json', mode='w', encoding='utf-8') as outfile:
-                    json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new}, outfile)
-                if self.update_changelog: print("data.json and changelog.json updated")
-                else: print("data.json updated")
+                    json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new}, outfile, indent=2, separators=(',', ':'), ensure_ascii=False)
+                if self.update_changelog:
+                    print("data.json and changelog.json updated")
+                else:
+                    print("data.json updated")
         except Exception as e:
             print(e)
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))

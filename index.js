@@ -100,7 +100,8 @@ var Game = LOCAL ? // Game variable used by GBF scripts
 };
 var debug_path = null;
 // global variables
-var index = {} // data index (loaded from data.json)
+var updated = {}; // latest updated elements
+var index = {}; // data index (loaded from data.json)
 var timestamp = Date.now(); // timestamp (loaded from changelog.json)
 var lastsearches = []; // history
 var bookmarks = []; // bookmarks
@@ -205,9 +206,7 @@ function initChangelog(unusued)
 	{
 		let json = JSON.parse(this.response);
 		if(json.hasOwnProperty("new"))
-		{
-			updated = json["new"].reverse();
-		}
+			updated = json["new"]
 		timestamp = json.timestamp;
 		setInterval(clock, 1000);
 	}
@@ -223,11 +222,18 @@ function initIndex(unused)
 	try
 	{
 		index = JSON.parse(this.response);
-		// init updated, bookmark, history ...
-		if(updated.length > 0) // init Updated list
+		// init Updated list
+		let new_node = document.getElementById('new');
+		for(const [key, value] of Object.entries(updated))
 		{
-			updateList(document.getElementById('new'), updated);
+			let div = document.createElement("div");
+			div.classList.add("mobile-big");
+			div.classList.add("updated-header");
+			div.innerText = key;
+			new_node.appendChild(div);
+			updateList(new_node, value.reverse(), false);
 		}
+		// init bookmark, history ...
 		updateHistory(null, null);
 		toggleBookmark(null, null);
 	}
@@ -709,9 +715,10 @@ function failJSON(id)
 	document.getElementById('output').innerHTML = "Error: Couldn't load ID " + id;
 }
 
-function updateList(node, elems) // update a list of elements
+function updateList(node, elems, clear_node = true) // update a list of elements
 {
-	node.innerHTML = "";
+	if(clear_node)
+		node.innerHTML = "";
 	for(let e of elems)
 	{
 		switch(e[1])
