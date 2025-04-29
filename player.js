@@ -242,7 +242,7 @@ function resetTexture(name)
 
 function openTexture()
 {
-	if(!!canInteract()) return;
+	if(!canInteract()) return;
 	if(sub_menu_open || ui.texture_action.style.display == "") return;
 	beep();
 	sub_menu_open = true;
