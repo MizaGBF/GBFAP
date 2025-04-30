@@ -50,6 +50,7 @@ IMG = ENDPOINT + "img" # no trailing /
 MP3_SEARCH = re.compile('"[a-zA-Z0-9_\\/]+\\.mp3"')
 
 # dynamic constants
+STYLE_CHARACTER : list[str] = []
 PATCHES : dict[str, list[str]] = {}
 ID_SUBSTITUTE : dict[str, str] = {}
 SHARED_SUMMONS : list[list[str]] = []
@@ -903,13 +904,12 @@ class Updater():
                 self.index[id+style] = character_data
                 self.modified = True
                 self.latest_additions[id+style] = 3
-            if id == "3040088000" and style == "": # style check for yngwie, change it later if they add more
+            if id in STYLE_CHARACTER and style == "": # style check
                 return 1 + await self.update_character(id, "_st2")
             return 1
         except Exception as e:
             sys.stdout.write("\rError {} for id: {}\n".format(e, id))
             sys.stdout.flush()
-            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
             return 0
 
     async def update_character_sub(self, fn : str) -> str|None:
@@ -932,11 +932,14 @@ class Updater():
                 if len(id) == 7:
                     tasks.append(tg.create_task(self.progress_container(self.update_mob(id))))
                 elif len(id) == 10:
-                    if id.startswith("10"): tasks.append(tg.create_task(self.progress_container(self.update_weapon(id))))
-                    elif id.startswith("20"): tasks.append(tg.create_task(self.progress_container(self.update_summon(id))))
-                    else: tasks.append(tg.create_task(self.progress_container(self.update_character(id, ""))))
-                elif len(id) == 14 and id.startswith("30") and id[10] == '_':
-                    tasks.append(tg.create_task(self.progress_container(self.update_character(id.split('_')[0], id.split('_')[1]))))
+                    if id.startswith("10"):
+                        tasks.append(tg.create_task(self.progress_container(self.update_weapon(id))))
+                    elif id.startswith("20"):
+                        tasks.append(tg.create_task(self.progress_container(self.update_summon(id))))
+                    else:
+                        tasks.append(tg.create_task(self.progress_container(self.update_character(id, ""))))
+                elif len(id) == 14 and (id.startswith("30") or id.startswith("38")) and id[10] == '_':
+                    tasks.append(tg.create_task(self.progress_container(self.update_character(id.split('_')[0], "_"+id.split('_')[1]))))
                 elif id in CLASS_LIST:
                     tasks.append(tg.create_task(self.progress_container(self.update_class(id))))
             if len(tasks) > 0:
@@ -1216,13 +1219,7 @@ class Updater():
                     else:
                         print("Operation aborted...")
                 elif run_help:
-                    #parser.print_help()
-                    self.update_changelog = False
-                    x = []
-                    for k in self.index:
-                        if len(k) == 10 and k.startswith("38"):
-                            x.append(k)
-                    await self.manualUpdate(x)
+                    parser.print_help()
                 if len(self.gbfal) > 0:
                     self.update_wiki_from_GBFAL()
                 self.saveIndex()
