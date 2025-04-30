@@ -668,7 +668,7 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 			{
 				let atk = new lib[elem];
 				me.stage.addChild(atk);
-				me.stage.setChildIndex(atk, stageZIndex.BG);
+				me.stage.setChildIndex(atk, stageZIndex.CHARACTER);
 				if(is_aoe)
 				{
 					atk.x = fullscreenOffset.x / SUMMON_FULLSCREEN_SCALING;
