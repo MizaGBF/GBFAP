@@ -113,6 +113,8 @@ var is_enemy = false; // set to true if we are dealing with enemy animations
 var mc_id = null; // used by classes only
 var mc_wpn = null; // used by weapons and classes
 var mc_summon = null; // used by summons
+var abilityList = []; // used by classes and characters, list of skill effects
+// for audio
 var muteBeep = false;
 var beepAudio = new Audio("assets/audio/beep.ogg"); // contains last played audio sfx
 
@@ -389,6 +391,7 @@ function loadCharacter(id)
 		const data = index[id+style];
 		if(id.startsWith("38")) is_partner = true;
 		updateHistory(id+style, is_partner ? 6 : parseInt(id[0]));
+		abilityList = "ab" in data ? data["ab"] : abilityList;
 		if('w' in data)
 		{
 			is_mc = true;
@@ -452,6 +455,7 @@ function loadMC(id)
 		AnimeData.push({1: {1: ""},2: {1: ""}});
 		const data = index[id];
 		is_mc = true;
+		abilityList = "ab" in data ? data["ab"] : abilityList;
 		if('w' in data) mc_wpn = data['w'];
 		mc_id = id;
 		for(let d of data['v'])

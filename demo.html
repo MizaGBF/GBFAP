@@ -1,137 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Demo v7.10</title>
-    <style>
-    #player-container {
-        min-width: 700px;
-        max-width:700px;
-        margin:auto;
-    }
+	<meta charset="utf-8">
+	<title>Demo v8.0</title>
+	<style>
+	#player-container {
+		min-width: 700px;
+		max-width:700px;
+		margin:auto;
+	}
 
-    #canvas-container {
-        min-width:600px;
-        max-width:600px;
-        min-height:600px;
-        max-height:600px;
-        margin:auto;
-        border-color: #000000;
-        border:solid;
-        overflow:hidden;
-        position:relative;
-    }
+	#canvas-container {
+		min-width:600px;
+		max-width:600px;
+		min-height:600px;
+		max-height:600px;
+		margin:auto;
+		border-color: #000000;
+		border:solid;
+		overflow:hidden;
+		position:relative;
+	}
 
-    .cjs-npc-demo {
-        top:50%;
-        left:50%;
-        transform:translate(-50%,-50%);
-        position: absolute;
-        z-index:0;
-        max-height:1400px;
-        max-width:1400px;
-    }
+	.cjs-npc-demo {
+		top:50%;
+		left:50%;
+		transform:translate(-50%,-50%);
+		position: absolute;
+		z-index:0;
+		max-height:1400px;
+		max-width:1400px;
+	}
 
-    .canvas-bg
-    {
-        z-index:-1;
-    }
-    </style>
-    <script src="require.js"></script>
-    <script>
-    // Game object
-    var Game = {
-        xjsUri: 'demo/',
-        jsUri: 'demo/',
-        imgUri: 'demo/img',
-        setting: {}
-    };
-    // other settings dependant on the animation loaded
-    var is_partner = false; // set to true for special partner characters
-    var is_mc = false; // set to true if we are dealing with main character animations
-    var is_enemy = true; // set to true if we are dealing with enemy animations
-    var mc_id = null; // used by classes only
-    var mc_wpn = null; // used by weapons and classes
-    var mc_summon = null; // used by summons
-    // Animation data, must be set accordingly
-    AnimeData = [
-        [
-            "Version Name"
-        ],
-        [
-            { // one object per version
-                "cjs":["demo"], // manifest/cjs file Names
-                "action_label_list":['setin', 'wait', 'attack', 'dead'], // list of animations to play under the "Demo" selection
-                "effect":["phit"], // list of attack effect manifest/cjs file Name
-                "special":[ // charge attack related files
-                    { // one per charge attack
-                        "random":0,
-                        "list":[
-                            {"target":"them","cjs":"esp_demo_01","fixed_pos_owner_bg":0,"full_screen":0}
-                        ]
-                    }
-                ],
-                "cjs_pos":{"y":0,"x":0},
-                "special_pos":[[{"y":0,"x":0}]]
-            }
-        ],
-        {1: {1: ""},2: {1: ""}}
-    ];
-    
-    function init()
-    {
-        require(['createjs'], function() {
-            hotfix_createjs(); // apply fix (see below)
-            require(["jquery","underscore","backbone", 'demo/player', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader']);
-        });
-    }
-    
-    // Code to patch the createjs 1.0 functions. Some are missing or behave differently from what GBF animations expect.
-    var createjs_overloaded_func = {};
-    function hotfix_createjs()
-    {
-        createjs_overloaded_func["bitmap_init"] = window.createjs.Bitmap.prototype.initialize;
-        window.createjs.Bitmap.prototype.initialize = function(image) {
-            let tmp = this.sourceRect;
-            createjs_overloaded_func["bitmap_init"].call(this, image);
-            if(tmp) this.sourceRect = tmp; // set the source rect AFTER
-        };
-        
-        window.createjs.DisplayObject.prototype.getStage = function() {
-            return cjsViewList[animeVersion].stage;
-        }
-    }
-    </script>
+	.canvas-bg
+	{
+		z-index:-1;
+	}
+	</style>
+	<script src="require.js"></script>
+	<script>
+	// Game object
+	var Game = {
+		xjsUri: 'demo/',
+		jsUri: 'demo/',
+		imgUri: 'demo/img',
+		setting: {}
+	};
+	// other settings dependant on the animation loaded
+	// you MUST include those variables
+	var is_partner = false; // set to true for special partner characters
+	var is_mc = false; // set to true if we are dealing with main character animations
+	var is_enemy = true; // set to true if we are dealing with enemy animations
+	var mc_id = null; // used by classes only
+	var mc_wpn = null; // used by weapons and classes
+	var mc_summon = null; // used by summons
+	var abilityPlayMode = 0; // 0 = None, 1 = Cycle, 2 = Fixed
+	var abilityListIndex = 0; // currently playing ability
+	var abilityList = []; // used by classes and characters, list of skill effects
+	// Animation data, must be set accordingly
+	AnimeData = [
+		[
+			"Version Name"
+		],
+		[
+			{ // one object per version
+				"cjs":["demo"], // manifest/cjs file Names
+				"action_label_list":['setin', 'wait', 'attack', 'dead'], // list of animations to play under the "Demo" selection
+				"effect":["phit"], // list of attack effect manifest/cjs file Name
+				"special":[ // charge attack related files
+					{ // one per charge attack
+						"random":0,
+						"list":[
+							{"target":"them","cjs":"esp_demo_01","fixed_pos_owner_bg":0,"full_screen":0}
+						]
+					}
+				],
+				"cjs_pos":{"y":0,"x":0},
+				"special_pos":[[{"y":0,"x":0}]]
+			}
+		],
+		{1: {1: ""},2: {1: ""}}
+	];
+	// Note: If there are CJS files you wish to include for ability/skill effects, list them in 'abilityList'
+	
+	function init()
+	{
+		require(['createjs'], function() {
+			hotfix_createjs(); // apply fix (see below)
+			require(["jquery","underscore","backbone", 'demo/player', 'view/cjs', 'script', 'jquery', 'underscore', 'model/cjs-loader']);
+		});
+	}
+	
+	// Code to patch the createjs 1.0 functions. Some are missing or behave differently from what GBF animations expect.
+	var createjs_overloaded_func = {};
+	function hotfix_createjs()
+	{
+		createjs_overloaded_func["bitmap_init"] = window.createjs.Bitmap.prototype.initialize;
+		window.createjs.Bitmap.prototype.initialize = function(image) {
+			let tmp = this.sourceRect;
+			createjs_overloaded_func["bitmap_init"].call(this, image);
+			if(tmp) this.sourceRect = tmp; // set the source rect AFTER
+		};
+		
+		window.createjs.DisplayObject.prototype.getStage = function() {
+			return cjsViewList[animeVersion].stage;
+		}
+	}
+	</script>
 </head>
 <body onload="init()">
-    <div id="player-container">
-        <div id="canvas-container">
-        </div>
-        <div class="controls-root">
-            <div class="controls-part">
-                <div class="controls-outline">
-                    <span>
-                        <label for="version-selection">Version</label>
-                        <select id="version-selection" onchange="versionChange(this)">
-                            <option value="Placeholder">
-                        </select>
-                    </span><br>
-                    <span>
-                        <label for="act-selection">Action</label>
-                        <select id="act-selection" onchange="actionChange(this)">
-                        </select>
-                    </span><br>
-                    <span class="act-element">Current:</span>
-                    <span id="act-name" class="act-element">Loading...</span><br>
-                    <span class="act-element">Duration:</span>
-                    <span id="act-duration" class="act-element">Loading...</span><br>
-                </div>
-            </div>
-        </div>
-    </div><br>
-    Minimal example to embed the player in a HTML page.<br>
-    Check the CSS and Javascript included in this HTML to check what's required, and the other files needed.<br>
-    Check the <b>demo</b> folder to see how the files are laid out.<br>
-    You might also wish to modify <b>lib/sound.js</b> if you wish to disable sounds entirely.
+	<div id="player-container">
+		<div id="canvas-container">
+		</div>
+		<div class="controls-root">
+			<div class="controls-part">
+				<div class="controls-outline">
+					<span>
+						<label for="version-selection">Version</label>
+						<select id="version-selection" onchange="versionChange(this)">
+							<option value="0">Placeholder</option>
+						</select>
+					</span><br>
+					<span>
+						<label for="act-selection">Action</label>
+						<select id="act-selection" onchange="actionChange(this)">
+							<option value="default">Demo</option>
+						</select>
+					</span><br>
+					<span>
+						<label for="ability-selection">Skill Effects</label>
+						<select id="ability-selection" onchange="abilityChange(this)">
+							<option value="default">None</option>
+						</select>
+					</span><br>
+					<span class="act-element">Current:</span>
+					<span id="act-name" class="act-element">Loading...</span><br>
+					<span class="act-element">Duration:</span>
+					<span id="act-duration" class="act-element">Loading...</span><br>
+				</div>
+			</div>
+		</div>
+	</div><br>
+	Minimal example to embed the player in a HTML page.<br>
+	Check the CSS and Javascript included in this HTML to check what's required, and the other files needed.<br>
+	Check the <b>demo</b> folder to see how the files are laid out.<br>
+	You might also wish to modify <b>lib/sound.js</b> if you wish to disable sounds entirely.
 </body>
 </html>

@@ -12,6 +12,8 @@ var dispatchStack = new Array;
 var sfxState = false;
 var loopingState = true;
 var animeVersion = 0;
+var abilityPlayMode = 0; // 0 = None, 1 = Cycle, 2 = Fixed
+var abilityListIndex = 0; // currently playing ability
 var sub_menu_open = false;
 var textureSwapCache = {};
 var loadTotal = 999999999999;
@@ -51,6 +53,9 @@ function setHTML()
 						</span><br>\
 						<span>\
 							<label for="act-selection">Action</label><select id="act-selection" onchange="actionChange(this)"></select>\
+						</span><br>\
+						<span>\
+							$ABILITIES\
 						</span><br>\
 						<span class="act-element">Loop frame:</span>\
 						<span id="act-frame" class="act-element">0</span><br>\
@@ -131,18 +136,33 @@ function setHTML()
 	for (var i = 1; i < versionList.length; i++)
 		canvasContent += '<canvas class="cjs-npc-demo cjs-npc-demo-' + i + '" width="'+JSON.stringify(CANVAS_SIZE)+'" height="'+JSON.stringify(CANVAS_SIZE)+'" style="display:none;"></canvas>';
 	// version list
-	let versions = ''
+	let versions = '';
 	if(versionList.length > 1)
 	{
-		versions = '<label for="version-selection">Version</label><select id="version-selection" onchange="versionChange(this)">'
-		for (var i = 0; i < versionList.length; i++) {
-			versions += '<option value="' + i + '">' + versionList[i] + '</option>'
+		versions = '<label for="version-selection">Version</label><select id="version-selection" onchange="versionChange(this)">';
+		for(var i = 0; i < versionList.length; i++)
+		{
+			versions += '<option value="' + i + '">' + versionList[i] + '</option>';
 		}
-		versions += '</select>'
+		versions += '</select>';
 	}
-	document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvasContent).replace('$VERSIONS', versions)
+	// ability list
+	let abilities = '';
+	if(abilityList.length > 1)
+	{
+		abilities = '<label for="ability-selection">Skill Effect</label><select id="ability-selection" onchange="abilityChange(this)">';
+		abilities += '<option value="default">None</option>';
+		abilities += '<option value="cycle">Cycle</option>';
+		for(var i = 0; i < abilityList.length; i++)
+		{
+			let split_ab = abilityList[i].split("_");
+			abilities += '<option value="' + i + '">' + (abilityList[i].includes("_all_") ? "AOE " : "Targeted ") + split_ab[split_ab.length-1] + '</option>';
+		}
+		abilities += '</select>';
+	}
+	// set in HTML
+	document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvasContent).replace('$VERSIONS', versions).replace('$ABILITIES', abilities);
 	// init UI
-	
 	ui.act_select = document.getElementById("act-selection");
 	ui.act_frame = document.getElementById("act-frame");
 	ui.act_name = document.getElementById("act-name");
@@ -708,9 +728,9 @@ function versionChange(obj)
 		}
 	}
 	if (actionUpdate){
-		action_list.motionList = action_index[animeVersion].action_label_list
+		action_list.motionList = action_index[animeVersion].action_label_list;
 	}
-	ui.act_select.innerHTML = actionlist
+	ui.act_select.innerHTML = actionlist;
 
 	//replace version
 	for (var i = 0; i < versionList.length; i++) {
@@ -761,4 +781,22 @@ function versionChange(obj)
 		el[2] += (AnimeID.includes("_st2") ? "_st2" : "");
 		document.getElementById("character").src = Game.externUri + "/img_low/sp/assets/npc/m/" + el[1] + "_" + el[2] + ".jpg";
 	}
+}
+
+function abilityChange(obj) // update ability sfx
+{
+	let index = obj.options[obj.selectedIndex].value;
+	switch(index)
+	{
+		case "default":
+			abilityPlayMode = 0;
+			break;
+		case "cycle":
+			abilityPlayMode = 1;
+			break;
+		default:
+			abilityListIndex = parseInt(index);
+			abilityPlayMode = 2;
+			break;
+	};
 }

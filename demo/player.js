@@ -8,10 +8,12 @@ var action_index=AnimeData[1];
 var custom_choices = {}
 var demo_list = null;
 var action_list = {};
+var dispatchStack = new Array;
 var sfxState = false;
 var loopingState = true;
-var dispatchStack = new Array;
 var animeVersion = 0;
+var abilityPlayMode = 0; // 0 = None, 1 = Cycle, 2 = Fixed
+var abilityListIndex = 0; // currently playing ability
 var loadTotal = 999999999999;
 var loadNow = 0;
 var canvas = null;
@@ -39,16 +41,31 @@ function setHTML()
 		canvasContent += '<canvas class="cjs-npc-demo cjs-npc-demo-' + i + '" width="'+JSON.stringify(CANVAS_SIZE)+'" height="'+JSON.stringify(CANVAS_SIZE)+'" style="display:none;"></canvas>';
 	document.getElementById("canvas-container").innerHTML = canvasContent;
 	// version list
-	let versions = ''
+	let versions = '';
 	if(versionList.length > 0)
 	{
-		versions = '';
-		for (var i = 0; i < versionList.length; i++) {
-			versions += '<option value="' + i + '">' + versionList[i] + '</option>'
+		versions = '<label for="version-selection">Version</label><select id="version-selection" onchange="versionChange(this)">';
+		for(var i = 0; i < versionList.length; i++)
+		{
+			versions += '<option value="' + i + '">' + versionList[i] + '</option>';
 		}
-		document.getElementById("version-selection").innerHTML = versions;
+		versions += '</select>';
 	}
-	
+	// ability list
+	let abilities = '';
+	if(abilityList.length > 0)
+	{
+		abilities = '<label for="ability-selection">Skill Effect</label><select id="ability-selection" onchange="abilityChange(this)">';
+		abilities += '<option value="default">None</option>';
+		abilities += '<option value="cycle">Cycle</option>';
+		for(var i = 0; i < abilityList.length; i++)
+		{
+			let split_ab = abilityList[i].split("_");
+			abilities += '<option value="' + i + '">' + (abilityList[i].includes("_all_") ? "AOE " : "Targeted ") + split_ab[split_ab.length-1] + '</option>';
+		}
+		abilities += '</select>';
+	}
+	// init UI
 	ui.act_select = document.getElementById("act-selection");
 	ui.act_name = document.getElementById("act-name");
 	ui.act_duration = document.getElementById("act-duration");
@@ -78,8 +95,7 @@ function versionChange(obj)
 
 	animeVersion = obj.options[obj.selectedIndex].value;
 	//verify if action exists
-	var actionLabel=document.getElementById("act-selection")
-	var action = actionLabel.options[actionLabel.selectedIndex].value;
+	var action = ui.act_select.options[ui.act_select.selectedIndex].value;
 	var defaultAction = action
 	if (!action in action_index[animeVersion].action_label_list) {
 		defaultAction="default"
@@ -100,9 +116,9 @@ function versionChange(obj)
 		}
 	}
 	if (actionUpdate){
-		action_list.motionList = action_index[animeVersion].action_label_list
+		action_list.motionList = action_index[animeVersion].action_label_list;
 	}
-	document.getElementById("act-selection").innerHTML = actionlist
+	ui.act_select.innerHTML = actionlist;
 
 	//replace version
 	for (var i = 0; i < versionList.length; i++) {
@@ -115,5 +131,23 @@ function versionChange(obj)
 			this.cjsViewList[i].pause();
 			canvas.style.setProperty('display', 'none');
 		}
+	};
+}
+
+function abilityChange(obj) // update ability sfx
+{
+	let index = obj.options[obj.selectedIndex].value;
+	switch(index)
+	{
+		case "default":
+			abilityPlayMode = 0;
+			break;
+		case "cycle":
+			abilityPlayMode = 1;
+			break;
+		default:
+			abilityListIndex = parseInt(index);
+			abilityPlayMode = 2;
+			break;
 	};
 }

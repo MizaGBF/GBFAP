@@ -76,7 +76,7 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo", "under
 		});
 
 		// Ensure the file list is unique.
-		loadFiles = _.uniq(loadFiles);
+		loadFiles = _.uniq(loadFiles.concat(abilityList)); // abilityList files to the list to load
 
 		// Load the CJS files and manifests sequentially.
 		this.loadCJS(loadFiles)

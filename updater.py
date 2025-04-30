@@ -10,6 +10,63 @@ from datetime import datetime, timedelta, timezone, UTC
 from typing import Callable, Any
 import argparse
 
+### CONSTANT
+VERSION = '4.0'
+# limit
+MAX_HTTP = 90
+MAX_RUN_TASK = 10
+# MC classes
+CLASS = [
+    "csr_sw_{}_01", # sword
+    "gzk_kn_{}_01", # dagger
+    "aps_sp_{}_01", # spear
+    "bsk_ax_{}_01", # axe
+    "wrk_wa_{}_01", # staff
+    "rlc_gu_{}_01", # gun
+    "ogr_me_{}_01", # melee
+    "rbn_bw_{}_01", # bow
+    "els_mc_{}_01", # harp
+    "kng_kt_{}_01" # katana
+]
+CLASS_DEFAULT_WEAPON = {
+    "sw": "1010000000",
+    "kn": "1010100000",
+    "sp": "1010200000",
+    "ax": "1010300000",
+    "wa": "1010400000",
+    "gu": "1010500000",
+    "me": "1010600000",
+    "bw": "1010700000",
+    "mc": "1010800000",
+    "kt": "1010900000"
+}
+# CDN endpoints
+ENDPOINT = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/"
+JS = ENDPOINT + "js/"
+MANIFEST = JS + "model/manifest/"
+CJS = JS + "cjs/"
+IMG = ENDPOINT + "img" # no trailing /
+# for mp3 download
+MP3_SEARCH = re.compile('"[a-zA-Z0-9_\\/]+\\.mp3"')
+
+# dynamic constants
+PATCHES : dict[str, list[str]] = {}
+ID_SUBSTITUTE : dict[str, str] = {}
+SHARED_SUMMONS : list[list[str]] = []
+UNIQUE_SKIN : list[str] = []
+CLASS_LIST : dict[str, list[str]] = {}
+CLASS_WEAPON_LIST : dict[str, str] = {}
+SUMMON_CLASS : str = ""
+# load dynamic constants
+try:
+    with open("json/manual_constants.json", mode="r", encoding="utf-8") as f:
+        globals().update(json.load(f)) # add to global scope
+except Exception as e:
+    print("Failed to load and set json/manual_constants.json")
+    print("Please fix the file content and try again")
+    print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+    raise Exception("Failed to load GBFAL Constants")
+
 # progress bar class
 class Progress():
     def __init__(self, *, total : int = 9999999999999, silent : bool = True) -> None: # set to silent with a high total by default
@@ -74,58 +131,7 @@ class Progress():
 
 # main class
 class Updater():
-    ### CONSTANT
-    VERSION = '3.15'
-    # limit
-    MAX_HTTP = 90
-    MAX_RUN_TASK = 10
-    # MC classes
-    CLASS = [
-        "csr_sw_{}_01", # sword
-        "gzk_kn_{}_01", # dagger
-        "aps_sp_{}_01", # spear
-        "bsk_ax_{}_01", # axe
-        "wrk_wa_{}_01", # staff
-        "rlc_gu_{}_01", # gun
-        "ogr_me_{}_01", # melee
-        "rbn_bw_{}_01", # bow
-        "els_mc_{}_01", # harp
-        "kng_kt_{}_01" # katana
-    ]
-    CLASS_DEFAULT_WEAPON = {
-        "sw": "1010000000",
-        "kn": "1010100000",
-        "sp": "1010200000",
-        "ax": "1010300000",
-        "wa": "1010400000",
-        "gu": "1010500000",
-        "me": "1010600000",
-        "bw": "1010700000",
-        "mc": "1010800000",
-        "kt": "1010900000"
-    }
-    # CDN endpoints
-    ENDPOINT = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/"
-    JS = ENDPOINT + "js/"
-    MANIFEST = JS + "model/manifest/"
-    CJS = JS + "cjs/"
-    IMG = ENDPOINT + "img" # no trailing /
-    # for mp3 download
-    MP3_SEARCH = re.compile('"[a-zA-Z0-9_\\/]+\\.mp3"')
-
     def __init__(self) -> None:
-        # load constants
-        try:
-            with open("json/manual_constants.json", mode="r", encoding="utf-8") as f:
-                data : dict[str, Any] = json.load(f)
-                k : str
-                for k, v in data.items():
-                    setattr(self, k, v)
-        except Exception as e:
-            print("Failed to load and set json/manual_constants.json")
-            print("Please fix the file content and try again")
-            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
-            os._exit(0)
         # other init
         self.client = None
         self.progress = Progress() # initialized with a silent progress bar
@@ -140,7 +146,7 @@ class Updater():
         self.exclusion = set()
         self.uncap_check = set()
         self.loadIndex()
-        self.http_sem = asyncio.Semaphore(self.MAX_HTTP) # http semaphore
+        self.http_sem = asyncio.Semaphore(MAX_HTTP) # http semaphore
 
     def update_data_from_GBFAL(self) -> None: # update CLASS_LIST and CLASS_WEAPON_LIST according to GBFAL data
         if self.class_gbfal or len(list(self.gbfal.keys())) == 0: return # only run once and if gbfal is loaded
@@ -148,15 +154,15 @@ class Updater():
             print("Checking GBFAL data for new classes...")
             count = 0
             for k in self.gbfal['job']: # go over jobs
-                if k not in self.CLASS_LIST:
-                    self.CLASS_LIST[k] = self.gbfal['job'][k][6] # add mh
+                if k not in CLASS_LIST:
+                    CLASS_LIST[k] = self.gbfal['job'][k][6] # add mh
                     for x, v in self.gbfal['job_wpn'].items():
                         if v == k:
-                            self.CLASS_WEAPON_LIST[k] = x # add class weapon
+                            CLASS_WEAPON_LIST[k] = x # add class weapon
                     for x, v in self.gbfal['job_id'].items():
                         if v == k:
-                            for i in range(len(self.CLASS_LIST[k])): # add missing classes
-                                self.CLASS_LIST[k] = x + "_" + self.CLASS_LIST[k]
+                            for i in range(len(CLASS_LIST[k])): # add missing classes
+                                CLASS_LIST[k] = x + "_" + CLASS_LIST[k]
                     count += 1
             if count > 0:
                 print("Found", count, "classes not present in GBFAP, from GBFAL, consider updating")
@@ -296,10 +302,10 @@ class Updater():
                 for b in range(1, 4):
                     possibles.append(str(a) + str(b) + "{}")
             # add possibles
-            for i in range(self.MAX_RUN_TASK):
-                tasks.append(tg.create_task(self.run_class(i, self.MAX_RUN_TASK)))
+            for i in range(MAX_RUN_TASK):
+                tasks.append(tg.create_task(self.run_class(i, MAX_RUN_TASK)))
                 for j in possibles:
-                    tasks.append(tg.create_task(self.run_sub(i, self.MAX_RUN_TASK, j)))
+                    tasks.append(tg.create_task(self.run_sub(i, MAX_RUN_TASK, j)))
             self.progress = Progress(total=len(tasks), silent=False)
         count = 0
         for t in tasks:
@@ -313,7 +319,7 @@ class Updater():
         count = 0
         for f in self.uncap_check:
             if f.startswith("10"):
-                if f in self.CLASS_WEAPON_LIST.values():
+                if f in CLASS_WEAPON_LIST.values():
                     continue
                 count += await self.update_weapon(f)
             elif f.startswith("20"):
@@ -357,7 +363,7 @@ class Updater():
                 else: # anything else
                     if self.index.get(f, 0) == 0 and f not in self.uncap_check:
                         if file.startswith("10"):
-                            if f in self.CLASS_WEAPON_LIST.values():
+                            if f in CLASS_WEAPON_LIST.values():
                                 errc = 0
                                 eid += step
                                 continue
@@ -380,7 +386,7 @@ class Updater():
 
     async def run_class(self, start : int, step : int) -> int: # function to update class
         with self.progress:
-            keys = list(self.CLASS_LIST.keys()) # go over our class list and update missing ones
+            keys = list(CLASS_LIST.keys()) # go over our class list and update missing ones
             i = start
             count = 0
             while i < len(keys):
@@ -393,46 +399,62 @@ class Updater():
     async def update_class(self, id : str) -> int:
         try:
             if id in self.exclusion: return 0
-            if id not in self.CLASS_LIST: return 0
+            if id not in CLASS_LIST: return 0
             try:
-                await self.req(self.IMG + "/sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg")
+                await self.req(IMG + "/sp/assets/leader/m/" + id.split('_')[0] + "_01.jpg")
             except:
                 return 0
             wid = None
             colors = []
-            for i in ["01", "02", "03", "04", "05", "80"] if id not in self.UNIQUE_SKIN else ["01"]: # check colors/alts
+            for i in ["01", "02", "03", "04", "05", "80"] if id not in UNIQUE_SKIN else ["01"]: # check colors/alts
                 try:
-                    await self.getJS(self.CLASS_LIST[id][0] + "_0_{}".format(i))
-                    colors.append(self.CLASS_LIST[id][0] + "_0_{}".format(i))
+                    await self.getJS(CLASS_LIST[id][0] + "_0_{}".format(i))
+                    colors.append(CLASS_LIST[id][0] + "_0_{}".format(i))
                 except:
                     pass
-            if len(colors) == 0: return 0
-            if id in self.CLASS_WEAPON_LIST: # skin with custom weapon
+            if len(colors) == 0:
+                return 0
+            abilities : list[str] = []
+            if id in CLASS_WEAPON_LIST: # skin with custom weapon
                 mortal = "mortal_B" # skin with custom ougis use this
                 mc_cjs = colors[0]
                 sp = None
                 phit = None
-                if self.CLASS_WEAPON_LIST[id] is not None: # check class weapon spritesheets
-                    for s in ["", "_0"]:
+                if CLASS_WEAPON_LIST[id] is not None: # check class weapon spritesheets
+                    for s in ["", "_0"]: # auto attack
                         try:
-                            f = "phit_" + self.CLASS_WEAPON_LIST[id] + s
+                            f = "phit_" + CLASS_WEAPON_LIST[id] + s
                             await self.getJS(f)
                             phit = f
                             break
                         except:
                             pass
-                    for s in ["", "_0", "_0_s2", "_s2"]:
+                    for s in ["", "_0", "_0_s2", "_s2"]: # ougi
                         try:
-                            f = "sp_" + self.CLASS_WEAPON_LIST[id] + s
+                            f = "sp_" + CLASS_WEAPON_LIST[id] + s
                             await self.getJS(f)
                             sp = f
                             break
                         except:
                             pass
+                    for s in range(1, 10): # single target skills
+                        try:
+                            f = "ab_" + CLASS_WEAPON_LIST[id] + "_" + str(s).zfill(2)
+                            await self.getJS(f)
+                            abilities.append(f)
+                        except:
+                            pass
+                    for s in range(1, 10): # AOE skills
+                        try:
+                            f = "ab_all_" + CLASS_WEAPON_LIST[id] + "_" + str(s).zfill(2)
+                            await self.getJS(f)
+                            abilities.append(f)
+                        except:
+                            pass
             else: # regular class
                 mortal = "mortal_A"
                 mc_cjs = colors[0]
-                wid = self.CLASS_DEFAULT_WEAPON[mc_cjs.split('_')[1]]
+                wid = CLASS_DEFAULT_WEAPON[mc_cjs.split('_')[1]]
                 sp = None
                 phit = None
                 for fn in ["phit_{}".format(id), "phit_{}_0".format(id)]: # check attack spritesheet
@@ -458,6 +480,7 @@ class Updater():
             if wid is not None: # set class weapon id
                 character_data['w'] = wid
             character_data['v'] = []
+            character_data['ab'] = abilities
             for x, c in enumerate(colors):
                 if c == colors[0]:
                     var = ""
@@ -495,12 +518,12 @@ class Updater():
         try:
             if id in self.exclusion: return 0
             try:
-                await self.req(self.IMG + "/sp/assets/weapon/m/" + id + ".jpg")
+                await self.req(IMG + "/sp/assets/weapon/m/" + id + ".jpg")
             except:
                 return 0
             # containers
-            mc_cjs = self.CLASS[(int(id) // 100000) % 10]
-            sid = self.ID_SUBSTITUTE.get(id, None)
+            mc_cjs = CLASS[(int(id) // 100000) % 10]
+            sid = ID_SUBSTITUTE.get(id, None)
             for uncap in ["", "_02", "_03"]: # check uncaps (only for Opus right now)
                 character_data = {}
                 character_data['w'] = id + uncap
@@ -575,7 +598,7 @@ class Updater():
             if id in self.exclusion: return 0
             # containers
             sid = [id]
-            for k in self.SHARED_SUMMONS:
+            for k in SHARED_SUMMONS:
                 if id in k:
                     sid = list(k)
                     break
@@ -585,7 +608,7 @@ class Updater():
             call_found = set()
             for uncap in ["_04", "_03", "_02", "_01"]:
                 try:
-                    await self.req(self.IMG + "/sp/assets/summon/m/" + id + uncap.replace('_01', '') + ".jpg") # try to guess uncap level based on existing portrait
+                    await self.req(IMG + "/sp/assets/summon/m/" + id + uncap.replace('_01', '') + ".jpg") # try to guess uncap level based on existing portrait
                 except:
                     if uncap != '_01':
                         continue
@@ -634,7 +657,7 @@ class Updater():
                         else: continue
                 uncap_data = []
                 for i, sp in enumerate(calls): # for each call
-                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), self.SUMMON_CLASS, '', None, [sp], ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
+                    uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), SUMMON_CLASS, '', None, [sp], ('attack' in sp)]) # name, cjs, mortal, phit, sp, fullscreen)
                 uncap_data.reverse()
                 character_data['v'] += uncap_data
             character_data['v'].reverse()
@@ -653,7 +676,7 @@ class Updater():
             if id in self.exclusion: return 0
             # Check if exists
             try:
-                await self.req(self.IMG + "/sp/assets/enemy/s/" + id + ".png")
+                await self.req(IMG + "/sp/assets/enemy/s/" + id + ".png")
             except:
                 return 0
             try: # base cjs
@@ -707,12 +730,17 @@ class Updater():
 
     async def update_character(self, id : str, style : str = "") -> bool: # character
         try:
-            if id in self.exclusion: return 0
+            if id in self.exclusion:
+                return 0
+            is_partner = id.startswith("38")
             try:
-                await self.req(self.IMG + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg", head=True)
+                if is_partner:
+                    await self.req(IMG + "/sp/assets/npc/raid_normal/" + id + "_01" + style + ".jpg", head=True)
+                else:
+                    await self.req(IMG + "/sp/assets/npc/m/" + id + "_01" + style + ".jpg", head=True)
             except:
                 return 0
-            tid = self.ID_SUBSTITUTE.get(id, id) # fix for bobobo skin
+            tid = ID_SUBSTITUTE.get(id, id) # fix for bobobo skin
             versions = {}
             genders = {}
             gender_ougis = {}
@@ -734,7 +762,7 @@ class Updater():
                                 if gender != "":
                                     genders[vs] = gender # add in gender versions
                                 # get cjs
-                                data = (await self.req(self.CJS + fn + ".js")).decode('utf-8') # retrieve the content for the following
+                                data = (await self.req(CJS + fn + ".js")).decode('utf-8') # retrieve the content for the following
                                 if vs not in mortals: # for characters such as lina
                                     for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
                                         if m in data: # we check which mortal (i.e. ougi) is found in the file, as some don't have the mortal_A
@@ -761,8 +789,8 @@ class Updater():
                                             if vs in phits:
                                                 break
                                         if vs not in phits: # if STILL not found, apply patch if any
-                                            if tid in self.PATCHES and self.PATCHES[tid][1] != "":
-                                                phits[vs] = self.PATCHES[tid][1].replace('UU', su).replace('FF', form)
+                                            if tid in PATCHES and PATCHES[tid][1] != "":
+                                                phits[vs] = PATCHES[tid][1].replace('UU', su).replace('FF', form)
                                             else: # else use default axe animation
                                                 phits[vs] = 'phit_ax_0001'
                                 for s in ["", "_s2", "_s3"]: # check ougi
@@ -776,14 +804,16 @@ class Updater():
                                                 tmp.append(r)
                                         if len(tmp) != 0:
                                             nsp[vs] = tmp
-                                            if gender == "" and g != "": gender_ougis[vs] = True
-                                            if s != "": fullscreen[vs] = True # s2 and s3 seems to use the fullscreen flag set to true
+                                            if gender == "" and g != "":
+                                                gender_ougis[vs] = True
+                                            if s != "":
+                                                fullscreen[vs] = True # s2 and s3 seems to use the fullscreen flag set to true
                                             break
                                 # apply patches if any and no ougi found
-                                if vs not in nsp and tid in self.PATCHES and self.PATCHES[tid][0] != "":
+                                if vs not in nsp and tid in PATCHES and PATCHES[tid][0] != "":
                                     for sub_uncap in range(uncap, 0, -1):
                                         ssu = str(sub_uncap).zfill(2)
-                                        pid = self.PATCHES[tid][0].replace('UU', ssu).replace('FF', form)
+                                        pid = PATCHES[tid][0].replace('UU', ssu).replace('FF', form)
                                         for s in ["", "_s2", "_s3"]:
                                             tasks = []
                                             for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
@@ -807,7 +837,7 @@ class Updater():
                                 if vs not in nsp: # else raise error
                                     raise Exception("No charge attack")
                             except Exception as se:
-                                if str(se) == "No charge attack":
+                                if str(se) == "No charge attack" and not is_partner:
                                     raise se
                         if found is True: # stop loop
                             break
@@ -817,6 +847,22 @@ class Updater():
                     break
             if len(versions.keys()) == 0: # stop if nothing found
                 return 0
+            # check abilities
+            abilities : list[str] = []
+            for s in range(1, 15): # single target skills
+                try:
+                    f = "ab_" + tid + "_" + str(s).zfill(2)
+                    await self.getJS(f)
+                    abilities.append(f)
+                except:
+                    pass
+            for s in range(1, 15): # AOE skills
+                try:
+                    f = "ab_all_" + tid + "_" + str(s).zfill(2)
+                    await self.getJS(f)
+                    abilities.append(f)
+                except:
+                    pass
             name_table = {}
             for vs in versions: # now add all versions to tab
                 name = ""
@@ -844,12 +890,12 @@ class Updater():
             # sort this stuff
             keys = list(name_table.keys())
             keys.sort()
-            character_data = {'v':[]}
+            character_data = {'v':[], 'ab':abilities}
             for name in keys:
                 vs = name_table[name]
-                sp = nsp[vs]
+                sp = nsp.get(vs, [])
                 if vs in gender_ougis and 'Djeeta' in name:
-                    sp = nsp[vs].copy()
+                    sp = nsp.get(vs, []).copy()
                     for i in range(len(sp)):
                         sp[i] = sp[i][:17] + sp[i][17:].replace('_0', '_1') # replace _0 by _1 for djeeta
                 character_data['v'].append([name, versions[vs], mortals[vs], phits[vs], sp, fullscreen.get(vs, False)])
@@ -863,6 +909,7 @@ class Updater():
         except Exception as e:
             sys.stdout.write("\rError {} for id: {}\n".format(e, id))
             sys.stdout.flush()
+            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
             return 0
 
     async def update_character_sub(self, fn : str) -> str|None:
@@ -890,7 +937,7 @@ class Updater():
                     else: tasks.append(tg.create_task(self.progress_container(self.update_character(id, ""))))
                 elif len(id) == 14 and id.startswith("30") and id[10] == '_':
                     tasks.append(tg.create_task(self.progress_container(self.update_character(id.split('_')[0], id.split('_')[1]))))
-                elif id in self.CLASS_LIST:
+                elif id in CLASS_LIST:
                     tasks.append(tg.create_task(self.progress_container(self.update_class(id))))
             if len(tasks) > 0:
                 print("Attempting to update", len(tasks), "element(s)")
@@ -902,7 +949,7 @@ class Updater():
         else: print("Done")
 
     async def getJS(self, js : str) -> None:
-        await self.req(self.MANIFEST + js + ".js")
+        await self.req(MANIFEST + js + ".js")
 
     async def phitUpdate(self, phit : str) -> None:
         with self.progress:
@@ -927,7 +974,7 @@ class Updater():
         # adding basic stuff to queue
         self.dl_queue = asyncio.Queue()
         self.dl_queue.put_nowait(("model/manifest/", "phit_0000000000.js"))
-        for p in self.CLASS:
+        for p in CLASS:
             self.dl_queue.put_nowait(("model/manifest/", p.format(0)+".js")) # gran
             self.dl_queue.put_nowait(("model/manifest/", p.format(1)+".js")) # djeeta
         for w in ["sw", "kn", "sp", "ax", "wa", "gu", "me", "bw", "mc", "kt"]:
@@ -990,8 +1037,8 @@ class Updater():
         for k in self.index:
             if len(k) == 10 and k[:2] == "20" and "v" in self.index[k]:
                 for i in range(len(self.index[k]["v"])):
-                    if self.index[k]["v"][i][1] != self.SUMMON_CLASS:
-                        self.index[k]["v"][i][1] = self.SUMMON_CLASS
+                    if self.index[k]["v"][i][1] != SUMMON_CLASS:
+                        self.index[k]["v"][i][1] = SUMMON_CLASS
                         self.modified = True
     
     async def downloader(self) -> None: # download task
@@ -1012,10 +1059,10 @@ class Updater():
             else:
                 try:
                     match path:
-                        case "model/manifest/": p = self.MANIFEST
-                        case "cjs/": p = self.CJS
-                        case "sound/se/"|"sound/voice/": p = self.ENDPOINT + path
-                        case "img/sp/cjs/"|"img/sp/raid/bg/"|"img/sp/guild/custom/bg/": p = self.ENDPOINT + path
+                        case "model/manifest/": p = MANIFEST
+                        case "cjs/": p = CJS
+                        case "sound/se/"|"sound/voice/": p = ENDPOINT + path
+                        case "img/sp/cjs/"|"img/sp/raid/bg/"|"img/sp/guild/custom/bg/": p = ENDPOINT + path
                         case _: raise Exception("Unknown path type " + path)
                     data = await self.req(p + file)
                     with open(path + file, "wb") as f:
@@ -1039,7 +1086,7 @@ class Updater():
                     continue
             elif path == "cjs/":
                 # extract mp3 paths from cjs
-                audios = self.MP3_SEARCH.findall(data.decode('utf-8'))
+                audios = MP3_SEARCH.findall(data.decode('utf-8'))
                 for a in audios:
                     s = a[1:-1].split('/', 1)
                     if len(s) == 2:
@@ -1118,13 +1165,13 @@ class Updater():
     async def start(self) -> None:
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-                print("GBFAP Updater v{}".format(self.VERSION))
+                print("GBFAP Updater v{}".format(VERSION))
                 # parse parameters
                 prog_name : str
                 try: prog_name = sys.argv[0].replace('\\', '/').split('/')[-1]
                 except: prog_name = "updater.py" # fallback to default
                 # Set Argument Parser
-                parser : argparse.ArgumentParser = argparse.ArgumentParser(prog=prog_name, description="Animation Updater v{} for GBFAP https://mizagbf.github.io/GBFAP/".format(self.VERSION))
+                parser : argparse.ArgumentParser = argparse.ArgumentParser(prog=prog_name, description="Animation Updater v{} for GBFAP https://mizagbf.github.io/GBFAP/".format(VERSION))
                 primary = parser.add_argument_group('primary', 'main commands.')
                 primary.add_argument('-r', '--run', help="search for new content.", action='store_const', const=True, default=False, metavar='')
                 primary.add_argument('-u', '--update', help="update given elements.", nargs='+', default=None)
@@ -1169,7 +1216,13 @@ class Updater():
                     else:
                         print("Operation aborted...")
                 elif run_help:
-                    parser.print_help()
+                    #parser.print_help()
+                    self.update_changelog = False
+                    x = []
+                    for k in self.index:
+                        if len(k) == 10 and k.startswith("38"):
+                            x.append(k)
+                    await self.manualUpdate(x)
                 if len(self.gbfal) > 0:
                     self.update_wiki_from_GBFAL()
                 self.saveIndex()

@@ -241,12 +241,12 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 		loopPaused: false,
 		motionList: null,
 		motionListIndex: 0,
+		abilityListIndex: 0,
 		isFullScreenMortal: false,
 		isFixedPosOwnerBG: false,
 		mainTween: null,
 		tweenElements: [],
 		childTweens: [],
-		damageTarget: null,
 		loopIndex: null,
 		npc: null,
 		recording: null,
@@ -546,12 +546,12 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 		generateCjsNpc: function(npc) // create element
 		{
 			let elem = new lib[npc];
-			return elem.name = npc,
-			elem.x = npcOffset.x + this.cjsPos.x,
-			elem.y = npcOffset.y + this.cjsPos.y,
-			elem.scaleX *= scaling,
-			elem.scaleY *= scaling,
-			elem
+			elem.name = npc;
+			elem.x = npcOffset.x + this.cjsPos.x;
+			elem.y = npcOffset.y + this.cjsPos.y;
+			elem.scaleX *= scaling;
+			elem.scaleY *= scaling;
+			return elem;
 		},
 		updateCjsParams: function(index) // update element
 		{
@@ -664,14 +664,54 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 				}
 				return me.getAnimDuration(me.cjsMortal[mortal][mortal]);
 			}
+			function addAbility(elem, is_aoe) // summon animations (based on the ougi code)
+			{
+				let atk = new lib[elem];
+				me.stage.addChild(atk);
+				me.stage.setChildIndex(atk, stageZIndex.BG);
+				if(is_aoe)
+				{
+					atk.x = fullscreenOffset.x / SUMMON_FULLSCREEN_SCALING;
+					atk.y = fullscreenOffset.y / SUMMON_FULLSCREEN_SCALING;
+					atk.scaleX *= SUMMON_FULLSCREEN_SCALING;
+					atk.scaleY *= SUMMON_FULLSCREEN_SCALING;
+				}
+				else
+				{
+					atk.x = npcOffset.x;
+					atk.y = npcOffset.y;
+				}
+				atk.scaleX *= scaling;
+				atk.scaleY *= scaling;
+				let duration;
+				try
+				{
+					duration = me.getAnimDuration(atk[elem][elem + "_effect"]);
+				} catch(err) {
+					duration = me.getAnimDuration(atk[elem][elem + "_end"]);
+				}
+				me.tweenElements.push(atk);
+				const childtween = createjs.Tween.get(atk, {
+					useTicks: true,
+					paused: me.paused
+				}).wait(duration).call(function () {
+					let i = me.tweenElements.indexOf(atk);
+					if(i != -1) me.tweenElements.splice(i, 1);
+					me.stage.removeChild(atk);
+					i = me.childTweens.indexOf(childtween);
+					if(i != -1) me.childTweens.splice(i, 1);
+				});
+				me.childTweens.push(childtween);
+				return duration;
+			}
 			function addAtkEffect(elem) { // add auto attack effect (phit file)
 				let atk = new lib[elem];
-				atk.x = enemyOffset.x,
-				atk.y = enemyOffset.y,
-				atk.scaleX *= scaling,
-				atk.scaleY *= scaling,
-				me.stage.addChild(atk),
-				me.stage.setChildIndex(atk, stageZIndex.CHARACTER),
+				atk.x = enemyOffset.x;
+				atk.y = enemyOffset.y;
+				atk.scaleX *= scaling;
+				atk.scaleY *= scaling;
+				me.stage.addChild(atk);
+				me.stage.setChildIndex(atk, stageZIndex.CHARACTER);
 				atk[elem].gotoAndPlay(atkIndex);
 				let duration = me.getAnimDuration(atk[elem][elem + "_effect"]);
 				me.tweenElements.push(atk);
@@ -768,7 +808,6 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 						animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
 						break;
 					}
-					this.damageTarget = this.cjsMortalList[this.currentIndex].list[0].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
 					this.updateCjsParams(this.currentIndex);
 					addOugi(this.cjsNameMortal);
 					animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]) + ((is_mc && mc_wpn) ? this.getAnimDuration(this.cjsMortal[this.cjsNameMortal][this.cjsNameMortal+"_special"]) : 0);
@@ -778,7 +817,6 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 				case animations.SUMMON_DAMAGE:
 				{ // summon call
 					this.currentIndex = 0;
-					this.damageTarget = this.cjsMortalList[this.currentIndex].list[0].target === targets.THEM ? targets.ENEMY : targets.PLAYER;
 					this.updateCjsParams(this.currentIndex);
 					animDuration = addSummon(motion == animations.SUMMON_DAMAGE ? this.cjsNameMortal.replace('attack', 'damage') : this.cjsNameMortal);
 					break;
@@ -791,7 +829,6 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 				case animations.SPECIAL_ATTACK:
 				case animations.ENEMY_ATTACK:
 				{ // attack (single/double/triple/quad/etc...)
-					this.damageTarget = targets.ENEMY;
 					addAtkEffect(this.cjsNameEffect);
 					let nmotion = nextMotion();
 					animDuration = _.contains([animations.ATTACK_DOUBLE, animations.ATTACK_TRIPLE, animations.ATTACK_QUADRUPLE], nmotion) ? aniState.COMBO_PROCESS : this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
@@ -805,6 +842,31 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 					elem = this.cjsNpc;
 					this.npc = elem[this.cjsNameNpc];
 					animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
+				}
+				case animations.ABILITY_MOTION:
+				case animations.ABILITY_MOTION_2:
+				case animations.ABILITY_MOTION_3:
+				case animations.ABILITY_MOTION_4:
+				case 'vs_motion_1':
+				case 'vs_motion_2':
+				case 'vs_motion_3':
+				case 'vs_motion_4':
+				case 'vs_motion_5':
+				case 'vs_motion_6':
+				{ // ability effects
+					let base_duration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
+					if(abilityPlayMode && typeof abilityList !== 'undefined' && abilityList.length > 0) // if there are ability effects
+					{
+						this.updateCjsParams(this.currentIndex);
+						animDuration = Math.max(base_duration, addAbility(abilityList[abilityListIndex], abilityList[abilityListIndex].includes("_all_")));
+						if(abilityPlayMode == 1) // cycling mode
+							abilityListIndex = (abilityListIndex + 1) % abilityList.length;
+					}
+					else
+					{
+						animDuration = base_duration;
+					}
+					break;
 				}
 				default:
 				{
@@ -863,7 +925,7 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 			}
 		},
 		getAnimDuration: function(elem) { // return an animation duration (in frames)
-			return !elem instanceof createjs.MovieClip ? null : (elem.timeline.duration ? +elem.timeline.duration : +elem.timeline.Id); // last if check might not be needed
+			return !elem instanceof createjs.MovieClip ? null : (elem.timeline.duration ? +elem.timeline.duration : +elem.timeline.Id); // last if check default the duration to Id if no duration value
 		},
 		pause: function () { // pause the animation (by stopping the ticker)
 			if(!this.isPaused)
