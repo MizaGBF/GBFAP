@@ -102,6 +102,13 @@ define(["model/cjs-loader", "model/manifest-loader", "view/cjs_npc_demo", "under
 					}
 					ui.act_select.innerHTML = actionlist;
 					view.reset(); // trick, see cjs_npc_demo.js
+					// enable selects
+					if(typeof ui !== 'undefined')
+					{
+						if(ui.version_select) ui.version_select.disabled = false;
+						if(ui.act_select) ui.act_select.disabled = false;
+						if(ui.ab_select) ui.ab_select.disabled = false;
+					}
 				}
 			});
 		});

@@ -9,6 +9,7 @@ var custom_choices = {}
 var demo_list = null;
 var action_list = {};
 var dispatchStack = new Array;
+var skillTarget = false;
 var sfxState = false;
 var loopingState = true;
 var animeVersion = 0;
@@ -66,7 +67,9 @@ function setHTML()
 		abilities += '</select>';
 	}
 	// init UI
+	ui.version_select = document.getElementById("version-selection");
 	ui.act_select = document.getElementById("act-selection");
+	ui.ab_select = document.getElementById("ability-selection");
 	ui.act_name = document.getElementById("act-name");
 	ui.act_duration = document.getElementById("act-duration");
 	canvas = document.querySelector('.cjs-npc-demo-0');

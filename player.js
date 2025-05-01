@@ -9,6 +9,7 @@ var custom_choices = {}
 var demo_list = null;
 var action_list = {};
 var dispatchStack = new Array;
+var skillTarget = false;
 var sfxState = false;
 var loopingState = true;
 var animeVersion = 0;
@@ -37,6 +38,19 @@ setInterval(update_frame_counter, 30);
 setHTML();
 
 // functions
+function IgnoreAlpha(e) // to disable keyboard on select elements
+{
+	if(!e)
+	{
+		e = window.event;
+	}
+	if(e.keyCode >= 65 && e.keyCode <= 90) // A to Z
+	{
+		e.returnValue = false;
+		e.cancel = true;
+	}
+}
+
 function setHTML()
 {
 	let base = 
@@ -52,7 +66,7 @@ function setHTML()
 							$VERSIONS\
 						</span><br>\
 						<span>\
-							<label for="act-selection">Action</label><select id="act-selection" onchange="actionChange(this)"></select>\
+							<label for="act-selection">Action</label><select id="act-selection" onchange="actionChange(this);" onkeydown="IgnoreAlpha(event);" disabled></select>\
 						</span><br>\
 						<span>\
 							$ABILITIES\
@@ -75,6 +89,7 @@ function setHTML()
 						<button class="small-button" onclick="openCustom()" id="custom-btn" title="Open the Custom Playlist menu\n(Shortcut: C)"><img src="assets/ui/controls/edit.png"></button>\
 						<br>\
 						<button class="small-button" onclick="toggleMute();" id="mute-btn" title="Mute the beep\n(Shortcut: M)"><img src="assets/ui/controls/beep.png"></button>\
+						<button class="small-button" onclick="toggleSkillPosition();" id="skill-btn" title="Change the position of Targeted Skills\n(Shortcut: T)"><img src="assets/ui/controls/skill.png"></button>\
 						<button class="small-button" onclick="toggleBound()" id="bound-btn" title="Toggle the Bounding boxes\n(Shortcut: B)"><img src="assets/ui/controls/bound.png"></button>\
 						<button class="small-button" onclick="enemyShift()" id="enemy-btn" title="Shift the Enemy position\n(Shortcut: E)"><img src="assets/ui/controls/enemy.png"></button>\
 						<button class="small-button" onclick="dlimage();" id="dl-btn" title="Download the Canvas\n(Shortcut: Shift+D)"><img src="assets/ui/controls/dl.png"></button>\
@@ -139,7 +154,7 @@ function setHTML()
 	let versions = '';
 	if(versionList.length > 1)
 	{
-		versions = '<label for="version-selection">Version</label><select id="version-selection" onchange="versionChange(this)">';
+		versions = '<label for="version-selection">Version</label><select id="version-selection" onchange="versionChange(this);" onkeydown="IgnoreAlpha(event);" disabled>';
 		for(var i = 0; i < versionList.length; i++)
 		{
 			versions += '<option value="' + i + '">' + versionList[i] + '</option>';
@@ -150,7 +165,7 @@ function setHTML()
 	let abilities = '';
 	if(abilityList.length > 1)
 	{
-		abilities = '<label for="ability-selection">Skill Effect</label><select id="ability-selection" onchange="abilityChange(this)">';
+		abilities = '<label for="ability-selection">Skill Effect</label><select id="ability-selection" onchange="abilityChange(this);" onkeydown="IgnoreAlpha(event);" disabled>';
 		abilities += '<option value="default">None</option>';
 		abilities += '<option value="cycle">Cycle</option>';
 		for(var i = 0; i < abilityList.length; i++)
@@ -163,7 +178,9 @@ function setHTML()
 	// set in HTML
 	document.getElementById("AnimationPlayer").innerHTML = base.replace('$BACKGROUND', background).replace('$CANVAS', canvasContent).replace('$VERSIONS', versions).replace('$ABILITIES', abilities);
 	// init UI
+	ui.version_select = document.getElementById("version-selection");
 	ui.act_select = document.getElementById("act-selection");
+	ui.ab_select = document.getElementById("ability-selection");
 	ui.act_frame = document.getElementById("act-frame");
 	ui.act_name = document.getElementById("act-name");
 	ui.act_duration = document.getElementById("act-duration");
@@ -175,6 +192,10 @@ function setHTML()
 	ui.btn_sfx = document.getElementById("sfx-btn");
 	ui.btn_custom = document.getElementById("custom-btn");
 	ui.btn_mute = document.getElementById("mute-btn");
+	if(abilityList.length == 0)
+		document.getElementById("skill-btn").remove();
+	else
+		ui.btn_skill = document.getElementById("skill-btn");
 	ui.btn_bound = document.getElementById("bound-btn");
 	if(!is_enemy)
 		document.getElementById("enemy-btn").remove();
@@ -477,6 +498,12 @@ function keybind_listener(event)
 				toggleSFX();
 			return;
 		}
+		case "t": case "T": // skill position toggle
+		{
+			if(!event.shiftKey)
+				toggleSkillPosition();
+			return;
+		}
 		case "m": case "M": // beep toggle
 		{
 			if(!event.shiftKey)
@@ -617,6 +644,22 @@ function toggleMute()
 	{
 		ui.btn_mute.classList.add("btn-enabled");
 		muteBeep = true;
+	}
+}
+
+function toggleSkillPosition()
+{
+	if(!canInteract()) return;
+	if(ui.btn_skill.classList.contains('btn-enabled'))
+	{
+		ui.btn_skill.classList.remove("btn-enabled");
+		skillTarget = false;
+		beep();
+	}
+	else
+	{
+		ui.btn_skill.classList.add("btn-enabled");
+		skillTarget = true;
 	}
 }
 

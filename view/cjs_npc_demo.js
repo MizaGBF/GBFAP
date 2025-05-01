@@ -678,18 +678,20 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 				}
 				else
 				{
-					atk.x = npcOffset.x;
-					atk.y = npcOffset.y;
+					if(skillTarget)
+					{
+						atk.x = enemyOffset.x;
+						atk.y = enemyOffset.y;
+					}
+					else
+					{
+						atk.x = npcOffset.x;
+						atk.y = npcOffset.y;
+					}
 				}
 				atk.scaleX *= scaling;
 				atk.scaleY *= scaling;
-				let duration;
-				try
-				{
-					duration = me.getAnimDuration(atk[elem][elem + "_effect"]);
-				} catch(err) {
-					duration = me.getAnimDuration(atk[elem][elem + "_end"]);
-				}
+				let duration = is_aoe ? me.getAnimDuration(atk[elem][elem + "_end"]) : me.getAnimDuration(atk[elem][elem + "_effect"]);
 				me.tweenElements.push(atk);
 				const childtween = createjs.Tween.get(atk, {
 					useTicks: true,
