@@ -426,7 +426,7 @@ function actionChange(obj)
 	beep();
 	if(window.soundPlayer) window.soundPlayer.clearAll();
 	var action = obj.options[obj.selectedIndex].value;
-	if (action == 'default')
+	if(action == 'default')
 	{
 		action_list.motionList = action_index[animeVersion].action_label_list
 	}

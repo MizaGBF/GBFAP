@@ -844,6 +844,7 @@ define(["view/cjs", "view/content", "underscore"], function (cjsview, content, _
 					elem = this.cjsNpc;
 					this.npc = elem[this.cjsNameNpc];
 					animDuration = this.getAnimDuration(this.npc[this.cjsNameNpc + "_" + motion]);
+					break;
 				}
 				case animations.ABILITY_MOTION:
 				case animations.ABILITY_MOTION_2:
