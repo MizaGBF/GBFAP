@@ -11,7 +11,7 @@ Older versions of the Animation Players were originally based and modified from 
 # Front-End  
 There are two pages:  
 - The main page, `index.html`.   
-- The demo page, `demo.html`, for developers intereted in integrating the player in another page.  
+- The demo page, `demo.html`, for developers interested in integrating the player in another page.  
   
 `index.html` is using assets and codes from [GBFML](https://github.com/MizaGBF/GBFML).  
   
@@ -24,7 +24,7 @@ Three of the JSON files in the `json` folder are also used:
 - [data.json](https://github.com/MizaGBF/GBFAP/blob/main/json/data.json) is loaded along with config.json and contains the asset catalog and more.  
   
 # Back-End  
-Another JSON file is used update purpose:  
+Another JSON file is used for update purposes:  
 - [manual_constants.json](https://github.com/MizaGBF/GBFAP/blob/main/json/manual_constants.json) contains constant values used by the Updater, loaded and set on boot. They are in this separate file for maintainability and clarity.  
   
 More JSON files not specified here might appear in this folder, for development or testing purpose.  
@@ -158,7 +158,7 @@ The name of the configuration is `local`.
   
 **Setup:**  
 1. Copy/Clone this repo.  
-2. Run `python updater.py --download` to download all the assets. (The script will ask you to confirm by typying `yes`).  
+2. Run `python updater.py --download` to download all the assets. (The script will ask you to confirm by typing `yes`).  
   
 > [!CAUTION]  
 > You'll need to run `python updater.py --download` after every update, but it won't re-download what's already on disk.  
@@ -177,7 +177,7 @@ I use it alongside [GBFCP](https://github.com/MizaGBF/GBFCP) using `python app.p
 If you're interested in tinkering locally with the project, this is the recommended way.  
   
 # Player Configuration  
-Below is a description of the settings found in `config.js` used by the player.  
+Below is a description of the settings found in `config.json` used by the player.  
 You'll find more in the provided [config.json](https://github.com/MizaGBF/GBFAP/blob/main/json/config.json): Those are used by [GBFML](https://github.com/MizaGBF/GBFML) to render the page.  
   
 > [!TIP]  
@@ -241,7 +241,7 @@ The inner HTML set in the player interface during loading.
 If set, settings will be loaded and saved from this key in the browser local storage.  
   
 # Player integration  
-If you wish to integrate the player is your own page or project, there are a few function callbacks you can define to extend or alter its capabilities:  
+If you wish to integrate the player in your own page or project, there are a few function callbacks you can define to extend or alter its capabilities:  
 - `player_test_start()`: It will be called just before testing the player proxy if the configuration `testUri` is set.  
 - `player_test_end(bool)`: It will be called just after testing the player proxy if the configuration `testUri` is set. The parameter is true if the test is a success, false otherwise.  
 - `toggle_beep()`: To toggle the beep feedback. If you're using GBFML `js/util.js`, it's defined by default.  
@@ -249,7 +249,7 @@ If you wish to integrate the player is your own page or project, there are a few
 - `push_popup()`: To display a text popup. If you're using GBFML `js/util.js`, it's defined by default.  
 - `open_background_search(bool)`: Called by the search background button. The parameter is true if it's for a MyPage animation, false otherwise.  
   
-# More Informations  
+# More Information  
 The whole code is commented, make sure to take a look.  
 Check the [demo](https://github.com/MizaGBF/GBFAP/blob/main/demo.html) page a minimal example of how to include the player in another page.  
   
@@ -277,7 +277,7 @@ For example, `150201` and `dkf` are Dark Fencer IDs. It also uses a sword `sw` a
 > Using the `-al` flag should remove the needs to manually update the class details, but this solution isn't fully tested.  
   
 ### Unite & Fight skin  
-The skin **Honing Seeker: Nova** and its upgrades are also separated, to avoid a few headhaches related to their ID and for clarity sake.  
+The skin **Honing Seeker: Nova** and its upgrades are also separated, to avoid a few headaches related to their ID and for clarity sake.  
 The related IDs must be set in `json/manual_constants.json`, under `UNIQUE_SKIN`.  
   
 ### Others  
