@@ -49,6 +49,8 @@ They are:
 - [Backbone.js](https://backbonejs.org/).  
 - [Underscore.js](https://underscorejs.org/).  
   
+Additionaly, the player in its purest form as presented in the [demo.html](https://github.com/MizaGBF/GBFAP/blob/main/demo.html) file uses GBFML [js/util.js](https://github.com/MizaGBF/GBFML/blob/main/js/util.js).  
+  
 ## [updater.py](https://github.com/MizaGBF/GBFAP/blob/main/updater.py)  
 This script is in charge of updating the JSON files.  
 > [!CAUTION]  
@@ -193,7 +195,6 @@ It must contains the Uris used by the game `xjsUri`, `jsUri`, `imgUri`, `soundUr
 Append on the front of your Uris `CORS/` if they must use your proxy.  
   
 Finally, there is `testUri`. Set to `null` or to the url of your choice if you need to test if your proxy is alive.  
-You can define the functions `player_test_start` and `player_test_end` (the later takes a boolean as a parameter, false for error, true for success) if you wish to perform actions while this request is on-going.  
   
 ### buttons  
 **Optional** Object.  
@@ -210,7 +211,7 @@ The url of the default background used in normal mode.
 Use to add extra buttons to change the background in normal mode.  
 The key is the button inner HTML.  
 The key is either:  
-- `null`. If so, the button will call the function `open_background_search`. Make sure you have it defined.  
+- `null`. To add a search background button. A callback is required (see further below).  
 - A path starting with `./`. It will set the background source to this local file.  
 - A path **not** starting with `./`. It will set the background source to this path, appended to `Game.bgUri + "/"`.  
   
@@ -238,6 +239,15 @@ The inner HTML set in the player interface during loading.
 ### save_setting_key  
 **Optional** String.  
 If set, settings will be loaded and saved from this key in the browser local storage.  
+  
+# Player integration  
+If you wish to integrate the player is your own page or project, there are a few function callbacks you can define to extend or alter its capabilities:  
+- `player_test_start()`: It will be called just before testing the player proxy if the configuration `testUri` is set.  
+- `player_test_end(bool)`: It will be called just after testing the player proxy if the configuration `testUri` is set. The parameter is true if the test is a success, false otherwise.  
+- `toggle_beep()`: To toggle the beep feedback. If you're using GBFML `js/util.js`, it's defined by default.  
+- `beep()`: To play the beep feedback. If you're using GBFML `js/util.js`, it's defined by default.  
+- `push_popup()`: To display a text popup. If you're using GBFML `js/util.js`, it's defined by default.  
+- `open_background_search(bool)`: Called by the search background button. The parameter is true if it's for a MyPage animation, false otherwise.  
   
 # More Informations  
 The whole code is commented, make sure to take a look.  
