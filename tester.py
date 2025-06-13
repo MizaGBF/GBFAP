@@ -51,32 +51,35 @@ class Tester():
             if b == -1:
                 break
 
-    async def check(self, data):
-        if "v" in data:
-            for e in data["v"]:
-                self.process_file(e[1], await self.req(e[1]))
-                self.process_file(e[3], await self.req(e[3]))
-                if isinstance(e[4], list):
-                    for f in e[4]:
-                        self.process_file(f, await self.req(f))
-                else:
-                    self.process_file(e[4], await self.req(e[4]))
-        if "ehit" in data:
-            self.process_file(data["ehit"], await self.req(data["ehit"]))
-        if "sp" in data:
-            for e in data["sp"]:
-                self.process_file(e, await self.req(e))
+    async def check(self, eid, data):
+        try:
+            if "v" in data:
+                for e in data["v"]:
+                    self.process_file(e[1], await self.req(e[1]))
+                    if e[3] is not None:
+                        self.process_file(e[3], await self.req(e[3]))
+                    if isinstance(e[4], list):
+                        for f in e[4]:
+                            self.process_file(f, await self.req(f))
+                    else:
+                        self.process_file(e[4], await self.req(e[4]))
+            if "ab" in data:
+                for f in data["ab"]:
+                    self.process_file(f, await self.req(f))
+        except Exception as e:
+            print("Exception for " + eid + "\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__)))
         self.count -= 1
 
     async def run(self):
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
             print("Looking for function calls in animation files...")
             for k, v in self.data.items():
-                if k not in ["background", "wiki"]:
-                    while self.count >= 80:
-                        await asyncio.sleep(0.5)
-                    asyncio.create_task(self.check(v))
-                    self.count += 1
+                if k in ["characters", "partners", "summons", "weapons", "enemies", "skins", "job", "mypage", "styles"]:
+                    for eid, el in v.items():
+                        while self.count >= 80:
+                            await asyncio.sleep(0.5)
+                        asyncio.create_task(self.check(eid, el))
+                        self.count += 1
             while self.count > 0:
                 await asyncio.sleep(1)
             print("Done")

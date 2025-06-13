@@ -1,0 +1,144 @@
+#player-container {
+	min-width:1000px;
+	max-width:1000px;
+	margin:auto;
+}
+
+#canvas-container {
+	margin:auto;
+	border-color: #000000;
+	border:solid;
+	overflow:hidden;
+	position:relative;
+}
+
+#canvas-player {
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	position: absolute;
+	z-index:2;
+}
+
+#canvas-bg
+{
+	position:relative;
+	z-index:1;
+}
+
+#background-image {
+	width:100%;
+	height:auto;
+	object-fit: cover;
+	object-position: top;
+}
+
+.background-mypage-mask {
+	-webkit-mask-image: linear-gradient(
+		to bottom,
+		rgba(255,255,255,0.5) 0%,
+		rgba(255,255,255,0.5) 80%,
+		rgba(255,255,255,0) 100%
+	  );
+	mask-image: linear-gradient(
+		to bottom,
+		rgba(255,255,255,0.5) 0%,
+		rgba(255,255,255,0.5) 80%,
+		rgba(255,255,255,0) 100%
+	  );
+}
+
+#player-controls {
+	display: flex;
+	flex-direction: column;
+	flex-basis: fit-content;
+}
+
+.player-control-hpart {
+	display: flex;
+	flex-direction: row;
+	margin-left: auto;
+	margin-right: auto;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.player-control-vpart {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+}
+
+.player-control-width {
+	width: 100%;
+}
+
+.player-control-span {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	min-height: 40px;
+}
+
+.player-control-label {
+	width: 200px;
+	min-width: 200px;
+}
+
+.player-control-text {
+	width: 200px;
+}
+
+.player-select {
+	display: inline-block;
+}
+
+.player-control-slider-container {
+	margin: 0;
+	width: 50%;
+	flex-wrap: nowrap;
+}
+
+.player-control-slider {
+	width: 100%;
+}
+
+.player-control-sub-column {
+	width: 100%;
+	text-align: center;
+}
+
+.player-control-button-container {
+	display: flex;
+	justify-content: center;
+}
+
+.player-control-button {
+	margin: 5px;
+	cursor: pointer;
+}
+
+.player-menu-button {
+	margin: 5px;
+	cursor: pointer;
+}
+
+.player-menu {
+	width: 800px;
+	height:800px;
+	position: absolute;
+	top:50px;
+	align-items: center;
+	justify-content: center;
+	background: #181818db;
+	color: white;
+	z-index:50;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.player-scroll-list {
+	min-height: 700px;
+	height: 700px;
+	overflow: auto;
+}
