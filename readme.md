@@ -38,7 +38,8 @@ Root Folder/
 ├── GBFAP/
 ├── GBFML/
 └── GBFAL/ (Optional)
-```
+```  
+If you wish to run a test server with Python for example, uses `python -m http.server` in the Root Folder.  
   
 # Requirements  
 Some third party libraries used by GBF are also required by the player as a result.  
