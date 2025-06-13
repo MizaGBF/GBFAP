@@ -1924,7 +1924,7 @@ class Player
 				// DON'T use clearRect, videos don't really support transparency
 				if(recording.use_background) // if local background
 				{
-					recording.ctx.drawImage(this.ui.m_background, 0, 0, 600, 900);
+					recording.ctx.drawImage(this.ui.m_background, 0, 0, this.m_width, this.m_player);
 				}
 				else // else just fill it black
 				{
