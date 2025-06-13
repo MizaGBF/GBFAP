@@ -67,7 +67,7 @@ class Loader
 		});
 
 		load_queue.on("error", function(event) {
-			console.log("Failed to load CJS", event);
+			console.error("Failed to load CJS", event);
 			cjs_deferred.reject();
 			error_flag = true;
 		});
