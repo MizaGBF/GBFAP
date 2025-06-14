@@ -533,7 +533,7 @@ class Player
 					center + h * 0.15 * this.m_scaling
 				);
 				this.m_offset.target.x = Math.round(
-					center - w * 0.20 * this.m_scaling
+					center - w * 0.10 * this.m_scaling
 				);
 				this.m_offset.target.y = Math.round(
 					center + h * 0.30 * this.m_scaling
