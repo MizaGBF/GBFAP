@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.0'
+VERSION = '5.1'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
@@ -74,6 +74,7 @@ MP3_SEARCH = re.compile('"[a-zA-Z0-9_\\/]+\\.mp3"')
 
 # dynamic constants
 STYLE_CHARACTER : list[str] = []
+NO_CHARGE_ATTACK : set[str] = set()
 PATCHES : dict[str, list[str]] = {}
 ID_SUBSTITUTE : dict[str, str] = {}
 SHARED_SUMMONS : list[list[str]] = []
@@ -91,6 +92,7 @@ except Exception as e:
     print("Please fix the file content and try again")
     print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
     raise Exception("Failed to load GBFAP Constants")
+NO_CHARGE_ATTACK = set(NO_CHARGE_ATTACK)
 
 # Handle tasks
 @dataclass(slots=True)
@@ -923,8 +925,9 @@ class Updater():
                 for gender in ["", "_0", "_1"]: # gender check (vgrim, catura, etc..)
                     for ftype in ["", "_s2"]: # version (s2 is newer)
                         for form in ["", "_f1", "_f2", "_f"]: # alternate stance/form (rosetta, nicholas, etc...)
+                            full_id : str = "{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype)
                             try:
-                                fn = "npc_{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype) # create full filename
+                                fn = "npc_{}".format(full_id) # create full filename
                                 await self.head_manifest(fn) # check if exists, exception is raised otherwise
                                 vs = su + gender + ftype + form
                                 versions[vs] = fn # add in found versions
@@ -940,7 +943,7 @@ class Updater():
                                 if form == "":
                                     found = True
                                 try: # check attacks
-                                    fn = "phit_{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype).replace("_01", "")
+                                    fn = "phit_{}".format(full_id).replace("_01", "")
                                     await self.head_manifest(fn)
                                     phits[vs] = fn
                                 except:
@@ -962,11 +965,11 @@ class Updater():
                                                 phits[vs] = PATCHES[tid][1].replace('UU', su).replace('FF', form)
                                             else: # else use default axe animation
                                                 phits[vs] = 'phit_ax_0001'
-                                if tid != "3040158000" or su not in ("01", "02"): # exception due to base alexiel
-                                    for s in ["", "_s2", "_s3"]: # check ougi
-                                        for g in ["", "_0"] if gender == "" else [gender]: # and gender
+                                if full_id not in NO_CHARGE_ATTACK:
+                                    for s in ("", "_s2", "_s3"): # check ougi
+                                        for g in (("", "_0") if gender == "" else (gender,)): # and gender
                                             tasks = []
-                                            for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]: # and variations for multiple ougi like shiva grand
+                                            for m in ("", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"): # and variations for multiple ougi like shiva grand
                                                 tasks.append(self.update_character_sub("nsp_{}_{}{}{}{}{}{}".format(tid, su, style, g, form, s, m)))
                                             tmp = []
                                             for r in await asyncio.gather(*tasks):
@@ -977,33 +980,33 @@ class Updater():
                                                 if gender == "" and g != "":
                                                     gender_ougis[vs] = True
                                                 break
-                                # apply patches if any and no ougi found
-                                if vs not in nsp and tid in PATCHES and PATCHES[tid][0] != "":
-                                    for sub_uncap in range(uncap, 0, -1):
-                                        ssu = str(sub_uncap).zfill(2)
-                                        pid = PATCHES[tid][0].replace('UU', ssu).replace('FF', form)
-                                        for s in ["", "_s2", "_s3"]:
-                                            tasks = []
-                                            for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
-                                                tasks.append(self.update_character_sub("nsp_{}{}{}".format(pid, s, m)))
-                                            tmp = []
-                                            for r in await asyncio.gather(*tasks):
-                                                if r is not None:
-                                                    tmp.append(r)
-                                            if len(tmp) != 0:
-                                                nsp[vs] = tmp
+                                    # apply patches if any and no ougi found
+                                    if vs not in nsp and tid in PATCHES and PATCHES[tid][0] != "":
+                                        for sub_uncap in range(uncap, 0, -1):
+                                            ssu = str(sub_uncap).zfill(2)
+                                            pid = PATCHES[tid][0].replace('UU', ssu).replace('FF', form)
+                                            for s in ["", "_s2", "_s3"]:
+                                                tasks = []
+                                                for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
+                                                    tasks.append(self.update_character_sub("nsp_{}{}{}".format(pid, s, m)))
+                                                tmp = []
+                                                for r in await asyncio.gather(*tasks):
+                                                    if r is not None:
+                                                        tmp.append(r)
+                                                if len(tmp) != 0:
+                                                    nsp[vs] = tmp
+                                                    break
+                                            if vs in nsp:
                                                 break
-                                        if vs in nsp:
-                                            break
-                                if vs not in nsp: # if still no ougi found, check base form if it's an alt form
-                                    if form != "":
-                                        svs = su + gender + ftype
-                                        if svs in nsp:
-                                            nsp[vs] = nsp[svs]
-                                if vs not in nsp: # else raise error
-                                    raise Exception("No charge attack")
+                                    if vs not in nsp: # if still no ougi found, check base form if it's an alt form
+                                        if form != "":
+                                            svs = su + gender + ftype
+                                            if svs in nsp:
+                                                nsp[vs] = nsp[svs]
+                                    if vs not in nsp: # else raise error
+                                        raise Exception("No charge attack")
                             except Exception as se:
-                                if str(se) == "No charge attack" and not is_partner and tid != "3040158000": # alexiel is excluded from this check
+                                if str(se) == "No charge attack" and not is_partner and full_id not in NO_CHARGE_ATTACK: # alexiel is excluded from this check
                                     raise se
                         if found is True: # stop loop
                             break

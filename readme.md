@@ -265,6 +265,10 @@ You can manually set exceptions in `json/manual_constants.json`, in the correspo
 - `ID_SUBSTITUTE` is also for ID substitutions but on a global scope (used by characters/skins/weapons). The format is `"ID_WITHOUT_ANIMATION" : "ID_WITH_ANIMATION"`.  
 - `SHARED_SUMMONS` is a similar system but for summon sharing animations. They must be grouped together in: `["ID_1", "ID_2", ..., "ID_N"]`.  
   
+### No Charge Attacks  
+Some characters must not be set their charge attack files at certain uncap levels.  
+They can be set in `NO_CHARGE_ATTACK`, with their corresponding uncap, gender, etc... (for example `"NO_CHARGE_ATTACK":["3040158000_01", "3040158000_02"]`).  
+  
 ### Classes  
 Classes requires to be set in `json/manual_constants.json` under the **following**:  
 - `CLASS_LIST` requires the class main ID and a list of its secondary ID along with its proficiencies IDs.  
