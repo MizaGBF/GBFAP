@@ -780,7 +780,7 @@ class Player
 		}
 		else
 		{
-			special[cjs].gotoAndPlay("special");
+			special[cjs].gotoAndPlay(6);
 		}
 		return special;
 	}
@@ -801,11 +801,13 @@ class Player
 			summon.scaleX *= this.m_fullscreen_scale;
 			summon.scaleY *= this.m_fullscreen_scale;
 		}
-		else // set to target
+		else // old summons (N, R, ...)
 		{
+			// set to target
 			summon.x = this.m_offset.target.x;
 			summon.y = this.m_offset.target.y;
 			this.m_stage.setChildIndex(summon, Player.c_zindex.TOP);
+			summon.gotoAndPlay(0);
 		}
 		// apply scaling
 		summon.scaleX *= this.m_scaling;
