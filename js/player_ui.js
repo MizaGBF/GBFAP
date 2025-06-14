@@ -506,6 +506,7 @@ class PlayerUI
 			_player_.ui.m_html.innerHTML = "";
 			_player_.ui.m_html.appendChild(fragment);
 			_player_.ui.m_canvas_container.scrollIntoView();
+			document.dispatchEvent(new Event("player-html-ready"));
 		});
 	}
 	
@@ -600,6 +601,9 @@ class PlayerUI
 		this.m_canvas_container.style.minHeight = "" + h + "px";
 		this.m_canvas_container.style.maxWidth = "" + w + "px";
 		this.m_canvas_container.style.maxHeight = "" + h + "px";
+		// purely for any css styling
+		this.m_html.classList.toggle("player-container-normal", this.player.m_layout_mode != PlayerLayoutMode.mypage);
+		this.m_html.classList.toggle("player-container-mypage", this.player.m_layout_mode == PlayerLayoutMode.mypage); 
 	}
 	
 	// set the loading progress in the duration text element

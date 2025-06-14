@@ -18,6 +18,14 @@ var wake_counter = 110; // 100s
 
 function init() // entry point, called by body onload
 {
+	document.addEventListener("player-html-ready", () => {
+			scale_player();
+		},
+		false
+	);
+	window.addEventListener('resize', scale_player);
+	window.addEventListener('orientationchange', scale_player);
+	
 	// init var
 	gbf = new GBF();
 	bookmark_onclick = index_onclick;
@@ -507,4 +515,31 @@ function player_start_end()
 		container.innerHTML = "";
 		container.appendChild(fragment);
 	});
+}
+
+// intended for mobile portrait
+function scale_player()
+{
+	if(player)
+	{
+		if (window.matchMedia("((hover: none) or (pointer: coarse)) and (orientation: portrait)").matches)
+		{
+			let scale = player.ui.m_html.parentNode.clientWidth / 840;
+			if(scale > 1)
+			{
+				player.ui.m_html.style.transform = "none";
+				player.ui.m_html.style.marginBottom = "auto";
+			}
+			else
+			{
+				player.ui.m_html.style.transform = "scale(" + scale + ")";
+				player.ui.m_html.style.marginBottom = "" + (- player.ui.m_html.clientHeight * scale) + "px";
+			}
+		}
+		else
+		{
+			player.ui.m_html.style.transform = "none";
+			player.ui.m_html.style.marginBottom = "auto";
+		}
+	}
 }
