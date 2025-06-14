@@ -95,11 +95,16 @@
 }
 
 .player-control-button:hover, .player-menu-button:hover {
-  outline: solid #ffffff;
+	outline: solid #ffffff;
 }
 
 .player-control-button:active, .player-menu-button:active {
-  outline: solid #007acc;
+	animation: animation-button-press 0.1s;
+	outline: solid #007acc;
+}
+
+.player-control-button:disabled, .player-menu-button:disabled {
+	animation: none;
 }
 
 .player-menu {
