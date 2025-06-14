@@ -962,20 +962,21 @@ class Updater():
                                                 phits[vs] = PATCHES[tid][1].replace('UU', su).replace('FF', form)
                                             else: # else use default axe animation
                                                 phits[vs] = 'phit_ax_0001'
-                                for s in ["", "_s2", "_s3"]: # check ougi
-                                    for g in ["", "_0"] if gender == "" else [gender]: # and gender
-                                        tasks = []
-                                        for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]: # and variations for multiple ougi like shiva grand
-                                            tasks.append(self.update_character_sub("nsp_{}_{}{}{}{}{}{}".format(tid, su, style, g, form, s, m)))
-                                        tmp = []
-                                        for r in await asyncio.gather(*tasks):
-                                            if r is not None:
-                                                tmp.append(r)
-                                        if len(tmp) != 0:
-                                            nsp[vs] = tmp
-                                            if gender == "" and g != "":
-                                                gender_ougis[vs] = True
-                                            break
+                                if tid != "3040158000" or su not in ("01", "02"): # exception due to base alexiel
+                                    for s in ["", "_s2", "_s3"]: # check ougi
+                                        for g in ["", "_0"] if gender == "" else [gender]: # and gender
+                                            tasks = []
+                                            for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]: # and variations for multiple ougi like shiva grand
+                                                tasks.append(self.update_character_sub("nsp_{}_{}{}{}{}{}{}".format(tid, su, style, g, form, s, m)))
+                                            tmp = []
+                                            for r in await asyncio.gather(*tasks):
+                                                if r is not None:
+                                                    tmp.append(r)
+                                            if len(tmp) != 0:
+                                                nsp[vs] = tmp
+                                                if gender == "" and g != "":
+                                                    gender_ougis[vs] = True
+                                                break
                                 # apply patches if any and no ougi found
                                 if vs not in nsp and tid in PATCHES and PATCHES[tid][0] != "":
                                     for sub_uncap in range(uncap, 0, -1):
@@ -1002,7 +1003,7 @@ class Updater():
                                 if vs not in nsp: # else raise error
                                     raise Exception("No charge attack")
                             except Exception as se:
-                                if str(se) == "No charge attack" and not is_partner:
+                                if str(se) == "No charge attack" and not is_partner and tid != "3040158000": # alexiel is excluded from this check
                                     raise se
                         if found is True: # stop loop
                             break
