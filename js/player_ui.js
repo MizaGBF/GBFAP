@@ -1405,7 +1405,7 @@ class PlayerUI
 					event.preventDefault();
 					this.m_buttons.reset.click();
 				}
-				break;
+				return;
 			}
 			case "+": // speed/sound up
 			{
@@ -1431,7 +1431,7 @@ class PlayerUI
 					);
 					this.control_audio_update();
 				}
-				break;
+				return;
 			}
 			case "-": // speed/sound down
 			{
@@ -1457,7 +1457,7 @@ class PlayerUI
 					);
 					this.control_audio_update();
 				}
-				break;
+				return;
 			}
 			case " ": // pause
 			{
@@ -1466,6 +1466,7 @@ class PlayerUI
 					event.preventDefault();
 					this.m_buttons.pause.click();
 				}
+				return;
 			}
 			case "l": case "L": // loop toggle
 			{
