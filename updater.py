@@ -614,7 +614,7 @@ class Updater():
                             max_uncap = u
                     if max_uncap > 0:
                         table[k] = max_uncap
-            for t in ["characters", "summons"]:
+            for t in ("characters", "summons"):
                 for k, v in self.data[t].items(): # now go over our items and our uncap table and comapre
                     if k in table:
                         if 'v' in v:
@@ -922,9 +922,9 @@ class Updater():
             for uncap in range(1, 6):
                 su = str(uncap).zfill(2) # uncap string, i.e. 01, 02, etc...
                 found = False
-                for gender in ["", "_0", "_1"]: # gender check (vgrim, catura, etc..)
-                    for ftype in ["", "_s2"]: # version (s2 is newer)
-                        for form in ["", "_f1", "_f2", "_f"]: # alternate stance/form (rosetta, nicholas, etc...)
+                for gender in ("", "_0", "_1"): # gender check (vgrim, catura, etc..)
+                    for ftype in ("", "_s2"): # version (s2 is newer)
+                        for form in ("", "_f1", "_f2", "_f"): # alternate stance/form (rosetta, nicholas, etc...)
                             full_id : str = "{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype)
                             try:
                                 fn = "npc_{}".format(full_id) # create full filename
@@ -936,7 +936,7 @@ class Updater():
                                 # get cjs
                                 data = (await self.get(CJS + fn + ".js")).decode('utf-8') # retrieve the content for the following
                                 if vs not in mortals: # for characters such as lina
-                                    for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
+                                    for m in ('mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K'):
                                         if m in data: # we check which mortal (i.e. ougi) is found in the file, as some don't have the mortal_A
                                             mortals[vs] = m
                                             break
@@ -985,9 +985,9 @@ class Updater():
                                         for sub_uncap in range(uncap, 0, -1):
                                             ssu = str(sub_uncap).zfill(2)
                                             pid = PATCHES[tid][0].replace('UU', ssu).replace('FF', form)
-                                            for s in ["", "_s2", "_s3"]:
+                                            for s in ("", "_s2", "_s3"):
                                                 tasks = []
-                                                for m in ["", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"]:
+                                                for m in ("", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"):
                                                     tasks.append(self.update_character_sub("nsp_{}{}{}".format(pid, s, m)))
                                                 tmp = []
                                                 for r in await asyncio.gather(*tasks):
@@ -1122,7 +1122,7 @@ class Updater():
             character_data['v'] = []
             character_data['s'] = element_id
             call_found = set()
-            for uncap in ["_04", "_03", "_02", "_01"]:
+            for uncap in ("_04", "_03", "_02", "_01"):
                 try:
                     await self.head(IMG + "/sp/assets/summon/m/" + element_id + uncap.replace('_01', '') + ".jpg") # try to guess uncap level based on existing portrait
                 except:
@@ -1132,19 +1132,19 @@ class Updater():
                         return False
                 match uncap: # identifiers to check according to uncap
                     case "_04":
-                        uns = ["_04", "_03", "_02"]
+                        uns = ("_04", "_03", "_02")
                     case "_03":
-                        uns = ["_03", "_02"]
+                        uns = ("_03", "_02")
                     case "_02":
-                        uns = ["_02"]
+                        uns = ("_02",)
                     case "_01":
-                        uns = ["_01", ""]
+                        uns = ("_01", "")
                 calls = []
                 for i in sid:
                     for un in uns:
                         if un in call_found:
                             break
-                        for m in ["", "_a", "_b", "_c", "_d", "_e"]: # look for call animations (they can have multiples)
+                        for m in ("", "_a", "_b", "_c", "_d", "_e"): # look for call animations (they can have multiples)
                             fn = "summon_{}{}{}_attack".format(i, un, m)
                             try:
                                 await self.head_manifest(fn)
@@ -1204,25 +1204,25 @@ class Updater():
             character_data = {}
             character_data['w'] = []
             character_data['v'] = []
-            for uncap in ["", "_02", "_03"]: # check uncaps (only for Opus right now)
+            for uncap in ("", "_02", "_03"): # check uncaps (only for Opus right now)
                 match uncap: # identifiers to check
                     case "_03":
-                        uns = ["_03", "_02"]
+                        uns = ("_03", "_02")
                         spus = [3, 2, 0]
                         name_suffix = " Lv250"
                     case "_02":
-                        uns = ["_02"]
+                        uns = ("_02", )
                         spus = [2, 0]
                         name_suffix = " Lv200"
                     case _:
-                        uns = [""]
+                        uns = ("", )
                         spus = [0]
                         name_suffix = ""
                 sp = None
                 phit = None
                 for i in ([element_id] if sid is None else [element_id, sid]):
                     for un in uns:
-                        for fn in ["phit_{}{}".format(i, un), "phit_{}{}_0".format(i, un)]: # check attack
+                        for fn in ("phit_{}{}".format(i, un), "phit_{}{}_0".format(i, un)): # check attack
                             try:
                                 if phit is None:
                                     await self.head_manifest(fn)
@@ -1230,7 +1230,7 @@ class Updater():
                             except:
                                 pass
                         for spu in spus:
-                            for fn in ["sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_s2".format(i)]: # check ougi
+                            for fn in ("sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_s2".format(i)): # check ougi
                                 try:
                                     if sp is None:
                                         await self.head_manifest(fn)
@@ -1360,7 +1360,7 @@ class Updater():
                 return False
             wid = None
             colors = []
-            for i in ["01", "02", "03", "04", "05", "80"] if element_id not in UNIQUE_SKIN else ["01"]: # check colors/alts
+            for i in ("01", "02", "03", "04", "05", "80") if element_id not in UNIQUE_SKIN else ("01", ): # check colors/alts
                 try:
                     await self.head_manifest(CLASS_LIST[element_id][0] + "_0_{}".format(i))
                     colors.append(CLASS_LIST[element_id][0] + "_0_{}".format(i))
@@ -1375,7 +1375,7 @@ class Updater():
                 sp = None
                 phit = None
                 if CLASS_WEAPON_LIST[element_id] is not None: # check class weapon spritesheets
-                    for s in ["", "_0"]: # auto attack
+                    for s in ("", "_0"): # auto attack
                         try:
                             f = "phit_" + CLASS_WEAPON_LIST[element_id] + s
                             await self.head_manifest(f)
@@ -1383,7 +1383,7 @@ class Updater():
                             break
                         except:
                             pass
-                    for s in ["", "_0", "_0_s2", "_s2"]: # ougi
+                    for s in ("", "_0", "_0_s2", "_s2"): # ougi
                         try:
                             f = "sp_" + CLASS_WEAPON_LIST[element_id] + s
                             await self.head_manifest(f)
@@ -1411,14 +1411,14 @@ class Updater():
                 wid = CLASS_DEFAULT_WEAPON[mc_cjs.split('_')[1]]
                 sp = None
                 phit = None
-                for fn in ["phit_{}".format(element_id), "phit_{}_0".format(element_id)]: # check attack spritesheet
+                for fn in ("phit_{}".format(element_id), "phit_{}_0".format(element_id)): # check attack spritesheet
                     try:
                         if phit is None:
                             await self.head_manifest(fn)
                             phit = fn
                     except:
                         pass
-                for fn in ["sp_{}".format(element_id), "sp_{}_0".format(element_id), "sp_{}_0_s2".format(element_id), "sp_{}_s2".format(element_id)]: # check ougi spritesheet
+                for fn in ("sp_{}".format(element_id), "sp_{}_0".format(element_id), "sp_{}_0_s2".format(element_id), "sp_{}_s2".format(element_id)): # check ougi spritesheet
                     try:
                         if sp is None:
                             await self.head_manifest(fn)
@@ -1490,7 +1490,7 @@ class Updater():
                 cjs = fn
                 # get cjs
                 data = (await self.get(CJS + fn + ".js")).decode('utf-8') # retrieve the content for the following
-                for m in ['mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K']:
+                for m in ('mortal_A', 'mortal_B', 'mortal_C', 'mortal_D', 'mortal_E', 'mortal_F', 'mortal_G', 'mortal_H', 'mortal_I', 'mortal_K'):
                     if m in data: # we check which mortal (i.e. ougi) is found in the file, as some don't have the mortal_A
                         mortal = m
                         break
@@ -1508,7 +1508,7 @@ class Updater():
                 except:
                     return False
             sp = None
-            for s in ["", "_s2", "_s3"]:
+            for s in ("", "_s2", "_s3"):
                 try:
                     fn = "nsp_" + element_id + "_01" + s
                     await self.head_manifest(fn)
