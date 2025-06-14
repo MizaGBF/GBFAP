@@ -331,8 +331,6 @@ class Player
 		if(!this.ui.m_canvas)
 			throw new Error("No canvas initialized");
 		this.m_stage = new createjs.Stage(this.ui.m_canvas);
-		// hack for some compatibility
-		this.m_stage.mIsDamaged = 0;
 	}
 	
 	// reset the player to a near starting state
