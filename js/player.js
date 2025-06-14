@@ -793,8 +793,8 @@ class Player
 		// add to stage
 		this.m_stage.addChild(summon);
 		// the newer files are in two files (attack and damage)
-		// the attack part is like a full screen special
-		if(cjs.includes("_attack"))
+		// both seems to use the fullscreen offset
+		if(cjs.includes("_attack") || cjs.includes("_damage"))
 		{
 			summon.x = this.m_offset.fullscreen.x;
 			summon.y = this.m_offset.fullscreen.y;
