@@ -2,6 +2,7 @@
 
 var settings = {};
 var gbf = null;
+var search = null;
 var timestamp = Date.now(); // last updated timestamp
 var index = null;
 const bookmark_key = "gbfap-bookmark";
@@ -30,9 +31,6 @@ function init() // entry point, called by body onload
 	gbf = new GBF();
 	bookmark_onclick = index_onclick;
 	history_onclick = index_onclick;
-	search_onclick = index_onclick;
-	// remove npc from search
-	search_type_allowed[SearchIndex.npc[0]] = false;
 	
 	// apply GBFML patches
 	override_GBFML();
@@ -96,7 +94,21 @@ function load(conf, changelog)
 
 function start(conf, changelog)
 {
-	init_search_lookup();
+	search = new Search(
+		document.getElementById("filter"),
+		document.getElementById("search-area"),
+		search_save_key,
+		{
+			"wpn":["Weapon", GBFType.weapon],
+			"sum":["Summon", GBFType.summon],
+			"cha":["Character", GBFType.character],
+			"skn":["Skin", "skins"],
+			"job":["Protagonist", GBFType.job],
+			"bss":["Enemy", GBFType.enemy]
+		},
+		(conf.allow_id_input ?? false)
+	);
+	search.populate_search_area();
 	init_lists(changelog, index_onclick);
 	init_index(conf, changelog, index_onclick);
 	// set config now
@@ -119,25 +131,6 @@ function index_onclick()
 	else
 	{
 		lookup_player(this.onclickid);
-	}
-}
-
-// more or less the same logic as GBFAL but only to search
-function lookup(id)
-{
-	try
-	{
-		let filter = document.getElementById('filter');
-		if(filter.value == "" || filter.value != id)
-		{
-			filter.value = id;
-		}
-		id = id.trim().toLowerCase();
-		if(id == "")
-			return;
-		search(id);
-	} catch(err) {
-		console.error("Exception thrown", err.stack);
 	}
 }
 
