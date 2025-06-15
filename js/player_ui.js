@@ -217,7 +217,7 @@ class PlayerUI
 			span,
 			"button",
 			{
-				cls:["player-control-button"],
+				cls:["player-control-button", "player-button-warning"],
 				title:"Toggle the Animation Audios\n(Shortcut: M)",
 				innerhtml:this.get_button_html("sound"),
 				onclick:function() {
@@ -833,6 +833,7 @@ class PlayerUI
 		if(window.audio)
 			window.audio.update_mute();
 		this.m_buttons.sound.classList.toggle("player-button-enabled", this.player.m_audio_enabled);
+		this.m_buttons.sound.classList.toggle("player-button-warning", !this.player.m_audio_enabled);
 		this.player.save_settings();
 		beep();
 	}
