@@ -3,6 +3,7 @@ var attack_num = 0;
 // variable to fix a skill for SR Richard (3030267000)
 var highlow_result = 0;
 // see view/raid/constant.js in GBF code for those exceptions above
+var alpha_video = false; // debug flag, see https://github.com/MizaGBF/GBFAP/issues/4
 
 // enum to pass to the player on creation
 const PlayerLayoutMode = Object.freeze({
@@ -412,6 +413,8 @@ class Player
 					// audio
 					this.m_audio_enabled = settings.audio;
 					this.ui.m_buttons.sound.classList.toggle("player-button-enabled", this.m_audio_enabled);
+					// debug
+					alpha_video = (settings.debug_alpha ?? false);
 				} catch(err) {
 					console.error("Failed to load localStorage settings with key " + config.save_setting_key, err);
 				}
@@ -434,7 +437,9 @@ class Player
 			{
 				settings = {};
 			}
+			// volume
 			settings.volume = this.ui.m_audio.value;
+			// background
 			if(this.m_layout_mode == PlayerLayoutMode.mypage)
 			{
 				settings.mypage_background = this.ui.m_background.src;
@@ -443,8 +448,12 @@ class Player
 			{
 				settings.background = this.ui.m_background.src;
 			}
+			// audio
 			settings.beep = beep_enabled;
 			settings.audio = this.m_audio_enabled;
+			// debug
+			settings.debug_alpha = alpha_video;
+			// set
 			settings = JSON.stringify(settings);
 			if(settings != past_settings)
 				localStorage.setItem(config.save_setting_key, settings);
@@ -1922,15 +1931,22 @@ class Player
 				recording.motions.add(segment);
 				// clear our canvas
 				// DON'T use clearRect, videos don't really support transparency
-				if(recording.use_background) // if local background
+				if(alpha_video) // debug flag to emulate v8 and below behavior
 				{
-					recording.ctx.drawImage(this.ui.m_background, 0, 0, this.m_width, this.m_height);
+					recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
 				}
-				else // else just fill it black
+				else
 				{
-					recording.ctx.rect(0, 0, this.m_width,this.m_height);
-					recording.ctx.fillStyle = "black";
-					recording.ctx.fill();
+					if(recording.use_background) // if local background
+					{
+						recording.ctx.drawImage(this.ui.m_background, 0, 0, this.m_width, this.m_height);
+					}
+					else // else just fill it black
+					{
+						recording.ctx.rect(0, 0, this.m_width,this.m_height);
+						recording.ctx.fillStyle = "black";
+						recording.ctx.fill();
+					}
 				}
 				// copy a crop of the player stage canvas to our canvas
 				recording.ctx.drawImage(
