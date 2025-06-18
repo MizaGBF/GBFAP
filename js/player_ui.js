@@ -865,8 +865,6 @@ class PlayerUI
 	// frame advance button
 	control_next_frame()
 	{
-		if(!this.player.m_paused)
-			this.player.pause();
 		this.player.next_frame();
 		this.m_buttons.pause.classList.toggle("player-button-warning", this.player.m_paused);
 		beep();
