@@ -1744,37 +1744,15 @@ class Player
 	{
 		if(this.m_paused)
 		{
-			this.resume(); // resume animation
-			// get current frame
-			const position = this.m_main_tween.position;
-			// check in 2ms if the frame changed
-			const _player_ = this;
-			setTimeout(function() {
-					_player_.next_frame_wait(position);
-				},
-				2
-			);
+			this.resume();
+			createjs.Ticker.addEventListener("tick", this.pause_next_tick);
 		}
 	}
 	
-	next_frame_wait(last_position)
+	pause_next_tick()
 	{
-		// get current frame
-		const position = this.m_main_tween.position;
-		if(last_position != position) // frame changed
-		{
-			this.pause(); // we pause the player again
-		}
-		else
-		{
-			const _player_ = this;
-			// check again in 2ms if the frame changed
-			setTimeout(function() {
-					_player_.next_frame_wait(position);
-				},
-				2
-			);
-		}
+		player.pause();
+		createjs.Ticker.removeEventListener("tick", player.pause_next_tick);
 	}
 	
 	record()
