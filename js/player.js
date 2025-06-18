@@ -262,6 +262,7 @@ class Player
 		this.m_paused = true;
 		this.m_loading = true;
 		this.m_setting_enabled = false;
+		// player callbacks
 		this.m_tick_callback = null;
 		this.m_animation_completed_callback = this.animation_completed.bind(this);
 		// player settings
@@ -1767,8 +1768,13 @@ class Player
 	{
 		try
 		{
+			if(this.m_tick_callback != null)
+				return;
 			// pause the player first
 			this.pause();
+			// set callback
+			this.m_tick_callback = this.record_next_frame.bind(this);
+			createjs.Ticker.addEventListener("tick", this.m_tick_callback);
 			// detect the mimetype
 			let mimetype = null;
 			// list of format/codecs we are trying.
@@ -1820,7 +1826,6 @@ class Player
 			// create and set media recorder
 			this.m_recording.rec = new MediaRecorder(this.m_recording.stream, {mimeType: this.m_recording.mimetype, videoBitsPerSecond:50*1024*1024}); // 50mbps
 			// set events
-			const ref = this;
 			this.m_recording.rec.ondataavailable = e => {
 				// when new data is available
 				if(e.data) // add data to chunks
@@ -1828,12 +1833,12 @@ class Player
 			}
 			this.m_recording.rec.onstop = e => {
 				// when recording is stopped
-				if(!ref.m_recording.error) // check if it's due to an error
+				if(!this.m_recording.error) // check if it's due to an error
 				{
 					// create blob from chunks and download it
-					ref.download_video(new Blob(ref.m_recording.chunks, {type: ref.m_recording.mimetype}), ref.m_recording.extension);
+					this.download_video(new Blob(this.m_recording.chunks, {type: this.m_recording.mimetype}), this.m_recording.extension);
 				}
-				ref.m_recording = null;
+				this.m_recording = null;
 			};
 			// start (using 1s chunks)
 			this.m_recording.rec.start(1);
@@ -1846,12 +1851,14 @@ class Player
 				push_popup("Generating the video, be patient...");
 			// lock the controls
 			this.ui.set_control_lock(true);
-			// capture next frame
-			this.record_next_frame(this.m_recording);
+			// resume play
+			this.resume()
 		}
 		catch(err) // error handling
 		{
 			// clean up
+			createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
+			this.m_tick_callback = null;
 			if(this.m_recording)
 			{
 				createjs.Ticker.framerate = this.m_recording.old_framerate;
@@ -1869,11 +1876,10 @@ class Player
 		}
 	}
 	
-	record_next_frame(recording)
+	record_next_frame()
 	{
 		try
 		{
-			const _player_ = this;
 			let segment = "" + this.m_current_cjs + "#" + this.m_current_motion;
 			// "segment" will be something like VERSION_INDEX#MOTION_INDEX
 			// it's done this way to ensure we won't have weird overlaps
@@ -1884,57 +1890,61 @@ class Player
 			// - if the current segment is stored in motions (if it's not, this means we haven't seen it yet)
 			
 			if(
-				(recording.motions.length == 0 && recording.frames == 0)
-				|| (recording.position != this.m_main_tween.position)
-				|| (!recording.motions.has(segment))
+				(this.m_recording.motions.length == 0 && this.m_recording.frames == 0)
+				|| (this.m_recording.position != this.m_main_tween.position)
+				|| (!this.m_recording.motions.has(segment))
 			)
 			{
 				// update position
-				recording.position = this.m_main_tween.position;
+				this.m_recording.position = this.m_main_tween.position;
 				// pause animation
 				this.pause();
 				// here we check if the animation is over
 				// if the segment is already in motions, it means we have looped back
 				// AND if the position is back to zero (meaning we just looped back to the start of another animation)
 				// AND the frames captured is non null (meaning it's not the beginning)
-				if(recording.motions.has(segment) && this.m_main_tween.position == 0 && recording.frames > 0)
+				if(this.m_recording.motions.has(segment) && this.m_main_tween.position == 0 && this.m_recording.frames > 0)
 				{
+					// cleanup
+					createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
+					this.m_tick_callback = null;
 					// add popup
 					if(typeof push_popup !== "undefined")
 						push_popup("Finalizing...");
-					// We wait a bit before ending the recording
+					// We wait a bit before ending the this.m_recording
 					// The delay is needed for to let MediaRecorder finishes what it's doing or frames might be missing
+					const _player_ = this;
 					setTimeout(function() {
-							_player_.record_end(recording);
+							_player_.record_end();
 						},
 						2000
 					);
 					return; // exit here
 				}
-				// recording isn't over
+				// this.m_recording isn't over
 				// add segment to motions
-				recording.motions.add(segment);
+				this.m_recording.motions.add(segment);
 				// clear our canvas
 				// DON'T use clearRect, videos don't really support transparency
 				if(alpha_video) // debug flag to emulate v8 and below behavior
 				{
-					recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
+					this.m_recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
 				}
 				else
 				{
-					if(recording.use_background) // if local background
+					if(this.m_recording.use_background) // if local background
 					{
-						recording.ctx.drawImage(this.ui.m_background, 0, 0, this.m_width, this.m_height);
+						this.m_recording.ctx.drawImage(this.ui.m_background, 0, 0, this.m_width, this.m_height);
 					}
 					else // else just fill it black
 					{
-						recording.ctx.rect(0, 0, this.m_width,this.m_height);
-						recording.ctx.fillStyle = "black";
-						recording.ctx.fill();
+						this.m_recording.ctx.rect(0, 0, this.m_width,this.m_height);
+						this.m_recording.ctx.fillStyle = "black";
+						this.m_recording.ctx.fill();
 					}
 				}
 				// copy a crop of the player stage canvas to our canvas
-				recording.ctx.drawImage(
+				this.m_recording.ctx.drawImage(
 					this.m_stage.canvas,
 					(Player.c_canvas_size - this.m_width) / 2,
 					(Player.c_canvas_size - this.m_height) / 2,
@@ -1946,21 +1956,18 @@ class Player
 					this.m_height)
 				;
 				// request the frame to capture it
-				recording.stream.getVideoTracks()[0].requestFrame();
+				this.m_recording.stream.getVideoTracks()[0].requestFrame();
 				// increase our frame counter
-				recording.frames++;
+				this.m_recording.frames++;
 				// resume playing
 				this.resume();
 			}
-			// wait 3ms and check the next frame
-			setTimeout(function() {
-					_player_.record_next_frame(recording);
-				},
-				3
-			);
 		}
 		catch(err) // error handling
 		{
+			// cleanup
+			createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
+			this.m_tick_callback = null;
 			// reset framerate
 			createjs.Ticker.framerate = this.m_recording.old_framerate;
 			// stop everything
@@ -1976,15 +1983,18 @@ class Player
 	}
 	
 	// recording is over
-	record_end(recording)
+	record_end()
 	{
+		// clean up
+		createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
+		this.m_tick_callback = null;
 		// reset framerate
 		createjs.Ticker.framerate = this.m_recording.old_framerate;
 		// unlock controls
 		this.ui.set_control_lock(false);
 		// stop the recording
 		// it will fire the onstop event
-		recording.rec.stop();
+		this.m_recording.rec.stop();
 	}
 	
 	// called by the recording onstop event
