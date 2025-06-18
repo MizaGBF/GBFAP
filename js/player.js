@@ -1749,9 +1749,10 @@ class Player
 		}
 	}
 	
+	// called at the next tick
 	pause_next_tick()
 	{
-		player.pause();
+		player.pause(); // can't use this, use player instead
 		createjs.Ticker.removeEventListener("tick", player.pause_next_tick);
 	}
 	
