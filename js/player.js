@@ -262,6 +262,8 @@ class Player
 		this.m_paused = true;
 		this.m_loading = true;
 		this.m_setting_enabled = false;
+		this.m_tick_callback = null;
+		this.m_animation_completed_callback = this.animation_completed.bind(this);
 		// player settings
 		this.m_speed = 1.0; // play speed
 		this.m_audio_enabled = false; // audio mute state
@@ -339,13 +341,17 @@ class Player
 	{
 		// pause the player
 		this.pause();
-		// clean stuff
+		// remove listeners
+		for(const cjs of this.m_cjs)
+			cjs.removeEventListener("animationComplete", this.m_animation_completed_callback);
+		if(this.m_tick_callback != null)
+			createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
+		// clean createjs
 		this.m_stage.removeAllEventListeners();
 		this.m_stage.removeAllChildren();
 		createjs.Tween.removeAllTweens();
 		createjs.Ticker.removeEventListener("tick", this.m_stage);
 		createjs.Ticker.reset();
-		
 		// reset everything
 		this.init_attributes(mode);
 		loader.reset();
@@ -889,8 +895,7 @@ class Player
 			useTicks: true,
 			paused: this.m_paused
 		}).wait(duration).call(function () {
-			//_player_.clean_tween(ref, child_tween);
-			player.clean_tween(ref, child_tween);
+			_player_.clean_tween(ref, child_tween);
 		});
 		this.m_child_tweens.push(child_tween);
 	}
@@ -1179,7 +1184,7 @@ class Player
 		this.ui.set_duration(duration);
 		
 		// set listener for animation completion
-		cjs.addEventListener("animationComplete", this.animation_completed);
+		cjs.addEventListener("animationComplete", this.m_animation_completed_callback);
 		// play animation
 		if(![
 				Player.c_animations.SUMMON_ATTACK,
@@ -1289,21 +1294,20 @@ class Player
 	// called when the animation is completed
 	animation_completed(event)
 	{
-		// note: called as a callback, so must use player global variable
 		// clean up listener
-		event.target.removeEventListener("animationComplete", player.animation_completed);
+		event.target.removeEventListener("animationComplete", this.m_animation_completed_callback);
 		// if there is a special
-		if(player.m_special_cjs != null) // clean up
+		if(this.m_special_cjs != null) // clean up
 		{
-			player.m_stage.removeChild(player.m_special_cjs);
-			player.m_special_cjs = null;
+			this.m_stage.removeChild(this.m_special_cjs);
+			this.m_special_cjs = null;
 		}
 		// increase motion index
-		player.m_current_motion++;
-		if(player.m_current_motion >= player.m_current_motion_list.length)
-			player.m_current_motion = 0;
+		this.m_current_motion++;
+		if(this.m_current_motion >= this.m_current_motion_list.length)
+			this.m_current_motion = 0;
 		// play next motion
-		player.play(player.m_current_motion_list[player.m_current_motion]);
+		this.play(this.m_current_motion_list[this.m_current_motion]);
 	}
 	
 	// update the main hand texture
@@ -1742,18 +1746,21 @@ class Player
 	// play the animation until the next frame. Must be paused beforehand.
 	next_frame()
 	{
-		if(this.m_paused)
+		if(this.m_tick_callback == null)
 		{
-			this.resume();
-			createjs.Ticker.addEventListener("tick", this.pause_next_tick);
+			if(this.m_paused)
+				this.resume();
+			this.m_tick_callback = this.pause_next_tick.bind(this);
+			createjs.Ticker.addEventListener("tick", this.m_tick_callback);
 		}
 	}
 	
 	// called at the next tick
 	pause_next_tick()
 	{
-		player.pause(); // can't use this, use player instead
-		createjs.Ticker.removeEventListener("tick", player.pause_next_tick);
+		this.pause(); // can't use this, use player instead
+		createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
+		this.m_tick_callback = null;
 	}
 	
 	record()
@@ -1862,7 +1869,6 @@ class Player
 		}
 	}
 	
-	// capture the next frame
 	record_next_frame(recording)
 	{
 		try
