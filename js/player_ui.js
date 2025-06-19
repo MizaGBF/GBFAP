@@ -89,7 +89,7 @@ class PlayerUI
 		let span = add_to(part, "span", {cls:["player-control-span"]});
 		span.style.display = "none";
 		let label = add_to(span, "label", {cls:["player-control-label"]});
-		label.for = "player-version-select";
+		label.htmlFor = "player-version-select";
 		label.innerText = "Version";
 		this.m_version = add_to(
 			span,
@@ -110,7 +110,7 @@ class PlayerUI
 		span = add_to(part, "span", {cls:["player-control-span"]});
 		span.style.display = "none";
 		label = add_to(span, "label", {cls:["player-control-label"]});
-		label.for = "player-motion-select";
+		label.htmlFor = "player-motion-select";
 		label.innerText = "Motion";
 		this.m_motion = add_to(
 			span,
@@ -145,7 +145,7 @@ class PlayerUI
 		
 		span.style.display = "none";
 		label = add_to(span, "label", {cls:["player-control-label", "player-control-label-small"]}); // add player-control-label-small to reduce label size
-		label.for = "player-ability-select";
+		label.htmlFor = "player-ability-select";
 		label.innerText = "Skill Effect";
 		this.m_ability = add_to(
 			span,
@@ -221,7 +221,7 @@ class PlayerUI
 			_ui_.control_speed_update();
 		};
 		this.m_speed_label = add_to(sub_span, "label", {cls:["player-control-label"]});
-		this.m_speed_label.for = "player-control-speed";
+		this.m_speed_label.htmlFor = "player-control-speed";
 		this.m_speed_label.innerText = "100% Speed";
 		
 		// volume slider
@@ -254,7 +254,7 @@ class PlayerUI
 			_ui_.control_audio_update();
 		};
 		this.m_audio_label = add_to(sub_span, "label", {cls:["player-control-label"]});
-		this.m_audio_label.for = "player-control-audio";
+		this.m_audio_label.htmlFor = "player-control-audio";
 		this.m_audio_label.innerText = "50% Audio";
 		
 		// control buttons
