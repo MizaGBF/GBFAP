@@ -6988,7 +6988,8 @@
 "6206133":{"v":[["","enemy_6206133",null,"phit_0000000000",[]]]},
 "6206123":{"v":[["","enemy_6206123",null,"phit_0000000000",[]]]},
 "6206163":{"v":[["","enemy_6206163",null,"phit_0000000000",[]]],"ra":["raid_appear_6206163"]},
-"6206173":{"v":[["","enemy_6206173",null,"ehit_6206173",["esp_6206173_01","esp_6206173_02"]]],"ra":["raid_appear_6206173"]}
+"6206173":{"v":[["","enemy_6206173",null,"ehit_6206173",["esp_6206173_01","esp_6206173_02"]]],"ra":["raid_appear_6206173"]},
+"9102713":{"v":[["","enemy_9102713",null,"ehit_9102713",["esp_9102713_01","esp_9102713_02","esp_9102713_03"]]],"ra":["raid_appear_9102713"]}
 },
 "skins":
 {
@@ -13229,7 +13230,7 @@
 "5200113":"dark cursed specimen undead-boss",
 "4300763":"light mega automagod skeletal diaspora machine-boss",
 "4300832":"wind zombicopter machine-boss",
-"5100263":"earth love-starved beast otherworld-boss",
+"5100263":"earth tyrannus otherworld-boss",
 "5100202":"fire otherworld hexer otherworld-boss",
 "5100173":"dark evil eye otherworld-boss",
 "4300833":"wind zombicopter machine-boss",
@@ -15209,7 +15210,13 @@
 "390001":"@@Main_Character gran djeeta skysonic gig 2024-08-31",
 "311303":"@@Main_Character gran djeeta honing seeker: eclipse 2025-04-07",
 "6206163":"fire titantad simulacrum mugen people-boss",
-"6206173":"null gallanth human male people-boss"
+"6206173":"null gallanth human male people-boss",
+"3040597000":"@@Hauhet fire ssr hauhet unknown female special staff ハウヘト sayaka kinoshita 木下紗華 2025-06-16",
+"3040598000":"@@Grimnir_(Dark) dark ssr grimnir primal male defense spear staff グリームニル megumi ogata 緒方恵美 2025-06-16",
+"2040436000":"@@Soul_Invoker fire ssr soul invoker robur ソウルインヴォーカー 2025-06-16",
+"1040220100":"@@Thundergale_of_the_Crimson dark spear ssr thundergale of the crimson 紫紅ノ霆風 2025-06-16",
+"1040620000":"@@Siwar_Al-Laahabi fire melee ssr siwar al-laahabi セィワール・ラハブ 2025-06-16",
+"9102713":"wind tart man other-boss"
 },
 "mypage":
 {
