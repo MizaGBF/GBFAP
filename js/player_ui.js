@@ -41,7 +41,6 @@ class PlayerUI
 		this.m_version.parentNode.style.display = "none";
 		this.m_motion.parentNode.style.display = "none";
 		this.m_ability.parentNode.style.display = "none";
-		this.m_buttons.ability_target.style.display = "none";
 		this.m_buttons.enemy_position.style.display = "none";
 		this.m_duration.parentNode.classList.toggle("player-button-warning", false);
 		this.m_buttons.pause.classList.toggle("player-button-warning", false);
@@ -130,10 +129,24 @@ class PlayerUI
 		
 		// ability control
 		span = add_to(part, "span", {cls:["player-control-span"]});
+		// this button is added as part of the span
+		this.m_buttons.ability_target = add_to(
+			span,
+			"button",
+			{
+				cls:["player-control-button"],
+				title:"Change the position of Targeted Skills\n(Shortcut: S)",
+				innerhtml:this.get_button_html("ability_target"),
+				onclick:function() {
+					_ui_.control_ability_toggle();
+				}
+			}
+		);
+		
 		span.style.display = "none";
-		label = add_to(span, "label", {cls:["player-control-label"]});
+		label = add_to(span, "label", {cls:["player-control-label", "player-control-label-small"]}); // add player-control-label-small to reduce label size
 		label.for = "player-ability-select";
-		label.innerText = "Skill Effects";
+		label.innerText = "Skill Effect";
 		this.m_ability = add_to(
 			span,
 			"select",
@@ -307,20 +320,6 @@ class PlayerUI
 			}
 		}
 		
-		this.m_buttons.ability_target = add_to(
-			span,
-			"button",
-			{
-				cls:["player-control-button"],
-				title:"Change the position of Targeted Skills\n(Shortcut: S)",
-				innerhtml:this.get_button_html("ability_target"),
-				onclick:function() {
-					_ui_.control_ability_toggle();
-				}
-			}
-		);
-		this.m_buttons.ability_target.style.display = "none";
-		
 		this.m_buttons.enemy_position = add_to(
 			span,
 			"button",
@@ -392,7 +391,7 @@ class PlayerUI
 			"button",
 			{
 				cls:["player-control-button"],
-				title:"Save the current playlist as a WEBM file\n(Shortcut: Shift+R)",
+				title:"Save the current playlist as a WEBM file\n(Shortcut: Shift+W)",
 				innerhtml:this.get_button_html("record"),
 				onclick:function() {
 					_ui_.control_record();
@@ -705,12 +704,10 @@ class PlayerUI
 		if(abilities.length == 0) // don't display if no skill
 		{
 			this.m_ability.parentNode.style.display = "none";
-			this.m_buttons.ability_target.style.display = "none"; // don't show the button either
 		}
 		else
 		{
 			this.m_ability.parentNode.style.display = "";
-			this.m_buttons.ability_target.style.display = "";
 			this.m_ability.innerHTML = "";
 			// add None option
 			let opt = add_to(this.m_ability, "option");
@@ -1495,7 +1492,7 @@ class PlayerUI
 				if(!event.shiftKey)
 				{
 					event.preventDefault();
-					this.m_buttons.ability.click();
+					this.m_buttons.ability_target.click();
 				}
 				return;
 			}
@@ -1544,7 +1541,7 @@ class PlayerUI
 				}
 				return;
 			}
-			case "r": case "R": // record webm
+			case "w": case "W": // record webm
 			{
 				if(event.shiftKey) // use shift key!
 				{

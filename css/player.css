@@ -85,6 +85,11 @@
 	min-width: 200px;
 }
 
+.player-control-label-small {
+	width: 140px;
+	min-width: 140px;
+}
+
 .player-control-text {
 	width: 200px;
 }
