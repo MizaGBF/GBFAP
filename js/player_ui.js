@@ -1379,6 +1379,20 @@ class PlayerUI
 		}
 	}
 	
+	// to disable keyboard on select elements
+	ignore_alpha(e)
+	{
+		if(!e)
+		{
+			e = window.event;
+		}
+		if(e.keyCode >= 65 && e.keyCode <= 90) // A to Z
+		{
+			e.returnValue = false;
+			e.cancel = true;
+		}
+	}
+	
 	// event callback to prevent the space bar key to trigger buttons
 	space_key_fix(event)
 	{
