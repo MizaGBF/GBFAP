@@ -688,7 +688,7 @@ class Updater():
     def import_gbfal_lookup(self : Updater) -> None:
         try:
             count = 0
-            for t in ("characters", "summons", "weapons", "enemies", "job"):
+            for t in ("characters", "skins", "summons", "weapons", "enemies", "job"):
                 for k in self.data[t]:
                     if k in self.gbfal["lookup"]:
                         is_in_lookup : bool = k in self.data["lookup"]
