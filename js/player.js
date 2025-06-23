@@ -1772,9 +1772,6 @@ class Player
 				return;
 			// pause the player first
 			this.pause();
-			// set callback
-			this.m_tick_callback = this.record_next_frame.bind(this);
-			createjs.Ticker.addEventListener("tick", this.m_tick_callback);
 			// detect the mimetype
 			let mimetype = null;
 			// list of format/codecs we are trying.
@@ -1794,6 +1791,9 @@ class Player
 					push_popup("This feature isn't supported on your device/browser.");
 				return;
 			}
+			// set callback
+			this.m_tick_callback = this.record_next_frame.bind(this);
+			createjs.Ticker.addEventListener("tick", this.m_tick_callback);
 			// restart current animation playlist
 			this.reset();
 			// container
@@ -1971,8 +1971,8 @@ class Player
 			// reset framerate
 			createjs.Ticker.framerate = this.m_recording.old_framerate;
 			// stop everything
-			recording.error = true;
-			recording.rec.stop();
+			this.m_recording.error = true;
+			this.m_recording.rec.stop();
 			// unlock controls
 			this.ui.set_control_lock(false);
 			// send error messages
