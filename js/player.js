@@ -3,7 +3,6 @@ var attack_num = 0;
 // variable to fix a skill for SR Richard (3030267000)
 var highlow_result = 0;
 // see view/raid/constant.js in GBF code for those exceptions above
-var alpha_video = false; // debug flag, see https://github.com/MizaGBF/GBFAP/issues/4
 
 // enum to pass to the player on creation
 const PlayerLayoutMode = Object.freeze({
@@ -420,8 +419,6 @@ class Player
 					// audio
 					this.m_audio_enabled = settings.audio;
 					this.ui.m_buttons.sound.classList.toggle("player-button-enabled", this.m_audio_enabled);
-					// debug
-					alpha_video = (settings.debug_alpha ?? false);
 				} catch(err) {
 					console.error("Failed to load localStorage settings with key " + config.save_setting_key, err);
 				}
@@ -458,8 +455,6 @@ class Player
 			// audio
 			settings.beep = beep_enabled;
 			settings.audio = this.m_audio_enabled;
-			// debug
-			settings.debug_alpha = alpha_video;
 			// set
 			settings = JSON.stringify(settings);
 			if(settings != past_settings)
@@ -1926,7 +1921,7 @@ class Player
 				this.m_recording.motions.add(segment);
 				// clear our canvas
 				// DON'T use clearRect, videos don't really support transparency
-				if(alpha_video) // debug flag to emulate v8 and below behavior
+				/*if(alpha_video) // debug flag to emulate v8 and below behavior
 				{
 					this.m_recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
 				}
@@ -1942,7 +1937,7 @@ class Player
 						this.m_recording.ctx.fillStyle = "black";
 						this.m_recording.ctx.fill();
 					}
-				}
+				}*/
 				// copy a crop of the player stage canvas to our canvas
 				this.m_recording.ctx.drawImage(
 					this.m_stage.canvas,
