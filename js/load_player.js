@@ -174,9 +174,6 @@ function monkeypatch_createjs()
 	_createjs_overloaded_func_["bitmap_init"] = window.createjs.Bitmap.prototype.initialize;
 	window.createjs.Bitmap.prototype.initialize = function(image) {
 		let tmp = this.sourceRect; // store the source rect
-		// set cross origin
-		if(config.use_game_config != "local" && image && image.crossOrigin == null)
-			image.crossOrigin = "anonymous"; // set origin
 		// call the original function
 		_createjs_overloaded_func_["bitmap_init"].call(this, image);
 		if(tmp) this.sourceRect = tmp; // now set the source rect AFTER (to avoid a bug)

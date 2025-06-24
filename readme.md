@@ -117,6 +117,9 @@ You might be interested in hosting your own copy.
 There are three configurations provided in the included [config.json](https://github.com/MizaGBF/GBFAP/blob/main/json/config.json) file for you to play with.
 **You can select which configuration to use by change the value of `use_game_config`**.  
   
+> [!IMPORTANT]  
+> The sprite sheets cross-origin is automatically set to `Anonymous` if `use_game_config` is different from `local`. CTRL+F `Anonymous` to find the relevant part in `js/loader.js` if you need to change this behavior.  
+  
 ### With a CORS Proxy  
 > [!TIP]  
 > This is the current way it's hosted on Github Pages.  

@@ -1806,6 +1806,7 @@ class Player
 				extension: mimetype.split(';')[0].split('/')[1], // the file extension
 				use_background: this.ui.m_background.src.startsWith(window.location.origin), // true if we can use the background
 				old_framerate: createjs.Ticker.framerate, // keep track of the framerate
+				firefox: navigator.userAgent.toLowerCase().includes("firefox"), // flag for firefox compatibility
 				error: false // error flag
 			};
 			// reset the framerate to 30
@@ -1818,7 +1819,8 @@ class Player
 			// create the 2d context
 			this.m_recording.ctx = this.m_recording.canvas.getContext("2d");
 			// set to 0 fps to disable automatic capture
-			this.m_recording.stream = this.m_recording.canvas.captureStream(0);
+			// note: firefox doesn't support requestFrame, so we use an automatic capture at 30 fps
+			this.m_recording.stream = this.m_recording.canvas.captureStream(this.m_recording.firefox ? 30 : 0);
 			// create and set media recorder
 			this.m_recording.rec = new MediaRecorder(this.m_recording.stream, {mimeType: this.m_recording.mimetype, videoBitsPerSecond:50*1024*1024}); // 50mbps
 			// set events
@@ -1950,8 +1952,11 @@ class Player
 					this.m_width,
 					this.m_height)
 				;
-				// request the frame to capture it
-				this.m_recording.stream.getVideoTracks()[0].requestFrame();
+				if(!this.m_recording.firefox)
+				{
+					// request the frame to capture it
+					this.m_recording.stream.getVideoTracks()[0].requestFrame();
+				}
 				// increase our frame counter
 				this.m_recording.frames++;
 				// resume playing

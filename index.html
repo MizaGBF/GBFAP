@@ -40,7 +40,7 @@
 <body onload="init()">
 	<a href="index.html"><img id="title-header" src="assets/ui/header.png" alt="header"></a>
 	<div id="header">
-		<div>v9.4</div>
+		<div>v9.5</div>
 		<div id="timestamp">Loading...</div>
 	</div>
 	<!-- Know issues -->
@@ -189,11 +189,9 @@
 		<br>
 		Adjust it as you see fit.<br>  
 		For example, Twitter requires a different codec and a MP4 file. Here's an example:<br>
-		<code>ffmpeg.exe -y -c:v libvpx -i intput.webm -c:v libx264 -b:v 50M -vf premultiply=inplace=1 -auto-alt-ref 0 output.mp4</code>
-		</p>
-		<h3>&#x2022; The Download and Recording features don't work on Firefox!</h3>
-		<p>
-		Nothing I can do about it, currently.<br>Pull Requests are open if you have a magic solution!
+		<code>ffmpeg.exe -y -c:v libvpx -i intput.webm -c:v libx264 -b:v 50M -vf premultiply=inplace=1 -auto-alt-ref 0 output.mp4</code><br>
+		<br>
+		Note that, on non-Chrome Browsers, the exported WebM might not have transparency.
 		</p>
 		<h3>&#x2022; Class Champion weapons seem to be bugged</h3>
 		<p>

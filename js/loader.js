@@ -306,7 +306,8 @@ class Loader
 		{
 			// make deferred and download queue
 			var queue_deferred = new $.Deferred();
-			var load_queue = new createjs.LoadQueue(false);
+			// 3rd parameter is the cross origin, we set it to true (Anonymous) if game_config isn't local
+			var load_queue = new createjs.LoadQueue(false, "", config.use_game_config != "local");
 			load_queue.setMaxConnections(5);
 			// to keep track of the progress
 			const total = to_load.length;
