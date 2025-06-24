@@ -1794,6 +1794,7 @@ class Player
 			// container
 			this.m_recording = {
 				motions: new Set(), // will contain the list of motion already played
+				alpha: (mimetype.includes(";codecs")), // set to true for vp8 (and possibly vp9 in the future)
 				position: -1, // the last played frame
 				frames: 0, // the number of frames added to the recording
 				canvas: null, // the canvas used for the recording
