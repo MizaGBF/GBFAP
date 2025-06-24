@@ -108,23 +108,46 @@
 	</div>
 	<div id="about" class="tab-content container" style="display:none">
 		<h3>&#x2022; What is this?</h3>
-		<p>This page allows the playback of animations featuring characters, outfits, summons, weapons, and main characters from the mobile game <a href="https://game.granbluefantasy.jp/">Granblue Fantasy</a>.This project is derived from the animation player found within the <a href="https://gbf.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5">Chinese Wiki</a>, itself based on the preview of the <a href="https://game.granbluefantasy.jp/#gacha/selected">Gacha page</a>.<br>Please acknowledge that assets could potentially become inaccessible or undergo modifications at the discretion of Cygames.</p>
+		<p>
+		This page allows the playback of animations featuring characters, outfits, summons, weapons, and main characters from the mobile game <a href="https://game.granbluefantasy.jp/">Granblue Fantasy</a>.<br>
+		This project is derived from the animation player found within the <a href="https://gbf.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5">Chinese Wiki</a>, itself based on the preview of the <a href="https://game.granbluefantasy.jp/#gacha/selected">Gacha page</a>.<br>
+		Please acknowledge that assets could potentially become inaccessible or undergo modifications at the discretion of Cygames.
+		</p>
 		<h3>&#x2022; Why is the loading so slow?</h3>
-		<p>Because of the existence of <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/CORS">Cross-origin resource sharing policies</a> and because no assets are hosted here, javascript and sprite sheet files used for the animations must be fetched via a proxy.<br>This proxy can take a few minutes to wake up, if it hasn't be used recently.<br>In doubt, refresh the page if it's still loading after a minute or two.<br>It's also limited in terms of bandwidth, so please use this page with parsimony.</p>
+		<p>
+		Because of the existence of <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/CORS">Cross-origin resource sharing policies</a> and because no assets are hosted here, javascript and sprite sheet files used for the animations must be fetched via a proxy.<br>
+		This proxy can take a few minutes to wake up, if it hasn't be used recently.<br>
+		In doubt, refresh the page if it's still loading after a minute or two.<br>
+		It's also limited in terms of bandwidth, so please use this page with parsimony.
+		</p>
 		<h3>&#x2022; I found a bug.</h3>
-		<p>You can either contact me, open an issue in the <a href="https://github.com/MizaGBF/GBFAP/issues">GitHub repository</a> or you can also use the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfIZNX0nliFS5QWdppIIOF7ss5lQQHxi_S9gl00FUCQmJsnyg/viewform">GBFAL form</a>.<br>Try to explain clearly what the problem is and provide screenshots, plus the ID of the element, if possible.</p>
+		<p>
+		You can either contact me, open an issue in the <a href="https://github.com/MizaGBF/GBFAP/issues">GitHub repository</a> or you can also use the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfIZNX0nliFS5QWdppIIOF7ss5lQQHxi_S9gl00FUCQmJsnyg/viewform">GBFAL form</a>.<br>
+		Try to explain clearly what the problem is and provide screenshots, plus the ID of the element, if possible.
+		</p>
 		<h3>&#x2022; Animations differ between the player and in-game.</h3>
-		<p>In some cases, characters might reuse animations from another.<br>As such, when an animation is missing, some guesswork is involved, which might lead to disparity between the game and what you see on this page.<br>Default animations are also used in some cases when no animations at all exist, like for Sakura's auto attack for example.<br>For skill animations, as they can be difficult to automatically associates with their owner, it's not guaranted they will be available.</p>
+		<p>In some cases, characters might reuse animations from another.<br>
+		As such, when an animation is missing, some guesswork is involved, which might lead to disparity between the game and what you see on this page.<br>
+		Default animations are also used in some cases when no animations at all exist, like for Sakura's auto attack for example.<br>
+		For skill animations, as they can be difficult to automatically associates with their owner, it's not guaranted they will be available.
+		</p>
 		<h3>&#x2022; Can I watch Summon skip animations?</h3>
-		<p>Modern summon animations are separated in two parts, <b>Attack</b> and <b>Damage</b>. The skip animation seems to just play the <b>Damage one</b>.</p>
+		<p>
+		Modern summon animations are separated in two parts, <b>Attack</b> and <b>Damage</b>.<br>
+		The skip animation seems to just play the <b>Damage one</b>.
+		</p>
 		<h3>&#x2022; Other tips and tricks?</h3>
-		<p>While using this webpage, you might come across the following icons:<br>
+		<p>
+		While using this webpage, you might come across the following icons:<br>
 		<ul>
 			<li><img src="../GBFML/assets/ui/vs.png" class="corner-icon"> indicates that this enemy has Raid Entry animations (named <b>Appear</b>).</li>
 		</ul>
 		</p>
 		<h3>&#x2022; When does it get updated?</h3>
-		<p>Updates to this page require manual interventions.<br>As such, you can expect them to occur between 15:00 and 08:00 JST, when I'm available.</p>
+		<p>
+		Updates to this page require manual interventions.<br>
+		As such, you can expect them to occur between 15:00 and 08:00 JST, when I'm available.
+		</p>
 		<h3>&#x2022; Controls and Keyboard Shortcuts</h3>
 		<p>The following controls are available under the player:<br>
 			<ul>
@@ -151,21 +174,31 @@
 			</ul>
 		</p>
 		<h3>&#x2022; The resulting image from the download button is weird...</h3>
-		<p>The download button saves the whole canvas, including what's "off-screen". This is the same result as when doing Right Click > Save as.</p>
-		<h3>&#x2022; The video files from the Record feature don't have duration metadatas.</h3>
-		<p>A weird quirk from the MediaRecorder API, as far as I know.<br>It makes impossible to post the resulting files on some websites.<br>If you have access to ffmpeg, here's commands to convert them quickly:<br>
-			<ul>
-				<li><b>Twitter/X:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libx264 -b:v 25M -an -threads 2 output_file.mp4</li>
-				<li><b>4chan:</b> ffmpeg -y -r 30 -i input_file.webm -c:v libvpx-vp9 -b:v 8M -an -threads 2 output_file.webm</li>
-			</ul>
-			Adjust bitrates/etc... to fit your needs.<br>
-			If you wish to change the speed, change the framerate (30) to something else.<br>
-			Contact me if you have more commands to suggest to add to this list.
+		<p>
+		The download button saves the whole canvas, including what's "off-screen". This is the same result as when doing Right Click > Save as.
+		</p>
+		<h3>&#x2022; The video files from the Record feature are corrupt/don't play properly.</h3>
+		<p>
+		The MediaRecorder API, used to generate those files, has some weird quirks.<br>
+		Because they're lacking some crucial metadatas, some websites just refuse the file. It should be fixed <b>starting from Chrome 138</b>.<br>
+		The transparent background might also not work by default in some video players.<br>
+		<br>
+		Until then, or for other usages, you might need to re-encode them.<br>
+		Using <a href="https://ffmpeg.org/">FFmpeg</a>, you can use the following command:  <br>
+		<code>ffmpeg -c:v libvpx -i input.webm -c:v libvpx -vf premultiply=inplace=1 -auto-alt-ref 0 -b:v 50M output.webm</code><br>
+		<br>
+		Adjust it as you see fit.<br>  
+		For example, Twitter requires a different codec and a MP4 file. Here's an example:<br>
+		<code>ffmpeg.exe -y -c:v libvpx -i intput.webm -c:v libx264 -b:v 50M -vf premultiply=inplace=1 -auto-alt-ref 0 output.mp4</code>
 		</p>
 		<h3>&#x2022; The Download and Recording features don't work on Firefox!</h3>
-		<p>Nothing I can do about it, currently.<br>Pull Requests are open if you have a magic solution!</p>
+		<p>
+		Nothing I can do about it, currently.<br>Pull Requests are open if you have a magic solution!
+		</p>
 		<h3>&#x2022; Class Champion weapons seem to be bugged</h3>
-		<p>For those weapon series, and similar other series, use the first version of the weapon (usually the Fire one) to view the full animations.</p>
+		<p>
+		For those weapon series, and similar other series, use the first version of the weapon (usually the Fire one) to view the full animations.
+		</p>
 		<h3>&#x2022; Restrictions</h3>
 		<p>
 		<ul>
@@ -174,12 +207,21 @@
 		</ul>
 		</p>
 		<h3>&#x2022; Unreleased asset policy</h3>
-		<p>Concerning unreleased assets, there are instances where Cygames inadvertently makes assets from upcoming content accessible to the general public.<br>In such occurrences, to prevent any potential complications, you can expect me to promptly delist related elements, if it's apparent that they were intended to remain concealed and if Cygames hasn't already addressed the situation.</p>
+		<p>
+		Concerning unreleased assets, there are instances where Cygames inadvertently makes assets from upcoming content accessible to the general public.<br>
+		In such occurrences, to prevent any potential complications, you can expect me to promptly delist related elements, if it's apparent that they were intended to remain concealed and if Cygames hasn't already addressed the situation.
+		</p>
 		<h3>&#x2022; Can I use this project?</h3>
-		<p>The project is open source, under the <a href="https://github.com/MizaGBF/GBFAP/blob/main/license">MIT License</a>.<br>In the advent that I quit or disappear, you can do whatever you want, within the license scopes, with this project.<br>Alternatively, you can check the <a href="https://github.com/MizaGBF/GBFAP/blob/main/readme.md">README</a> file on how to setup your own local version, if you have the knowledge to do so.</p>
+		<p>
+		The project is open source, under the <a href="https://github.com/MizaGBF/GBFAP/blob/main/license">MIT License</a>.<br>
+		In the advent that I quit or disappear, you can do whatever you want, within the license scopes, with this project.<br>
+		Alternatively, you can check the <a href="https://github.com/MizaGBF/GBFAP/blob/main/readme.md">README</a> file on how to setup your own local version, if you have the knowledge to do so.
+		</p>
 		<h3>&#x2022; How can I support you?</h3>
-		<p>You can leave a star on the <a href="https://github.com/MizaGBF/GBFAP">GitHub repository</a>.<br>
-		No need to advertise this page, bandwidth isn't unlimited.</p>
+		<p>
+		You can leave a star on the <a href="https://github.com/MizaGBF/GBFAP">GitHub repository</a>.<br>
+		No need to advertise this page, bandwidth isn't unlimited.
+		</p>
 	</div>
 	<br>
 	<div class="navigation clickable" onclick="window.scroll(0,0);">▲</div>
