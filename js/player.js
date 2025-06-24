@@ -1791,10 +1791,12 @@ class Player
 			createjs.Ticker.addEventListener("tick", this.m_tick_callback);
 			// restart current animation playlist
 			this.reset();
+			// firefox check
+			let is_firefox = navigator.userAgent.toLowerCase().includes("firefox");
 			// container
 			this.m_recording = {
 				motions: new Set(), // will contain the list of motion already played
-				alpha: (mimetype.includes(";codecs")), // set to true for vp8 (and possibly vp9 in the future)
+				alpha: (mimetype.includes(";codecs") && !is_firefox), // set to true for vp8 (and possibly vp9 in the future) and if NOT firefox
 				position: -1, // the last played frame
 				frames: 0, // the number of frames added to the recording
 				canvas: null, // the canvas used for the recording
@@ -1806,7 +1808,7 @@ class Player
 				extension: mimetype.split(';')[0].split('/')[1], // the file extension
 				use_background: this.ui.m_background.src.startsWith(window.location.origin), // true if we can use the background
 				old_framerate: createjs.Ticker.framerate, // keep track of the framerate
-				firefox: navigator.userAgent.toLowerCase().includes("firefox"), // flag for firefox compatibility
+				firefox: is_firefox, // flag for firefox compatibility
 				error: false // error flag
 			};
 			// reset the framerate to 30
