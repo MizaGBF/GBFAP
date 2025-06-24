@@ -1921,12 +1921,11 @@ class Player
 				// add segment to motions
 				this.m_recording.motions.add(segment);
 				// clear our canvas
-				// DON'T use clearRect, videos don't really support transparency
-				/*if(alpha_video) // debug flag to emulate v8 and below behavior
+				if(this.m_recording.alpha) // if set, simply clear with transparent rectangle
 				{
 					this.m_recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
 				}
-				else
+				else // else we use a solid image to clear the canvas, to avoid transparency issues (for non VPX codecs)
 				{
 					if(this.m_recording.use_background) // if local background
 					{
@@ -1938,7 +1937,7 @@ class Player
 						this.m_recording.ctx.fillStyle = "black";
 						this.m_recording.ctx.fill();
 					}
-				}*/
+				}
 				// copy a crop of the player stage canvas to our canvas
 				this.m_recording.ctx.drawImage(
 					this.m_stage.canvas,
