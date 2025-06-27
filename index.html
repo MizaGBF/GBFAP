@@ -184,9 +184,7 @@
 		Using <a href="https://ffmpeg.org/">FFmpeg</a>, you can use the following command:  <br>
 		<code>ffmpeg -c:v libvpx -i input.webm -c:v libvpx -vf premultiply=inplace=1 -auto-alt-ref 0 -b:v 50M output.webm</code><br>
 		<br>
-		Adjust it as you see fit.<br>  
-		For example, Twitter requires a different codec and a MP4 file. Here's an example:<br>
-		<code>ffmpeg.exe -y -c:v libvpx -i intput.webm -c:v libx264 -b:v 50M -vf premultiply=inplace=1 -auto-alt-ref 0 output.mp4</code><br>
+		Adjust it as you see fit.<br>
 		<br>
 		Note that, on non-Chrome Browsers, the exported WebM might not have transparency.
 		</p>
