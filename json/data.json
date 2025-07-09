@@ -6997,7 +6997,8 @@
 "6206173":{"v":[["","enemy_6206173",null,"ehit_6206173",["esp_6206173_01","esp_6206173_02"]]],"ra":["raid_appear_6206173"]},
 "9102713":{"v":[["","enemy_9102713",null,"ehit_9102713",["esp_9102713_01","esp_9102713_02","esp_9102713_03"]]],"ra":["raid_appear_9102713"]},
 "1300403":{"v":[["","enemy_1300403",null,"ehit_1300403",["esp_1300403_01","esp_1300403_02","esp_1300403_03"]]],"ra":["raid_appear_1300403"]},
-"3101263":{"v":[["","enemy_3101263",null,"ehit_3101263",["esp_3101263_01","esp_3101263_02","esp_3101263_03"]]],"ra":["raid_appear_3101263"]}
+"3101263":{"v":[["","enemy_3101263",null,"ehit_3101263",["esp_3101263_01","esp_3101263_02","esp_3101263_03"]]],"ra":["raid_appear_3101263"]},
+"6206183":{"v":[["","enemy_6206183",null,"ehit_6206183",["esp_6206183_01","esp_6206183_02","esp_6206183_03"]]]}
 },
 "skins":
 {
@@ -15457,12 +15458,13 @@
 "3710103000":"@@Soriz seismic fist soriz 2025-06-16",
 "1300403":"water super-evolved plesiosaurus monster-boss",
 "3101263":"water bruce 2 the rampage fish-boss",
-"3040600000":"@@Fraux_(Formal) earth ssr fraux formal erune female attack melee フラウ azumi asakura 浅倉杏美 2025-06-30",
+"3040600000":"@@Fraux_(Formal) earth ssr fraux evokers formal erune female attack melee フラウ azumi asakura 浅倉杏美 2025-06-30",
 "3040599000":"@@Ilsa_(Formal) water ssr ilsa formal erune female attack gun bow イルザ mie sonozaki 園崎未恵 2025-06-30",
-"1030109200":"@@Shark_Bouquet water dagger sr shark bouquet 2025-06-28",
-"1040714500":"@@Shark_Breath water bow ssr shark breath 2025-06-28",
-"1040518100":"@@Bridekeeper water gun ssr bridekeeper 2025-06-30",
-"1040620100":"@@Scheherazade earth melee ssr scheherazade 2025-06-30"
+"1030109200":"@@Shark_Bouquet water dagger sr shark bouquet シャークブーケ 2025-06-28",
+"1040714500":"@@Shark_Breath water bow ssr shark breath シャークブレス 2025-06-28",
+"1040518100":"@@Bridekeeper water gun ssr bridekeeper ブライドキーパー 2025-06-30",
+"1040620100":"@@Scheherazade earth melee ssr scheherazade シェヘラザード 2025-06-30",
+"6206183":"water otherworld violet knight people-boss"
 },
 "mypage":
 {
