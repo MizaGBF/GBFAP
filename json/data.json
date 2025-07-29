@@ -4336,7 +4336,9 @@
 "1040620500":{"w":["1040620500","1040620500"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040620200",["sp_1040620200_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040620200",["sp_1040620200_1_s2"]]]},
 "1040620700":{"w":["1040620700","1040620700"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040620200",["sp_1040620200_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040620200",["sp_1040620200_1_s2"]]]},
 "1040517900":{"w":["1040517900","1040517900"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040517400",["sp_1040517400_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040517400",["sp_1040517400_1_s2"]]]},
-"1040817800":{"w":["1040817800","1040817800"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040817300",["sp_1040817300_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040817300",["sp_1040817300_1_s2"]]]}
+"1040817800":{"w":["1040817800","1040817800"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040817300",["sp_1040817300_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040817300",["sp_1040817300_1_s2"]]]},
+"1030010500":{"w":["1030010500","1030010500"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1030010500",["sp_1030010500_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1030010500",["sp_1030010500_1_s2"]]]},
+"1040220200":{"w":["1040220200","1040220200"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040220200",["sp_1040220200_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040220200",["sp_1040220200_1_s2"]]]}
 },
 "enemies":
 {
@@ -7022,7 +7024,13 @@
 "1300403":{"v":[["","enemy_1300403",null,"ehit_1300403",["esp_1300403_01","esp_1300403_02","esp_1300403_03"]]],"ra":["raid_appear_1300403"]},
 "3101263":{"v":[["","enemy_3101263",null,"ehit_3101263",["esp_3101263_01","esp_3101263_02","esp_3101263_03"]]],"ra":["raid_appear_3101263"]},
 "6206183":{"v":[["","enemy_6206183",null,"ehit_6206183",["esp_6206183_01","esp_6206183_02","esp_6206183_03"]]]},
-"6206193":{"v":[["","enemy_6206193",null,"ehit_6206193",["esp_6206193_01","esp_6206193_02","esp_6206193_03","esp_6206193_04"]]],"ra":["raid_appear_6206193"]}
+"6206193":{"v":[["","enemy_6206193",null,"ehit_6206193",["esp_6206193_01","esp_6206193_02","esp_6206193_03","esp_6206193_04"]]],"ra":["raid_appear_6206193"]},
+"1100483":{"v":[["","enemy_1100483",null,"ehit_1100483",["esp_1100483_01","esp_1100483_02","esp_1100483_03"]]],"ra":["raid_appear_1100483"]},
+"3101273":{"v":[["","enemy_3101273",null,"ehit_3101273",["esp_3101273_01","esp_3101273_02","esp_3101273_03"]]],"ra":["raid_appear_3101273"]},
+"3101293":{"v":[["","enemy_3101293",null,"ehit_3101293",["esp_3101293_01","esp_3101293_02","esp_3101293_03"]]]},
+"3101283":{"v":[["","enemy_3101283",null,"ehit_3101283",["esp_3101283_01","esp_3101283_02","esp_3101283_03"]]]},
+"3101313":{"v":[["","enemy_3101313",null,"ehit_3101313",["esp_3101313_01","esp_3101313_02"]]]},
+"3101303":{"v":[["","enemy_3101303",null,"ehit_3101303",["esp_3101303_01","esp_3101303_02","esp_3101303_03","esp_3101303_04"]]]}
 },
 "skins":
 {
@@ -8142,7 +8150,8 @@
 "event_538":[["event_538","event_538_a"]],
 "common_086":[["common_086"]],
 "27rb":[["27rb_1","27rb_2","27rb_3"]],
-"event_539":[["event_539"]]
+"event_539":[["event_539"]],
+"event_540":[["event_540"]]
 },
 "mypage_bg":
 {
@@ -15495,7 +15504,31 @@
 "3040602000":"@@Korwa_(Yukata) light ssr korwa yukata erune female special staff コルワ ayumi fujimura shizuka itō 藤村歩 / 伊藤静 2025-07-15",
 "3040601000":"@@Atum_(Summer) fire ssr atum summer primal male attack staff アトゥム kengo takanashi 高梨謙吾 2025-07-15",
 "2040437000":"@@Bastet_(Summer) wind ssr bastet summer バステト 2025-07-15",
-"6206193":"earth phantasmal performer people-boss"
+"6206193":"earth phantasmal performer people-boss",
+"1040517400":"@@Lux_in_Tenebris_(Fire) fire gun ssr lux in tenebris ccw 2025-07-22",
+"1040817300":"@@Guitarron_del_Maestro_(Fire) fire harp ssr guitarron del maestro ccw 2025-07-22",
+"1040620200":"@@Iron_Fist_of_Severed_Chains_(Fire) fire melee ssr iron fist of severed chains ccw 2025-07-22",
+"1040817500":"@@Guitarron_del_Maestro_(Earth) earth harp ssr guitarron del maestro ccw 2025-07-22",
+"1040517500":"@@Lux_in_Tenebris_(Water) water gun ssr lux in tenebris ccw 2025-07-22",
+"1040517600":"@@Lux_in_Tenebris_(Earth) earth gun ssr lux in tenebris ccw 2025-07-22",
+"1040817400":"@@Guitarron_del_Maestro_(Water) water harp ssr guitarron del maestro ccw 2025-07-22",
+"1040817600":"@@Guitarron_del_Maestro_(Wind) wind harp ssr guitarron del maestro ccw 2025-07-22",
+"1040517800":"@@Lux_in_Tenebris_(Light) light gun ssr lux in tenebris ccw 2025-07-22",
+"1040817700":"@@Guitarron_del_Maestro_(Light) light harp ssr guitarron del maestro ccw 2025-07-22",
+"1040620400":"@@Iron_Fist_of_Severed_Chains_(Earth) earth melee ssr iron fist of severed chains ccw 2025-07-22",
+"1040620300":"@@Iron_Fist_of_Severed_Chains_(Water) water melee ssr iron fist of severed chains ccw 2025-07-22",
+"1040517700":"@@Lux_in_Tenebris_(Wind) wind gun ssr lux in tenebris ccw 2025-07-22",
+"1040620600":"@@Iron_Fist_of_Severed_Chains_(Light) light melee ssr iron fist of severed chains ccw 2025-07-22",
+"1040620500":"@@Iron_Fist_of_Severed_Chains_(Wind) wind melee ssr iron fist of severed chains ccw 2025-07-22",
+"1040620700":"@@Iron_Fist_of_Severed_Chains_(Dark) dark melee ssr iron fist of severed chains ccw 2025-07-22",
+"1040517900":"@@Lux_in_Tenebris_(Dark) dark gun ssr lux in tenebris ccw 2025-07-22",
+"1040817800":"@@Guitarron_del_Maestro_(Dark) dark harp ssr guitarron del maestro ccw 2025-07-22",
+"1100483":"dark the ravenous horror flying-boss",
+"3101273":"dark octomorph bimio fish-boss",
+"3101293":"dark octomorph bimio fish-boss",
+"3101283":"dark octomorph bimio fish-boss",
+"3101313":"dark octomorph bimio fish-boss",
+"3101303":"dark octomorph bimio fish-boss"
 },
 "mypage":
 {
