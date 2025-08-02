@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.1'
+VERSION = '5.2'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
@@ -824,7 +824,7 @@ class Updater():
     async def update_mypage(self : Updater, element_id : str, style : str = "") -> bool:
         try:
             add_type = None
-            if len(element_id) == 10:
+            if len(element_id) == 10: # summons/characters
                 match element_id[:2]:
                     case "20":
                         suffixes = [style, "_02"+style, "_03"+style, "_04"+style, "_05"+style]
@@ -835,6 +835,9 @@ class Updater():
                     case _:
                         self.tasks.print("Unsupported ID " + element_id + " for update_mypage")
                         return False
+            elif len(element_id) == 6: # classes
+                suffixes = ["_01", "_02"]
+                add_type = ADD_JOB
             else:
                 self.tasks.print("Unsupported ID " + element_id + " for update_mypage")
                 return False
@@ -1472,6 +1475,7 @@ class Updater():
                 self.data["job"][element_id] = character_data
                 self.modified = True
                 self.tasks.print("Updated", element_id, "for index job")
+            self.tasks.add(self.update_mypage, parameters=(element_id,))
             return True
         except Exception as e:
             self.tasks.print("Exception for id: {}\n{}".format(element_id, self.trbk(e)))
