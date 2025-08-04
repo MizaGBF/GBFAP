@@ -7269,7 +7269,9 @@
 "3710236000":{"v":[["0★","npc_3710236000_01","mortal_A","phit_3710236000",["nsp_3710236000_01_s2"]]],"ab":[]},
 "3710237000":{"v":[["0★","npc_3710237000_01","mortal_A","phit_3710237000",["nsp_3710237000_01_s2"]]],"ab":[]},
 "3710238000":{"v":[["0★","npc_3710238000_01","mortal_A","phit_3710238000",["nsp_3710238000_01_s2"]]],"ab":[]},
-"3710103000":{"v":[["0★","npc_3710103000_01","mortal_A","phit_3710103000",["nsp_3710103000_01_s2"]]],"ab":[]}
+"3710103000":{"v":[["0★","npc_3710103000_01","mortal_A","phit_3710103000",["nsp_3710103000_01_s2"]]],"ab":[]},
+"3710239000":{"v":[["0★","npc_3710239000_01","mortal_A","phit_3710239000",["nsp_3710239000_01_s2"]]],"ab":[]},
+"3710240000":{"v":[["0★","npc_3710240000_01","mortal_A","phit_3710240000",["nsp_3710240000_01_s2"]],["0★ B","npc_3710240000_01_f1","mortal_A","phit_3710240000_f1",["nsp_3710240000_01_f1_s2"]]],"ab":[]}
 },
 "job":
 {
@@ -15539,8 +15541,8 @@
 "2040438000":"@@Commander_of_Destruction earth ssr commander of destruction robur デストロイヤーズコマンダー 2025-07-31",
 "1030010500":"@@Beak_Slasher dark sabre sr beak slasher ビークスラッシャー 2025-07-29",
 "1040220200":"@@Giant_Octo_Leg_on_a_Stick dark spear ssr giant octo leg on a stick 特大タコ足串 2025-07-29",
-"1040425000":"@@Shade_and_Suffering earth staff ssr shade and suffering 2025-07-31",
-"1040620800":"@@Beach_House_Ramen wind melee ssr beach house ramen 2025-07-31"
+"1040425000":"@@Shade_and_Suffering earth staff ssr shade and suffering ブラインド・アンド・ストレイン 2025-07-31",
+"1040620800":"@@Beach_House_Ramen wind melee ssr beach house ramen 海の家のラーメン 2025-07-31"
 },
 "mypage":
 {
