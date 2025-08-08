@@ -1416,7 +1416,7 @@
 "2040424000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040424000_01_attack"]]],"s":"2040424000"},
 "2040426000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040426000_01_attack"]]],"s":"2040426000"},
 "2040427000":{"v":[["3★ A","sdw_bw_0_01","",null,["summon_2040427000_01_a_attack"]],["3★ B","sdw_bw_0_01","",null,["summon_2040427000_01_b_attack"]]],"s":"2040427000"},
-"2040430000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040430000_01_attack"]]],"s":"2040430000"},
+"2040430000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040430000_01_attack"]],["4★","sdw_bw_0_01","",null,["summon_2040430000_02_attack"]]],"s":"2040430000"},
 "2040429000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040429000_01_attack"]]],"s":"2040429000"},
 "2040428000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040428000_attack"]]],"s":"2040428000"},
 "2040431000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040431000_01_attack"]]],"s":"2040431000"},
@@ -15559,11 +15559,20 @@
 "1040620800":"@@Beach_House_Ramen wind melee ssr beach house ramen 海の家のラーメン 2025-07-31",
 "3710239000":"@@Noa haven's ensemble noa 2025-08-04",
 "3710240000":"@@Threo colorful striker threo 2025-08-04",
-"1300413":"light radiant replica beast monster-boss",
+"1300413":"light radiant replica beast collab monster-boss",
 "8104453":"dark shadow summoner collab primal-boss",
-"8104483":"dark iron replica beast primal-boss",
+"8104483":"dark iron replica beast collab primal-boss",
 "8104503":"missing-help-wanted",
-"8104493":"dark earthen replica beast primal-boss"
+"8104493":"dark earthen replica beast collab primal-boss",
+"3040608000":"@@Chrollo dark ssr chrollo collab human male special staff dagger クロロ mamoru miyano 宮野真守 2025-08-07",
+"3040605000":"@@Gon earth ssr gon collab human male balanced melee ゴン megumi han 潘めぐみ 2025-08-07",
+"3040607000":"@@Kurapika fire ssr kurapika collab human male balanced dagger melee クラピカ miyuki sawashiro 沢城みゆき 2025-08-07",
+"3710241000":"@@Yatima deep-rooted promise yatima 2025-08-13",
+"2040439000":"@@Nobunaga,_Feitan,_Machi,_and_Uvogin dark ssr nobunaga feitan machi and uvogin collab ノブナガ＆フェイタン＆マチ＆ウボォーギン 2025-08-07",
+"1040319500":"@@Mega_Metallic_Yo-Yo wind axe ssr mega metallic yo-yo collab 特注合金製ヨーヨー 2025-08-07",
+"1040621000":"@@Five-Finger_Chain fire melee ssr five-finger chain collab 五指の誓鎖 2025-08-07",
+"1040620900":"@@Ko-Focused_Fist earth melee ssr ko-focused fist collab “硬”の拳 2025-08-07",
+"1040425100":"@@Bandit's_Secret dark staff ssr bandit's secret collab 盗賊の極意 2025-08-07"
 },
 "mypage":
 {
