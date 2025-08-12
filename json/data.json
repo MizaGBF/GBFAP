@@ -955,7 +955,8 @@
 "3040604000":{"v":[["0★","npc_3040604000_01","mortal_A","phit_3040604000",["nsp_3040604000_01_s2"]],["4★","npc_3040604000_02","mortal_A","phit_3040604000_02",["nsp_3040604000_02_s2"]]],"ab":["ab_3040604000_01","ab_all_3040604000_01","ab_all_3040604000_02"]},
 "3040608000":{"v":[["0★","npc_3040608000_01","mortal_A","phit_3040608000",["nsp_3040608000_01_s2"]],["4★","npc_3040608000_02","mortal_A","phit_3040608000_02",["nsp_3040608000_02_s2"]]],"ab":["ab_3040608000_01","ab_all_3040608000_02","ab_all_3040608000_03","ab_all_3040608000_04"]},
 "3040605000":{"v":[["0★","npc_3040605000_01","mortal_A","phit_3040605000",["nsp_3040605000_01_s2"]],["4★","npc_3040605000_02","mortal_A","phit_3040605000_02",["nsp_3040605000_02_s2"]]],"ab":["ab_3040605000_01","ab_3040605000_02","ab_3040605000_03","ab_all_3040605000_01"]},
-"3040607000":{"v":[["0★","npc_3040607000_01","mortal_A","phit_3040607000",["nsp_3040607000_01_s2"]],["0★ B","npc_3040607000_01_f1","mortal_A","phit_3040607000_f1",["nsp_3040607000_01_f1_s2"]],["4★","npc_3040607000_02","mortal_A","phit_3040607000_02",["nsp_3040607000_02_s2"]],["4★ B","npc_3040607000_02_f1","mortal_A","phit_3040607000_02_f1",["nsp_3040607000_02_f1_s2"]]],"ab":["ab_3040607000_01","ab_all_3040607000_01","ab_all_3040607000_02"]}
+"3040607000":{"v":[["0★","npc_3040607000_01","mortal_A","phit_3040607000",["nsp_3040607000_01_s2"]],["0★ B","npc_3040607000_01_f1","mortal_A","phit_3040607000_f1",["nsp_3040607000_01_f1_s2"]],["4★","npc_3040607000_02","mortal_A","phit_3040607000_02",["nsp_3040607000_02_s2"]],["4★ B","npc_3040607000_02_f1","mortal_A","phit_3040607000_02_f1",["nsp_3040607000_02_f1_s2"]]],"ab":["ab_3040607000_01","ab_all_3040607000_01","ab_all_3040607000_02"]},
+"3040606000":{"v":[["0★","npc_3040606000_01","mortal_A","phit_3040606000",["nsp_3040606000_01_s2"]],["4★","npc_3040606000_02","mortal_A","phit_3040606000_02",["nsp_3040606000_02_s2"]]],"ab":["ab_3040606000_01","ab_all_3040606000_01","ab_all_3040606000_02"]}
 },
 "partners":
 {
@@ -1427,7 +1428,8 @@
 "2040436000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040436000_01_attack"]]],"s":"2040436000"},
 "2040437000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040437000_01_attack"]]],"s":"2040437000"},
 "2040438000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040438000_01_attack"]]],"s":"2040438000"},
-"2040439000":{"v":[["3★ A","sdw_bw_0_01","",null,["summon_2040439000_01_a_attack"]],["3★ B","sdw_bw_0_01","",null,["summon_2040439000_01_b_attack"]],["3★ C","sdw_bw_0_01","",null,["summon_2040439000_01_c_attack"]],["3★ D","sdw_bw_0_01","",null,["summon_2040439000_01_d_attack"]]],"s":"2040439000"}
+"2040439000":{"v":[["3★ A","sdw_bw_0_01","",null,["summon_2040439000_01_a_attack"]],["3★ B","sdw_bw_0_01","",null,["summon_2040439000_01_b_attack"]],["3★ C","sdw_bw_0_01","",null,["summon_2040439000_01_c_attack"]],["3★ D","sdw_bw_0_01","",null,["summon_2040439000_01_d_attack"]]],"s":"2040439000"},
+"2040440000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040440000_01_attack"]]],"s":"2040440000"}
 },
 "weapons":
 {
@@ -7048,7 +7050,10 @@
 "8104453":{"v":[["","enemy_8104453",null,"ehit_8104453",["esp_8104453_01_all","esp_8104453_02_all","esp_8104453_03_all"]]],"ra":["raid_appear_8104453"]},
 "8104483":{"v":[["","enemy_8104483",null,"phit_0000000000",[]]]},
 "8104503":{"v":[["","enemy_8104503",null,"phit_0000000000",[]]]},
-"8104493":{"v":[["","enemy_8104493",null,"phit_0000000000",[]]]}
+"8104493":{"v":[["","enemy_8104493",null,"phit_0000000000",[]]]},
+"1300411":{"v":[["","enemy_1300411",null,"phit_0000000000",[]]]},
+"8104463":{"v":[["","enemy_8104463",null,"ehit_8104463",["esp_8104463_01","esp_8104463_02","esp_8104463_03"]]],"ra":["raid_appear_8104463"]},
+"8104451":{"v":[["","enemy_8104451",null,"phit_0000000000",[]]]}
 },
 "skins":
 {
@@ -15562,17 +15567,20 @@
 "1300413":"light radiant replica beast collab monster-boss",
 "8104453":"dark shadow summoner collab primal-boss",
 "8104483":"dark iron replica beast collab primal-boss",
-"8104503":"missing-help-wanted",
+"8104503":"dark replicated primal beast collab primal-boss",
 "8104493":"dark earthen replica beast collab primal-boss",
 "3040608000":"@@Chrollo dark ssr chrollo collab human male special staff dagger クロロ mamoru miyano 宮野真守 2025-08-07",
 "3040605000":"@@Gon earth ssr gon collab human male balanced melee ゴン megumi han 潘めぐみ 2025-08-07",
-"3040607000":"@@Kurapika fire ssr kurapika collab human male balanced dagger melee クラピカ miyuki sawashiro 沢城みゆき 2025-08-07",
+"3040607000":"@@Kurapika fire ssr kurapika collab human other balanced dagger melee クラピカ miyuki sawashiro 沢城みゆき 2025-08-07",
 "3710241000":"@@Yatima deep-rooted promise yatima 2025-08-13",
 "2040439000":"@@Nobunaga,_Feitan,_Machi,_and_Uvogin dark ssr nobunaga feitan machi and uvogin collab ノブナガ＆フェイタン＆マチ＆ウボォーギン 2025-08-07",
 "1040319500":"@@Mega_Metallic_Yo-Yo wind axe ssr mega metallic yo-yo collab 特注合金製ヨーヨー 2025-08-07",
 "1040621000":"@@Five-Finger_Chain fire melee ssr five-finger chain collab 五指の誓鎖 2025-08-07",
 "1040620900":"@@Ko-Focused_Fist earth melee ssr ko-focused fist collab “硬”の拳 2025-08-07",
-"1040425100":"@@Bandit's_Secret dark staff ssr bandit's secret collab 盗賊の極意 2025-08-07"
+"1040425100":"@@Bandit's_Secret dark staff ssr bandit's secret collab 盗賊の極意 2025-08-07",
+"1300411":"light radiant replica beast collab monster-boss",
+"8104463":"dark primal beast andosa collab primal-boss",
+"8104451":"dark shadow summoner collab primal-boss"
 },
 "mypage":
 {
