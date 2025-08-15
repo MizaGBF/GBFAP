@@ -518,7 +518,10 @@ class Updater():
                     if len(keys) > 5: # and remove oldest
                         keys = keys[:5]
                     new = {k:new[k] for k in keys}
-                    self.addition = set() # clear self.addition
+                    # sort updated one
+                    new[now] = sorted(new[now], key=lambda x: (0 if isinstance(x[1], int) else 1, x[1], x[0]), reverse=True)
+                    # clear self.addition
+                    self.addition = set()
                 with open('json/changelog.json', mode='w', encoding='utf-8') as outfile: # the timestamp is upated below
                     json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new, 'stat':stat, 'issues':issues, 'help':help}, outfile, indent=2, separators=(',', ':'), ensure_ascii=False)
                 if self.update_changelog:
