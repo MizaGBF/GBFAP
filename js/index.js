@@ -5,6 +5,7 @@ var gbf = null;
 var search = null;
 var timestamp = Date.now(); // last updated timestamp
 var index = null;
+const updated_key = "gbfap-updated";
 const bookmark_key = "gbfap-bookmark";
 var bookmark_onclick = null;
 const history_key = "gbfap-history";
