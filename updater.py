@@ -895,6 +895,22 @@ class Updater():
         except:
             return None
 
+    # custom sort for the version sorting of characters
+    def name_sort(self : Updater, name : str):
+        parts : list[str] = name.split(' ')
+        star : int = int(parts[0].replace('★', ''))
+        name_order : int = 0
+        if len(parts) > 1:
+            if parts[1] == 'Gran':
+                name_order = 1
+            elif parts[1] == 'Djeeta':
+                name_order = 2
+        version_letter = ''
+        if len(parts) > 2:
+            version_letter = parts[-1]
+            
+        return (star, name_order, version_letter)
+
     async def update_character(self : Updater, element_id : str, style : str = "") -> bool:
         try:
             if element_id + style in self.updated_elements:
@@ -1046,11 +1062,11 @@ class Updater():
                     indice = int(vs[:2])
                     match indice:
                         case 1:
-                            name = "Gran"
+                            name = "0★ Gran"
                         case 2:
-                            name = "Djeeta"
+                            name = "0★ Djeeta"
                         case 3:
-                            name = "???"
+                            name = "0★ ???"
                 elif style == "":
                     star = int(vs[:2]) # star number used in the name
                     if star == 1:
@@ -1077,7 +1093,7 @@ class Updater():
                     name_table[name.replace('Gran', 'Djeeta')] = vs
             # sort this stuff
             keys = list(name_table.keys())
-            keys.sort()
+            keys.sort(key=self.name_sort)
             character_data = {'v':[], 'ab':abilities}
             for name in keys:
                 vs = name_table[name]
