@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.2'
+VERSION = '5.3'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
@@ -902,6 +902,7 @@ class Updater():
             self.updated_elements.add(element_id + style)
             
             is_partner : bool = element_id.startswith("38")
+            is_special_partner : bool = element_id.startswith("388")
             if is_partner and element_id.startswith("389"):
                 return await self.update_partner_main_character(element_id)
             is_skin : bool = element_id.startswith("37")
@@ -1041,7 +1042,16 @@ class Updater():
             name_table = {}
             for vs in versions: # now add all versions to tab
                 name = ""
-                if style == "":
+                if is_special_partner:
+                    indice = int(vs[:2])
+                    match indice:
+                        case 1:
+                            name = "Gran"
+                        case 2:
+                            name = "Djeeta"
+                        case 3:
+                            name = "???"
+                elif style == "":
                     star = int(vs[:2]) # star number used in the name
                     if star == 1:
                         star = 0
@@ -1087,7 +1097,7 @@ class Updater():
                 if str(character_data) != str(self.data[target].get(element_id, None)):
                     self.data[target][element_id] = character_data
                     self.modified = True
-                    self.add(element_id, ADD_CHAR)
+                    self.add(element_id, ADD_CHAR if target != "partners" else ADD_PARTNER)
                     self.tasks.print("Updated", element_id, "for index", target)
                 if not is_partner:
                     if not is_skin:
@@ -1477,6 +1487,7 @@ class Updater():
             if str(character_data) != str(self.data["job"].get(element_id, None)):
                 self.data["job"][element_id] = character_data
                 self.modified = True
+                self.add(element_id, ADD_JOB)
                 self.tasks.print("Updated", element_id, "for index job")
             self.tasks.add(self.update_mypage, parameters=(element_id,))
             return True
@@ -1568,6 +1579,7 @@ class Updater():
             if str(character_data) != str(self.data["partners"].get(element_id, None)):
                 self.data["partners"][element_id] = character_data
                 self.modified = True
+                self.add(element_id, ADD_PARTNER)
                 self.tasks.print("Updated", element_id, "for index partners")
             return True
         except Exception as e:
