@@ -1178,6 +1178,15 @@ class Player
 		this.ui.set_motion(this.translate_motion(motion));
 		// update displayed duration
 		this.ui.set_duration(duration);
+		if(isNaN(duration))
+		{
+			let next_motion = this.next_motion();
+			if(next_motion != motion)
+			{
+				this.play(next_motion);
+			}
+			return;
+		}
 		
 		// set listener for animation completion
 		cjs.addEventListener("animationComplete", this.m_animation_completed_callback);

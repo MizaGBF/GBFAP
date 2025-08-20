@@ -634,7 +634,7 @@ class PlayerUI
 	// set the duration text, duration is in frames
 	set_duration(duration)
 	{
-		const duration_text = (duration / 30).toFixed(2) + "s";
+		const duration_text = isNaN(duration) ? "???" : (duration / 30).toFixed(2) + "s";
 		if(duration_text != this.m_duration.innerText)
 			this.m_duration.innerText = duration_text;
 	}
