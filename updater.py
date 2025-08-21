@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.3'
+VERSION = '5.4'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
@@ -106,7 +106,6 @@ class TaskManager():
     finished : int
     print_flag : bool
     elapsed : float
-    return_state : bool
     written_len : int
     def __init__(self : TaskManager, updater : Updater) -> None:
         self.debug = False
@@ -118,7 +117,6 @@ class TaskManager():
         self.finished = 0
         self.print_flag = False
         self.elapsed = 0
-        self.return_state = True
         self.written_len = 0
 
     # reinitialize variables
@@ -172,7 +170,6 @@ class TaskManager():
                         self.print("Can't start task, the following exception occured in queue", i)
                         self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
                         self.finished += 1
-                        self.return_state = False
                         break
             # remove completed tasks
             prev : int = self.finished
@@ -182,7 +179,6 @@ class TaskManager():
                     try:
                         t.result()
                     except Exception as e:
-                        self.return_state = False
                         self.print("The following exception occured:")
                         self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
                     self.finished += 1
@@ -229,12 +225,8 @@ class TaskManager():
     async def start(self : TaskManager) -> bool:
         if self.is_running or self.queues_are_empty(): # return if already running or no tasks pending
             return False
-        self.return_state = True
-        asyncio.create_task(self.run())
-        await asyncio.sleep(5)
-        while self.is_running:
-            await asyncio.sleep(1)
-        return self.return_state
+        await self.run()
+        return True
 
     # print the progression string
     def print_progress(self : TaskManager) -> None:
