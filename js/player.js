@@ -954,6 +954,7 @@ class Player
 		// duration will contain the animation duration
 		let duration = 0;
 		// check which motion it is
+		console.log(motion);
 		switch(motion)
 		{
 			// Charge attacks / specials
@@ -1000,11 +1001,31 @@ class Player
 					// retrieve index
 					// example: mortal_A is index 0, mortal_B is index 1...
 					let special_index = motion.split('_')[1].charCodeAt()-65;
-					// check if index is in bound, else default to 0
-					if(special_index >= animation.specials.length)
-						special_index = 0;
 					// play the special file
-					let special_cjs = this.add_special(animation.specials[special_index], animation);
+					let special_cjs = null;
+					if(animation.is_enemy)
+					{
+						// note: enemies need to match the proper file (if it exists) with the ougi motion
+						// so for mortal_A, we're looking for the file with _01_ in the name, and so on
+						for(let i = 0; i < animation.specials.length; ++i)
+						{
+							// enemy ougi file name are esp_ID_index_whatever
+							// we want the file matching the index
+							const file_index = animation.specials[i].split("_")[2];
+							if(parseInt(file_index) - 1 == special_index)
+							{
+								special_cjs = this.add_special(animation.specials[i], animation);
+								break
+							}
+						}
+					}
+					else
+					{
+						// check if index is in bound, else default to 0
+						if(special_index >= animation.specials.length)
+							special_index = 0;
+						special_cjs = this.add_special(animation.specials[special_index], animation);
+					}
 					// store it in class attriute
 					this.m_special_cjs = special_cjs;
 					// add file duration if it's a weapon animation
