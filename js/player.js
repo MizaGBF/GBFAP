@@ -246,6 +246,7 @@ class Player
 	// it will affect the player behavior
 	constructor(mode = PlayerLayoutMode.normal)
 	{
+		this.m_debug = {};
 		// the HTML ui is separated in another instance
 		this.ui = new PlayerUI(this);
 		this.init_attributes(mode);
@@ -936,6 +937,7 @@ class Player
 			this.play(this.m_current_motion_list[this.m_current_motion]);
 			return;
 		}
+		let debug_extra_cjs = null;
 		// retrieve the current animation data and instance
 		let data = this.get_current_animation_cjs()
 		if(data == null)
@@ -954,7 +956,6 @@ class Player
 		// duration will contain the animation duration
 		let duration = 0;
 		// check which motion it is
-		console.log(motion);
 		switch(motion)
 		{
 			// Charge attacks / specials
@@ -1015,6 +1016,7 @@ class Player
 							if(parseInt(file_index) - 1 == special_index)
 							{
 								special_cjs = this.add_special(animation.specials[i], animation);
+								debug_extra_cjs = animation.specials[i];
 								break
 							}
 						}
@@ -1025,6 +1027,7 @@ class Player
 						if(special_index >= animation.specials.length)
 							special_index = 0;
 						special_cjs = this.add_special(animation.specials[special_index], animation);
+						debug_extra_cjs = animation.specials[special_index];
 					}
 					// store it in class attriute
 					this.m_special_cjs = special_cjs;
@@ -1056,6 +1059,7 @@ class Player
 					{
 						if(k.includes("_attack")) // find the one named attack
 						{
+							debug_extra_cjs = summon_cjs_name;
 							summon_cjs[summon_cjs_name].gotoAndPlay("attack");
 							duration = this.get_animation_duration(summon_cjs[summon_cjs_name][k]);
 							break;
@@ -1064,6 +1068,7 @@ class Player
 				}
 				else
 				{
+					debug_extra_cjs = summon_cjs_name;
 					duration = this.get_animation_duration(summon_cjs[summon_cjs_name][summon_cjs_name]);
 				}
 				break;
@@ -1078,6 +1083,7 @@ class Player
 			case Player.c_animations.SPECIAL_ATTACK:
 			case Player.c_animations.ENEMY_ATTACK:
 			{
+				debug_extra_cjs = animation.attack;
 				// retrieve and play file
 				let atk = this.add_attack(animation.attack);
 				// get the duration
@@ -1133,6 +1139,7 @@ class Player
 				{
 					// get file to play
 					let skill_cjs = animation.abilities[this.m_ability_index];
+					debug_extra_cjs = skill_cjs;
 					let is_aoe = skill_cjs.includes("_all_");
 					// instantiate
 					const skill = this.add_ability(skill_cjs, is_aoe);
@@ -1176,6 +1183,7 @@ class Player
 				let appear_index = parseInt(motion.split('_')[2]);
 				// get file to play
 				let appear_cjs = animation.raid_appear[appear_index];
+				debug_extra_cjs = appear_cjs;
 				// instantiate
 				const appear = this.add_appear(appear_cjs);
 				// get duration
@@ -1208,6 +1216,9 @@ class Player
 			}
 			return;
 		}
+		this.m_debug.motion = motion;
+		this.m_debug.duration = duration;
+		this.m_debug.extra = debug_extra_cjs;
 		
 		// set listener for animation completion
 		cjs.addEventListener("animationComplete", this.m_animation_completed_callback);

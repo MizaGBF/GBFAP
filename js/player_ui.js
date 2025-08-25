@@ -29,8 +29,10 @@ class PlayerUI
 		this.m_buttons = {};
 		this.m_backgrounds = {};
 		this.m_menus = {};
+		this.m_debug = null;
 		// others
 		this.m_last_background_mode = null;
+		setInterval(this.update_debug_infos.bind(this), 300);
 	}
 	
 	reset()
@@ -1572,6 +1574,65 @@ class PlayerUI
 					this.m_buttons.texture.click();
 				}
 				return;
+			}
+			case "x": case "X": // debug
+			{
+				if(event.shiftKey)
+				{
+					event.preventDefault();
+					if(this.m_debug == null)
+					{
+						this.m_debug = document.getElementById("debug-panel");
+						if(this.m_debug != null)
+						{
+							this.update_debug_infos();
+							this.m_debug.style.display = "";
+						}
+					}
+					else
+					{
+						this.m_debug.style.display = "none";
+						this.m_debug = null;
+					}
+				}
+				return;
+			}
+		}
+	}
+	
+	update_debug_infos()
+	{
+		if(this.m_debug)
+		{
+			let str = "";
+			if(this.player.m_loading)
+			{
+				str = "State: Loading";
+			}
+			else
+			{
+				if(this.player.m_paused)
+				{
+					str = "State: Paused";
+				}
+				else
+				{
+					str = "State: Running";
+				}
+				str += "<br>Version: " + this.player.m_animations[this.player.m_current_cjs].cjs;
+				if((this.player.m_debug.motion ?? null) != null)
+				{
+					str += "<br>Duration: " + this.player.m_debug.duration + "f<br>Motion: " + this.player.m_debug.motion;
+					if(this.player.m_debug.extra != null)
+					{
+						str += "<br>Extra: " + this.player.m_debug.extra;
+					}
+				}
+			}
+			
+			if(str != this.m_debug.innerHTML)
+			{
+				this.m_debug.innerHTML = str;
 			}
 		}
 	}
