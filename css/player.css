@@ -149,7 +149,7 @@
 }
 
 #debug-panel {
-	position: fixed !important;
+	position: fixed;
 	top: 10px;
 	left: 10px;
 	background-color: #000000b0;
@@ -158,6 +158,7 @@
 	border-radius: 5px;
 	font-family: monospace;
 	font-size: 12px;
-	backdrop-filter: blur(5px); /* Blurs the content behind the panel */
-	z-index: 9999; /* Ensures it's on top of other content */
+	z-index: 9999;
+	min-width: 200px;
+	min-height: 160px;
 }

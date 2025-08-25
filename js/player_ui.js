@@ -1611,7 +1611,11 @@ class PlayerUI
 			}
 			else
 			{
-				if(this.player.m_paused)
+				if(this.player.m_recording != null)
+				{
+					str = "State: Recording (" + this.player.m_recording.frames + "f)";
+				}
+				else if(this.player.m_paused)
 				{
 					str = "State: Paused";
 				}
@@ -1619,17 +1623,36 @@ class PlayerUI
 				{
 					str = "State: Running";
 				}
-				str += "<br>Version: " + this.player.m_animations[this.player.m_current_cjs].cjs;
+				str += "<br>Rate: " + (Math.round(createjs.Ticker.framerate * 100) / 100) + " Hz<br>Base: " + this.player.m_animations[this.player.m_current_cjs].cjs;
 				if((this.player.m_debug.motion ?? null) != null)
 				{
-					str += "<br>Duration: " + this.player.m_debug.duration + "f<br>Motion: " + this.player.m_debug.motion;
 					if(this.player.m_debug.extra != null)
 					{
 						str += "<br>Extra: " + this.player.m_debug.extra;
 					}
+					else
+					{
+						str += "<br>Extra: None";
+					}
+					str += "<br>Motion: " + this.player.m_debug.motion + "<br>Duration: " + this.player.m_debug.duration + "f";
+				}
+				str += "<br><br>Memory:<br>" + this.player.m_debug.element_count + " elements<br>" + this.player.m_debug.texture_count + " textures";
+				if(window.audio)
+				{
+					if(window.audio.disabled)
+					{
+						str += "<br>Audio module disabled";
+					}
+					else
+					{
+						str += "<br>" + window.audio.audio_cache_size + " audio cached<br>" + window.audio.instances.length + " audio playing";
+					}
+				}
+				else
+				{
+					str += "<br>No audio module";
 				}
 			}
-			
 			if(str != this.m_debug.innerHTML)
 			{
 				this.m_debug.innerHTML = str;

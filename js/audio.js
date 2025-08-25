@@ -4,6 +4,7 @@ define([], (function() {
 		window.audio = {
 			disabled: (config.audio_disabled ?? false), // if true, audios won't play
 			audio_cache: {}, // cache audio files, for reuse
+			audio_cache_size: 0,
 			instances: [], // currently playing files
 			volume: 0.5,
 			// the following functions are needed for the animation playback
@@ -29,6 +30,7 @@ define([], (function() {
 						// create new audio
 						audio = new Audio(Game.soundUri + "/" + file);
 						this.audio_cache[file] = audio; // add to cache
+						this.audio_cache_size++;
 						audio.addEventListener('ended', this.audio_ended); // add listener
 					}
 					audio.volume = this.volume; // set volume to master
@@ -56,6 +58,7 @@ define([], (function() {
 				this.stop_all();
 				this.instances = [];
 				this.audio_cache = {};
+				this.audio_cache_size = 0;
 			},
 			set_master_volume: function(value)
 			{

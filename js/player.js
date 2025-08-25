@@ -254,6 +254,8 @@ class Player
 	
 	init_attributes(mode)
 	{
+		this.m_debug.texture_count = 0;
+		this.m_debug.element_count = 0;
 		this.m_layout_mode = mode;
 		// player size
 		this.m_width = 0;
@@ -591,6 +593,8 @@ class Player
 	start_animation()
 	{
 		// reset some variables
+		this.m_debug.texture_count = Object.keys(window.images).length;
+		this.m_debug.element_count = Object.keys(window.lib).length;
 		this.m_playlist = [];
 		this.m_current_motion = 0;
 		this.m_current_cjs = 0;
