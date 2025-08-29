@@ -4362,7 +4362,9 @@
 "1040425100":{"w":["1040425100","1040425100"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425100",["sp_1040425100_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425100",["sp_1040425100_1_s2"]]]},
 "1040918000":{"w":["1040918000","1040918000"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040918000",["sp_1040918000_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040918000",["sp_1040918000_1_s2"]]]},
 "1040518200":{"w":["1040518200","1040518200"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040518200",["sp_1040518200_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040518200",["sp_1040518200_1_s2"]]]},
-"1040714600":{"w":["1040714600","1040714600"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040714600",["sp_1040714600_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040714600",["sp_1040714600_1_s2"]]]}
+"1040714600":{"w":["1040714600","1040714600"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040714600",["sp_1040714600_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040714600",["sp_1040714600_1_s2"]]]},
+"1030109300":{"w":["1030109300","1030109300"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1030109300",["sp_1030109300_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1030109300",["sp_1030109300_1_s2"]]]},
+"1040425200":{"w":["1040425200","1040425200"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425200",["sp_1040425200_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425200",["sp_1040425200_1_s2"]]]}
 },
 "enemies":
 {
@@ -5852,7 +5854,7 @@
 "6201593":{"v":[["","enemy_6201593",null,"phit_0000000000",[]]]},
 "8200342":{"v":[["","enemy_8200342",null,"ehit_8200342",["esp_8200342_01","esp_8200342_02_all","esp_8200342_03"]]]},
 "7300563":{"v":[["","enemy_7300563",null,"phit_0000000000",["esp_7300563_01","esp_7300563_03","esp_7300563_04"]]]},
-"8200293":{"v":[["","enemy_8200293",null,"phit_0000000000",[]]]},
+"8200293":{"v":[["","enemy_8200293",null,"phit_0000000000",[]]],"ra":["raid_appear_8200293_2"]},
 "8200303":{"v":[["","enemy_8200303",null,"phit_0000000000",[]]]},
 "7300603":{"v":[["","enemy_7300603",null,"phit_0000000000",["esp_7300603_01","esp_7300603_02"]]]},
 "6201663":{"v":[["","enemy_6201663",null,"ehit_6201663",["esp_6201663_01","esp_6201663_02","esp_6201663_03"]]],"ra":["raid_appear_6201663"]},
@@ -7068,7 +7070,10 @@
 "7300863":{"v":[["","enemy_7300863",null,"ehit_7300863",["esp_7300863_01_all","esp_7300863_02_all"]]],"ra":["raid_appear_7300863"]},
 "8104523":{"v":[["","enemy_8104523",null,"ehit_8104523",["esp_8104523_01","esp_8104523_02","esp_8104523_03"]]],"ra":["raid_appear_8104523"]},
 "8104553":{"v":[["","enemy_8104553",null,"phit_0000000000",[]]]},
-"8104473":{"v":[["","enemy_8104473",null,"phit_0000000000",[]]],"ra":["raid_appear_8104473"]}
+"8104473":{"v":[["","enemy_8104473",null,"phit_0000000000",[]]],"ra":["raid_appear_8104473"]},
+"8104543":{"v":[["","enemy_8104543",null,"ehit_8104543",["esp_8104543_01","esp_8104543_02_all","esp_8104543_03_all","esp_8104543_04_all","esp_8104543_05_all"]]],"ra":["raid_appear_8104543"]},
+"8104533":{"v":[["","enemy_8104533",null,"ehit_8104533",["esp_8104533_01","esp_8104533_02","esp_8104533_03"]]],"ra":["raid_appear_8104533"]},
+"8104573":{"v":[["","enemy_8104573",null,"phit_0000000000",[]]]}
 },
 "skins":
 {
@@ -8848,7 +8853,7 @@
 "3040270000":"@@Black_Knight_and_Orchis dark ssr black knight and orchis human female defense sabre エルステの要 黒騎士&オルキス romi park minori chihara 朴 璐美 茅原実里 2020-06-24",
 "3040269000":"@@Drang fire ssr drang erune male special staff ドランク tomokazu sugita 杉田智和 2020-03-31",
 "3040271000":"@@Herja_(SSR) earth ssr herja human female defense sabre ヘリヤ minako kotobuki 寿美菜子 2020-04-15",
-"3040272000":"@@Milleore_and_Sahli_Lao water ssr milleore and sahli lao harvin female attack gun bow 阿吽の破弓 ミラオル＆ザーリリャオー saori ōnishi nanami yamashita 大西沙織 山下七海 2020-04-15",
+"3040272000":"@@Milleore_and_Sahli_Lao water ssr milleore and sahli lao harvin female attack bow gun 阿吽の破弓 ミラオル＆ザーリリャオー saori ōnishi nanami yamashita 大西沙織 山下七海 2020-04-15",
 "3040273000":"@@Shura water ssr shura human female balanced spear シュラ megumi toyoguchi 豊口めぐみ 2020-04-30",
 "3040274000":"@@Reinhardtzar_(Grand) fire ssr reinhardtzar grand draph male attack melee ラインハルザ kenichirou matsuda 松田健一郎 2020-04-30",
 "3040275000":"@@New_Generations light ssr new generations collab human female balanced sabre gun 渋谷凛＆島村卯月＆本田未央 ayaka fukuhara ayaka ōhashi sayuri hara 福原綾香 大橋彩香 原紗友里 2020-05-15",
@@ -15610,7 +15615,10 @@
 "7300863":"dark god of destruction bahamut dragon-boss",
 "8104523":"water eiskalt strafe primal-boss",
 "8104553":"earth dogu primal-boss",
-"8104473":"water unschuldiger adel primal-boss"
+"8104473":"water unschuldiger adel primal-boss",
+"8104543":"missing-help-wanted",
+"8104533":"missing-help-wanted",
+"8104573":"missing-help-wanted"
 },
 "mypage":
 {
