@@ -644,6 +644,43 @@
             "reverse":1
         },
         {
+            "name":"Home Page",
+            "icon":"../GBFML/assets/ui/result_icon/home.png",
+            "childs":[
+                {
+                    "name":"Characters",
+                    "icon":"../GBFML/assets/ui/icon/characters.png",
+                    "target":"characters",
+                    "arg1":[0, 10000],
+                    "arg2":true,
+                    "reverse":1
+                },
+                {
+                    "name":"Skins",
+                    "icon":"../GBFML/assets/ui/icon/skins.png",
+                    "target":"skins",
+                    "arg1":[0, 10000],
+                    "arg2":true,
+                    "reverse":1
+                },
+                {
+                    "name":"Summons",
+                    "icon":"../GBFML/assets/ui/icon/summons.png",
+                    "target":"summons",
+                    "arg1":null,
+                    "arg2":true,
+                    "reverse":1
+                },
+                {
+                    "name":"Classes",
+                    "icon":"../GBFML/assets/ui/icon/classes.png",
+                    "target":"job",
+                    "arg1":true,
+                    "reverse":1
+                }
+            ]
+        },
+        {
             "name": "Enemies",
             "icon": "../GBFML/assets/ui/icon/enemies.png",
             "childs": [

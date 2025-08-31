@@ -1,9 +1,9 @@
 // override some functions from GBFML page.js
 function override_GBFML()
 {
-	get_character = function(id, data, range, unused = null)
+	get_character = function(id, data, range, mypage = false)
 	{
-		if(data == null)
+		if(data == null || (mypage && !(id in index.mypage)))
 			return null;
 		let val = parseInt(id.slice(4, 7));
 		switch(id[2])
@@ -50,9 +50,9 @@ function override_GBFML()
 		return [{id:id, path:path, onerr:onerr, class:"", link:false}];
 	}
 
-	get_skin = function(id, data, range, unused = null)
+	get_skin = function(id, data, range, mypage = false)
 	{
-		if(data == null)
+		if(data == null || (mypage && !(id in index.mypage)))
 			return null;
 		let val = parseInt(id.slice(4, 7));
 		if(val < range[0] || val >= range[1])
@@ -81,11 +81,19 @@ function override_GBFML()
 	{
 		if(data == null)
 			return null;
-		if(id[2] != rarity)
+		if(rarity != null && id[2] != rarity)
 			return null;
-		let val = parseInt(id.slice(4, 7));
-		if(val < range[0] || val >= range[1])
-			return null;
+		if(typeof range == 'boolean') // mypage check
+		{
+			if(range && !(id in index.mypage))
+				return null;
+		}
+		else
+		{
+			let val = parseInt(id.slice(4, 7));
+			if(val < range[0] || val >= range[1])
+				return null;
+		}
 		let uncap_string = "";
 		switch(data['v'][data['v'].length - 1][0][0])
 		{
@@ -151,6 +159,13 @@ function override_GBFML()
 		}
 		let path = "GBF/assets_en/img_low/sp/assets/weapon/m/" + id + uncap_string + ".jpg";
 		return [{id:id, path:path, onerr:onerr, class:"", link:false}];
+	}
+
+	get_job = function(id, data, mypage = false, unusedB = null)
+	{
+		if(mypage && !(id in index.mypage))
+			return null;
+		return [{id:id, path:"GBF/assets_en/img_low/sp/assets/leader/m/" + id + "_01.jpg", onerr:default_onerror, class:"", link:false}];
 	}
 
 	get_enemy = function(id, data, type, size)
