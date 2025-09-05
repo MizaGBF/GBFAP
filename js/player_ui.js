@@ -935,6 +935,10 @@ class PlayerUI
 		{
 			this.m_menus.playlist_versions.style.display = "none";
 		}
+		else
+		{
+			this.m_menus.playlist_versions.style.display = "";
+		}
 		// iterate over all animation datas
 		for(let i in this.player.get_animations())
 		{
