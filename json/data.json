@@ -7078,7 +7078,8 @@
 "8104473":{"v":[["","enemy_8104473",null,"phit_0000000000",[]]],"ra":["raid_appear_8104473"]},
 "8104543":{"v":[["","enemy_8104543",null,"ehit_8104543",["esp_8104543_01","esp_8104543_02_all","esp_8104543_03_all","esp_8104543_04_all","esp_8104543_05_all"]]],"ra":["raid_appear_8104543"]},
 "8104533":{"v":[["","enemy_8104533",null,"ehit_8104533",["esp_8104533_01","esp_8104533_02","esp_8104533_03"]]],"ra":["raid_appear_8104533"]},
-"8104573":{"v":[["","enemy_8104573",null,"phit_0000000000",[]]]}
+"8104573":{"v":[["","enemy_8104573",null,"phit_0000000000",[]]]},
+"8104563":{"v":[["","enemy_8104563",null,"ehit_8104563",["esp_8104563_01","esp_8104563_02","esp_8104563_03"]]],"ra":["raid_appear_8104563"]}
 },
 "skins":
 {
@@ -7433,7 +7434,10 @@
 "390001":{"v":[["Gran","fes_mc_0_01","mortal_B","phit_1040816700",["sp_1040816700_0_s2"]],["Djeeta","fes_mc_1_01","mortal_B","phit_1040816700",["sp_1040816700_1_s2"]]],"ab":[]},
 "311401":{"v":[["Gran","alb_sw_0_01","mortal_B","phit_1040026500",["sp_1040026500_0_s2"]],["Djeeta","alb_sw_1_01","mortal_B","phit_1040026500",["sp_1040026500_1_s2"]]],"ab":[]},
 "311303":{"v":[["Gran","uf3_sw_0_01","mortal_B","phit_1040028000_0",["sp_1040028000_0_s2"]],["Djeeta","uf3_sw_1_01","mortal_B","phit_1040028000_1",["sp_1040028000_1_s2"]]],"ab":[]},
-"360201":{"v":[["Gran","ebi_gu_0_01","mortal_B","phit_1040515800",["sp_1040515800_0_s2"]],["Djeeta","ebi_gu_1_01","mortal_B","phit_1040515800",["sp_1040515800_1_s2"]]],"ab":[]}
+"360201":{"v":[["Gran","ebi_gu_0_01","mortal_B","phit_1040515800",["sp_1040515800_0_s2"]],["Djeeta","ebi_gu_1_01","mortal_B","phit_1040515800",["sp_1040515800_1_s2"]]],"ab":[]},
+"360302":{"v":[["Gran","mu2_gu_0_01","mortal_B","phit_1040518400_0",["sp_1040518400_0_s2"]],["Djeeta","mu2_gu_1_01","mortal_B","phit_1040518400_1",["sp_1040518400_1_s2"]]],"ab":[]},
+"360301":{"v":[["Gran","mu1_gu_0_01","mortal_B","phit_1040518300",["sp_1040518300_0_s2"]],["Djeeta","mu1_gu_1_01","mortal_B","phit_1040518300",["sp_1040518300_1_s2"]]],"ab":[]},
+"360303":{"v":[["Gran","mu3_gu_0_01","mortal_B","phit_1040518500_0",["sp_1040518500_0_s2"]],["Djeeta","mu3_gu_1_01","mortal_B","phit_1040518500_1",["sp_1040518500_1_s2"]]],"ab":[]}
 },
 "background":
 {
@@ -8601,7 +8605,7 @@
 "3030136000":"@@Stahn_Aileron fire sr stahn aileron collab human male attack sabre スタン・エルロン tomokazu seki 関智一 2016-06-13",
 "3030137000":"@@Tear_Grants light sr tear grants collab human female balanced staff ティア・グランツ yukana ゆかな 2016-06-13",
 "3030138000":"@@Elize_Lutus dark sr elize lutus collab human female special staff エリーゼ・ルタス yuki horinaka 堀中優希 2016-06-13",
-"3030135000":"@@Morphe_and_Phoebe_(Event) water sr morphe and phoebe unknown special harp モルフェとヴェトル rika morinaga azusa tadokoro 田所あずさ 森永理科 2016-05-31",
+"3030135000":"@@Morphe_and_Phoebe_(Event) water sr morphe and phoebe unknown male female special harp モルフェとヴェトル rika morinaga azusa tadokoro 田所あずさ 森永理科 2016-05-31",
 "3040125000":"@@Yggdrasil earth ssr yggdrasil primal female special melee ユグドラシル - ？？？ 2017-06-30",
 "3040126000":"@@Izmir_(Summer) water ssr izmir summer draph female attack sabre イシュミール aya endo 遠藤綾 2017-07-31",
 "3040129000":"@@Diantha_(Summer) water ssr diantha summer human female special harp ディアンサ inori minase 水瀬いのり 2017-08-15",
@@ -8696,7 +8700,7 @@
 "3040171000":"@@Cain_(Grand) earth ssr cain grand human male special katana カイン takuma terashima 寺島拓篤 2018-05-31",
 "3030186000":"@@Lamretta_(Water) water sr lamretta draph female special melee ラムレッダ satomi akesaka 明坂聡美 2017-04-18",
 "3030187000":"@@Sutera_(Event) fire sr sutera erune female balanced bow スーテラ shizuka itō 伊藤静 2017-04-01",
-"3040174000":"@@Wulf_and_Renie dark ssr wulf and renie unknown attack melee gun ウーフとレニー tomoaki maeno akane fujita 前野智昭 藤田茜 2018-06-18",
+"3040174000":"@@Wulf_and_Renie dark ssr wulf and renie unknown male female attack melee gun ウーフとレニー tomoaki maeno akane fujita 前野智昭 藤田茜 2018-06-18",
 "3040172000":"@@Lunalu_(SSR) dark ssr lunalu harvin female special staff ルナール rumi okubo 大久保瑠美 2018-05-31",
 "3040173000":"@@Joker dark ssr joker collab human male special dagger gun ジョーカー jun fukuyama 福山潤 2018-06-18",
 "3030188000":"@@Deliford_(SR) dark sr deliford human male defense spear デリフォード kenta miyake 三宅健太 2017-04-30",
@@ -8819,7 +8823,7 @@
 "3040231000":"@@Μ's_Third-Years dark ssr μ's third-years collab human female defense harp staff 絢瀬絵里＆矢澤にこ＆東條 希 yoshino nanjō sora tokui aina kusuda 南條愛乃 徳井青空 楠田亜衣奈 2019-08-12",
 "3040232000":"@@Alexiel_(Summer) earth ssr alexiel summer primal female special sabre katana ブローディア aya hirano 平野綾 2019-08-15",
 "3030258000":"@@Sevilbarra_(Event) light sr sevilbarra harvin male attack katana サビルバラ kazuyuki okitsu 興津和幸 2018-11-30",
-"3040233000":"@@Stan_and_Aliza wind ssr stan and aliza erune draph attack sabre melee 勇者と姫君 スタン＆アリーザ toshiki masuda natsumi takamori 増田俊樹 高森奈津美 2019-08-31",
+"3040233000":"@@Stan_and_Aliza wind ssr stan and aliza erune draph male female attack sabre melee 勇者と姫君 スタン＆アリーザ toshiki masuda natsumi takamori 増田俊樹 高森奈津美 2019-08-31",
 "3030259000":"@@Yaia_(Holiday) wind sr yaia holiday draph female special sabre ヤイア rina hidaka 日高里菜 2018-12-17",
 "3040234000":"@@Tabina fire ssr tabina human female attack bow axe タヴィーナ kaede hondo 本渡楓 2019-08-31",
 "3030261000":"@@Beatrix_(SR) earth sr beatrix human female attack sabre ベアトリクス aya hirano 平野綾 2018-12-31",
@@ -8832,7 +8836,7 @@
 "3040238000":"@@Monika_(Grand) wind ssr monika grand human female balanced sabre katana モニカ ayumi tsuji 辻あゆみ 2019-09-30",
 "3030265000":"@@Mirin_(Light) light sr mirin human female attack katana ミリン miyu takagi 高木美佑 2019-02-28",
 "3030266000":"@@Korwa_(SR) wind sr korwa fantasy erune female balanced sabre コルワ ayumi fujimura shizuka itō 藤村歩 / 伊藤静 2019-03-31",
-"3040239000":"@@Zeta_and_Vaseraga_(Halloween) earth ssr zeta and vaseraga halloween human draph balanced spear axe 真紅と冥闇 ゼタ＆バザラガ kana hanazawa fumihiko tachiki 花澤香菜 立木文彦 2019-10-16",
+"3040239000":"@@Zeta_and_Vaseraga_(Halloween) earth ssr zeta and vaseraga halloween human draph male female balanced spear axe 真紅と冥闇 ゼタ＆バザラガ kana hanazawa fumihiko tachiki 花澤香菜 立木文彦 2019-10-16",
 "3040240000":"@@Hallessena_(Halloween) light ssr hallessena halloween draph female attack axe ハレゼナ sumire uesaka 上坂すみれ 2019-10-16",
 "3030267000":"@@Richard_(SR) dark sr richard human male special gun リチャード ryōhei kimura 木村良平 2019-04-30",
 "3030268000":"@@Aster fire sr aster erune female special bow アステール risa taneda 種田梨沙 2019-05-18",
@@ -8867,7 +8871,7 @@
 "3040253000":"@@Yuisis_(Fire) fire ssr yuisis erune female attack sabre katana ユイシス rika tachibana 立花理香 2019-12-31",
 "3030310000":"@@Ferry_(Summer) fire sr ferry summer erune female special dagger フェリ madoka yonezawa 米澤円 2020-08-09",
 "3040256000":"@@Danua_(SSR) light ssr danua draph female special dagger axe ダヌア nozomi sasaki ささきのぞみ 2020-01-17",
-"3030321000":"@@Wulf_and_Renie_(Halloween) dark sr wulf and renie halloween unknown defense melee gun ウーフとレニー tomoaki maeno akane fujita 前野智昭 藤田茜 2020-10-17",
+"3030321000":"@@Wulf_and_Renie_(Halloween) dark sr wulf and renie halloween unknown male female defense melee gun ウーフとレニー tomoaki maeno akane fujita 前野智昭 藤田茜 2020-10-17",
 "3030320000":"@@Joel_(SR) water sr joel human male heal melee ジョエル shunichi toki 土岐隼一 2020-08-31",
 "3030322000":"@@Spinnah_(Holiday) wind sr spinnah holiday human male attack dagger スピナー showtaro morikubo 森久保祥太郎 2020-12-16",
 "3040257000":"@@Jin earth ssr jin human male attack katana ジン hiroki yasumoto 安元洋貴 2020-01-17",
@@ -8878,7 +8882,7 @@
 "3040262000":"@@Seox_(Event) dark ssr seox eternals erune male attack melee シス nobuyuki hiyama 檜山修之 2020-03-04",
 "3040265000":"@@Rei dark ssr rei grand harvin female special staff katana レイ ai kayano 茅野愛衣 2020-02-29",
 "3040263000":"@@Lecia_(Water) water ssr lecia human female attack sabre gun リーシャ ayako kawasumi 川澄綾子 2020-02-29",
-"3040264000":"@@Vania_and_Malinda water ssr vania and malinda unknown special staff melee 飛竜と吸血姫 ヴァンピィ＆ベス rie kugimiya inuko inuyama 釘宮理恵 犬山イヌコ 2020-02-29",
+"3040264000":"@@Vania_and_Malinda water ssr vania and malinda unknown female other special staff melee 飛竜と吸血姫 ヴァンピィ＆ベス rie kugimiya inuko inuyama 釘宮理恵 犬山イヌコ 2020-02-29",
 "3040266000":"@@Teena_(Summer) fire ssr teena summer human female balanced staff ティナ yui horie 堀江由衣 2020-03-17",
 "3040267000":"@@Mugen fire ssr mugen grand draph male attack melee harp ムゲン tesshō genda 玄田哲章 2020-03-17",
 "3040268000":"@@Sturm water ssr sturm draph female attack sabre スツルム kanae itō 伊藤かな恵 2020-03-31",
@@ -8938,7 +8942,7 @@
 "3040322000":"@@Aglovale_(Valentine) light ssr aglovale valentine human male attack sabre アグロヴァル tatsuhisa suzuki 鈴木達央 2021-02-14",
 "3040323000":"@@Zeta_(Water) water ssr zeta human female attack spear ゼタ kana hanazawa 花澤香菜 2021-02-28",
 "3040324000":"@@Vaseraga_(Fire) fire ssr vaseraga draph male attack axe バザラガ fumihiko tachiki 立木文彦 2021-02-28",
-"3040325000":"@@Farrah_and_Juri light ssr farrah and juri human balanced sabre 同期組 ファラ＆ユーリ mariya ise makoto furukawa 伊瀬茉莉也 古川慎 2021-02-28",
+"3040325000":"@@Farrah_and_Juri light ssr farrah and juri human male female balanced sabre 同期組 ファラ＆ユーリ mariya ise makoto furukawa 伊瀬茉莉也 古川慎 2021-02-28",
 "3040326000":"@@Cassius_(Event_SSR) dark ssr cassius unknown male balanced melee spear カシウス masaya matsukaze 松風 雅也 2021-03-16",
 "3040327000":"@@Isaac water ssr isaac human male defense gun melee アイザック kōsuke toriumi 鳥海浩輔 2021-03-16",
 "3040328000":"@@Beatrix_(Earth) earth ssr beatrix human female special sabre ベアトリクス aya hirano 平野綾 2021-03-16",
@@ -9008,7 +9012,7 @@
 "3040393000":"@@You light ssr you erune female attack melee katana ヨウ miho wataya 渡谷美帆 2022-04-19",
 "3040394000":"@@Laguna_(SSR) earth ssr laguna draph female special spear ラグナ yuka terasaki 寺崎裕香 2022-04-19",
 "3040392000":"@@Narmaya_(Yukata) light ssr narmaya yukata draph female attack katana ナルメア mao ichimichi m・a・o 2022-03-31",
-"3040396000":"@@Skull_and_Balurga earth ssr skull and balurga harvin attack gun melee 自由を謳う漢達 スカル＆バルルガン koki uchiyama yuki kaida 内山昂輝 甲斐田ゆき 2022-04-30",
+"3040396000":"@@Skull_and_Balurga earth ssr skull and balurga harvin male female attack gun melee 自由を謳う漢達 スカル＆バルルガン koki uchiyama yuki kaida 内山昂輝 甲斐田ゆき 2022-04-30",
 "3040397000":"@@Sophia_(Water) water ssr sophia human female heal staff ソフィア kaori fukuhara 福原香織 2022-04-30",
 "3040398000":"@@Iroha fire ssr iroha collab human female special spear イロハ inori minase 水瀬いのり 2022-05-14",
 "3040399000":"@@Lilisette wind ssr lilisette collab unknown female balanced dagger リリゼット emiri katō 加藤英美里 2022-05-09",
@@ -9105,7 +9109,7 @@
 "3040490000":"@@Sevilbarra_(SSR) fire ssr sevilbarra harvin male attack katana サビルバラ kazuyuki okitsu 興津和幸 2023-10-31",
 "3040491000":"@@Utsusemi light ssr utsusemi draph female special harp dagger ウツセミ reina kondō 近藤玲奈 2023-10-31",
 "3040492000":"@@Gabriel water ssr gabriel grand primal female defense staff ガブリエル mariko kouda 國府田マリ子 2023-11-17",
-"3040493000":"@@Barawa_and_Sarya fire ssr barawa and sarya draph attack gun バロワ＆サーヤ shunsuke takeuchi ari ozawa 武内駿輔 小澤亜李 2023-11-17",
+"3040493000":"@@Barawa_and_Sarya fire ssr barawa and sarya draph male female attack gun バロワ＆サーヤ shunsuke takeuchi ari ozawa 武内駿輔 小澤亜李 2023-11-17",
 "3040494000":"@@Volenna_(SSR) light ssr volenna human female balanced sabre ボレミア yū shimamura 嶋村侑 2023-11-17",
 "3040496000":"@@Illnott_(Holiday) light ssr illnott holiday human female special gun イルノート akari kitō 鬼頭明里 2023-11-30",
 "3040495000":"@@Yuni_(Holiday) dark ssr yuni holiday primal female balanced staff ユニ ai kayano 茅野愛衣 2023-11-30",
@@ -9149,7 +9153,7 @@
 "3040534000":"@@Mirin_(SSR) wind ssr mirin human female attack katana ミリン miyu takagi 高木美佑 2024-05-31",
 "3040537000":"@@Tefnut_(Summer) water ssr tefnut summer primal female special staff テフヌト yui kondo 近藤唯 2024-06-30",
 "3040535000":"@@Nectar_(Water) water ssr nectar unknown male attack katana bow ネクタル yoshihisa kawahara 川原慶久 2024-06-15",
-"3040538000":"@@Raziel_(Summer) earth ssr raziel summer primal  balanced gun staff ラジエル ayaka nanase 七瀬彩夏 2024-06-30",
+"3040538000":"@@Raziel_(Summer) earth ssr raziel summer primal female balanced gun staff ラジエル ayaka nanase 七瀬彩夏 2024-06-30",
 "3040536000":"@@Orologia dark ssr orologia grand unknown other special axe staff オロロジャイア satoshi hino sora tokui 日野聡/徳井青空 2024-06-15",
 "3040539000":"@@Cucouroux_(Summer) light ssr cucouroux summer human female special gun ククル aya suzaki 洲崎綾 2024-07-16",
 "3040540000":"@@Hallessena_(Summer) dark ssr hallessena summer draph female attack axe ハレゼナ sumire uesaka 上坂すみれ 2024-07-16",
@@ -15657,13 +15661,15 @@
 "3040611000":"@@Sariel dark ssr sariel grand primal male attack axe サリエル akira ishida 石田彰 2025-08-31",
 "2040441000":"@@Vepar dark ssr vepar robur ウェパル 2025-08-31",
 "1040918100":"@@Executioner dark katana ssr executioner grand エクスキューショナー 2025-08-31",
-"1040028600":"@@Epee_Scintillante earth sabre ssr epee scintillante エペ・サンティユモン 2025-08-31"
+"1040028600":"@@Epee_Scintillante earth sabre ssr epee scintillante エペ・サンティユモン 2025-08-31",
+"8104563":"light fairy princess primal-boss"
 },
 "mypage":
 {
 "2040294000":{"v":[["1","mypage_2040294000",null,null,[]]]},
 "3040595000":{"v":[["1","mypage_3040595000_01",null,null,[]],["2","mypage_3040595000_02",null,null,[]]]},
-"3040611000":{"v":[["1","mypage_3040611000_01",null,null,[]],["2","mypage_3040611000_02",null,null,[]]]}
+"3040611000":{"v":[["1","mypage_3040611000_01",null,null,[]],["2","mypage_3040611000_02",null,null,[]]]},
+"360303":{"v":[["1","mypage_360303_gu_0_01",null,null,[]],["2","mypage_360303_gu_1_01",null,null,[]]]}
 },
 "styles":
 {

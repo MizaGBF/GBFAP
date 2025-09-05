@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.4'
+VERSION = '5.5'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
@@ -831,7 +831,9 @@ class Updater():
                         self.tasks.print("Unsupported ID " + element_id + " for update_mypage")
                         return False
             elif len(element_id) == 6: # classes
-                suffixes = ["_01", "_02"]
+                suffixes = []
+                for g in range(0, 2):
+                    suffixes.append("_{}_{}_01".format(CLASS_LIST[element_id][0].split("_")[1], g))
                 add_type = ADD_JOB
             else:
                 self.tasks.print("Unsupported ID " + element_id + " for update_mypage")
