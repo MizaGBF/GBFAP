@@ -219,9 +219,7 @@ class PlayerUI
 		this.m_speed.onmouseup = function() {
 			_ui_.control_speed_update();
 		};
-		this.m_speed.ontouchend = function() { // mobile
-			_ui_.control_speed_update();
-		};
+		this.m_speed.addEventListener("touchend", (event) => { this.control_speed_update(); });
 		this.m_speed_label = add_to(sub_span, "label", {cls:["player-control-label"]});
 		this.m_speed_label.htmlFor = "player-control-speed";
 		this.m_speed_label.innerText = "100% Speed";
@@ -252,9 +250,7 @@ class PlayerUI
 		this.m_audio.onmouseup = function() {
 			_ui_.control_audio_update();
 		};
-		this.m_audio.ontouchend = function() { // mobile
-			_ui_.control_audio_update();
-		};
+		this.m_audio.addEventListener("touchend", (event) => { this.control_audio_update(); });
 		this.m_audio_label = add_to(sub_span, "label", {cls:["player-control-label"]});
 		this.m_audio_label.htmlFor = "player-control-audio";
 		this.m_audio_label.innerText = "50% Audio";
