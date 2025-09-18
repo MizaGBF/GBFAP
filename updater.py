@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.5'
+VERSION = '5.6'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
