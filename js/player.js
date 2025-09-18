@@ -1481,6 +1481,7 @@ class Player
 						// hack to disable ougi options on mc beside mortal_B
 						if(animation.is_main_character
 							&& motion_str.includes("mortal")
+							&& !motion_str.endsWith("_mortal_SP")
 							&& (
 								(
 									animation.weapon == null
