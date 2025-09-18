@@ -7437,7 +7437,8 @@
 "360201":{"v":[["Gran","ebi_gu_0_01","mortal_B","phit_1040515800",["sp_1040515800_0_s2"]],["Djeeta","ebi_gu_1_01","mortal_B","phit_1040515800",["sp_1040515800_1_s2"]]],"ab":[]},
 "360302":{"v":[["Gran","mu2_gu_0_01","mortal_B","phit_1040518400_0",["sp_1040518400_0_s2"]],["Djeeta","mu2_gu_1_01","mortal_B","phit_1040518400_1",["sp_1040518400_1_s2"]]],"ab":[]},
 "360301":{"v":[["Gran","mu1_gu_0_01","mortal_B","phit_1040518300",["sp_1040518300_0_s2"]],["Djeeta","mu1_gu_1_01","mortal_B","phit_1040518300",["sp_1040518300_1_s2"]]],"ab":[]},
-"360303":{"v":[["Gran","mu3_gu_0_01","mortal_B","phit_1040518500_0",["sp_1040518500_0_s2"]],["Djeeta","mu3_gu_1_01","mortal_B","phit_1040518500_1",["sp_1040518500_1_s2"]]],"ab":[]}
+"360303":{"v":[["Gran","mu3_gu_0_01","mortal_B","phit_1040518500_0",["sp_1040518500_0_s2"]],["Djeeta","mu3_gu_1_01","mortal_B","phit_1040518500_1",["sp_1040518500_1_s2"]]],"ab":[]},
+"100501":{"v":[["Gran","fio_sw_0_01","mortal_B","phit_sw_0001",["sp_1040028800_0_s2"]],["Djeeta","fio_sw_1_01","mortal_B","phit_sw_0001",["sp_1040028800_1_s2"]],["Gran v1","fio_sw_0_80","mortal_B","phit_sw_0001",["sp_1040028800_1_s2"]],["Djeeta v1","fio_sw_1_80","mortal_B","phit_sw_0001",["sp_1040028800_1_s2"]]],"ab":[]}
 },
 "background":
 {
@@ -12751,7 +12752,7 @@
 "2100181":"earth fog fungus plant-boss",
 "1200862":"fire bull beast-boss",
 "2100141":"fire burning cactus plant-boss",
-"1200883":"earth cat beast-boss",
+"1200883":"earth cat torajiro beast-boss",
 "1200911":"light squirrel beast-boss",
 "2100152":"water baby nopal plant-boss",
 "2100163":"earth pidri plant-boss",
@@ -15662,7 +15663,10 @@
 "2040441000":"@@Vepar dark ssr vepar robur ウェパル 2025-08-31",
 "1040918100":"@@Executioner dark katana ssr executioner grand エクスキューショナー 2025-08-31",
 "1040028600":"@@Epee_Scintillante earth sabre ssr epee scintillante エペ・サンティユモン 2025-08-31",
-"8104563":"light fairy princess primal-boss"
+"8104563":"light fairy princess primal-boss",
+"360302":"@@Main_Character gran djeeta air stratos: captain 2025-09-07",
+"360301":"@@Main_Character gran djeeta air stratos: sergeant 2025-09-07",
+"360303":"@@Main_Character gran djeeta air stratos: general 2025-09-07"
 },
 "mypage":
 {
