@@ -1,5 +1,5 @@
 {
-    "use_game_config":"test",
+    "use_game_config":"proxy",
     "game": {
         "local": {
             "corsProxy": null,
