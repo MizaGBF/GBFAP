@@ -15,6 +15,7 @@ class Animation
 		this.attack = obj.attack ?? null; // list of auto attack ("phit") files
 		this.abilities = obj.abilities ?? []; // list of skill effect ("ab") files
 		this.raid_appear = obj.raid_appear ?? []; // list of raid appear ("ra") files
+		this.ultimate = obj.ultimate ?? null; // mortal_SP ougi
 	}
 	
 	get manifests() // return a list of file to download
@@ -26,6 +27,10 @@ class Animation
 		{
 			if(this.specials.length > 0 && this.specials[0].endsWith("_attack")) // add also _damage if the summon file ends with attack
 				manifests.push(this.specials[0].replace("attack", "damage"));
+		}
+		if(this.ultimate)
+		{
+			manifests.push(this.ultimate);
 		}
 		return manifests;
 	}

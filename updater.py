@@ -81,6 +81,7 @@ SHARED_SUMMONS : list[list[str]] = []
 UNIQUE_SKIN : list[str] = []
 CLASS_LIST : dict[str, list[str]] = {}
 CLASS_WEAPON_LIST : dict[str, str] = {}
+ORIGIN_CLASSES : list[str] = []
 SUMMON_CLASS : str = ""
 # load dynamic constants
 try:
@@ -1395,7 +1396,8 @@ class Updater():
             if len(colors) == 0:
                 return False
             abilities : list[str] = []
-            if element_id in CLASS_WEAPON_LIST: # skin with custom weapon
+            ultimate_base : str|None = None
+            if element_id in CLASS_WEAPON_LIST and element_id not in ORIGIN_CLASSES: # skin with custom weapon
                 mortal = "mortal_B" # skin with custom ougis use this
                 mc_cjs = colors[0]
                 sp = None
@@ -1451,6 +1453,16 @@ class Updater():
                             sp = fn
                     except:
                         pass
+                # only for fighter origin so far
+                if element_id in CLASS_WEAPON_LIST and element_id in ORIGIN_CLASSES:
+                    for s in ("", "_0", "_0_s2", "_s2"): # ougi
+                        try:
+                            f = "sp_" + CLASS_WEAPON_LIST[element_id] + s
+                            await self.head_manifest(f)
+                            ultimate_base = f
+                            break
+                        except:
+                            pass
             if phit is None:
                 if element_id == "360101":
                     phit = "phit_racer" # special exception
@@ -1494,6 +1506,13 @@ class Updater():
                     character_data['v'].append(tmp)
                     if wid is not None:
                         character_data['w'].append(wid)
+            if ultimate_base is not None:
+                character_data['u'] = []
+                for v in character_data['v']:
+                    if "Djeeta" in v[0]:
+                        character_data['u'].append(ultimate_base.replace("_0_", "_1_"))
+                    else:
+                        character_data['u'].append(ultimate_base)
             if str(character_data) != str(self.data["job"].get(element_id, None)):
                 self.data["job"][element_id] = character_data
                 self.modified = True

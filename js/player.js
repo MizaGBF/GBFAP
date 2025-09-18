@@ -93,6 +93,7 @@ class Player
 		MORTAL_K: "mortal_K",
 		MORTAL_K_1: "mortal_K_1",
 		MORTAL_K_2: "mortal_K_2",
+		MORTAL_SP: "mortal_SP",
 		ATTACK: "attack",
 		ATTACK_SHORT: "short_attack",
 		ATTACK_SHORT_ADV: "short_attack_adv",
@@ -1043,6 +1044,22 @@ class Player
 				}
 				break;
 			}
+			// special ougis for origin classes
+			case Player.c_animations.MORTAL_SP:
+			{
+				// get the duration in the element
+				duration = this.get_animation_duration(cjs[name + "_" + motion]);
+				let special_cjs = this.add_special(animation.ultimate, animation);
+				debug_extra_cjs = animation.ultimate;
+				// store it in class attriute
+				this.m_special_cjs = special_cjs;
+				// add file duration if it's a weapon animation
+				duration = Math.min(
+					duration,
+					this.get_animation_duration(special_cjs[special_cjs.name][special_cjs.name + "_special"]
+				));
+				break;
+			}
 			// Summon files
 			// Note: this isn't native and kinda hacked on top
 			case Player.c_animations.SUMMON_ATTACK:
@@ -1577,6 +1594,7 @@ class Player
 			case Player.c_animations.MORTAL_K: return "Charge Attack K";
 			case Player.c_animations.MORTAL_K_1: return "Charge Attack K1";
 			case Player.c_animations.MORTAL_K_2: return "Charge Attack K2";
+			case Player.c_animations.MORTAL_SP: return "Charge Ultimate";
 			case Player.c_animations.ATTACK: return "Attack";
 			case Player.c_animations.ATTACK_SHORT: return "Attack 1";
 			case Player.c_animations.ATTACK_SHORT_ADV: return "Attack 1 (Adv)";

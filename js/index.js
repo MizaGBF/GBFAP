@@ -342,6 +342,9 @@ function list_animation(target, data)
 		let weapon = null;
 		if(data.w ?? null)
 			weapon = data.w[i];
+		let ultimate = null;
+		if(data.u ?? null)
+			ultimate = data.u[i];
 		if(summon) // set special demo motions
 		{
 			if(version[4].length > 0 && version[4][0].includes("_attack"))
@@ -380,7 +383,8 @@ function list_animation(target, data)
 			is_main_character: is_main_character,
 			is_enemy: is_enemy,
 			is_mypage: is_mypage,
-			raid_appear: raid_appear
+			raid_appear: raid_appear,
+			ultimate: ultimate
 		}));
 	}
 	return animations;
