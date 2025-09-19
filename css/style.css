@@ -1,3 +1,19 @@
+@keyframes cyan-background-glow {
+	0% {
+		background-color: #181818;
+	}
+	70% {
+		background-color: #2bdada;
+	}
+	100% {
+		background-color: #181818;
+	}
+}
+
+.animation-switcher {
+	animation: cyan-background-glow 2s infinite;
+}
+
 #view {
 	background: #181818;
 	color: #ffffff;

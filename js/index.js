@@ -488,7 +488,7 @@ function player_start_end()
 	if("mypage" in index && last_id in index["mypage"])
 	{
 		add_to(div.getElementById("container-header-element-links"), "img", {
-			cls:["clickable", "img-link"],
+			cls:["clickable", "img-link", "animation-switcher"],
 			title:"Load other animations",
 			onclick: function() {
 				if(player == null || waiting_player || player.is_busy())
