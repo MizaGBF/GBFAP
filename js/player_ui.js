@@ -18,6 +18,7 @@ class PlayerUI
 		this.m_ability = null;
 		// the 3 text display
 		this.m_frame = null;
+		this.m_loop_frame = null;
 		this.m_motion_text = null;
 		this.m_duration = null;
 		// the sliders
@@ -44,6 +45,14 @@ class PlayerUI
 		this.m_motion.parentNode.style.display = "none";
 		this.m_ability.parentNode.style.display = "none";
 		this.m_buttons.enemy_position.style.display = "none";
+		this.m_loop_frame.style.display = (
+			this.player.m_layout_mode == PlayerLayoutMode.mypage ?
+			"none" : ""
+		);
+		this.m_buttons.loop.style.display = (
+			this.player.m_layout_mode == PlayerLayoutMode.mypage ?
+			"none" : ""
+		);
 		this.m_duration.parentNode.classList.toggle("player-button-warning", false);
 		this.m_buttons.pause.classList.toggle("player-button-warning", false);
 		// reset select
@@ -166,6 +175,8 @@ class PlayerUI
 		
 		// other displays
 		part = add_to(top_part, "div", {cls:["player-control-vpart"]});
+		this.m_loop_frame = part;
+		this.m_loop_frame.style.display = "none";
 		span = add_to(part, "span", {cls:["player-control-hpart", "player-control-span"]});
 		add_to(span, "span", {cls:["player-control-text"], innertext:"Loop Frame"});
 		this.m_frame = add_to(
@@ -297,6 +308,7 @@ class PlayerUI
 				}
 			}
 		);
+		this.m_buttons.loop.style.display = "none";
 		
 		this.m_buttons.beep = add_to(
 			span,
@@ -1484,8 +1496,11 @@ class PlayerUI
 			{
 				if(!event.shiftKey)
 				{
-					event.preventDefault();
-					this.m_buttons.loop.click();
+					if(this.m_buttons.loop.style.display != "none")
+					{
+						event.preventDefault();
+						this.m_buttons.loop.click();
+					}
 				}
 				return;
 			}
@@ -1623,6 +1638,29 @@ class PlayerUI
 				{
 					str = "State: Running";
 				}
+				switch(this.player.m_layout_mode)
+				{
+					case PlayerLayoutMode.normal:
+					{
+						str += "<br>Layout: Normal";
+						break;
+					}
+					case PlayerLayoutMode.enemy:
+					{
+						str += "<br>Layout: Enemy";
+						break;
+					}
+					case PlayerLayoutMode.mypage:
+					{
+						str += "<br>Layout: MyPage";
+						break;
+					}
+					default:
+					{
+						str += "<br>Layout: Unknown";
+						break;
+					}
+				}
 				str += "<br>Rate: " + (Math.round(createjs.Ticker.framerate * 100) / 100) + " Hz<br>Base: " + this.player.m_animations[this.player.m_current_cjs].cjs;
 				if((this.player.m_debug.motion ?? null) != null)
 				{
@@ -1634,7 +1672,7 @@ class PlayerUI
 					{
 						str += "<br>Extra: None";
 					}
-					str += "<br>Motion: " + this.player.m_debug.motion + "<br>Duration: " + this.player.m_debug.duration + "f";
+					str += "<br>Motion: " + this.player.m_debug.motion + "<br>Loop Duration: " + this.player.m_debug.duration + "f";
 				}
 				str += "<br><br>Memory:<br>" + this.player.m_debug.element_count + " elements<br>" + this.player.m_debug.texture_count + " textures";
 				if(window.audio)

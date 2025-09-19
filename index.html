@@ -41,7 +41,7 @@
 <body onload="init()">
 	<a href="index.html"><img id="title-header" src="assets/ui/header.png" alt="header"></a>
 	<div id="header">
-		<div>v9.11</div>
+		<div>v9.12</div>
 		<div id="timestamp">Loading...</div>
 	</div>
 	<!-- Debug panel -->
@@ -166,7 +166,7 @@
 				<li><button class="player-control-button"><img src="assets/ui/controls/sound.png"></button> Toggle the Animation Audios (<b>Keyboard shortcut: M</b>)</li>
 				<li><button class="player-control-button"><img src="assets/ui/controls/pause.png"></button> Pause the animation. (<b>Keyboard shortcut: Space</b>)</li>
 				<li><button class="player-control-button"><img src="assets/ui/controls/frame.png"></button> Pause and advance by a single frame. (<b>Keyboard shortcut: F</b>)</li>
-				<li><button class="player-control-button"><img src="assets/ui/controls/loop.png"></button> If disabled, the animation won't loop. (<b>Keyboard shortcut: L</b>)</li>
+				<li><button class="player-control-button"><img src="assets/ui/controls/loop.png"></button> If disabled, the animation won't loop. (<b>Keyboard shortcut: L</b>) (Unavailable for Home Page animations)</li>
 				<li><button class="player-control-button"><img src="assets/ui/controls/beep.png"></button> To mute the beep when pressing buttons. (<b>Keyboard shortcut: Shift+M</b>)</li>
 				<li><button class="player-control-button"><img src="assets/ui/controls/ability_target.png"></button> (Characters with Skills only) To move the position of Targeted Skills. (<b>Keyboard shortcut: S</b>)</li>
 				<li><button class="player-control-button"><img src="assets/ui/controls/enemy_position.png"></button> (Enemies only) Shift an enemy by 71x117 px to the top right. (<b>Keyboard shortcut: E</b>)</li>
@@ -202,6 +202,12 @@
 		Adjust it as you see fit.<br>
 		<br>
 		Note that, on non-Chrome Browsers, the exported WebM might not have transparency.
+		</p>
+		<h3>&#x2022; The Record feature only record short parts.</h3>
+		<p>
+		Due to implementation reasons, the feature only record the looping part of animations.<br>
+		Some are designed to run indefinitely, such as Idle or Home Page animations.<br>
+		The record feature needs a stopping point and, as such, has to stop when the animation tells it to.
 		</p>
 		<h3>&#x2022; Class Champion weapons seem to be bugged</h3>
 		<p>
