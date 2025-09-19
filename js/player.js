@@ -1288,7 +1288,7 @@ class Player
 			paused: this.m_paused
 		}).wait(duration).call(function (p, index) {
 			p.m_looping_index = index;
-			if(p.m_looping && p.m_layout_mode != PlayerLayoutMode.mypage)
+			if(p.m_recording || (p.m_looping && p.m_layout_mode != PlayerLayoutMode.mypage))
 				p.play_next(cjs);
 		}, [this, index]);
 	}
@@ -1345,7 +1345,13 @@ class Player
 		{
 			this.m_dispatch_stack[this.m_looping_index] = 0;
 			// if not looping or is mypage, we fire the dispatch
-			if(!this.m_looping || this.m_layout_mode == PlayerLayoutMode.mypage)
+			if(
+				!this.m_looping || 
+				(
+					this.m_recording == null &&
+					this.m_layout_mode == PlayerLayoutMode.mypage
+				)
+			)
 				cjs.dispatchEvent("animationComplete");
 		}
 	}
