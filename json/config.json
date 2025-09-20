@@ -673,7 +673,7 @@
                     "reverse":1
                 },
                 {
-                    "name":"Classes",
+                    "name":"Main Character",
                     "icon":"../GBFML/assets/ui/icon/classes.png",
                     "target":"job",
                     "arg1":true,
