@@ -2100,6 +2100,7 @@ function init_player(mode = PlayerLayoutMode.normal)
 	{
 		player = new Player(mode);
 		player.ui.set_html();
+		player.ui.reset();
 	}
 	player.init_stage();
 	player.load_settings();
