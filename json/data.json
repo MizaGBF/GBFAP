@@ -962,7 +962,9 @@
 "3040612000":{"v":[["0★","npc_3040612000_01","mortal_A","phit_3040612000",["nsp_3040612000_01_s2"]],["4★","npc_3040612000_02","mortal_A","phit_3040612000_02",["nsp_3040612000_02_s2"]]],"ab":["ab_all_3040612000_01","ab_all_3040612000_02","ab_all_3040612000_03"]},
 "3040611000":{"v":[["0★","npc_3040611000_01","mortal_A","phit_3040611000",["nsp_3040611000_01_s2"]],["4★","npc_3040611000_02","mortal_A","phit_3040611000",["nsp_3040611000_02_s2"]]],"ab":["ab_3040611000_01","ab_all_3040611000_01","ab_all_3040611000_02"]},
 "3040614000":{"v":[["0★","npc_3040614000_01","mortal_A","phit_3040614000",["nsp_3040614000_01_s2"]],["4★","npc_3040614000_02","mortal_A","phit_3040614000_02",["nsp_3040614000_02_s2"]]],"ab":["ab_3040614000_01","ab_all_3040614000_01","ab_all_3040614000_03"]},
-"3040613000":{"v":[["0★","npc_3040613000_01","mortal_A","phit_3040613000",["nsp_3040613000_01_s2"]],["4★","npc_3040613000_02","mortal_A","phit_3040613000",["nsp_3040613000_02_s2"]]],"ab":["ab_3040613000_01","ab_3040613000_02","ab_all_3040613000_01"]}
+"3040613000":{"v":[["0★","npc_3040613000_01","mortal_A","phit_3040613000",["nsp_3040613000_01_s2"]],["4★","npc_3040613000_02","mortal_A","phit_3040613000",["nsp_3040613000_02_s2"]]],"ab":["ab_3040613000_01","ab_3040613000_02","ab_all_3040613000_01"]},
+"3040615000":{"v":[["0★","npc_3040615000_01","mortal_A","phit_3040615000",["nsp_3040615000_01_s2"]],["4★","npc_3040615000_02","mortal_A","phit_3040615000_02",["nsp_3040615000_02_s2"]]],"ab":["ab_3040615000_01","ab_3040615000_02","ab_3040615000_03"]},
+"3040616000":{"v":[["0★","npc_3040616000_01","mortal_A","phit_3040616000",["nsp_3040616000_01_s2"]],["4★","npc_3040616000_02","mortal_A","phit_3040616000_02",["nsp_3040616000_02_s2"]]],"ab":["ab_all_3040616000_01"]}
 },
 "partners":
 {
@@ -1440,7 +1442,8 @@
 "2040438000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040438000_01_attack"]]],"s":"2040438000"},
 "2040439000":{"v":[["3★ A","sdw_bw_0_01","",null,["summon_2040439000_01_a_attack"]],["3★ B","sdw_bw_0_01","",null,["summon_2040439000_01_b_attack"]],["3★ C","sdw_bw_0_01","",null,["summon_2040439000_01_c_attack"]],["3★ D","sdw_bw_0_01","",null,["summon_2040439000_01_d_attack"]]],"s":"2040439000"},
 "2040440000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040440000_01_attack"]]],"s":"2040440000"},
-"2040441000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040441000_01_attack"]]],"s":"2040441000"}
+"2040441000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040441000_01_attack"]]],"s":"2040441000"},
+"2040442000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040442000_01_attack"]]],"s":"2040442000"}
 },
 "weapons":
 {
@@ -4375,7 +4378,9 @@
 "1040122100":{"w":["1040122100","1040122100"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122100",["sp_1040122100_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122100",["sp_1040122100_1_s2"]]]},
 "1040918200":{"w":["1040918200","1040918200"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040918200",["sp_1040918200_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040918200",["sp_1040918200_1_s2"]]]},
 "1030610000":{"w":["1030610000","1030610000"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1030610000",["sp_1030610000_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1030610000",["sp_1030610000_1_s2"]]]},
-"1040028700":{"w":["1040028700","1040028700"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040028700",["sp_1040028700_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040028700",["sp_1040028700_1_s2"]]]}
+"1040028700":{"w":["1040028700","1040028700"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040028700",["sp_1040028700_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040028700",["sp_1040028700_1_s2"]]]},
+"1040425300":{"w":["1040425300","1040425300"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425300",["sp_1040425300_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425300",["sp_1040425300_1_s2"]]]},
+"1040122200":{"w":["1040122200","1040122200"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122200",["sp_1040122200_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122200",["sp_1040122200_1_s2"]]]}
 },
 "enemies":
 {
@@ -8882,7 +8887,7 @@
 "3040254000":"@@Lucius_(SSR) dark ssr lucius human male attack sabre katana ルシウス takehito koyasu 子安武人 2019-12-31",
 "3040253000":"@@Yuisis_(Fire) fire ssr yuisis erune female attack sabre katana ユイシス rika tachibana 立花理香 2019-12-31",
 "3030310000":"@@Ferry_(Summer) fire sr ferry summer erune female special dagger フェリ madoka yonezawa 米澤円 2020-08-09",
-"3040256000":"@@Danua_(SSR) light ssr danua draph female special dagger axe ダヌア nozomi sasaki ささきのぞみ 2020-01-17",
+"3040256000":"@@Danua_(Light) light ssr danua draph female special dagger axe ダヌア nozomi sasaki ささきのぞみ 2020-01-17",
 "3030321000":"@@Wulf_and_Renie_(Halloween) dark sr wulf and renie halloween unknown male female defense melee gun ウーフとレニー tomoaki maeno akane fujita 前野智昭 藤田茜 2020-10-17",
 "3030320000":"@@Joel_(SR) water sr joel human male heal melee ジョエル shunichi toki 土岐隼一 2020-08-31",
 "3030322000":"@@Spinnah_(Holiday) wind sr spinnah holiday human male attack dagger スピナー showtaro morikubo 森久保祥太郎 2020-12-16",
@@ -15688,7 +15693,13 @@
 "6206203":"aberrant knight people-boss",
 "6206213":"aberrant knight people-boss",
 "1030610000":"@@Gauntlet_of_Bewilderment wind melee sr gauntlet of bewilderment 2025-09-28",
-"1040028700":"@@Blade_of_Remorse wind sabre ssr blade of remorse 2025-09-28"
+"1040028700":"@@Blade_of_Remorse wind sabre ssr blade of remorse 2025-09-28",
+"3040615000":"@@Lamorak wind ssr lamorak human male special staff ラモラック nobuhiko okamoto 岡本信彦 2025-09-30",
+"3040616000":"@@Danua_(SSR) dark ssr danua draph female attack dagger axe ダヌア nozomi sasaki ささきのぞみ 2025-09-30",
+"3710144000":"@@Sophia charter of storied stars sophia 2025-09-29",
+"2040442000":"@@Fairy_Princess light ssr fairy princess robur 2025-09-30",
+"1040425300":"@@Feder_des_Zugvogels wind staff ssr feder des zugvogels 2025-09-30",
+"1040122200":"@@Marionette_Machete dark dagger ssr marionette machete 2025-09-30"
 },
 "mypage":
 {
