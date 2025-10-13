@@ -84,84 +84,84 @@
             "childs":[
                 {
                     "name":"Year 2025 (Snake)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2025_(snake).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2025_(snake).png",
                     "target":"characters",
                     "arg1":[0, -1, 0, -1, 571, 999],
                     "reverse":1
                 },
                 {
                     "name":"Year 2024 (Dragon)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2024_(dragon).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2024_(dragon).png",
                     "target":"characters",
                     "arg1":[75, 76, 0, -1, 504, 571],
                     "reverse":1
                 },
                 {
                     "name":"Year 2023 (Rabbit)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2023_(rabbit).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2023_(rabbit).png",
                     "target":"characters",
                     "arg1":[0, -1, 0, -1, 443, 504],
                     "reverse":1
                 },
                 {
                     "name":"Year 2022 (Tiger)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2022_(tiger).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2022_(tiger).png",
                     "target":"characters",
                     "arg1":[0, -1, 0, -1, 379, 443],
                     "reverse":1
                 },
                 {
                     "name":"Year 2021 (Ox)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2021_(ox).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2021_(ox).png",
                     "target":"characters",
                     "arg1":[74, 75, 0, -1, 316, 379],
                     "reverse":1
                 },
                 {
                     "name":"Year 2020 (Rat)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2020_(rat).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2020_(rat).png",
                     "target":"characters",
                     "arg1":[73, 74, 281, 323, 256, 316],
                     "reverse":1
                 },
                 {
                     "name":"Year 2019 (Pig)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2019_(pig).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2019_(pig).png",
                     "target":"characters",
                     "arg1":[72, 73, 263, 281, 199, 256],
                     "reverse":1
                 },
                 {
                     "name":"Year 2018 (Dog)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2018_(dog).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2018_(dog).png",
                     "target":"characters",
                     "arg1":[71, 72, 233, 263, 149, 199],
                     "reverse":1
                 },
                 {
                     "name":"Year 2017 (Chicken)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2017_(chicken).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2017_(chicken).png",
                     "target":"characters",
                     "arg1":[0, -1, 173, 233, 108, 149],
                     "reverse":1
                 },
                 {
                     "name":"Year 2016 (Monkey)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2016_(monkey).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2016_(monkey).png",
                     "target":"characters",
                     "arg1":[47, 71, 113, 173, 72, 108],
                     "reverse":1
                 },
                 {
                     "name":"Year 2015 (Sheep)",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2015_(sheep).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2015_(sheep).png",
                     "target":"characters",
                     "arg1":[30, 47, 51, 113, 30, 72],
                     "reverse":1
                 },
                 {
                     "name":"Year 2014",
-                    "icon":"../GBFML/assets/ui/index_icon/year_2015_(sheep).png",
+                    "icon":"../GBFML/assets/ui/icon/year_2015_(sheep).png",
                     "target":"characters",
                     "arg1":[0, 30, 0, 51, 0, 30],
                     "reverse":1
@@ -646,7 +646,7 @@
         },
         {
             "name":"Home Page",
-            "icon":"../GBFML/assets/ui/result_icon/home.png",
+            "icon":"../GBFML/assets/ui/icon/home.png",
             "childs":[
                 {
                     "name":"Characters",
@@ -687,11 +687,11 @@
             "childs": [
                 {
                     "name": "Beasts and Animals",
-                    "icon": "../GBFML/assets/ui/index_icon/1.png",
+                    "icon": "../GBFML/assets/ui/icon/1.png",
                     "childs": [
                         {
                             "name": "Flying",
-                            "icon": "../GBFML/assets/ui/index_icon/flying.png",
+                            "icon": "../GBFML/assets/ui/icon/flying.png",
                             "target": "enemies",
                             "arg1": "1",
                             "arg2": "1",
@@ -699,7 +699,7 @@
                         },
                         {
                             "name": "Beasts",
-                            "icon": "../GBFML/assets/ui/index_icon/beasts.png",
+                            "icon": "../GBFML/assets/ui/icon/beasts.png",
                             "target": "enemies",
                             "arg1": "1",
                             "arg2": "2",
@@ -707,7 +707,7 @@
                         },
                         {
                             "name": "Monstrosities",
-                            "icon": "../GBFML/assets/ui/index_icon/monstrosities.png",
+                            "icon": "../GBFML/assets/ui/icon/monstrosities.png",
                             "target": "enemies",
                             "arg1": "1",
                             "arg2": "3",
@@ -717,11 +717,11 @@
                 },
                 {
                     "name": "Plants and Insects",
-                    "icon": "../GBFML/assets/ui/index_icon/2.png",
+                    "icon": "../GBFML/assets/ui/icon/2.png",
                     "childs": [
                         {
                             "name": "Plants",
-                            "icon": "../GBFML/assets/ui/index_icon/plants.png",
+                            "icon": "../GBFML/assets/ui/icon/plants.png",
                             "target": "enemies",
                             "arg1": "2",
                             "arg2": "1",
@@ -729,7 +729,7 @@
                         },
                         {
                             "name": "Insects",
-                            "icon": "../GBFML/assets/ui/index_icon/insects.png",
+                            "icon": "../GBFML/assets/ui/icon/insects.png",
                             "target": "enemies",
                             "arg1": "2",
                             "arg2": "2",
@@ -737,7 +737,7 @@
                         },
                         {
                             "name": "???",
-                            "icon": "../GBFML/assets/ui/index_icon/unkn.png",
+                            "icon": "../GBFML/assets/ui/icon/unkn.png",
                             "target": "enemies",
                             "arg1": "2",
                             "arg2": "3",
@@ -747,11 +747,11 @@
                 },
                 {
                     "name": "Fishes and Sea Life",
-                    "icon": "../GBFML/assets/ui/index_icon/3.png",
+                    "icon": "../GBFML/assets/ui/icon/3.png",
                     "childs": [
                         {
                             "name": "Sea Life",
-                            "icon": "../GBFML/assets/ui/index_icon/sea_life.png",
+                            "icon": "../GBFML/assets/ui/icon/sea_life.png",
                             "target": "enemies",
                             "arg1": "3",
                             "arg2": "1",
@@ -759,7 +759,7 @@
                         },
                         {
                             "name": "???",
-                            "icon": "../GBFML/assets/ui/index_icon/unkn.png",
+                            "icon": "../GBFML/assets/ui/icon/unkn.png",
                             "target": "enemies",
                             "arg1": "3",
                             "arg2": "2",
@@ -767,7 +767,7 @@
                         },
                         {
                             "name": "???",
-                            "icon": "../GBFML/assets/ui/index_icon/unkn.png",
+                            "icon": "../GBFML/assets/ui/icon/unkn.png",
                             "target": "enemies",
                             "arg1": "3",
                             "arg2": "3",
@@ -777,11 +777,11 @@
                 },
                 {
                     "name": "Golems and Robots",
-                    "icon": "../GBFML/assets/ui/index_icon/4.png",
+                    "icon": "../GBFML/assets/ui/icon/4.png",
                     "childs": [
                         {
                             "name": "Golems",
-                            "icon": "../GBFML/assets/ui/index_icon/golems.png",
+                            "icon": "../GBFML/assets/ui/icon/golems.png",
                             "target": "enemies",
                             "arg1": "4",
                             "arg2": "1",
@@ -789,7 +789,7 @@
                         },
                         {
                             "name": "Aberrations",
-                            "icon": "../GBFML/assets/ui/index_icon/aberrations.png",
+                            "icon": "../GBFML/assets/ui/icon/aberrations.png",
                             "target": "enemies",
                             "arg1": "4",
                             "arg2": "2",
@@ -797,7 +797,7 @@
                         },
                         {
                             "name": "Machines",
-                            "icon": "../GBFML/assets/ui/index_icon/machines.png",
+                            "icon": "../GBFML/assets/ui/icon/machines.png",
                             "target": "enemies",
                             "arg1": "4",
                             "arg2": "3",
@@ -807,11 +807,11 @@
                 },
                 {
                     "name": "Undeads and Otherworlders",
-                    "icon": "../GBFML/assets/ui/index_icon/5.png",
+                    "icon": "../GBFML/assets/ui/icon/5.png",
                     "childs": [
                         {
                             "name": "Otherwordly",
-                            "icon": "../GBFML/assets/ui/index_icon/otherwordly.png",
+                            "icon": "../GBFML/assets/ui/icon/otherwordly.png",
                             "target": "enemies",
                             "arg1": "5",
                             "arg2": "1",
@@ -819,7 +819,7 @@
                         },
                         {
                             "name": "Undeads",
-                            "icon": "../GBFML/assets/ui/index_icon/undeads.png",
+                            "icon": "../GBFML/assets/ui/icon/undeads.png",
                             "target": "enemies",
                             "arg1": "5",
                             "arg2": "2",
@@ -827,7 +827,7 @@
                         },
                         {
                             "name": "???",
-                            "icon": "../GBFML/assets/ui/index_icon/unkn.png",
+                            "icon": "../GBFML/assets/ui/icon/unkn.png",
                             "target": "enemies",
                             "arg1": "5",
                             "arg2": "3",
@@ -837,11 +837,11 @@
                 },
                 {
                     "name": "Humans and Humanoids",
-                    "icon": "../GBFML/assets/ui/index_icon/6.png",
+                    "icon": "../GBFML/assets/ui/icon/6.png",
                     "childs": [
                         {
                             "name": "Goblins",
-                            "icon": "../GBFML/assets/ui/index_icon/goblins.png",
+                            "icon": "../GBFML/assets/ui/icon/goblins.png",
                             "target": "enemies",
                             "arg1": "6",
                             "arg2": "1",
@@ -849,7 +849,7 @@
                         },
                         {
                             "name": "People",
-                            "icon": "../GBFML/assets/ui/index_icon/people.png",
+                            "icon": "../GBFML/assets/ui/icon/people.png",
                             "target": "enemies",
                             "arg1": "6",
                             "arg2": "2",
@@ -857,7 +857,7 @@
                         },
                         {
                             "name": "Fairies",
-                            "icon": "../GBFML/assets/ui/index_icon/fairies.png",
+                            "icon": "../GBFML/assets/ui/icon/fairies.png",
                             "target": "enemies",
                             "arg1": "6",
                             "arg2": "3",
@@ -867,11 +867,11 @@
                 },
                 {
                     "name": "Dragons and Wyverns",
-                    "icon": "../GBFML/assets/ui/index_icon/7.png",
+                    "icon": "../GBFML/assets/ui/icon/7.png",
                     "childs": [
                         {
                             "name": "Dragons",
-                            "icon": "../GBFML/assets/ui/index_icon/dragons.png",
+                            "icon": "../GBFML/assets/ui/icon/dragons.png",
                             "target": "enemies",
                             "arg1": "7",
                             "arg2": "1",
@@ -879,7 +879,7 @@
                         },
                         {
                             "name": "Reptiles",
-                            "icon": "../GBFML/assets/ui/index_icon/reptiles.png",
+                            "icon": "../GBFML/assets/ui/icon/reptiles.png",
                             "target": "enemies",
                             "arg1": "7",
                             "arg2": "2",
@@ -887,7 +887,7 @@
                         },
                         {
                             "name": "True Dragons",
-                            "icon": "../GBFML/assets/ui/index_icon/true_dragons.png",
+                            "icon": "../GBFML/assets/ui/icon/true_dragons.png",
                             "target": "enemies",
                             "arg1": "7",
                             "arg2": "3",
@@ -897,11 +897,11 @@
                 },
                 {
                     "name": "Primal Beasts",
-                    "icon": "../GBFML/assets/ui/index_icon/8.png",
+                    "icon": "../GBFML/assets/ui/icon/8.png",
                     "childs": [
                         {
                             "name": "Primals",
-                            "icon": "../GBFML/assets/ui/index_icon/primals.png",
+                            "icon": "../GBFML/assets/ui/icon/primals.png",
                             "target": "enemies",
                             "arg1": "8",
                             "arg2": "1",
@@ -909,7 +909,7 @@
                         },
                         {
                             "name": "Elementals",
-                            "icon": "../GBFML/assets/ui/index_icon/elementals.png",
+                            "icon": "../GBFML/assets/ui/icon/elementals.png",
                             "target": "enemies",
                             "arg1": "8",
                             "arg2": "2",
@@ -917,7 +917,7 @@
                         },
                         {
                             "name": "Angel Cores",
-                            "icon": "../GBFML/assets/ui/index_icon/angel_cores.png",
+                            "icon": "../GBFML/assets/ui/icon/angel_cores.png",
                             "target": "enemies",
                             "arg1": "8",
                             "arg2": "3",
@@ -927,11 +927,11 @@
                 },
                 {
                     "name": "Astrals and Others",
-                    "icon": "../GBFML/assets/ui/index_icon/9.png",
+                    "icon": "../GBFML/assets/ui/icon/9.png",
                     "childs": [
                         {
                             "name": "Others",
-                            "icon": "../GBFML/assets/ui/index_icon/others.png",
+                            "icon": "../GBFML/assets/ui/icon/others.png",
                             "target": "enemies",
                             "arg1": "9",
                             "arg2": "1",
@@ -939,7 +939,7 @@
                         },
                         {
                             "name": "???",
-                            "icon": "../GBFML/assets/ui/index_icon/unkn.png",
+                            "icon": "../GBFML/assets/ui/icon/unkn.png",
                             "target": "enemies",
                             "arg1": "9",
                             "arg2": "2",
@@ -947,7 +947,7 @@
                         },
                         {
                             "name": "???",
-                            "icon": "../GBFML/assets/ui/index_icon/unkn.png",
+                            "icon": "../GBFML/assets/ui/icon/unkn.png",
                             "target": "enemies",
                             "arg1": "9",
                             "arg2": "3",
