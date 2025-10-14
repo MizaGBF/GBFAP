@@ -173,6 +173,12 @@
             "icon":"../GBFML/assets/ui/icon/skins.png",
             "childs":[
                 {
+                    "name":"ID 300 & more",
+                    "target":"skins",
+                    "arg1":[300, 999],
+                    "reverse":1
+                },
+                {
                     "name":"ID 200 to 299",
                     "target":"skins",
                     "arg1":[200, 300],
@@ -238,11 +244,11 @@
             "icon":"../GBFML/assets/ui/icon/summons.png",
             "childs":[
                 {
-                    "name":"SSR ID 400 to 599",
+                    "name":"SSR ID 400 & more",
                     "icon":"../GBFML/assets/ui/icon/ssr.png",
                     "target":"summons",
                     "arg1":"4",
-                    "arg2":[400, 600],
+                    "arg2":[400, 999],
                     "reverse":1
                 },
                 {
@@ -640,9 +646,22 @@
         {
             "name": "Main Character",
             "icon": "../GBFML/assets/ui/icon/classes.png",
-            "target": "job",
-            "reverse":1,
-            "text": "ID order"
+            "childs": [
+                {
+                    "name": "Classes",
+                    "icon": "../GBFML/assets/ui/icon/party.png",
+                    "target": "job",
+                    "arg1": true,
+                    "text": "ID order"
+                },
+                {
+                    "name": "Outfits",
+                    "icon": "../GBFML/assets/ui/icon/skin.png",
+                    "target": "job",
+                    "arg1": false,
+                    "text": "ID order"
+                }
+            ]
         },
         {
             "name":"Home Page",
@@ -673,11 +692,26 @@
                     "reverse":1
                 },
                 {
-                    "name":"Main Character",
-                    "icon":"../GBFML/assets/ui/icon/classes.png",
-                    "target":"job",
-                    "arg1":true,
-                    "reverse":1
+                    "name": "Main Character",
+                    "icon": "../GBFML/assets/ui/icon/classes.png",
+                    "childs": [
+                        {
+                            "name": "Classes",
+                            "icon": "../GBFML/assets/ui/icon/party.png",
+                            "target": "job",
+                            "arg1": true,
+                            "arg2": true,
+                            "text": "ID order"
+                        },
+                        {
+                            "name": "Outfits",
+                            "icon": "../GBFML/assets/ui/icon/skin.png",
+                            "target": "job",
+                            "arg1": false,
+                            "arg2": true,
+                            "text": "ID order"
+                        }
+                    ]
                 }
             ]
         },

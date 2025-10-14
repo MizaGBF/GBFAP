@@ -161,8 +161,29 @@ function override_GBFML()
 		return [{id:id, path:path, onerr:onerr, class:"", link:false}];
 	}
 
-	get_job = function(id, data, mypage = false, unusedB = null)
+	get_job = function(id, data, type_filter = null, mypage = false)
 	{
+		if(type_filter != null)
+		{
+			const s2 = id.slice(0,2);
+			const s3 = id.slice(0,3);
+			if(type_filter) // classes
+			{
+				if(
+					["31","32","33","34","35","36","37","38","39","40"].includes(s2) ||
+					["125","165","185"].includes(s3)
+				)
+					return null;
+			}
+			else // outfits
+			{
+				if(
+					!["31","32","33","34","35","36","37","38","39"].includes(s2) &&
+					!["125","165","185"].includes(s3)
+				)
+					return null;
+			}
+		}
 		if(mypage && !(id in index.mypage))
 			return null;
 		return [{id:id, path:"GBF/assets_en/img_low/sp/assets/leader/m/" + id + "_01.jpg", onerr:default_onerror, class:"", link:false}];
