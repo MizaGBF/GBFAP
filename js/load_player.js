@@ -200,6 +200,7 @@ function add_bounding_box(displayObject) {
 	displayObject._bounding_box.visible = bounding_box_state; // set visibility according to global variable
 	// on each tick, draw our box (see below)
 	displayObject.on("tick", draw_object_bounding_box);
+	displayObject.on("removed", remove_bounding_box);
 }
 
 // Function to draw the bounding box
@@ -211,7 +212,7 @@ function draw_object_bounding_box()
 		this._bounding_box.visible = bounding_box_state;
 	}
 	// if visible
-	if(this._bounding_box.visible)
+	if(this._bounding_box.visible && this.parent)
 	{
 		// update parent if needed
 		if(this._bounding_box.parent != this.parent)
@@ -239,4 +240,19 @@ function draw_object_bounding_box()
 			}
 		}
 	}
+	else if(this._bounding_box.parent)
+	{
+		// If the box shouldn't be visible
+		this._bounding_box.parent.removeChild(this._bounding_box);
+	}
+}
+
+// function to clean the bounding box when the owner is removed to avoid a memory leak
+function remove_bounding_box()
+{
+	// remove the tick
+	this.off("tick", draw_object_bounding_box);
+	// remove from stage
+	if(this._bounding_box.parent)
+		this._bounding_box.parent.removeChild(this._bounding_box);
 }
