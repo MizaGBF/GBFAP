@@ -153,14 +153,29 @@ class Player
 		ENEMY_STANDBY_B: "standby_B",
 		ENEMY_STANDBY_C: "standby_C",
 		ENEMY_STANDBY_D: "standby_D",
+		ENEMY_STANDBY_E: "standby_E",
+		ENEMY_STANDBY_F: "standby_F",
+		ENEMY_STANDBY_G: "standby_G",
+		ENEMY_STANDBY_H: "standby_H",
+		ENEMY_STANDBY_I: "standby_I",
 		ENEMY_BREAK_STANDBY_A: "break_standby_A",
 		ENEMY_BREAK_STANDBY_B: "break_standby_B",
 		ENEMY_BREAK_STANDBY_C: "break_standby_C",
 		ENEMY_BREAK_STANDBY_D: "break_standby_D",
+		ENEMY_BREAK_STANDBY_E: "break_standby_E",
+		ENEMY_BREAK_STANDBY_F: "break_standby_F",
+		ENEMY_BREAK_STANDBY_G: "break_standby_G",
+		ENEMY_BREAK_STANDBY_H: "break_standby_H",
+		ENEMY_BREAK_STANDBY_I: "break_standby_I",
 		ENEMY_DAMAGE_STANDBY_A: "damage_standby_A",
 		ENEMY_DAMAGE_STANDBY_B: "damage_standby_B",
 		ENEMY_DAMAGE_STANDBY_C: "damage_standby_C",
 		ENEMY_DAMAGE_STANDBY_D: "damage_standby_D",
+		ENEMY_DAMAGE_STANDBY_E: "damage_standby_E",
+		ENEMY_DAMAGE_STANDBY_F: "damage_standby_F",
+		ENEMY_DAMAGE_STANDBY_G: "damage_standby_G",
+		ENEMY_DAMAGE_STANDBY_H: "damage_standby_H",
+		ENEMY_DAMAGE_STANDBY_I: "damage_standby_I",
 		LINK_PHASE_1: "setin_link",
 		LINK_PHASE_1_2: "setin_link_2",
 		LINK_PHASE_1_F2: "setin_link_f2",
@@ -1663,14 +1678,29 @@ class Player
 			case Player.c_animations.ENEMY_STANDBY_B: return "Standby B";
 			case Player.c_animations.ENEMY_STANDBY_C: return "Standby C";
 			case Player.c_animations.ENEMY_STANDBY_D: return "Standby D";
+			case Player.c_animations.ENEMY_STANDBY_E: return "Standby E";
+			case Player.c_animations.ENEMY_STANDBY_F: return "Standby F";
+			case Player.c_animations.ENEMY_STANDBY_G: return "Standby G";
+			case Player.c_animations.ENEMY_STANDBY_H: return "Standby H";
+			case Player.c_animations.ENEMY_STANDBY_I: return "Standby I";
 			case Player.c_animations.ENEMY_BREAK_STANDBY_A: return "Standby A (Break)";
 			case Player.c_animations.ENEMY_BREAK_STANDBY_B: return "Standby B (Break)";
 			case Player.c_animations.ENEMY_BREAK_STANDBY_C: return "Standby C (Break)";
 			case Player.c_animations.ENEMY_BREAK_STANDBY_D: return "Standby D (Break)";
+			case Player.c_animations.ENEMY_BREAK_STANDBY_E: return "Standby E (Break)";
+			case Player.c_animations.ENEMY_BREAK_STANDBY_F: return "Standby F (Break)";
+			case Player.c_animations.ENEMY_BREAK_STANDBY_G: return "Standby G (Break)";
+			case Player.c_animations.ENEMY_BREAK_STANDBY_H: return "Standby H (Break)";
+			case Player.c_animations.ENEMY_BREAK_STANDBY_I: return "Standby I (Break)";
 			case Player.c_animations.ENEMY_DAMAGE_STANDBY_A: return "Standby A (Dmgd)";
 			case Player.c_animations.ENEMY_DAMAGE_STANDBY_B: return "Standby B (Dmgd)";
 			case Player.c_animations.ENEMY_DAMAGE_STANDBY_C: return "Standby C (Dmgd)";
 			case Player.c_animations.ENEMY_DAMAGE_STANDBY_D: return "Standby D (Dmgd)";
+			case Player.c_animations.ENEMY_DAMAGE_STANDBY_E: return "Standby E (Dmgd)";
+			case Player.c_animations.ENEMY_DAMAGE_STANDBY_F: return "Standby F (Dmgd)";
+			case Player.c_animations.ENEMY_DAMAGE_STANDBY_G: return "Standby G (Dmgd)";
+			case Player.c_animations.ENEMY_DAMAGE_STANDBY_H: return "Standby H (Dmgd)";
+			case Player.c_animations.ENEMY_DAMAGE_STANDBY_I: return "Standby I (Dmgd)";
 			case Player.c_animations.LINK_PHASE_1: return "Phase 1 (Entry)(Lk)";
 			case Player.c_animations.LINK_PHASE_1_2: return "Phase 1B (Entry)(Lk)";
 			case Player.c_animations.LINK_PHASE_1_F2: return "Phase 1C (Entry)(Lk)";
