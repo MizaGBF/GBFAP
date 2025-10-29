@@ -4392,7 +4392,9 @@
 "1040220300":{"w":["1040220300","1040220300"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040220300",["sp_1040220300_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040220300",["sp_1040220300_1_s2"]]]},
 "1040714700":{"w":["1040714700","1040714700"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040714700",["sp_1040714700_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040714700",["sp_1040714700_1_s2"]]]},
 "1040621200":{"w":["1040621200","1040621200"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621200",["sp_1040621200_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621200",["sp_1040621200_1_s2"]]]},
-"1040028900":{"w":["1040028900","1040028900"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040028900",["sp_1040028900_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040028900",["sp_1040028900_1_s2"]]]}
+"1040028900":{"w":["1040028900","1040028900"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040028900",["sp_1040028900_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040028900",["sp_1040028900_1_s2"]]]},
+"1030109400":{"w":["1030109400","1030109400"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1030109400",["sp_1030109400_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1030109400",["sp_1030109400_1_s2"]]]},
+"1040220400":{"w":["1040220400","1040220400"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040220400",["sp_1040220400_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040220400",["sp_1040220400_1_s2"]]]}
 },
 "enemies":
 {
@@ -6171,7 +6173,7 @@
 "6202502":{"v":[["","enemy_6202502",null,"phit_0000000000",[]]]},
 "6202581":{"v":[["","enemy_6202581",null,"phit_0000000000",[]]]},
 "9100533":{"v":[["","enemy_9100533",null,"ehit_9100533",["esp_9100533_01","esp_9100533_02","esp_9100533_03"]]]},
-"9100543":{"v":[["","enemy_9100543",null,"ehit_9100543",["esp_9100543_01","esp_9100543_02","esp_9100543_03"]]],"ra":["raid_appear_9100543"]},
+"9100543":{"v":[["","enemy_9100543",null,"ehit_9100543",["esp_9100543_01","esp_9100543_02","esp_9100543_03"]]],"ra":["raid_appear_9100543","raid_appear_9100543_2"]},
 "9100552":{"v":[["","enemy_9100552",null,"phit_0000000000",[]]]},
 "8101593":{"v":[["","enemy_8101593",null,"ehit_8101593",["esp_8101593_01","esp_8101593_02","esp_8101593_03"]]],"ra":["raid_appear_8101593"]},
 "6202591":{"v":[["","enemy_6202591",null,"phit_0000000000",[]]]},
@@ -7114,7 +7116,9 @@
 "7300913":{"v":[["","enemy_7300913",null,"phit_0000000000",["esp_7300913_02_all"]]]},
 "9102723":{"v":[["","enemy_9102723",null,"ehit_9102723",["esp_9102723_01","esp_9102723_02","esp_9102723_03"]]],"ra":["raid_appear_9102723"]},
 "8104593":{"v":[["","enemy_8104593",null,"phit_0000000000",[]]],"ra":["raid_appear_8104593"]},
-"8104583":{"v":[["","enemy_8104583",null,"ehit_8104583",["esp_8104583_01","esp_8104583_02","esp_8104583_03"]]],"ra":["raid_appear_8104583"]}
+"8104583":{"v":[["","enemy_8104583",null,"ehit_8104583",["esp_8104583_01","esp_8104583_02","esp_8104583_03"]]],"ra":["raid_appear_8104583"]},
+"9102753":{"v":[["","enemy_9102753",null,"phit_0000000000",[]]]},
+"9102733":{"v":[["","enemy_9102733",null,"ehit_9102733",["esp_9102733_01","esp_9102733_02","esp_9102733_03"]]],"ra":["raid_appear_9102733"]}
 },
 "skins":
 {
@@ -15732,7 +15736,7 @@
 "1040425400":"@@Black_Cat_in_a_Hat wind staff ssr black cat in a hat とんがり帽子の黒猫 2025-10-16",
 "1040518600":"@@Pistolet_Fleuri water gun ssr pistolet fleuri ピストレア・ブーケ 2025-10-16",
 "1040621100":"@@Eleventh_Treat_of_the_Pack light melee ssr eleventh treat of the pack 第十一戌行袋爪 2025-10-16",
-"1100493":"earth griffin flying-boss",
+"1100493":"earth guardian of gleaming gold flying-boss",
 "7300893":"null versusia genesis dragon-boss gbf-versus-rising",
 "7300903":"null quasi-omnipotent antigonelos dragon-boss",
 "7300923":"null quasi-omnipotent antigonelos dragon-boss",
@@ -15741,12 +15745,14 @@
 "9102723":"dark demiurge other-boss",
 "8104593":"earth goddess of elegant sadism primal-boss",
 "8104583":"earth wayward heir of the twin beasts primal-boss",
-"1040122300":"@@Doombringer_Edge water dagger ssr doombringer edge destroyer 2025-10-22",
-"1040817900":"@@Doombringer_Lyre dark harp ssr doombringer lyre destroyer 2025-10-22",
-"1040220300":"@@Doombringer_Trident earth spear ssr doombringer trident destroyer 2025-10-22",
-"1040714700":"@@Doombringer_Bow light bow ssr doombringer bow destroyer 2025-10-22",
-"1040621200":"@@Doombringer_Gauntlet wind melee ssr doombringer gauntlet destroyer 2025-10-22",
-"1040028900":"@@Doombringer_Sword fire sabre ssr doombringer sword destroyer 2025-10-22"
+"1040122300":"@@Doombringer_Edge water dagger ssr doombringer edge destroyer 万象尽滅の鋭刃 2025-10-22",
+"1040817900":"@@Doombringer_Lyre dark harp ssr doombringer lyre destroyer 万象尽滅の楽弦 2025-10-22",
+"1040220300":"@@Doombringer_Trident earth spear ssr doombringer trident destroyer 万象尽滅の三又槍 2025-10-22",
+"1040714700":"@@Doombringer_Bow light bow ssr doombringer bow destroyer 万象尽滅の貫弓 2025-10-22",
+"1040621200":"@@Doombringer_Gauntlet wind melee ssr doombringer gauntlet destroyer 万象尽滅の鎧腕 2025-10-22",
+"1040028900":"@@Doombringer_Sword fire sabre ssr doombringer sword destroyer 万象尽滅の宝剣 2025-10-22",
+"9102753":"dark biyao mingyou other-boss",
+"9102733":"dark biyao mingyou other-boss"
 },
 "mypage":
 {
