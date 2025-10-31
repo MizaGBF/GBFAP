@@ -1360,13 +1360,7 @@ class Player
 		{
 			this.m_dispatch_stack[this.m_looping_index] = 0;
 			// if not looping or is mypage, we fire the dispatch
-			if(
-				!this.m_looping || 
-				(
-					this.m_recording == null &&
-					this.m_layout_mode == PlayerLayoutMode.mypage
-				)
-			)
+			if(!this.m_looping || this.m_layout_mode == PlayerLayoutMode.mypage)
 				cjs.dispatchEvent("animationComplete");
 		}
 	}
@@ -2000,12 +1994,26 @@ class Player
 				this.m_recording.position = this.m_main_tween.position;
 				// pause animation
 				this.pause();
-				// here we check if the animation is over
-				// if the segment is already in motions, it means we have looped back
-				// AND if the position is back to zero (meaning we just looped back to the start of another animation)
-				// AND the frames captured is non null (meaning it's not the beginning)
-				if(this.m_recording.motions.has(segment) && this.m_main_tween.position == 0 && this.m_recording.frames > 0)
+				/* here we check if the animation is over
+				for mypage animations, we let it run for 10s
+				for other animations:
+				- if the segment is already in motions, it means we have looped back
+				- AND if the position is back to zero (meaning we just looped back to the start of another animation)
+				- AND the frames captured is non null (meaning it's not the beginning)
+				*/
+				if(
+					(
+						this.m_layout_mode == PlayerLayoutMode.mypage
+						&& this.m_recording.frames >= 300
+					) || (
+						this.m_layout_mode != PlayerLayoutMode.mypage
+						&& this.m_recording.motions.has(segment)
+						&& this.m_main_tween.position == 0
+						&& this.m_recording.frames > 0
+					)
+				)
 				{
+					console.log(this.m_recording.frames, this.m_layout_mode);
 					// cleanup
 					createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
 					this.m_tick_callback = null;
