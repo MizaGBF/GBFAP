@@ -53,6 +53,10 @@ class PlayerUI
 			this.player.m_layout_mode == PlayerLayoutMode.mypage ?
 			"none" : ""
 		);
+		this.m_buttons.playlist.style.display = (
+			this.player.m_layout_mode == PlayerLayoutMode.mypage ?
+			"none" : ""
+		);
 		this.m_duration.parentNode.classList.toggle("player-button-warning", false);
 		this.m_buttons.pause.classList.toggle("player-button-warning", false);
 		// reset select
@@ -369,6 +373,7 @@ class PlayerUI
 				}
 			}
 		);
+		this.m_buttons.playlist.style.display = "none";
 		
 		this.m_buttons.texture = add_to(
 			span,
@@ -1531,8 +1536,11 @@ class PlayerUI
 			{
 				if(!event.shiftKey)
 				{
-					event.preventDefault();
-					this.m_buttons.playlist.click();
+					if(this.m_buttons.playlist.style.display != "none")
+					{
+						event.preventDefault();
+						this.m_buttons.playlist.click();
+					}
 				}
 				return;
 			}
