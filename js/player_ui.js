@@ -32,6 +32,7 @@ class PlayerUI
 		this.m_menus = {};
 		this.m_debug = null;
 		// others
+		this.m_record_transparency = true;
 		this.m_last_background_mode = null;
 		setInterval(this.update_debug_infos.bind(this), 300);
 	}
@@ -59,6 +60,7 @@ class PlayerUI
 		);
 		this.m_duration.parentNode.classList.toggle("player-button-warning", false);
 		this.m_buttons.pause.classList.toggle("player-button-warning", false);
+		this.record_duration_display();
 		// reset select
 		this.m_version.value = "0";
 		this.m_motion.value = "default";
@@ -406,7 +408,7 @@ class PlayerUI
 				title:"Save the current playlist as a WEBM file\n(Shortcut: Shift+W)",
 				innerhtml:this.get_button_html("record"),
 				onclick:() => {
-					this.control_record();
+					this.control_record_open();
 				}
 			}
 		);
@@ -488,6 +490,97 @@ class PlayerUI
 				innertext:"Close",
 				onclick:() => {
 					this.texture_close();
+				}
+			}
+		);
+		
+		// record menu
+		this.m_menus.record = add_to(fragment, "div", {cls:["player-menu", "player-control-hpart"]});
+		this.m_menus.record.style.display = "none";
+		part = add_to(this.m_menus.record, "div", {cls:["player-control-vpart", "player-control-slider-container"]});
+		// bitrate slider
+		add_to(part, "span", {cls:["player-control-label"], innertext:"Recording Bitrate"});
+		this.m_menus.record_bitrate = add_to(part, "input", {cls:["player-control-slider"], id:"player-record-bitrate"});
+		this.m_menus.record_bitrate.type = "range";
+		this.m_menus.record_bitrate.min = "1";
+		this.m_menus.record_bitrate.max = "99";
+		this.m_menus.record_bitrate.step = "1";
+		this.m_menus.record_bitrate.value = "50";
+		this.m_menus.record_bitrate.oninput = () => {
+			this.record_bitrate_update();
+		};
+		this.m_menus.record_bitrate_label = add_to(part, "label", {cls:["player-control-label"]});
+		this.m_menus.record_bitrate_label.htmlFor = "player-record-bitrate";
+		this.m_menus.record_bitrate_label.innerText = "50 Mbps";
+		// duration slider
+		this.m_menus.record_duration_br = add_to(part, "br");
+		this.m_menus.record_duration_text = add_to(part, "span", {cls:["player-control-label"], innertext:"Home Page duration"});
+		this.m_menus.record_duration = add_to(part, "input", {cls:["player-control-slider"], id:"player-record-duration"});
+		this.m_menus.record_duration.type = "range";
+		this.m_menus.record_duration.min = "5";
+		this.m_menus.record_duration.max = "60";
+		this.m_menus.record_duration.step = "1";
+		this.m_menus.record_duration.value = "10";
+		this.m_menus.record_duration.oninput = () => {
+			this.record_duration_update();
+		};
+		this.m_menus.record_duration_label = add_to(part, "label", {cls:["player-control-label"]});
+		this.m_menus.record_duration_label.htmlFor = "player-record-duration";
+		this.m_menus.record_duration_label.innerText = "10 s";
+		// transparency
+		add_to(part, "br");
+		add_to(part, "span", {cls:["player-control-label"], innertext:"BG. Transparency"});
+		this.m_menus.record_transparency = add_to(
+			part,
+			"button",
+			{
+				cls:["player-menu-button", "player-button-enabled"],
+				innertext:"Enabled",
+				onclick:() => {
+					this.record_transparency_toggle();
+				}
+			}
+		);
+		add_to(part, "span", {cls:["player-control-label"], innertext:"(Chrome only)"});
+		// buttons
+		part = add_to(this.m_menus.record, "div", {cls:["player-control-vpart"]});
+		add_to(part, "span", {cls:["player-control-label"], innertext:"Shift+W"});
+		add_to(
+			part,
+			"button",
+			{
+				cls:["player-menu-button"],
+				innertext:"Record",
+				onclick:() => {
+					this.control_record();
+				}
+			}
+		);
+		add_to(
+			part,
+			"button",
+			{
+				cls:["player-menu-button"],
+				innertext:"Reset",
+				onclick:() => {
+					this.m_menus.record_bitrate.value = "50";
+					this.m_menus.record_duration.value = "10";
+					this.m_record_transparency = false; // it will be toggled
+					this.record_bitrate_update();
+					this.record_duration_update();
+					this.record_transparency_toggle();
+					beep();
+				}
+			}
+		);
+		add_to(
+			part,
+			"button",
+			{
+				cls:["player-menu-button"],
+				innertext:"Close",
+				onclick:() => {
+					this.record_close();
 				}
 			}
 		);
@@ -1163,9 +1256,58 @@ class PlayerUI
 	// record button
 	control_record()
 	{
+		this.record_close();
 		this.player.record();
 		this.m_buttons.pause.classList.toggle("player-button-warning", true);
+	}
+	
+	// record menu open button
+	control_record_open()
+	{
+		// unhide
+		this.m_menus.record.style.display = "";
+		// lock controls
+		this.set_control_lock(true);
 		beep();
+	}
+	
+	// record menu close button
+	record_close()
+	{
+		// hide menu
+		this.m_menus.record.style.display = "none";
+		// lock controls
+		this.set_control_lock(false);
+		beep();
+	}
+	
+	record_bitrate_update()
+	{
+		this.m_menus.record_bitrate_label.innerText = this.m_menus.record_bitrate.value + " Mbps";
+		this.player.save_settings();
+	}
+	
+	record_duration_display()
+	{
+		let val = this.player.m_layout_mode == PlayerLayoutMode.mypage ? "" : "none";
+		this.m_menus.record_duration_br.style.display = val;
+		this.m_menus.record_duration_text.style.display = val;
+		this.m_menus.record_duration.style.display = val;
+		this.m_menus.record_duration_label.style.display = val;
+	}
+	
+	record_duration_update()
+	{
+		this.m_menus.record_duration_label.innerText = this.m_menus.record_duration.value + " s";
+		this.player.save_settings();
+	}
+	
+	record_transparency_toggle()
+	{
+		this.m_record_transparency = !this.m_record_transparency;
+		this.m_menus.record_transparency.classList.toggle("player-button-enabled", this.m_record_transparency);
+		this.m_menus.record_transparency.innerText = this.m_record_transparency ? "Enabled" : "Disabled";
+		this.player.save_settings();
 	}
 	
 	set_texture_list()
@@ -1579,6 +1721,11 @@ class PlayerUI
 			case "w": case "W": // record webm
 			{
 				if(event.shiftKey) // use shift key!
+				{
+					event.preventDefault();
+					this.control_record();
+				}
+				else
 				{
 					event.preventDefault();
 					this.m_buttons.record.click();

@@ -263,6 +263,7 @@ class Player
 	constructor(mode = PlayerLayoutMode.normal)
 	{
 		this.m_debug = {};
+		this.m_allow_save = true;
 		// the HTML ui is separated in another instance
 		this.ui = new PlayerUI(this);
 		this.init_attributes(mode);
@@ -279,7 +280,6 @@ class Player
 		// player state
 		this.m_paused = true;
 		this.m_loading = true;
-		this.m_setting_enabled = false;
 		// player callbacks
 		this.m_tick_callback = null;
 		this.m_animation_completed_callback = this.animation_completed.bind(this);
@@ -404,9 +404,9 @@ class Player
 	
 	load_settings()
 	{
-		if((config.save_setting_key ?? null) != null)
+		if((config.save_setting_key ?? null) != null && this.m_allow_save)
 		{
-			this.m_setting_enabled = true;
+			this.m_allow_save = false;
 			let settings = localStorage.getItem(config.save_setting_key);
 			if(settings != null)
 			{
@@ -438,18 +438,26 @@ class Player
 					// audio
 					this.m_audio_enabled = settings.audio;
 					this.ui.m_buttons.sound.classList.toggle("player-button-enabled", this.m_audio_enabled);
+					// record
+					this.ui.m_menus.record_bitrate.value = (settings.record_bitrate ?? "50");
+					this.ui.m_menus.record_duration.value = (settings.record_duration ?? "10");
+					this.ui.m_record_transparency = !(settings.record_transparency ?? false); // it will be toggled
+					this.ui.record_bitrate_update();
+					this.ui.record_duration_update();
+					this.ui.record_transparency_toggle();
 				} catch(err) {
 					console.error("Failed to load localStorage settings with key " + config.save_setting_key, err);
 				}
 				// re-enable saving
 				config.save_setting_key = tmp;
 			}
+			this.m_allow_save = true
 		}
 	}
 	
 	save_settings()
 	{
-		if((config.save_setting_key ?? null) != null)
+		if((config.save_setting_key ?? null) != null && this.m_allow_save)
 		{
 			let past_settings = localStorage.getItem(config.save_setting_key);
 			if(past_settings != null)
@@ -474,6 +482,10 @@ class Player
 			// audio
 			settings.beep = beep_enabled;
 			settings.audio = this.m_audio_enabled;
+			// record
+			settings.record_bitrate = this.ui.m_menus.record_bitrate.value;
+			settings.record_duration = this.ui.m_menus.record_duration.value;
+			settings.record_transparency = this.ui.m_record_transparency;
 			// set
 			settings = JSON.stringify(settings);
 			if(settings != past_settings)
@@ -1889,7 +1901,7 @@ class Player
 			// container
 			this.m_recording = {
 				motions: new Set(), // will contain the list of motion already played
-				alpha: (mimetype.includes(";codecs") && !is_firefox), // set to true for vp8 (and possibly vp9 in the future) and if NOT firefox
+				alpha: (mimetype.includes(";codecs") && this.ui.m_record_transparency && !is_firefox), // set to true for vp8 (and possibly vp9 in the future), setting is enabled and if NOT firefox
 				position: -1, // the last played frame
 				frames: 0, // the number of frames added to the recording
 				canvas: null, // the canvas used for the recording
@@ -1899,10 +1911,12 @@ class Player
 				chunks: [], // video chunks
 				mimetype: mimetype, // the mimetype
 				extension: mimetype.split(';')[0].split('/')[1], // the file extension
+				transparency: this.ui.m_record_transparency,
 				use_background: this.ui.m_background.src.startsWith(window.location.origin), // true if we can use the background
 				old_framerate: createjs.Ticker.framerate, // keep track of the framerate
 				firefox: is_firefox, // flag for firefox compatibility
-				error: false // error flag
+				error: false, // error flag
+				mypage_duration: parseInt(this.ui.m_menus.record_duration.value ?? "10") * 30 // duration of MyPage animations
 			};
 			// reset the framerate to 30
 			createjs.Ticker.framerate = 30;
@@ -1917,7 +1931,8 @@ class Player
 			// note: firefox doesn't support requestFrame, so we use an automatic capture at 30 fps
 			this.m_recording.stream = this.m_recording.canvas.captureStream(this.m_recording.firefox ? 30 : 0);
 			// create and set media recorder
-			this.m_recording.rec = new MediaRecorder(this.m_recording.stream, {mimeType: this.m_recording.mimetype, videoBitsPerSecond:50*1024*1024}); // 50mbps
+			let bitrate = parseInt(this.ui.m_menus.record_bitrate.value ?? "50") * 1024 * 1024;
+			this.m_recording.rec = new MediaRecorder(this.m_recording.stream, {mimeType: this.m_recording.mimetype, videoBitsPerSecond:bitrate}); // 50mbps
 			// set events
 			this.m_recording.rec.ondataavailable = e => {
 				// when new data is available
@@ -2002,7 +2017,7 @@ class Player
 				if(
 					(
 						this.m_layout_mode == PlayerLayoutMode.mypage
-						&& this.m_recording.frames >= 300
+						&& this.m_recording.frames >= this.m_recording.mypage_duration
 					) || (
 						this.m_layout_mode != PlayerLayoutMode.mypage
 						&& this.m_recording.motions.has(segment)
