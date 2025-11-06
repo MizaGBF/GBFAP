@@ -405,7 +405,7 @@ class PlayerUI
 			"button",
 			{
 				cls:["player-control-button"],
-				title:"Save the current playlist as a WEBM file\n(Shortcut: Shift+W)",
+				title:"Save the current playlist as a WEBM file\n(Shortcut: W for settings, Shift+W to record)",
 				innerhtml:this.get_button_html("record"),
 				onclick:() => {
 					this.control_record_open();
