@@ -78,9 +78,6 @@ class PlayerUI
 		// check if html is already populated
 		if(this.m_html.innerHTML.trim() != "")
 			throw new Error("Element player-container is already populated.");
-		// ref for callbacks
-		const _player_ = this.player;
-		const _ui_ = this;
 		// create fragment
 		let fragment = document.createDocumentFragment();
 		// Canvas container
@@ -114,11 +111,11 @@ class PlayerUI
 				id:"player-version-select"
 			}
 		);
-		this.m_version.onchange = function() {
-			_ui_.select_version();
+		this.m_version.onchange = () => {
+			this.select_version();
 		};
-		this.m_version.onkeydown = function(event) {
-			_ui_.ignore_alpha(event)
+		this.m_version.onkeydown = (event) => {
+			this.ignore_alpha(event);
 		};
 		
 		// motion control
@@ -135,11 +132,11 @@ class PlayerUI
 				id:"player-motion-select"
 			}
 		);
-		this.m_motion.onchange = function() {
-			_ui_.select_motion();
+		this.m_motion.onchange = () => {
+			this.select_motion();
 		};
-		this.m_motion.onkeydown = function(event) {
-			_ui_.ignore_alpha(event)
+		this.m_motion.onkeydown = (event) => {
+			this.ignore_alpha(event)
 		};
 		
 		// ability control
@@ -152,8 +149,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Change the position of Targeted Skills\n(Shortcut: S)",
 				innerhtml:this.get_button_html("ability_target"),
-				onclick:function() {
-					_ui_.control_ability_toggle();
+				onclick:() => {
+					this.control_ability_toggle();
 				}
 			}
 		);
@@ -170,11 +167,11 @@ class PlayerUI
 				id:"player-ability-select"
 			}
 		);
-		this.m_ability.onchange = function() {
-			_ui_.select_ability();
+		this.m_ability.onchange = () => {
+			this.select_ability();
 		};
-		this.m_ability.onkeydown = function(event) {
-			_ui_.ignore_alpha(event)
+		this.m_ability.onkeydown = (event) => {
+			this.ignore_alpha(event)
 		};
 		
 		// other displays
@@ -219,8 +216,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Reset the Speed to 100%\n(Shortcut: R)",
 				innerhtml:this.get_button_html("reset"),
-				onclick:function() {
-					_ui_.control_speed_reset();
+				onclick:() => {
+					this.control_speed_reset();
 				}
 			}
 		);
@@ -231,8 +228,8 @@ class PlayerUI
 		this.m_speed.max = "300";
 		this.m_speed.step = "5";
 		this.m_speed.value = "100";
-		this.m_speed.onmouseup = function() {
-			_ui_.control_speed_update();
+		this.m_speed.onmouseup = () => {
+			this.control_speed_update();
 		};
 		this.m_speed.addEventListener("touchend", (event) => { this.control_speed_update(); });
 		this.m_speed_label = add_to(sub_span, "label", {cls:["player-control-label"]});
@@ -248,8 +245,8 @@ class PlayerUI
 				cls:["player-control-button", "player-button-warning"],
 				title:"Toggle the Animation Audios\n(Shortcut: M)",
 				innerhtml:this.get_button_html("sound"),
-				onclick:function() {
-					_ui_.control_audio_toggle();
+				onclick:() => {
+					this.control_audio_toggle();
 				}
 			}
 		);
@@ -262,8 +259,8 @@ class PlayerUI
 		this.m_audio.max = "100";
 		this.m_audio.step = "1";
 		this.m_audio.value = "50";
-		this.m_audio.onmouseup = function() {
-			_ui_.control_audio_update();
+		this.m_audio.onmouseup = () => {
+			this.control_audio_update();
 		};
 		this.m_audio.addEventListener("touchend", (event) => { this.control_audio_update(); });
 		this.m_audio_label = add_to(sub_span, "label", {cls:["player-control-label"]});
@@ -281,8 +278,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Toggle the Pause\n(Shortcut: Space)",
 				innerhtml:this.get_button_html("pause"),
-				onclick:function() {
-					_ui_.control_pause_toggle();
+				onclick:() => {
+					this.control_pause_toggle();
 				}
 			}
 		);
@@ -294,8 +291,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Frame Advance\n(Shortcut: F)",
 				innerhtml:this.get_button_html("frame"),
-				onclick:function() {
-					_ui_.control_next_frame();
+				onclick:() => {
+					this.control_next_frame();
 				}
 			}
 		);
@@ -307,8 +304,8 @@ class PlayerUI
 				cls:["player-control-button", "player-button-enabled"],
 				title:"Toggle the Animation Loop\n(Shortcut: L)",
 				innerhtml:this.get_button_html("loop"),
-				onclick:function() {
-					_ui_.control_loop_toggle();
+				onclick:() => {
+					this.control_loop_toggle();
 				}
 			}
 		);
@@ -329,8 +326,8 @@ class PlayerUI
 		}
 		else
 		{
-			this.m_buttons.beep.onclick = function() {
-				_ui_.control_beep_toggle();
+			this.m_buttons.beep.onclick = () => {
+				this.control_beep_toggle();
 			}
 		}
 		
@@ -341,8 +338,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Shift the Enemy position\n(Shortcut: E)",
 				innerhtml:this.get_button_html("enemy_position"),
-				onclick:function() {
-					_ui_.control_enemy_shift();
+				onclick:() => {
+					this.control_enemy_shift();
 				}
 			}
 		);
@@ -355,8 +352,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Toggle the Bounding boxes\n(Shortcut: B)",
 				innerhtml:this.get_button_html("bound_box"),
-				onclick:function() {
-					_ui_.control_bound_toggle();
+				onclick:() => {
+					this.control_bound_toggle();
 				}
 			}
 		);
@@ -368,8 +365,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Open the Playlist menu\n(Shortcut: P)",
 				innerhtml:this.get_button_html("playlist"),
-				onclick:function() {
-					_ui_.control_playlist_open();
+				onclick:() => {
+					this.control_playlist_open();
 				}
 			}
 		);
@@ -382,8 +379,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Open the Texture menu\n(Shortcut: T)",
 				innerhtml:this.get_button_html("texture"),
-				onclick:function() {
-					_ui_.control_texture_open();
+				onclick:() => {
+					this.control_texture_open();
 				}
 			}
 		);
@@ -395,8 +392,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Download the Canvas\n(Shortcut: Shift+D)",
 				innerhtml:this.get_button_html("download"),
-				onclick:function() {
-					_ui_.control_download();
+				onclick:() => {
+					this.control_download();
 				}
 			}
 		);
@@ -408,8 +405,8 @@ class PlayerUI
 				cls:["player-control-button"],
 				title:"Save the current playlist as a WEBM file\n(Shortcut: Shift+W)",
 				innerhtml:this.get_button_html("record"),
-				onclick:function() {
-					_ui_.control_record();
+				onclick:() => {
+					this.control_record();
 				}
 			}
 		);
@@ -427,8 +424,8 @@ class PlayerUI
 		
 		part = add_to(this.m_menus.playlist, "div", {cls:["player-control-vpart"]});
 		this.m_menus.playlist_versions = add_to(part, "select", {cls:["player-select"]});
-		this.m_menus.playlist_versions.onchange = function() {
-			_ui_.playlist_update_motion();
+		this.m_menus.playlist_versions.onchange = () => {
+			this.playlist_update_motion();
 		};
 		
 		this.m_menus.playlist_motions = add_to(part, "select", {cls:["player-select"]});
@@ -438,8 +435,8 @@ class PlayerUI
 			{
 				cls:["player-menu-button"],
 				innertext:"Add",
-				onclick:function() {
-					_ui_.playlist_add();
+				onclick:() => {
+					this.playlist_add();
 				}
 			}
 		);
@@ -449,8 +446,8 @@ class PlayerUI
 			{
 				cls:["player-menu-button"],
 				innertext:"Play",
-				onclick:function() {
-					_ui_.playlist_play();
+				onclick:() => {
+					this.playlist_play();
 				}
 			}
 		);
@@ -460,8 +457,8 @@ class PlayerUI
 			{
 				cls:["player-menu-button"],
 				innertext:"Close",
-				onclick:function() {
-					_ui_.playlist_close();
+				onclick:() => {
+					this.playlist_close();
 				}
 			}
 		);
@@ -471,8 +468,8 @@ class PlayerUI
 			{
 				cls:["player-menu-button"],
 				innertext:"Reset",
-				onclick:function() {
-					_ui_.playlist_reset();
+				onclick:() => {
+					this.playlist_reset();
 				}
 			}
 		);
@@ -489,8 +486,8 @@ class PlayerUI
 			{
 				cls:["player-menu-button"],
 				innertext:"Close",
-				onclick:function() {
-					_ui_.texture_close();
+				onclick:() => {
+					this.texture_close();
 				}
 			}
 		);
@@ -498,8 +495,8 @@ class PlayerUI
 		// init
 		if(frame_interval == null)
 		{
-			setInterval(function() {
-					_ui_.update_frame_counter();
+			setInterval(() => {
+					this.update_frame_counter();
 				}, 
 				30
 			);
@@ -508,25 +505,24 @@ class PlayerUI
 		if(this.player.m_loading)
 			this.set_control_lock(true);
 		
-		document.addEventListener("keydown", function(event){
-			_ui_.space_key_fix(event);
+		document.addEventListener("keydown", (event) => {
+			this.space_key_fix(event);
 		});
-		document.addEventListener("keyup", function(event){
-			_ui_.key_bind_handler(event);
+		document.addEventListener("keyup", (event) => {
+			this.key_bind_handler(event);
 		});
 		
 		// apply fragment next frame
-		update_next_frame(function() {
-			_player_.ui.m_html.innerHTML = "";
-			_player_.ui.m_html.appendChild(fragment);
-			_player_.ui.m_canvas_container.scrollIntoView();
+		update_next_frame(() => {
+			this.m_html.innerHTML = "";
+			this.m_html.appendChild(fragment);
+			this.m_canvas_container.scrollIntoView();
 			document.dispatchEvent(new Event("player-html-ready"));
 		});
 	}
 	
 	init_background_elements()
 	{
-		const _ui_ = this;
 		if(this.player.m_layout_mode != this.m_last_background_mode)
 		{
 			let is_mypage = this.player.m_layout_mode == PlayerLayoutMode.mypage;
@@ -560,9 +556,9 @@ class PlayerUI
 					{
 						// open_background_search must be defined in your own code
 						if(typeof open_background_search !== "undefined")
-							this.m_backgrounds[icon].onclick = function() {
+							this.m_backgrounds[icon].onclick = () => {
 								// pause player
-								_ui_.player.pause();
+								this.player.pause();
 								// use callback
 								open_background_search(background_search_callback_mode);
 							};
@@ -571,14 +567,14 @@ class PlayerUI
 					}
 					else if(target.startsWith("./")) // local files
 					{
-						this.m_backgrounds[icon].onclick = function() {
-							_ui_.set_background(target);
+						this.m_backgrounds[icon].onclick = () => {
+							this.set_background(target);
 						};
 					}
 					else // remote files
 					{
-						this.m_backgrounds[icon].onclick = function() {
-							_ui_.set_background(Game.bgUri + "/" + target);
+						this.m_backgrounds[icon].onclick = () => {
+							this.set_background(Game.bgUri + "/" + target);
 						};
 					}
 				}
@@ -1006,8 +1002,8 @@ class PlayerUI
 			const ci = i;
 			let span = add_to(fragment, "span", {cls:["player-control-hpart"]});
 			// add delete button
-			add_to(span, "button", {cls:["player-control-button"], innerhtml:this.get_button_html("delete"), onclick:function() {
-				_ui_.playlist_del(ci);
+			add_to(span, "button", {cls:["player-control-button"], innerhtml:this.get_button_html("delete"), onclick:() => {
+				this.playlist_del(ci);
 			}});
 			// add text
 			span.appendChild(document.createTextNode(
@@ -1021,9 +1017,9 @@ class PlayerUI
 			// note: we don't display the version name is there is only one version
 		}
 		// add it next frame
-		update_next_frame(function() {
-			_ui_.m_menus.playlist_list.innerHTML = "";
-			_ui_.m_menus.playlist_list.appendChild(fragment);
+		update_next_frame(() => {
+			this.m_menus.playlist_list.innerHTML = "";
+			this.m_menus.playlist_list.appendChild(fragment);
 		});
 	}
 	
@@ -1267,8 +1263,8 @@ class PlayerUI
 				{
 					cls:["player-control-button", "player-control-texture-delete-button"],
 					innerhtml:this.get_button_html("delete"),
-					onclick:function() {
-						_ui_.texture_reset(name, c_display_name)
+					onclick:() => {
+						this.texture_reset(name, c_display_name)
 					},
 					id:display_name
 				}
@@ -1281,8 +1277,8 @@ class PlayerUI
 				{
 					cls:["player-control-button"],
 					innerhtml:this.get_button_html("upload"),
-					onclick:function() {
-						_ui_.texture_upload(name, c_display_name)
+					onclick:() => {
+						this.texture_upload(name, c_display_name)
 					}
 				}
 			);
@@ -1298,9 +1294,9 @@ class PlayerUI
 			a.href = Game.externUri + "/img/sp/cjs/" + split[split.length - 1];
 			a.target="_blank";
 		}
-		update_next_frame(function() {
-			_ui_.m_menus.texture_list.innerHTML = "";
-			_ui_.m_menus.texture_list.appendChild(fragment);
+		update_next_frame(() => {
+			this.m_menus.texture_list.innerHTML = "";
+			this.m_menus.texture_list.appendChild(fragment);
 		});
 	}
 	

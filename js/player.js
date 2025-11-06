@@ -905,14 +905,12 @@ class Player
 	// create a tween for N duration and store it
 	add_child_tween(tween_source, duration)
 	{
-		var _player_ = this;
-		const ref = tween_source;
 		this.m_tween_sources.push(tween_source);
 		const child_tween = createjs.Tween.get(tween_source, {
 			useTicks: true,
 			paused: this.m_paused
-		}).wait(duration).call(function () {
-			_player_.clean_tween(ref, child_tween);
+		}).wait(duration).call(() => {
+			this.clean_tween(tween_source, child_tween);
 		});
 		this.m_child_tweens.push(child_tween);
 	}
@@ -2022,9 +2020,8 @@ class Player
 						push_popup("Finalizing...");
 					// We wait a bit before ending the this.m_recording
 					// The delay is needed for to let MediaRecorder finishes what it's doing or frames might be missing
-					const _player_ = this;
-					setTimeout(function() {
-							_player_.record_end();
+					setTimeout(() => {
+							this.record_end();
 						},
 						2000
 					);
