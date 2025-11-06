@@ -1911,7 +1911,6 @@ class Player
 				chunks: [], // video chunks
 				mimetype: mimetype, // the mimetype
 				extension: mimetype.split(';')[0].split('/')[1], // the file extension
-				transparency: this.ui.m_record_transparency,
 				use_background: this.ui.m_background.src.startsWith(window.location.origin), // true if we can use the background
 				old_framerate: createjs.Ticker.framerate, // keep track of the framerate
 				firefox: is_firefox, // flag for firefox compatibility
