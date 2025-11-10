@@ -972,7 +972,8 @@
 "3040620000":{"v":[["0★","npc_3040620000_01","mortal_A","phit_3040620000",["nsp_3040620000_01_s2"]],["4★","npc_3040620000_02","mortal_A","phit_3040620000_02",["nsp_3040620000_02_s2"]]],"ab":["ab_3040620000_01","ab_all_3040620000_02"]},
 "3040624000":{"v":[["0★","npc_3040624000_01","mortal_A","phit_3040624000",["nsp_3040624000_01_s2"]],["4★","npc_3040624000_02","mortal_A","phit_3040624000_02",["nsp_3040624000_02_s2"]]],"ab":["ab_3040624000_01","ab_3040624000_02","ab_all_3040624000_01","ab_all_3040624000_02"]},
 "3040622000":{"v":[["0★","npc_3040622000_01","mortal_A","phit_3040622000",["nsp_3040622000_01_s2"]],["4★","npc_3040622000_02","mortal_A","phit_3040622000_02",["nsp_3040622000_02_s2"]]],"ab":["ab_3040622000_01","ab_all_3040622000_01","ab_all_3040622000_03"]},
-"3040625000":{"v":[["0★","npc_3040625000_01","mortal_A","phit_3040625000",["nsp_3040625000_01_s2"]],["4★","npc_3040625000_02","mortal_A","phit_3040625000_02",["nsp_3040625000_02_s2"]]],"ab":["ab_3040625000_01","ab_all_3040625000_01","ab_all_3040625000_02"]}
+"3040625000":{"v":[["0★","npc_3040625000_01","mortal_A","phit_3040625000",["nsp_3040625000_01_s2"]],["4★","npc_3040625000_02","mortal_A","phit_3040625000_02",["nsp_3040625000_02_s2"]]],"ab":["ab_3040625000_01","ab_all_3040625000_01","ab_all_3040625000_02"]},
+"3040623000":{"v":[["0★","npc_3040623000_01","mortal_A","phit_3040623000",["nsp_3040623000_01_s2"]],["4★","npc_3040623000_02","mortal_A","phit_3040623000_02",["nsp_3040623000_02_s2"]]],"ab":["ab_3040623000_01","ab_all_3040623000_02"]}
 },
 "partners":
 {
@@ -7139,7 +7140,12 @@
 "9102793":{"v":[["","enemy_9102793",null,"phit_0000000000",[]]]},
 "9102773":{"v":[["","enemy_9102773",null,"phit_0000000000",[]]]},
 "9102763":{"v":[["","enemy_9102763",null,"phit_0000000000",[]]]},
-"9102783":{"v":[["","enemy_9102783",null,"phit_0000000000",[]]]}
+"9102783":{"v":[["","enemy_9102783",null,"phit_0000000000",[]]]},
+"4101063":{"v":[["","enemy_4101063",null,"phit_0000000000",[]]]},
+"9102813":{"v":[["","enemy_9102813",null,"phit_0000000000",[]]]},
+"8104603":{"v":[["","enemy_8104603",null,"ehit_8104603",["esp_8104603_01","esp_8104603_02","esp_8104603_03"]]],"ra":["raid_appear_8104603"]},
+"8104633":{"v":[["","enemy_8104633",null,"phit_0000000000",[]]]},
+"8104643":{"v":[["","enemy_8104643",null,"phit_0000000000",[]]]}
 },
 "skins":
 {
@@ -15777,20 +15783,32 @@
 "3040621000":"@@Chichiri_(Water) water ssr chichiri 4saints draph female balanced axe チチリ yūki takada 高田憂希 2025-10-31",
 "3040620000":"@@Metera_(Grand) wind ssr metera grand erune female attack bow メーテラ ryōka yuzuki 柚木涼香 2025-10-31 gbf-versus-rising",
 "2040443000":"@@Cassiopeia wind ssr cassiopeia robur カシオペア 2025-10-31",
-"1030109400":"@@Nightfall's_Wing dark dagger sr nightfall's wing 2025-10-29",
-"1040220400":"@@Caliginous_Quill dark spear ssr caliginous quill 2025-10-29",
+"1030109400":"@@Nightfall's_Wing dark dagger sr nightfall's wing 黒紫羽 2025-10-29",
+"1040220400":"@@Caliginous_Quill dark spear ssr caliginous quill 冥羽筆 2025-10-29",
 "1040319600":"@@Sweety-Weety_Garnet_Broadaxe water axe ssr sweety-weety garnet broadaxe 甘々柘榴の鉞 2025-10-31",
 "1040714800":"@@Aetherial_Maverick wind bow ssr aetherial maverick grand マーヴェリック・エーテリアル 2025-10-31",
-"3040624000":"@@Asuka_and_Unit_02 fire ssr asuka & unit 02 collab human attack gun melee yuko miyamura",
-"1040220600":"@@Spear_of_Longinus_(Man-Portable) dark spear ssr spear of longinus man-portable",
-"1040518700":"@@Assault_Rifle_(Man-Portable) light gun ssr assault rifle man-portable",
+"3040624000":"@@Asuka_&_Unit_02 fire ssr asuka & unit 02 collab human female attack gun melee アスカ&2号機 yūko miyamura 宮村優子 2025-11-05",
+"1040220600":"@@Spear_of_Longinus_(Man-Portable) dark spear ssr spear of longinus man-portable collab ロンギヌスの槍・汎人用 2025-11-05",
+"1040518700":"@@Assault_Rifle_(Man-Portable) light gun ssr assault rifle man-portable collab アサルトライフル・汎人用 2025-11-05",
 "8300093":"dark resilient angel core-boss",
 "9102063":"dark crystalline angel other-boss",
 "9102743":"dark the 10th angel other-boss",
 "9102793":"dark the 10th angel other-boss",
 "9102773":"dark the 10th angel other-boss",
 "9102763":"dark the 10th angel other-boss",
-"9102783":"dark the 10th angel other-boss"
+"9102783":"dark the 10th angel other-boss",
+"3040622000":"@@Shinji_&_Unit_01 light ssr shinji & unit 01 collab human male balanced gun katana シンジ＆初号機 megumi ogata 緒方恵美 2025-11-05",
+"3040625000":"@@Kaworu_&_Mark.06 light ssr kaworu & mark.06 collab unknown male special spear harp カヲル&mark.06 akira ishida 石田彰 2025-11-05",
+"3040623000":"@@Rei_&_Unit_00 water ssr rei & unit 00 collab human female defense gun レイ＆零号機 megumi hayashibara 林原めぐみ 2025-11-10",
+"2040444000":"@@Trigger_of_Awakening:_Shinji_and_Rei water ssr trigger of awakening: shinji and rei collab 覚醒のトリガー シンジ＆レイ 2025-11-05",
+"2040445000":"@@Mari_and_Unit_08 wind ssr mari and unit 08 collab マリ＆８号機 2025-11-05",
+"1040220500":"@@Spear_of_Cassius_(Man-Portable) light spear ssr spear of cassius man-portable collab カシウスの槍・汎人用 2025-11-05",
+"1040122400":"@@Progressive_Knife_(Man-Portable) fire dagger ssr progressive knife man-portable collab プログレッシブナイフ・汎人用 2025-11-05",
+"4101063":"water prophetic angel golem-boss",
+"9102813":"water wondrous angel other-boss",
+"8104603":"water elpis agonia primal-boss",
+"8104633":"water elpis agonia primal-boss",
+"8104643":"water elpis agonia primal-boss"
 },
 "mypage":
 {
