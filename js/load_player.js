@@ -178,7 +178,8 @@ function monkeypatch_createjs()
 		_createjs_overloaded_func_["bitmap_init"].call(this, image);
 		if(tmp) this.sourceRect = tmp; // now set the source rect AFTER (to avoid a bug)
 		// add bouding box logic
-		add_bounding_box(this);
+		if(!(config.disable_bounding_boxes ?? false))
+			add_bounding_box(this);
 	};
 	
 	// add getStage method to DisplayObject

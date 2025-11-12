@@ -33,6 +33,7 @@ class PlayerUI
 		this.m_debug = null;
 		// others
 		this.m_record_transparency = true;
+		this.m_bounding_boxes_enabled = !(config.disable_bounding_boxes ?? false);
 		this.m_last_background_mode = null;
 		setInterval(this.update_debug_infos.bind(this), 300);
 	}
@@ -347,18 +348,21 @@ class PlayerUI
 		);
 		this.m_buttons.enemy_position.style.display = "none";
 		
-		this.m_buttons.bound_box = add_to(
-			span,
-			"button",
-			{
-				cls:["player-control-button"],
-				title:"Toggle the Bounding boxes\n(Shortcut: B)",
-				innerhtml:this.get_button_html("bound_box"),
-				onclick:() => {
-					this.control_bound_toggle();
+		if(this.m_bounding_boxes_enabled)
+		{
+			this.m_buttons.bound_box = add_to(
+				span,
+				"button",
+				{
+					cls:["player-control-button"],
+					title:"Toggle the Bounding boxes\n(Shortcut: B)",
+					innerhtml:this.get_button_html("bound_box"),
+					onclick:() => {
+						this.control_bound_toggle();
+					}
 				}
-			}
-		);
+			);
+		}
 		
 		this.m_buttons.playlist = add_to(
 			span,
@@ -1684,7 +1688,7 @@ class PlayerUI
 			}
 			case "b": case "B": // toggle bounding boxes
 			{
-				if(!event.shiftKey)
+				if(!event.shiftKey && this.m_bounding_boxes_enabled)
 				{
 					event.preventDefault();
 					this.m_buttons.bound_box.click();

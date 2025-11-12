@@ -49,6 +49,7 @@
         "delete":"<img src=\"assets/ui/controls/delete.png\">",
         "upload":"<img src=\"assets/ui/controls/upload.png\">"
     },
+    "disable_bounding_boxes":false,
     "default_background":"./assets/backgrounds/raid/grid.jpg",
     "backgrounds": {
         "<img src=\"assets/ui/controls/bg_select.png\">":null,

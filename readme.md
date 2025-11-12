@@ -206,6 +206,10 @@ Use to customize the inner HTML of the Player buttons.
 The key must match the one used by the button.  
 The value is the inner HTML.  
   
+### disable_bounding_boxes  
+**Optional** Boolean.  
+If `true`, the bounding box feature will be disabled.  
+  
 ### default_background  
 **Optional** String.  
 The url of the default background used in normal mode.  
