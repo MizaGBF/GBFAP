@@ -480,7 +480,7 @@ function player_start_end()
 			create_div:false,
 			navigation:true,
 			lookup:true,
-			related:false,
+			related:true,
 			link:true,
 			extra_links:[["Assets for " + last_id, "../GBFAL/assets/icon.png", "../GBFAL/?id=" + gbfal_prefix + last_id]]
 		}
