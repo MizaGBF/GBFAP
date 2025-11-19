@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.6'
+VERSION = '5.7'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
@@ -683,17 +683,8 @@ class Updater():
 
     def import_gbfal_lookup(self : Updater) -> None:
         try:
-            count = 0
-            for t in ("characters", "skins", "summons", "weapons", "enemies", "job"):
-                for k in self.data[t]:
-                    if k in self.gbfal["lookup"]:
-                        is_in_lookup : bool = k in self.data["lookup"]
-                        if (not is_in_lookup
-                                or (is_in_lookup and self.data["lookup"][k] != self.gbfal["lookup"][k])):
-                            self.data["lookup"][k] = self.gbfal["lookup"][k]
-                            count += 1
-            if count > 0:
-                self.tasks.print("Imported", count, "entries from GBFAL lookup")
+            if self.data["lookup"] != self.gbfal["lookup"]:
+                self.data["lookup"] = self.gbfal["lookup"]
                 self.modified = True
         except Exception as e:
             self.tasks.print("Failed to import GBFAL lookup:\n", self.trbk(e))

@@ -112,6 +112,13 @@ function start(conf, changelog)
 			"job":["Protagonist", GBFType.job],
 			"bss":["Enemy", GBFType.enemy]
 		},
+		[
+			GBFType.weapon,
+			GBFType.summon,
+			GBFType.character,
+			GBFType.job,
+			GBFType.enemy
+		],
 		(conf.allow_id_input ?? false)
 	);
 	search.populate_search_area();
