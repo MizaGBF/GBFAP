@@ -4409,7 +4409,9 @@
 "1040220500":{"w":["1040220500","1040220500"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040220500",["sp_1040220500_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040220500",["sp_1040220500_1_s2"]]]},
 "1040220600":{"w":["1040220600","1040220600"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040220600",["sp_1040220600_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040220600",["sp_1040220600_1_s2"]]]},
 "1040122400":{"w":["1040122400","1040122400"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122400",["sp_1040122400_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122400",["sp_1040122400_1_s2"]]]},
-"1040518700":{"w":["1040518700","1040518700"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040518700",["sp_1040518700_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040518700",["sp_1040518700_1_s2"]]]}
+"1040518700":{"w":["1040518700","1040518700"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040518700",["sp_1040518700_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040518700",["sp_1040518700_1_s2"]]]},
+"1030406800":{"w":["1030406800","1030406800"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1030406800",["sp_1030406800_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1030406800",["sp_1030406800_1_s2"]]]},
+"1040122500":{"w":["1040122500","1040122500"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122500",["sp_1040122500_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122500",["sp_1040122500_1_s2"]]]}
 },
 "enemies":
 {
@@ -5646,7 +5648,7 @@
 "6200982":{"v":[["","enemy_6200982",null,"phit_0000000000",["esp_6200982_01","esp_6200982_02"]]],"ra":["raid_appear_6200982"]},
 "6200992":{"v":[["","enemy_6200992",null,"phit_0000000000",[]]]},
 "6200942":{"v":[["","enemy_6200942",null,"ehit_6200942",["esp_6200942_01","esp_6200942_02","esp_6200942_03"]]]},
-"6201002":{"v":[["","enemy_6201002",null,"phit_0000000000",["esp_6201002_01","esp_6201002_02"]]]},
+"6201002":{"v":[["","enemy_6201002",null,"phit_0000000000",["esp_6201002_01","esp_6201002_02"]]],"ra":["raid_appear_6201002"]},
 "6200972":{"v":[["","enemy_6200972",null,"phit_0000000000",[]]]},
 "6201032":{"v":[["","enemy_6201032",null,"phit_0000000000",[]]]},
 "6200953":{"v":[["","enemy_6200953",null,"phit_0000000000",["esp_6200953_01","esp_6200953_02"]]]},
@@ -7146,7 +7148,11 @@
 "8104603":{"v":[["","enemy_8104603",null,"ehit_8104603",["esp_8104603_01","esp_8104603_02","esp_8104603_03"]]],"ra":["raid_appear_8104603"]},
 "8104633":{"v":[["","enemy_8104633",null,"phit_0000000000",[]]]},
 "8104643":{"v":[["","enemy_8104643",null,"phit_0000000000",[]]]},
-"8104613":{"v":[["","enemy_8104613",null,"ehit_8104613",["esp_8104613_01","esp_8104613_02","esp_8104613_03"]]],"ra":["raid_appear_8104613"]}
+"8104613":{"v":[["","enemy_8104613",null,"ehit_8104613",["esp_8104613_01","esp_8104613_02","esp_8104613_03"]]],"ra":["raid_appear_8104613"]},
+"8104623":{"v":[["","enemy_8104623",null,"ehit_8104623",["esp_8104623_01","esp_8104623_02","esp_8104623_03_all"]]],"ra":["raid_appear_8104623"]},
+"8104663":{"v":[["","enemy_8104663",null,"phit_0000000000",[]]]},
+"8104653":{"v":[["","enemy_8104653",null,"phit_0000000000",[]]]},
+"8104673":{"v":[["","enemy_8104673",null,"phit_0000000000",[]]]}
 },
 "skins":
 {
@@ -8308,7 +8314,13 @@
 "04ra":[["04ra_1","04ra_2","04ra_3"]],
 "09ra":[["09ra_1","09ra_2","09ra_3"]],
 "common_089":[["common_089"]],
-"common_090":[["common_090"]]
+"common_090":[["common_090"]],
+"event_541":[["event_541"]],
+"event_542":[["event_542"]],
+"event_543":[["event_543"]],
+"event_544":[["event_544"]],
+"event_545":[["event_545"]],
+"event_546":[["event_546"]]
 },
 "mypage_bg":
 {
@@ -10083,7 +10095,7 @@
 "3991077000":"@@Al-Khalid_(NPC) al-khalid harvin male アルハリード tomoyuki shimura 志村知幸 2018-04-30",
 "3991084000":"@@Ai_Haibara_(NPC) ai haibara collab human female 灰原哀 megumi hayashibara 林原めぐみ 2018-04-14",
 "3991082000":"@@Kogorō_Mōri_(NPC) kogorō mōri collab human male 毛利小五郎 rikiya koyama 小山力也 2018-04-14",
-"3991094000":"@@Abel_(NPC) abel human male アベル kenji takahashi 高橋研二 2018-04-24",
+"3991094000":"@@Abel_(NPC) cain's brother abel human male アベル kenji takahashi 高橋研二 2018-04-24",
 "3991109000":"@@Morgana_/_Mona_(NPC) morgana / mona collab unknown other モルガナ／モナ ikue ōtani 大谷育江 2018-06-18",
 "3991119000":"@@Shitori_(NPC) shitori human female シトリ chika anzai 安済 知佳 2018-09-19",
 "3991107000":"@@Ann_Takamaki_/_Panther_(NPC) ann takamaki / panther collab human female 高巻杏／パンサー nana mizuki 水樹奈々 2018-06-18",
@@ -16682,7 +16694,7 @@
 "3991074000":"airi unknown female マリエ noriko hidaka 日高のり子",
 "3991075000":"gigante blazer",
 "3991078000":"rosetta primal female ロゼッタ rie tanaka 田中理恵 gbf-versus-rising gbf-relink",
-"3991079000":"cagliostro human female カリオストロ sakura tange 丹下桜 gbf-versus-rising gbf-relink",
+"3991079000":"cagliostro and clarisse's duo cagliostro human female カリオストロ sakura tange 丹下桜 gbf-versus-rising gbf-relink",
 "3991080000":"lancelot human male ランスロット yūki ono 小野友樹 gbf-versus-rising gbf-relink",
 "3991086000":"culprit",
 "3991087000":"barawa draph male バロワ shunsuke takeuchi 武内駿輔",
@@ -18655,7 +18667,7 @@
 "3993755000":"sierokarte harvin female シェロカルテ emiri katō 加藤英美里 gbf-versus-rising gbf-relink",
 "3993757000":"sierokarte harvin female シェロカルテ emiri katō 加藤英美里 gbf-versus-rising gbf-relink",
 "3993744000":"agielba's daughter ardora draph female アルドラ hiromi igarashi 五十嵐裕美",
-"3993745000":"raziel primal female ラジエル ayaka nanase 七瀬彩夏",
+"3993745000":"deliford human male デリフォード kenta miyake 三宅健太",
 "3993746000":"raziel primal female ラジエル ayaka nanase 七瀬彩夏",
 "3993752000":"agielba draph male アギエルバ unshō ishizuka kōji ishii 石塚運昇 / 石井康嗣",
 "8104323":"null shiva primal-boss",
@@ -19478,7 +19490,15 @@
 "8104643":"water elpis agonia primal-boss",
 "9102813":"water wondrous angel other-boss",
 "3040623000":"@@Rei_&_Unit_00 water ssr rei & unit 00 collab human female defense gun レイ＆零号機 megumi hayashibara 林原めぐみ 2025-11-10",
-"8104613":"earth gagu primal-boss"
+"8104613":"earth gagu primal-boss",
+"3994180000":"primal beast paleta's relation paleta painter of shadow primal male 星晶獣パレタ natsumi fujiwara 藤原夏海 voiced voice-only",
+"3994181000":"primal beast paleta primal male 星晶獣パレタ natsumi fujiwara 藤原夏海",
+"3994182000":"primal beast paleta primal male 星晶獣パレタ natsumi fujiwara 藤原夏海",
+"3994183000":"primal beast paleta primal male 星晶獣パレタ natsumi fujiwara 藤原夏海",
+"8104623":"wind paleta painter of shadow primal-boss",
+"8104653":"wind paleta painter of shadow primal-boss",
+"8104663":"wind paleta painter of shadow primal-boss",
+"8104673":"wind paleta painter of shadow primal-boss"
 },
 "mypage":
 {
