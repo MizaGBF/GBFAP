@@ -973,7 +973,9 @@
 "3040624000":{"v":[["0★","npc_3040624000_01","mortal_A","phit_3040624000",["nsp_3040624000_01_s2"]],["4★","npc_3040624000_02","mortal_A","phit_3040624000_02",["nsp_3040624000_02_s2"]]],"ab":["ab_3040624000_01","ab_3040624000_02","ab_all_3040624000_01","ab_all_3040624000_02"]},
 "3040622000":{"v":[["0★","npc_3040622000_01","mortal_A","phit_3040622000",["nsp_3040622000_01_s2"]],["4★","npc_3040622000_02","mortal_A","phit_3040622000_02",["nsp_3040622000_02_s2"]]],"ab":["ab_3040622000_01","ab_all_3040622000_01","ab_all_3040622000_03"]},
 "3040625000":{"v":[["0★","npc_3040625000_01","mortal_A","phit_3040625000",["nsp_3040625000_01_s2"]],["4★","npc_3040625000_02","mortal_A","phit_3040625000_02",["nsp_3040625000_02_s2"]]],"ab":["ab_3040625000_01","ab_all_3040625000_01","ab_all_3040625000_02"]},
-"3040623000":{"v":[["0★","npc_3040623000_01","mortal_A","phit_3040623000",["nsp_3040623000_01_s2"]],["4★","npc_3040623000_02","mortal_A","phit_3040623000_02",["nsp_3040623000_02_s2"]]],"ab":["ab_3040623000_01","ab_all_3040623000_02"]}
+"3040623000":{"v":[["0★","npc_3040623000_01","mortal_A","phit_3040623000",["nsp_3040623000_01_s2"]],["4★","npc_3040623000_02","mortal_A","phit_3040623000_02",["nsp_3040623000_02_s2"]]],"ab":["ab_3040623000_01","ab_all_3040623000_02"]},
+"3040627000":{"v":[["0★","npc_3040627000_01","mortal_A","phit_3040627000",["nsp_3040627000_01_s2"]],["4★","npc_3040627000_02","mortal_A","phit_3040627000_02",["nsp_3040627000_02_s2"]]],"ab":["ab_3040627000_01","ab_3040627000_02","ab_all_3040627000_02"]},
+"3040626000":{"v":[["0★","npc_3040626000_01","mortal_A","phit_3040626000",["nsp_3040626000_01_s2"]],["0★ B","npc_3040626000_01_f1","mortal_A","phit_3040626000_f1",["nsp_3040626000_01_f1_s2"]],["4★","npc_3040626000_02","mortal_A","phit_3040626000_02",["nsp_3040626000_02_s2"]],["4★ B","npc_3040626000_02_f1","mortal_A","phit_3040626000_02_f1",["nsp_3040626000_02_f1_s2"]]],"ab":["ab_3040626000_01","ab_3040626000_02","ab_3040626000_03","ab_3040626000_04","ab_3040626000_05"]}
 },
 "partners":
 {
@@ -4411,7 +4413,9 @@
 "1040122400":{"w":["1040122400","1040122400"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122400",["sp_1040122400_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122400",["sp_1040122400_1_s2"]]]},
 "1040518700":{"w":["1040518700","1040518700"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040518700",["sp_1040518700_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040518700",["sp_1040518700_1_s2"]]]},
 "1030406800":{"w":["1030406800","1030406800"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1030406800",["sp_1030406800_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1030406800",["sp_1030406800_1_s2"]]]},
-"1040122500":{"w":["1040122500","1040122500"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122500",["sp_1040122500_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122500",["sp_1040122500_1_s2"]]]}
+"1040122500":{"w":["1040122500","1040122500"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122500",["sp_1040122500_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122500",["sp_1040122500_1_s2"]]]},
+"1040319700":{"w":["1040319700","1040319700"],"v":[["Gran","bsk_ax_0_01","mortal_A","phit_1040319700",["sp_1040319700_0_s2"]],["Djeeta","bsk_ax_1_01","mortal_A","phit_1040319700",["sp_1040319700_1_s2"]]]},
+"1040621300":{"w":["1040621300","1040621300"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621300",["sp_1040621300_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621300",["sp_1040621300_1_s2"]]]}
 },
 "enemies":
 {
@@ -9991,7 +9995,7 @@
 "3990558000":"@@Hal_(NPC) hal draph male ハル ayumu murase 村瀬歩",
 "3990563000":"@@Crystalia_(NPC) crystalia unknown female クリスタリアの民 ??? ？？？ 2016-11-01",
 "3990569000":"@@Aglovale,_Lord_of_Frost_(NPC) percival's brother aglovale lord of frost human male 氷皇アグロヴァル tatsuhisa suzuki 鈴木達央 2016-11-30",
-"3990616000":"@@Pholia_(NPC) pholia erune female フォリア maaya uchida 内田真礼 voiced",
+"3990616000":"@@Pholia_(NPC) alliah's relation pholia erune female フォリア maaya uchida 内田真礼 voiced",
 "3990605000":"@@Previous_King_of_Levin_(NPC) previous king of levin human male レヴィオン先王 hiroyuki kinoshita 木下浩之 2021-04-29",
 "3990587000":"@@Blue_Orbit_(NPC) blue orbit unknown other ブルーオービット masakazu morita 森田成一 2016-12-31",
 "3990610000":"@@Mordecai_(NPC) mordecai collab unknown other モルディカイ makoto yasumura 保村真 2017-02-22",
@@ -10158,7 +10162,7 @@
 "3991945000":"@@Kyojuro_Rengoku_(NPC) kyojuro rengoku collab human male 煉獄杏寿郎 satoshi hino 日野聡 2020-12-08",
 "3991552000":"@@Hagen_(SIEGFRIED) hagen human male ハーゲン takeshi maeda 前田剛",
 "3991950000":"@@Ryomen_Sukuna_(NPC) ryomen sukuna primal other 星晶獣リョウメンスクナ keiichi nakagawa 中川慶一 2020-12-13",
-"3991970000":"@@Ultra_Robo_Grand_God_Kaiser_(NPC) ultra robo grand god kaiser unknown other 極鋼巨帝グランゴッドカイザー ??? ？？？ 2020-12-28",
+"3991970000":"@@Ultra_Robo_Grand_God_Kaiser_(NPC) nicholas's relation ultra robo grand god kaiser unknown other 極鋼巨帝グランゴッドカイザー ??? ？？？ 2020-12-28",
 "3991636000":"@@Vikala_(NPC) vikala 12generals human female ビカラ atsumi tanezaki 種﨑敦美 2019-12-28 gbf-versus-rising",
 "3991651000":"@@Heisenberg_(NPC) heisenberg human male ハイゼンベルク chafurin 茶風林 2020-01-28",
 "3991513000":"@@Attiyah_(NPC) attiyah human male アーテファ anri katsu 勝杏里 2019-08-28",
@@ -14683,7 +14687,7 @@
 "8101673":"water gabriel primal-boss",
 "8101693":"wind raphael primal-boss",
 "8101713":"earth uriel primal-boss",
-"8101733":"water rampaging primal bai ze primal-boss",
+"8101733":"water bai ze primal-boss",
 "8101753":"earth xeno vohu manah primal-boss",
 "8101763":"earth ahura mazda primal-boss",
 "8101773":"earth temple of judgement primal-boss",
@@ -16532,7 +16536,7 @@
 "3990603000":"yurius human male ユリウス hidenobu kiuchi 木内秀信",
 "3990606000":"villager girl human female",
 "3990611000":"eris anthule collab human female",
-"3990617000":"bai ze",
+"3990617000":"pholia's relation bai ze primal",
 "3990619000":"juri human male ユーリ makoto furukawa 古川慎",
 "3990620000":"virtue core primal",
 "3990621000":"dominion core primal",
@@ -19498,7 +19502,13 @@
 "8104623":"wind paleta painter of shadow primal-boss",
 "8104653":"wind paleta painter of shadow primal-boss",
 "8104663":"wind paleta painter of shadow primal-boss",
-"8104673":"wind paleta painter of shadow primal-boss"
+"8104673":"wind paleta painter of shadow primal-boss",
+"3040627000":"@@Bennu_(Holiday) earth ssr bennu holiday primal male attack melee ベンヌ satoshi tsuruoka 鶴岡聡 2025-11-30",
+"3040626000":"@@Reinhardtzar_(Holiday) earth ssr reinhardtzar holiday draph male attack melee ラインハルザ kenichirou matsuda 松田健一郎 2025-11-30",
+"1030406800":"@@Achromatic_Palette wind staff sr achromatic palette 白黒の調色板 2025-11-28",
+"1040122500":"@@Chromatic_Paintbrush wind dagger ssr chromatic paintbrush 色彩の絵筆 2025-11-28",
+"1040319700":"@@Jinn_Al-Shajarah earth axe ssr jinn al-shajarah 2025-11-30",
+"1040621300":"@@Ripening_Spirit earth melee ssr ripening spirit 2025-11-30"
 },
 "mypage":
 {
