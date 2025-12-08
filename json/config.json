@@ -67,7 +67,8 @@
     "default_mypage_background":"./assets/backgrounds/mypage/grid.jpg",
     "mypage_background_allow_mask":true,
     "mypage_backgrounds": {
-        "<img src=\"assets/ui/controls/bg_select.png\">":null,
+        "<img src=\"assets/ui/controls/bg_select.png\">":"select",
+        "<img src=\"assets/ui/controls/bg_upload.png\">":"upload",
         "<img src=\"assets/ui/controls/mypage_bg_default1.png\">":"img/sp/mypage/town/10001/bg.jpg",
         "<img src=\"assets/ui/controls/mypage_bg_default2.png\">":"img/sp/mypage/town/20001/bg.jpg",
         "<img src=\"assets/ui/controls/bg_grid.png\">":"./assets/backgrounds/mypage/grid.jpg",
