@@ -739,8 +739,17 @@ class PlayerUI
 	//
 	update_background_upload_button_visibility()
 	{
-		if("last" in this.m_backgrounds && this.m_uploaded_background != null)
-			this.m_backgrounds["last"].style.display = "";
+		if("last" in this.m_backgrounds)
+		{
+			if(this.m_uploaded_background != null)
+			{
+				this.m_backgrounds["last"].style.display = "";
+			}
+			else
+			{
+				this.m_backgrounds["last"].style.display = "none";
+			}
+		}
 	}
 	
 	// set the background image
