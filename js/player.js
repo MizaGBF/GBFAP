@@ -2068,7 +2068,8 @@ class Player
 				{
 					if(this.m_recording.use_background) // if local background
 					{
-						this.m_recording.ctx.drawImage(this.ui.m_background, 0, 0, this.m_width, this.m_height);
+						this.m_recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
+						this.m_recording.ctx.drawImage(this.ui.m_background, 0, 0);
 					}
 					else // else just fill it black
 					{
