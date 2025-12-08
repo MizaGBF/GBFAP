@@ -1931,6 +1931,7 @@ class Player
 				old_framerate: createjs.Ticker.framerate, // keep track of the framerate
 				firefox: is_firefox, // flag for firefox compatibility
 				error: false, // error flag
+				bg_scaled_height: null, // used for background scaling
 				mypage_duration: parseInt(this.ui.m_menus.record_duration.value ?? "10") * 30 // duration of MyPage animations
 			};
 			// reset the framerate to 30
@@ -2068,8 +2069,16 @@ class Player
 				{
 					if(this.m_recording.use_background) // if local background
 					{
+						if(this.m_recording.bg_scaled_height == null)
+						{
+							this.m_recording.bg_scaled_height = (
+								this.m_width
+								/ this.ui.m_background.naturalWidth
+								* this.ui.m_background.naturalHeight
+							);
+						}
 						this.m_recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
-						this.m_recording.ctx.drawImage(this.ui.m_background, 0, 0);
+						this.m_recording.ctx.drawImage(this.ui.m_background, 0, 0, this.m_width,this.m_recording.bg_scaled_height);
 					}
 					else // else just fill it black
 					{
