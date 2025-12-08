@@ -546,7 +546,7 @@ class PlayerUI
 			}
 		);
 		add_to(part, "span", {cls:["player-control-label"], innertext:"Chrome only"});
-		add_to(part, "span", {cls:["player-control-label", "small-text"], innerhtml:"(Only color BG<br>are supported)"});
+		add_to(part, "span", {cls:["player-control-label", "small-text"], innerhtml:"(Only for color<br>and uploaded<br>backgrounds)"});
 		// buttons
 		part = add_to(this.m_menus.record, "div", {cls:["player-control-vpart"]});
 		add_to(part, "span", {cls:["player-control-label"], innertext:"Shift+W"});
@@ -649,9 +649,12 @@ class PlayerUI
 				let span = add_to(this.m_background_part, "span", {cls:["player-control-hpart", "player-control-button-container"]});
 				for(const [icon, target] of Object.entries(config[background_config_key]))
 				{
+					if(target == null)
+						continue;
 					this.m_backgrounds[icon] = add_to(span, "button", {cls:["player-control-button"], innerhtml:icon});
-					if(target == null) // the "search" button
+					if(target == "select") // the "search" button
 					{
+						this.m_backgrounds[icon].title = "Search a background";
 						// open_background_search must be defined in your own code
 						if(typeof open_background_search !== "undefined")
 							this.m_backgrounds[icon].onclick = () => {
@@ -662,6 +665,29 @@ class PlayerUI
 							};
 						else // else button won't show
 							this.m_backgrounds[icon].style.display = "none";
+					}
+					else if(target == "upload") // the "upload" button
+					{
+						this.m_backgrounds[icon].title = "Upload a background";
+						this.m_backgrounds[icon].onclick = () => {
+							let input = document.createElement("input");
+							input.type = "file";
+							input.accept = "image/*"; // Accepts any image file type
+							input.multiple = false;
+							input.onchange = ((event) => {
+								if(input.files && input.files.length > 0)
+								{
+									const file = input.files[0];
+									const reader = new FileReader();
+									reader.onload = ((e) => {
+										const dataURL = e.target.result;
+										this.set_background(e.target.result);
+									});
+									reader.readAsDataURL(file);
+								}
+							});
+							input.click();
+						};
 					}
 					else if(target.startsWith("./")) // local files
 					{

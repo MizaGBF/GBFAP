@@ -1911,7 +1911,10 @@ class Player
 				chunks: [], // video chunks
 				mimetype: mimetype, // the mimetype
 				extension: mimetype.split(';')[0].split('/')[1], // the file extension
-				use_background: this.ui.m_background.src.startsWith(window.location.origin), // true if we can use the background
+				use_background: ( // true if we can use the background
+					this.ui.m_background.src.startsWith(window.location.origin) ||
+					this.ui.m_background.src.startsWith("data:image")
+				), 
 				old_framerate: createjs.Ticker.framerate, // keep track of the framerate
 				firefox: is_firefox, // flag for firefox compatibility
 				error: false, // error flag
@@ -2025,7 +2028,6 @@ class Player
 					)
 				)
 				{
-					console.log(this.m_recording.frames, this.m_layout_mode);
 					// cleanup
 					createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
 					this.m_tick_callback = null;

@@ -52,7 +52,8 @@
     "disable_bounding_boxes":false,
     "default_background":"./assets/backgrounds/raid/grid.jpg",
     "backgrounds": {
-        "<img src=\"assets/ui/controls/bg_select.png\">":null,
+        "<img src=\"assets/ui/controls/bg_select.png\">":"select",
+        "<img src=\"assets/ui/controls/bg_upload.png\">":"upload",
         "<img src=\"assets/ui/controls/bg_default1.png\">":"img/sp/raid/bg/event_82.jpg",
         "<img src=\"assets/ui/controls/bg_default2.png\">":"img/sp/raid/bg/common_011.jpg",
         "<img src=\"assets/ui/controls/bg_default3.png\">":"img/sp/raid/bg/common_025.jpg",
