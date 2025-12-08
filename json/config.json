@@ -54,6 +54,7 @@
     "backgrounds": {
         "<img src=\"assets/ui/controls/bg_select.png\">":"select",
         "<img src=\"assets/ui/controls/bg_upload.png\">":"upload",
+        "<img src=\"assets/ui/controls/bg_last.png\">":"last",
         "<img src=\"assets/ui/controls/bg_default1.png\">":"img/sp/raid/bg/event_82.jpg",
         "<img src=\"assets/ui/controls/bg_default2.png\">":"img/sp/raid/bg/common_011.jpg",
         "<img src=\"assets/ui/controls/bg_default3.png\">":"img/sp/raid/bg/common_025.jpg",
@@ -69,6 +70,7 @@
     "mypage_backgrounds": {
         "<img src=\"assets/ui/controls/bg_select.png\">":"select",
         "<img src=\"assets/ui/controls/bg_upload.png\">":"upload",
+        "<img src=\"assets/ui/controls/bg_last.png\">":"last",
         "<img src=\"assets/ui/controls/mypage_bg_default1.png\">":"img/sp/mypage/town/10001/bg.jpg",
         "<img src=\"assets/ui/controls/mypage_bg_default2.png\">":"img/sp/mypage/town/20001/bg.jpg",
         "<img src=\"assets/ui/controls/bg_grid.png\">":"./assets/backgrounds/mypage/grid.jpg",

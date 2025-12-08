@@ -32,6 +32,7 @@ class PlayerUI
 		this.m_menus = {};
 		this.m_debug = null;
 		// others
+		this.m_uploaded_background = null;
 		this.m_record_transparency = true;
 		this.m_bounding_boxes_enabled = !(config.disable_bounding_boxes ?? false);
 		this.m_last_background_mode = null;
@@ -651,25 +652,32 @@ class PlayerUI
 				{
 					if(target == null)
 						continue;
-					this.m_backgrounds[icon] = add_to(span, "button", {cls:["player-control-button"], innerhtml:icon});
+					this.m_backgrounds[target] = add_to(
+						span,
+						"button",
+						{
+							cls:["player-control-button"],
+							innerhtml:icon
+						}
+					);
 					if(target == "select") // the "search" button
 					{
-						this.m_backgrounds[icon].title = "Search a background";
+						this.m_backgrounds[target].title = "Search a background";
 						// open_background_search must be defined in your own code
 						if(typeof open_background_search !== "undefined")
-							this.m_backgrounds[icon].onclick = () => {
+							this.m_backgrounds[target].onclick = () => {
 								// pause player
 								this.player.pause();
 								// use callback
 								open_background_search(background_search_callback_mode);
 							};
 						else // else button won't show
-							this.m_backgrounds[icon].style.display = "none";
+							this.m_backgrounds[target].style.display = "none";
 					}
 					else if(target == "upload") // the "upload" button
 					{
-						this.m_backgrounds[icon].title = "Upload a background";
-						this.m_backgrounds[icon].onclick = () => {
+						this.m_backgrounds[target].title = "Upload a background";
+						this.m_backgrounds[target].onclick = () => {
 							let input = document.createElement("input");
 							input.type = "file";
 							input.accept = "image/*"; // Accepts any image file type
@@ -681,6 +689,11 @@ class PlayerUI
 									const reader = new FileReader();
 									reader.onload = ((e) => {
 										const dataURL = e.target.result;
+										if(dataURL != this.m_uploaded_background)
+										{
+											this.m_uploaded_background = dataURL;
+											this.update_background_upload_button_visibility();
+										}
 										this.set_background(e.target.result);
 									});
 									reader.readAsDataURL(file);
@@ -689,15 +702,27 @@ class PlayerUI
 							input.click();
 						};
 					}
+					else if(target == "last") // the "last" button
+					{
+						this.m_backgrounds[target].title = "Load the last uploaded background";
+						this.m_backgrounds[target].onclick = () => {
+							if(this.m_uploaded_background != null)
+							{
+								this.set_background(this.m_uploaded_background);
+							}
+						};
+						// invisible by default
+						this.m_backgrounds[target].style.display = "none";
+					}
 					else if(target.startsWith("./")) // local files
 					{
-						this.m_backgrounds[icon].onclick = () => {
+						this.m_backgrounds[target].onclick = () => {
 							this.set_background(target);
 						};
 					}
 					else // remote files
 					{
-						this.m_backgrounds[icon].onclick = () => {
+						this.m_backgrounds[target].onclick = () => {
 							this.set_background(Game.bgUri + "/" + target);
 						};
 					}
@@ -709,6 +734,13 @@ class PlayerUI
 			}
 			this.m_last_background_mode = this.player.m_layout_mode;
 		}
+	}
+	
+	//
+	update_background_upload_button_visibility()
+	{
+		if("last" in this.m_backgrounds && this.m_uploaded_background != null)
+			this.m_backgrounds["last"].style.display = "";
 	}
 	
 	// set the background image

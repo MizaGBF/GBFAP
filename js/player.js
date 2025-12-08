@@ -426,12 +426,23 @@ class Player
 							this.ui.m_background.src = settings.mypage_background;
 							this.ui.update_mypage_background_mask();
 						}
+						if(settings.mypage_uploaded_background)
+						{
+							this.ui.m_uploaded_background = settings.mypage_uploaded_background;
+						}
 					}
 					else
 					{
 						if(settings.background)
+						{
 							this.ui.m_background.src = settings.background;
+						}
+						if(settings.uploaded_background)
+						{
+							this.ui.m_uploaded_background = settings.uploaded_background;
+						}
 					}
+					this.ui.update_background_upload_button_visibility();
 					// beep
 					beep_enabled = settings.beep;
 					this.ui.m_buttons.beep.classList.toggle("player-button-warning", !beep_enabled);
@@ -474,10 +485,12 @@ class Player
 			if(this.m_layout_mode == PlayerLayoutMode.mypage)
 			{
 				settings.mypage_background = this.ui.m_background.src;
+				settings.mypage_uploaded_background = this.ui.m_uploaded_background;
 			}
 			else
 			{
 				settings.background = this.ui.m_background.src;
+				settings.uploaded_background = this.ui.m_uploaded_background;
 			}
 			// audio
 			settings.beep = beep_enabled;
