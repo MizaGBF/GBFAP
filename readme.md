@@ -288,10 +288,7 @@ For example, `150201` and `dkf` are Dark Fencer IDs. It also uses a sword `sw` a
 > [!TIP]  
 > Using the `-al` flag should remove the needs to manually update the class details, but this solution isn't fully tested.  
   
-### Unite & Fight skin  
-The skin **Honing Seeker: Nova** and its upgrades are also separated, to avoid a few headaches related to their ID and for clarity sake.  
+### Evolving outfits  
+The skins such as **Honing Seeker: Nova** and their upgrades are also separated, to avoid a few headaches related to their ID and for clarity sake.  
 The related IDs must be set in `json/manual_constants.json`, under `UNIQUE_SKIN`.  
   
-### Others  
-It's untested if the Player animations can be switched on the fly from one element to another and what's the system impact is (Memory usage, etc...).  
-It's recommended to stick to one set of animations and player instance per page.  
