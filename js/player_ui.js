@@ -71,6 +71,7 @@ class PlayerUI
 		this.m_motion_text.innerHTML = config.loading_html ? config.loading_html : "Loading";
 		this.m_duration.innerText = "Downloading...";
 		// reset background
+		this.m_uploaded_background = null;
 		this.init_background_elements();
 		// cleat the canvas
 		this.m_canvas.getContext("2d").clearRect(0, 0, Player.c_canvas_size, Player.c_canvas_size);
