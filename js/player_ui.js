@@ -545,7 +545,8 @@ class PlayerUI
 				}
 			}
 		);
-		add_to(part, "span", {cls:["player-control-label"], innertext:"(Chrome only)"});
+		add_to(part, "span", {cls:["player-control-label"], innertext:"Chrome only"});
+		add_to(part, "span", {cls:["player-control-label", "small-text"], innerhtml:"(Only color BG<br>are supported)"});
 		// buttons
 		part = add_to(this.m_menus.record, "div", {cls:["player-control-vpart"]});
 		add_to(part, "span", {cls:["player-control-label"], innertext:"Shift+W"});
