@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.7'
+VERSION = '5.8'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
@@ -566,7 +566,7 @@ class Updater():
                 self.tasks.print("New mypage backgrounds imported from GBFAL")
             # class import
             count : int = 0
-            for k in self.gbfal["job"]:
+            for k, jd in self.gbfal["job"].items():
                 if k not in CLASS_LIST:
                     CLASS_LIST[k] = self.gbfal['job'][k][6] # add mh
                     for x, v in self.gbfal['job_wpn'].items():
@@ -577,6 +577,11 @@ class Updater():
                             for i in range(len(CLASS_LIST[k])): # add missing classes
                                 CLASS_LIST[k] = x + "_" + CLASS_LIST[k]
                     count += 1
+                else:
+                    # mypage section
+                    if len(jd[13]) > 0 and k not in self.data["mypage"]:
+                        self.tasks.add(self.update_mypage, parameters=(k,))
+                        self.tasks.print("New mypage animation found in GBFAL:", k)
             if count > 0:
                 self.tasks.print("Found", count, "new classes in GBFAL")
             # uncap check
@@ -598,6 +603,10 @@ class Updater():
                                 count += 1
                     if max_uncap > 0: # add to table if not 0
                         table[k] = max_uncap
+                    # mypage section
+                    if len(v[9]) > 0 and k not in self.data["mypage"]:
+                        self.tasks.add(self.update_mypage, parameters=(k,))
+                        self.tasks.print("New mypage animation found in GBFAL:", k)
             for k, v in self.gbfal['summons'].items(): # do the same for summons
                 if isinstance(v, list):
                     max_uncap = 0
@@ -610,6 +619,10 @@ class Updater():
                             max_uncap = u
                     if max_uncap > 0:
                         table[k] = max_uncap
+                    # mypage section
+                    if len(v[3]) > 0 and k not in self.data["mypage"]:
+                        self.tasks.add(self.update_mypage, parameters=(k,))
+                        self.tasks.print("New mypage animation found in GBFAL:", k)
             for t in ("characters", "summons"):
                 for k, v in self.data[t].items(): # now go over our items and our uncap table and comapre
                     if k in table:
