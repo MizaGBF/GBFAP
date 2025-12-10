@@ -1130,6 +1130,7 @@ class PlayerUI
 	{
 		// remove display "none"
 		this.m_menus.playlist.style.display = "";
+		this.m_menus.playlist.scrollIntoView();
 		// update motion list (if needed)
 		this.playlist_update_motion();
 		// update displayed playlist
@@ -1339,6 +1340,7 @@ class PlayerUI
 	{
 		// unhide
 		this.m_menus.record.style.display = "";
+		this.m_menus.record.scrollIntoView();
 		// lock controls
 		this.set_control_lock(true);
 		beep();
@@ -1520,6 +1522,7 @@ class PlayerUI
 	{
 		// unhide
 		this.m_menus.texture.style.display = "";
+		this.m_menus.texture.scrollIntoView();
 		// lock controls
 		this.set_control_lock(true);
 		beep();
