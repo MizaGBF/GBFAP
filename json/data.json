@@ -429,7 +429,7 @@
 "3030182000":{"v":[["0★","npc_3030182000_01_s2","mortal_A","phit_3040098000",["nsp_3030182000_01_s2"]],["4★","npc_3030182000_02_s2","mortal_A","phit_3040098000",["nsp_3030182000_02_s2"]],["5★","npc_3030182000_03","mortal_A","phit_3040098000",["nsp_3030182000_03_s2"]]],"ab":["ab_all_3030182000_01","ab_all_3030182000_02","ab_all_3030182000_03","ab_all_3030182000_04"]},
 "3030184000":{"v":[["0★","npc_3030184000_01","mortal_A","phit_kt_0013",["nsp_3030184000_01"]],["4★","npc_3030184000_02","mortal_A","phit_kt_0013",["nsp_3030184000_02"]]],"ab":["ab_all_3030184000_01","ab_all_3030184000_02"]},
 "3030185000":{"v":[["0★","npc_3030185000_01","mortal_A","phit_gu_0016",["nsp_3030185000_01","nsp_3030185000_01_b","nsp_3030185000_01_c","nsp_3030185000_01_d","nsp_3030185000_01_e"]],["4★","npc_3030185000_02","mortal_A","phit_gu_0016",["nsp_3030185000_02","nsp_3030185000_02_b","nsp_3030185000_02_c","nsp_3030185000_02_d","nsp_3030185000_02_e"]]],"ab":[]},
-"3040171000":{"v":[["0★","npc_3040171000_01","mortal_A","phit_3040171000",["nsp_3040171000_01_s2"]],["4★","npc_3040171000_02","mortal_A","phit_3040171000",["nsp_3040171000_02_s2"]]],"ab":["ab_3040171000_01","ab_all_3040171000_01","ab_all_3040171000_02"]},
+"3040171000":{"v":[["0★","npc_3040171000_01","mortal_A","phit_3040171000",["nsp_3040171000_01_s2"]],["4★","npc_3040171000_02","mortal_A","phit_3040171000",["nsp_3040171000_02_s2"]],["5★","npc_3040171000_03","mortal_A","phit_3040171000_03",["nsp_3040171000_03_s2"]]],"ab":["ab_3040171000_01","ab_3040171000_02","ab_3040171000_03","ab_all_3040171000_01","ab_all_3040171000_02"]},
 "3030186000":{"v":[["0★","npc_3030186000_01","mortal_A","phit_me_0012_silent",["nsp_3030186000_01"]],["4★","npc_3030186000_02","mortal_A","phit_me_0012_silent",["nsp_3030186000_02"]]],"ab":[]},
 "3030187000":{"v":[["0★","npc_3030187000_01","mortal_A","phit_bw_0011",["nsp_3030187000_01"]],["4★","npc_3030187000_02","mortal_A","phit_bw_0011",["nsp_3030187000_02"]]],"ab":[]},
 "3040174000":{"v":[["0★","npc_3040174000_01","mortal_A","phit_3040174000",["nsp_3040174000_01"]],["4★","npc_3040174000_02","mortal_A","phit_3040174000",["nsp_3040174000_02"]]],"ab":["ab_3040174000_01","ab_3040174000_02"]},
@@ -19496,7 +19496,7 @@
 "3040623000":"@@Rei_&_Unit_00 water ssr rei & unit 00 collab human female defense gun レイ＆零号機 megumi hayashibara 林原めぐみ 2025-11-10",
 "8104613":"earth gagu primal-boss",
 "3994180000":"primal beast paleta's relation paleta painter of shadow primal male 星晶獣パレタ natsumi fujiwara 藤原夏海 voiced voice-only",
-"3994181000":"primal beast paleta primal male 星晶獣パレタ natsumi fujiwara 藤原夏海",
+"3994181000":"@@Primal_Beast_Paleta_(NPC) primal beast paleta primal male 星晶獣パレタ natsumi fujiwara 藤原夏海 2025-11-28",
 "3994182000":"primal beast paleta primal male 星晶獣パレタ natsumi fujiwara 藤原夏海",
 "3994183000":"primal beast paleta primal male 星晶獣パレタ natsumi fujiwara 藤原夏海",
 "8104623":"wind paleta painter of shadow primal-boss",
@@ -19507,8 +19507,10 @@
 "3040626000":"@@Reinhardtzar_(Holiday) earth ssr reinhardtzar holiday draph male attack melee ラインハルザ kenichirou matsuda 松田健一郎 2025-11-30",
 "1030406800":"@@Achromatic_Palette wind staff sr achromatic palette 白黒の調色板 2025-11-28",
 "1040122500":"@@Chromatic_Paintbrush wind dagger ssr chromatic paintbrush 色彩の絵筆 2025-11-28",
-"1040319700":"@@Jinn_Al-Shajarah earth axe ssr jinn al-shajarah 2025-11-30",
-"1040621300":"@@Ripening_Spirit earth melee ssr ripening spirit 2025-11-30"
+"1040319700":"@@Jinn_Al-Shajarah earth axe ssr jinn al-shajarah シャジャラ・ジン 2025-11-30",
+"1040621300":"@@Ripening_Spirit earth melee ssr ripening spirit 追熟の烈酒 2025-11-30",
+"3994186000":"missing-help-wanted",
+"3994187000":"cain human male カイン takuma terashima 寺島拓篤"
 },
 "mypage":
 {
@@ -19517,7 +19519,14 @@
 "3040611000":{"v":[["1","mypage_3040611000_01",null,null,[]],["2","mypage_3040611000_02",null,null,[]]]},
 "360303":{"v":[["1","mypage_360303_gu_0_01",null,null,[]],["2","mypage_360303_gu_1_01",null,null,[]]]},
 "3040613000":{"v":[["1","mypage_3040613000_01",null,null,[]],["2","mypage_3040613000_02",null,null,[]]]},
-"3040620000":{"v":[["1","mypage_3040620000_01",null,null,[]],["2","mypage_3040620000_02",null,null,[]]]}
+"3040620000":{"v":[["1","mypage_3040620000_01",null,null,[]],["2","mypage_3040620000_02",null,null,[]]]},
+"3040065000":{"v":[["1","mypage_3040065000_01",null,null,[]],["2","mypage_3040065000_02",null,null,[]],["3","mypage_3040065000_03",null,null,[]]]},
+"3040054000":{"v":[["1","mypage_3040054000_01",null,null,[]],["2","mypage_3040054000_02",null,null,[]],["3","mypage_3040054000_03",null,null,[]]]},
+"3040106000":{"v":[["1","mypage_3040106000_01",null,null,[]],["2","mypage_3040106000_02",null,null,[]],["3","mypage_3040106000_03",null,null,[]]]},
+"3040059000":{"v":[["1","mypage_3040059000_01",null,null,[]],["2","mypage_3040059000_02",null,null,[]],["3","mypage_3040059000_03",null,null,[]]]},
+"3040068000":{"v":[["1","mypage_3040068000_01",null,null,[]],["2","mypage_3040068000_02",null,null,[]],["3","mypage_3040068000_03",null,null,[]]]},
+"3040077000":{"v":[["1","mypage_3040077000_01",null,null,[]],["2","mypage_3040077000_02",null,null,[]],["3","mypage_3040077000_03",null,null,[]]]},
+"3040082000":{"v":[["1","mypage_3040082000_01",null,null,[]],["2","mypage_3040082000_02",null,null,[]],["3","mypage_3040082000_03",null,null,[]]]}
 },
 "styles":
 {
