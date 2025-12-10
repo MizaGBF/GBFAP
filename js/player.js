@@ -1324,11 +1324,17 @@ class Player
 			useTicks: true,
 			override: true,
 			paused: this.m_paused
-		}).wait(duration).call(function (p, index) {
-			p.m_looping_index = index;
-			if(p.m_recording || (p.m_looping && p.m_layout_mode != PlayerLayoutMode.mypage))
-				p.play_next(cjs);
-		}, [this, index]);
+		}).wait(duration).call((index) => {
+			this.m_looping_index = index;
+			if(
+				this.m_layout_mode != PlayerLayoutMode.mypage &&
+				(
+					this.m_recording ||
+					this.m_looping
+				)
+			)
+				this.play_next(cjs);
+		}, [index]);
 	}
 	
 	// change which character to play animations from
@@ -2007,16 +2013,23 @@ class Player
 			let segment = "" + this.m_current_cjs + "#" + this.m_current_motion;
 			// "segment" will be something like VERSION_INDEX#MOTION_INDEX
 			// it's done this way to ensure we won't have weird overlaps
-			
+			//
 			// next we check if either:
 			// - it's the very first frame (no motions seen and frames captured at 0)
 			// - the frame has changed (if it did, this mean the animation progressed)
 			// - if the current segment is stored in motions (if it's not, this means we haven't seen it yet)
-			
+			//
+			// Note: for home page animations, we just go through, as we don't care about the loop or animations
 			if(
-				(this.m_recording.motions.length == 0 && this.m_recording.frames == 0)
-				|| (this.m_recording.position != this.m_main_tween.position)
-				|| (!this.m_recording.motions.has(segment))
+				this.m_layout_mode == PlayerLayoutMode.mypage ||
+				(
+					this.m_layout_mode != PlayerLayoutMode.mypage &&
+					(
+						(this.m_recording.motions.length == 0 && this.m_recording.frames == 0)
+						|| (this.m_recording.position != this.m_main_tween.position)
+						|| (!this.m_recording.motions.has(segment))
+					)
+				)
 			)
 			{
 				// update position
@@ -2112,6 +2125,7 @@ class Player
 		}
 		catch(err) // error handling
 		{
+			console.error(err);
 			// cleanup
 			createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
 			this.m_tick_callback = null;

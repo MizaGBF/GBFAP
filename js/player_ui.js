@@ -1896,7 +1896,7 @@ class PlayerUI
 					{
 						str += "<br>Extra: None";
 					}
-					str += "<br>Motion: " + this.player.m_debug.motion + "<br>Loop Duration: " + this.player.m_debug.duration + "f";
+					str += "<br>Motion: " + this.player.m_debug.motion + "<br>Loop Frame: " + this.player.m_main_tween.position + "<br>Loop Duration: " + this.player.m_debug.duration + "f";
 				}
 				str += "<br><br>Memory:<br>" + this.player.m_debug.element_count + " elements<br>" + this.player.m_debug.texture_count + " textures";
 				if(window.audio)
