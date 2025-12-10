@@ -1920,6 +1920,7 @@ class Player
 			// container
 			this.m_recording = {
 				motions: new Set(), // will contain the list of motion already played
+				can_alpha: (mimetype.includes(";codecs") && !is_firefox), // flag to check if alpha can be true if the button is enabled
 				alpha: (mimetype.includes(";codecs") && this.ui.m_record_transparency && !is_firefox), // set to true for vp8 (and possibly vp9 in the future), setting is enabled and if NOT firefox
 				position: -1, // the last played frame
 				frames: 0, // the number of frames added to the recording
@@ -2082,6 +2083,18 @@ class Player
 				{
 					if(this.m_recording.use_background) // if local background
 					{
+						// clear the rectangle
+						if(this.m_recording.can_alpha)
+						{
+							this.m_recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
+						}
+						else
+						{
+							this.m_recording.ctx.rect(0, 0, this.m_width,this.m_height);
+							this.m_recording.ctx.fillStyle = "black";
+							this.m_recording.ctx.fill();
+						}
+						// draw the background
 						if(this.m_recording.bg_scaled_height == null)
 						{
 							this.m_recording.bg_scaled_height = (
@@ -2090,7 +2103,6 @@ class Player
 								* this.ui.m_background.naturalHeight
 							);
 						}
-						this.m_recording.ctx.clearRect(0, 0, this.m_width,this.m_height);
 						this.m_recording.ctx.drawImage(this.ui.m_background, 0, 0, this.m_width,this.m_recording.bg_scaled_height);
 					}
 					else // else just fill it black
