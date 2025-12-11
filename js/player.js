@@ -621,7 +621,7 @@ class Player
 		const half_size = Player.c_canvas_size / 2;
 		const ctx = this.ui.m_canvas.getContext("2d");
 		ctx.clearRect(0, 0, Player.c_canvas_size, Player.c_canvas_size);
-		ctx.font = "20px consolas";
+		ctx.font = "20px Consolas, monospace";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		ctx.strokeStyle = "black";
@@ -648,7 +648,7 @@ class Player
 		ctx.rect(half_size - 200, half_size + 20, 400 * count / limit, 10);
 		ctx.fill();
 		// text
-		ctx.font = "20px consolas";
+		ctx.font = "20px Consolas, monospace";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		ctx.strokeStyle = "black";
