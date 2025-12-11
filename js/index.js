@@ -444,6 +444,10 @@ function player_test_end(result)
 	if(!result)
 	{
 		container.innerHTML = "An unexpected error occured.<br>Try to reload and contact the author if the issue persists.";
+		if(player)
+		{
+			player.restart();
+		}
 	}
 	waiting_player = false;
 }
