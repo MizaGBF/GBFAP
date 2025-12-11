@@ -685,6 +685,7 @@ class Player
 		this.m_playlist = [];
 		this.m_current_motion = 0;
 		this.m_current_cjs = 0;
+		this.ui.m_canvas.getContext("2d").reset();
 		// set texture container
 		this.m_texture_state = {}
 		for(const [name, img] of Object.entries(window.images))
