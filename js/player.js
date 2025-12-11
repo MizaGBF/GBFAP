@@ -637,15 +637,25 @@ class Player
 		const half_size = Player.c_canvas_size / 2;
 		const ctx = this.ui.m_canvas.getContext("2d");
 		ctx.clearRect(0, 0, Player.c_canvas_size, Player.c_canvas_size);
-		// bg
+		// back of the bar
 		ctx.beginPath();
 		ctx.fillStyle = "#111111";
-		ctx.rect(half_size - 200, half_size + 20, 400, 10);
+		ctx.roundRect(half_size - 200, half_size + 20, 400, 10, 5);
 		ctx.fill();
-		// fill
+		// fill part of the bar
 		ctx.beginPath();
-		ctx.fillStyle = "#2bfafa";
-		ctx.rect(half_size - 200, half_size + 20, 400 * count / limit, 10);
+		// make gradient for the fill bar
+		const gradient = ctx.createLinearGradient(
+			half_size - 200,
+			half_size,
+			half_size + 200,
+			half_size
+		);
+		gradient.addColorStop(0, "#ff0000");
+		gradient.addColorStop(0.5, "#ffffff");
+		gradient.addColorStop(1, "#2bfafa");
+		ctx.fillStyle = gradient;
+		ctx.roundRect(half_size - 200, half_size + 20, 400 * count / limit, 10, 5);
 		ctx.fill();
 		// text
 		ctx.font = "20px Consolas, monospace";
