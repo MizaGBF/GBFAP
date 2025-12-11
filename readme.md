@@ -240,10 +240,6 @@ If `true`, a transparent white mask is added to the background, to emulate the l
 **Optional** Boolean.  
 If `true`, the audio system will be disabled.  
   
-### loading_html  
-**Optional** String.  
-The inner HTML set in the player interface during loading.  
-  
 ### save_setting_key  
 **Optional** String.  
 If set, settings will be loaded and saved from this key in the browser local storage.  

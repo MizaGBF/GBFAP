@@ -80,7 +80,6 @@
         "<img src=\"assets/ui/controls/bg_red.png\">":"./assets/backgrounds/mypage/red.jpg",
         "<img src=\"assets/ui/controls/bg_pink.png\">":"./assets/backgrounds/mypage/pink.jpg"
     },
-    "loading_html": "<img src=\"../GBFML/assets/ui/loading.gif\">",
     "save_setting_key": "gbfap-player-settings",
     "index" : [
         {

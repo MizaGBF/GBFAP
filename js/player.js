@@ -353,6 +353,7 @@ class Player
 		if(!this.ui.m_canvas)
 			throw new Error("No canvas initialized");
 		this.m_stage = new createjs.Stage(this.ui.m_canvas);
+		this.loading_draw_text("Initialization...");
 	}
 	
 	// reset the player to a near starting state
@@ -614,19 +615,47 @@ class Player
 		return this.m_animations;
 	}
 	
-	// used to draw text on the middle of the canvas during loading
-	draw_loading_text_on_canvas()
+	// clear the canvas and draw a text
+	loading_draw_text(text)
 	{
-		// text size is around 190x20
-		const at_half_screen = {x:Player.c_canvas_size / 2 - 95, y:Player.c_canvas_size / 2 - 10};
-		
+		const half_size = Player.c_canvas_size / 2;
 		const ctx = this.ui.m_canvas.getContext("2d");
+		ctx.clearRect(0, 0, Player.c_canvas_size, Player.c_canvas_size);
 		ctx.font = "20px consolas";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
 		ctx.strokeStyle = "black";
 		ctx.lineWidth = 8;
-		ctx.strokeText("Loading assets...", at_half_screen.x, at_half_screen.y); // outline
+		ctx.strokeText(text, half_size, half_size); // outline
 		ctx.fillStyle = "white";
-		ctx.fillText("Loading assets...", at_half_screen.x, at_half_screen.y);
+		ctx.fillText(text, half_size, half_size);
+	}
+	
+	// clear the canvas and draw the loading progress
+	loading_draw_progress_bar(count, limit)
+	{
+		const half_size = Player.c_canvas_size / 2;
+		const ctx = this.ui.m_canvas.getContext("2d");
+		ctx.clearRect(0, 0, Player.c_canvas_size, Player.c_canvas_size);
+		// bg
+		ctx.beginPath();
+		ctx.fillStyle = "#111111";
+		ctx.rect(half_size - 200, half_size + 20, 400, 10);
+		ctx.fill();
+		// fill
+		ctx.beginPath();
+		ctx.fillStyle = "#2bfafa";
+		ctx.rect(half_size - 200, half_size + 20, 400 * count / limit, 10);
+		ctx.fill();
+		// text
+		ctx.font = "20px consolas";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 8;
+		ctx.strokeText(count + " / " + limit, half_size, half_size); // outline
+		ctx.fillStyle = "white";
+		ctx.fillText(count + " / " + limit, half_size, half_size);
 	}
 	
 	// set the Animation datas
@@ -640,7 +669,7 @@ class Player
 				this.m_weapon_textures.push(animation.weapon);
 			}
 		}
-		this.draw_loading_text_on_canvas()
+		this.loading_draw_text("Loading Animations...")
 		// set the version Select
 		this.ui.set_version();
 		// load the files

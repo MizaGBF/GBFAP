@@ -125,7 +125,7 @@ class Loader
 		$.when(cjs_deferred, manifest_deferred).always(function() {
 			if(error_flag)
 			{
-				player.ui.set_error();
+				player.loading_draw_text("An error occured.");
 				return;
 			}
 			// hot fix the main character weapon
@@ -322,7 +322,7 @@ class Loader
 				if(event.item)
 				{
 					count++;
-					player.ui.set_loading_progress(count, total);
+					player.loading_draw_progress_bar(count, total);
 					var id = event.item.id;
 					if(id && event.item.type === createjs.Types.IMAGE)
 					{
@@ -335,7 +335,7 @@ class Loader
 				if(event && event.srcElement)
 					console.error("Failed to download spritesheet", event.srcElement.src);
 				count++; // still increase the count
-				player.ui.set_loading_progress(count, total);
+				player.loading_draw_progress_bar(count, total);
 				// don't reject, others might still download just fine
 			});
 			
@@ -343,7 +343,6 @@ class Loader
 			load_queue.loadManifest(to_load, true, "./img/");
 			
 			queue_deferred.always(function() {
-				player.ui.clear_loading_progress();
 				// add extra versions
 				for(const [dupe, orig] of Object.entries(weapon_dupe_table))
 				{

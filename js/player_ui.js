@@ -68,8 +68,8 @@ class PlayerUI
 		this.m_motion.value = "default";
 		this.m_ability.value = "default";
 		// reset texts
-		this.m_motion_text.innerHTML = config.loading_html ? config.loading_html : "Loading";
-		this.m_duration.innerText = "Downloading...";
+		this.m_motion_text.innerText = "?";
+		this.m_duration.innerText = "?";
 		// reset background
 		this.m_uploaded_background = null;
 		this.init_background_elements();
@@ -199,7 +199,7 @@ class PlayerUI
 			"span",
 			{cls:["player-control-text"], id:"player-control-motion"}
 		);
-		this.m_motion_text.innerHTML = config.loading_html ? config.loading_html : "Loading";
+		this.m_motion_text.innerHTML = "?";
 		
 		span = add_to(part, "span", {cls:["player-control-hpart", "player-control-span"]});
 		add_to(span, "span", {cls:["player-control-text"], innertext:"Duration"});
@@ -780,25 +780,6 @@ class PlayerUI
 		// purely for any css styling
 		this.m_html.classList.toggle("player-container-normal", this.player.m_layout_mode != PlayerLayoutMode.mypage);
 		this.m_html.classList.toggle("player-container-mypage", this.player.m_layout_mode == PlayerLayoutMode.mypage); 
-	}
-	
-	// set the loading progress in the duration text element
-	set_loading_progress(count, total)
-	{
-		this.m_duration.innerText = "" + count + " / " + total;
-	}
-	
-	// to indicate the player is in an error start
-	set_error(count, total)
-	{
-		this.m_duration.innerText = "ERROR";
-		this.m_duration.parentNode.classList.toggle("player-button-warning", true);
-	}
-	
-	// clear the loading state in the motion text element
-	clear_loading_progress()
-	{
-		this.m_motion_text.innerHTML = "";
 	}
 	
 	// set the current motion text
