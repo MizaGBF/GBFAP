@@ -632,7 +632,7 @@ class Player
 	}
 	
 	// clear the canvas and draw the loading progress
-	loading_draw_progress_bar(count, limit)
+	loading_draw_progress_bar(count, limit, suffix = "")
 	{
 		const half_size = Player.c_canvas_size / 2;
 		const ctx = this.ui.m_canvas.getContext("2d");
@@ -653,9 +653,9 @@ class Player
 		ctx.textBaseline = "middle";
 		ctx.strokeStyle = "black";
 		ctx.lineWidth = 8;
-		ctx.strokeText(count + " / " + limit, half_size, half_size); // outline
+		ctx.strokeText(count + " / " + limit + (suffix != "" ? " " + suffix : ""), half_size, half_size); // outline
 		ctx.fillStyle = "white";
-		ctx.fillText(count + " / " + limit, half_size, half_size);
+		ctx.fillText(count + " / " + limit + (suffix != "" ? " " + suffix : ""), half_size, half_size);
 	}
 	
 	// set the Animation datas

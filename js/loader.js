@@ -39,6 +39,9 @@ class Loader
 			return;
 		
 		var error_flag = false;
+		// to track loading progress
+		var file_count = to_load.length * 2; // manifest + cjs
+		var file_loaded = 0;
 		
 		// CJS file
 		// Each manifest has an equivalent animation in the cjs folder
@@ -62,6 +65,8 @@ class Loader
 					window.lib[file_name].prototype.playFunc = function(callback) {
 						createjs.Tween.get().wait(1).call(callback);
 					};
+					// set loading
+					player.loading_draw_progress_bar(file_loaded++, file_count, "scripts");
 				}
 			}
 		});
@@ -101,7 +106,7 @@ class Loader
 			// use require to set the manifest as intended
 			require(
 				[manifest_path],
-				function(module) {
+				(module) => {
 					// add to cache
 					loader.manifest_cache[manifest_path] = module.prototype.defaults.manifest;
 					// add the spritesheets
@@ -112,8 +117,10 @@ class Loader
 					{
 						manifest_deferred.resolve(); // resolve the deferred
 					}
+					// set loading
+					player.loading_draw_progress_bar(file_loaded++, file_count, "scripts");
 				},
-				function() { // in case of error
+				() => { // in case of error
 					console.error("Error loading manifest " + manifest_path);
 					loaded = total_files; // terminate early
 					manifest_deferred.reject();
@@ -321,8 +328,7 @@ class Loader
 			load_queue.on("fileload", function(event) {
 				if(event.item)
 				{
-					count++;
-					player.loading_draw_progress_bar(count, total);
+					player.loading_draw_progress_bar(count++, total, "spritesheets");
 					var id = event.item.id;
 					if(id && event.item.type === createjs.Types.IMAGE)
 					{
@@ -334,8 +340,8 @@ class Loader
 			load_queue.on("error", function() {
 				if(event && event.srcElement)
 					console.error("Failed to download spritesheet", event.srcElement.src);
-				count++; // still increase the count
-				player.loading_draw_progress_bar(count, total);
+				// still increase the count
+				player.loading_draw_progress_bar(count++, total, "spritesheets");
 				// don't reject, others might still download just fine
 			});
 			
