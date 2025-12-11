@@ -614,6 +614,21 @@ class Player
 		return this.m_animations;
 	}
 	
+	// used to draw text on the middle of the canvas during loading
+	draw_loading_text_on_canvas()
+	{
+		// text size is around 190x20
+		const at_half_screen = {x:Player.c_canvas_size / 2 - 95, y:Player.c_canvas_size / 2 - 10};
+		
+		const ctx = this.ui.m_canvas.getContext("2d");
+		ctx.font = "20px consolas";
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 8;
+		ctx.strokeText("Loading assets...", at_half_screen.x, at_half_screen.y); // outline
+		ctx.fillStyle = "white";
+		ctx.fillText("Loading assets...", at_half_screen.x, at_half_screen.y);
+	}
+	
 	// set the Animation datas
 	set_animations(animations)
 	{
@@ -625,7 +640,9 @@ class Player
 				this.m_weapon_textures.push(animation.weapon);
 			}
 		}
-		this.ui.set_version(); // set the version Select
+		this.draw_loading_text_on_canvas()
+		// set the version Select
+		this.ui.set_version();
 		// load the files
 		loader.load_animations();
 	}
