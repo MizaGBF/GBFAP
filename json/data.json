@@ -7160,7 +7160,10 @@
 "8104623":{"v":[["","enemy_8104623",null,"ehit_8104623",["esp_8104623_01","esp_8104623_02","esp_8104623_03_all"]]],"ra":["raid_appear_8104623"]},
 "8104663":{"v":[["","enemy_8104663",null,"phit_0000000000",[]]]},
 "8104653":{"v":[["","enemy_8104653",null,"phit_0000000000",[]]]},
-"8104673":{"v":[["","enemy_8104673",null,"phit_0000000000",[]]]}
+"8104673":{"v":[["","enemy_8104673",null,"phit_0000000000",[]]]},
+"3101323":{"v":[["","enemy_3101323",null,"phit_0000000000",[]]]},
+"8104683":{"v":[["","enemy_8104683",null,"phit_0000000000",[]]]},
+"8104703":{"v":[["","enemy_8104703",null,"phit_0000000000",[]]]}
 },
 "skins":
 {
@@ -19522,7 +19525,10 @@
 "3994185000":"rei harvin female レイ ai kayano 茅野愛衣",
 "3040629000":"@@Maria_Theresa_(Holiday) fire ssr maria theresa evokers holiday draph female balanced staff sabre マリア・テレサ mikako takahashi 高橋美佳子 2025-12-15",
 "3040628000":"@@Zeta_(Holiday) dark ssr zeta holiday human female attack spear ゼタ kana hanazawa 花澤香菜 2025-12-15 gbf-versus-rising gbf-relink",
-"3710250000":"@@Rei rei's relation selfless sacred eve rei 2025-12-15"
+"3710250000":"@@Rei rei's relation selfless sacred eve rei 2025-12-15",
+"3101323":"missing-help-wanted",
+"8104683":"missing-help-wanted",
+"8104703":"missing-help-wanted"
 },
 "mypage":
 {
