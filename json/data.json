@@ -4622,7 +4622,7 @@
 "1200832":{"v":[["","enemy_1200832",null,"phit_0000000000",["esp_1200832_02"]]]},
 "2100103":{"v":[["","enemy_2100103",null,"phit_0000000000",[]]]},
 "2100113":{"v":[["","enemy_2100113",null,"phit_0000000000",[]]]},
-"1200813":{"v":[["","enemy_1200813",null,"ehit_1200813",["esp_1200813_01","esp_1200813_02","esp_1200813_03"]]],"ra":["raid_appear_1200813","raid_appear_1200813_2"]},
+"1200813":{"v":[["","enemy_1200813",null,"ehit_1200813",["esp_1200813_01","esp_1200813_02","esp_1200813_03"]]],"ra":["raid_appear_1200813","raid_appear_1200813_2","raid_appear_1200813_3"]},
 "1200852":{"v":[["","enemy_1200852",null,"phit_0000000000",[]]]},
 "2100162":{"v":[["","enemy_2100162",null,"ehit_2100162",["esp_2100162_01","esp_2100162_02","esp_2100162_03"]]]},
 "1200792":{"v":[["","enemy_1200792",null,"phit_0000000000",["esp_1200792_01","esp_1200792_02","esp_1200792_03"]]]},
@@ -4939,7 +4939,7 @@
 "3100963":{"v":[["","enemy_3100963",null,"phit_0000000000",[]]]},
 "3100953":{"v":[["","enemy_3100953",null,"phit_0000000000",[]]],"ra":["raid_appear_3100953_2"]},
 "4100123":{"v":[["","enemy_4100123",null,"phit_0000000000",[]]]},
-"3100993":{"v":[["","enemy_3100993",null,"ehit_3100993",["esp_3100993_01","esp_3100993_02","esp_3100993_03"]]],"ra":["raid_appear_3100993"]},
+"3100993":{"v":[["","enemy_3100993",null,"ehit_3100993",["esp_3100993_01","esp_3100993_02","esp_3100993_03"]]],"ra":["raid_appear_3100993","raid_appear_3100993_2"]},
 "3100983":{"v":[["","enemy_3100983",null,"ehit_3100983",["esp_3100983_01","esp_3100983_02","esp_3100983_03"]]],"ra":["raid_appear_3100983"]},
 "4100213":{"v":[["","enemy_4100213",null,"phit_0000000000",[]]]},
 "4100243":{"v":[["","enemy_4100243",null,"ehit_4100243",["esp_4100243_01","esp_4100243_02","esp_4100243_03"]]],"ra":["raid_appear_4100243"]},
@@ -7163,7 +7163,11 @@
 "8104673":{"v":[["","enemy_8104673",null,"phit_0000000000",[]]]},
 "3101323":{"v":[["","enemy_3101323",null,"phit_0000000000",[]]]},
 "8104683":{"v":[["","enemy_8104683",null,"phit_0000000000",[]]]},
-"8104703":{"v":[["","enemy_8104703",null,"phit_0000000000",[]]]}
+"8104703":{"v":[["","enemy_8104703",null,"phit_0000000000",[]]]},
+"9102942":{"v":[["","enemy_9102942",null,"phit_0000000000",["esp_9102942_01_all","esp_9102942_03_all"]]]},
+"9103003":{"v":[["","enemy_9103003",null,"phit_0000000000",[]]]},
+"9102973":{"v":[["","enemy_9102973",null,"phit_0000000000",[]]]},
+"9102943":{"v":[["","enemy_9102943",null,"ehit_9102943",["esp_9102943_01","esp_9102943_02","esp_9102943_03"]]],"ra":["raid_appear_9102943"]}
 },
 "skins":
 {
@@ -7404,7 +7408,8 @@
 "3710242000":{"v":[["0★ Gran","npc_3710242000_01_0","mortal_A","phit_3710242000",["nsp_3710242000_01_0_s2"]],["0★ Djeeta","npc_3710242000_01_1","mortal_A","phit_3710242000",["nsp_3710242000_01_1_s2"]]],"ab":[]},
 "3710144000":{"v":[["0★","npc_3710144000_01","mortal_A","phit_3710144000",["nsp_3710144000_01_s2"]]],"ab":[]},
 "3710243000":{"v":[["0★","npc_3710243000_01","mortal_A","phit_3710243000",["nsp_3710243000_01_s2"]]],"ab":[]},
-"3710250000":{"v":[["0★","npc_3710250000_01","mortal_A","phit_3710250000",["nsp_3710250000_01_s2"]]],"ab":[]}
+"3710250000":{"v":[["0★","npc_3710250000_01","mortal_A","phit_3710250000",["nsp_3710250000_01_s2"]]],"ab":[]},
+"3710251000":{"v":[["0★","npc_3710251000_01","mortal_A","phit_3710251000",["nsp_3710251000_01_s2"]]],"ab":[]}
 },
 "job":
 {
@@ -8332,7 +8337,10 @@
 "event_543":[["event_543"]],
 "event_544":[["event_544"]],
 "event_545":[["event_545"]],
-"event_546":[["event_546"]]
+"event_546":[["event_546"]],
+"event_547":[["event_547"]],
+"event_548":[["event_548"]],
+"event_549":[["event_549"]]
 },
 "mypage_bg":
 {
@@ -18435,7 +18443,7 @@
 "311401":"@@Main_Character main character's related conqueror of the deep blue 2024-07-29",
 "3991432000":"bahamut バハムート gbf-relink",
 "3993605000":"hekate unknown female ヘカテー shizuka itō 伊藤静",
-"3993621000":"helgoku hellfire bonito",
+"3993621000":"bonito's relation hellfire bonito",
 "3040543000":"@@Hekate_(Summer) dark ssr hekate summer unknown female attack staff ヘカテー shizuka itō 伊藤静 2024-07-31",
 "3040542000":"@@Ragazzo_(Summer) light ssr ragazzo summer human male attack melee ラガッツォ hiroyuki yoshino 吉野裕行 2024-07-31",
 "3040541000":"@@Tweyen_(Yukata) fire ssr tweyen eternals yukata human female balanced bow ソーン yūko minaguchi 皆口裕子 2024-07-31 gbf-relink",
@@ -19526,9 +19534,14 @@
 "3040629000":"@@Maria_Theresa_(Holiday) fire ssr maria theresa evokers holiday draph female balanced staff sabre マリア・テレサ mikako takahashi 高橋美佳子 2025-12-15",
 "3040628000":"@@Zeta_(Holiday) dark ssr zeta holiday human female attack spear ゼタ kana hanazawa 花澤香菜 2025-12-15 gbf-versus-rising gbf-relink",
 "3710250000":"@@Rei rei's relation selfless sacred eve rei 2025-12-15",
-"3101323":"missing-help-wanted",
-"8104683":"missing-help-wanted",
-"8104703":"missing-help-wanted"
+"3101323":"null hellfire bonito fish-boss gbf-versus-rising",
+"8104683":"null bonito primal-boss gbf-versus-rising",
+"8104703":"earth mammoth primal-boss",
+"3994188000":"bonitomurai voiced",
+"9102942":"null bonitomurai other-boss",
+"9102943":"null bonitomurai other-boss",
+"9102973":"null bonitomurai other-boss",
+"9103003":"null bonitomurai other-boss"
 },
 "mypage":
 {
