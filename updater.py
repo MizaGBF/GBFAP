@@ -33,9 +33,11 @@ ADD_EVENT = 7
 ADD_SKILL = 8
 ADD_BUFF = 9
 ADD_BG = 10
-ADD_STORY = 11
+ADD_STORY0 = 11
 ADD_FATE = 12
 ADD_SHIELD = 13
+ADD_MANATURA = 14
+ADD_STORY1 = 15
 # CDN endpoints
 ENDPOINT = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/"
 JS = ENDPOINT + "js/"

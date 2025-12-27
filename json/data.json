@@ -977,7 +977,8 @@
 "3040627000":{"v":[["0★","npc_3040627000_01","mortal_A","phit_3040627000",["nsp_3040627000_01_s2"]],["4★","npc_3040627000_02","mortal_A","phit_3040627000_02",["nsp_3040627000_02_s2"]]],"ab":["ab_3040627000_01","ab_3040627000_02","ab_all_3040627000_02"]},
 "3040626000":{"v":[["0★","npc_3040626000_01","mortal_A","phit_3040626000",["nsp_3040626000_01_s2"]],["0★ B","npc_3040626000_01_f1","mortal_A","phit_3040626000_f1",["nsp_3040626000_01_f1_s2"]],["4★","npc_3040626000_02","mortal_A","phit_3040626000_02",["nsp_3040626000_02_s2"]],["4★ B","npc_3040626000_02_f1","mortal_A","phit_3040626000_02_f1",["nsp_3040626000_02_f1_s2"]]],"ab":["ab_3040626000_01","ab_3040626000_02","ab_3040626000_03","ab_3040626000_04","ab_3040626000_05"]},
 "3040629000":{"v":[["0★","npc_3040629000_01","mortal_A","phit_3040629000",["nsp_3040629000_01_s2"]],["4★","npc_3040629000_02","mortal_A","phit_3040629000_02",["nsp_3040629000_02_s2"]]],"ab":["ab_all_3040629000_01","ab_all_3040629000_02","ab_all_3040629000_03"]},
-"3040628000":{"v":[["0★","npc_3040628000_01","mortal_A","phit_3040628000",["nsp_3040628000_01_s2"]],["4★","npc_3040628000_02","mortal_A","phit_3040628000",["nsp_3040628000_02_s2"]]],"ab":["ab_3040628000_01","ab_3040628000_02","ab_all_3040628000_01"]}
+"3040628000":{"v":[["0★","npc_3040628000_01","mortal_A","phit_3040628000",["nsp_3040628000_01_s2"]],["4★","npc_3040628000_02","mortal_A","phit_3040628000",["nsp_3040628000_02_s2"]]],"ab":["ab_3040628000_01","ab_3040628000_02","ab_all_3040628000_01"]},
+"3040631000":{"v":[["0★","npc_3040631000_01","mortal_A","phit_3040631000",["nsp_3040631000_01_s2"]],["4★","npc_3040631000_02","mortal_A","phit_3040631000_02",["nsp_3040631000_02_s2"]]],"ab":["ab_3040631000_01","ab_3040631000_02","ab_3040631000_03"]}
 },
 "partners":
 {
@@ -1459,7 +1460,9 @@
 "2040442000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040442000_01_attack"]]],"s":"2040442000"},
 "2040443000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040443000_01_attack"]]],"s":"2040443000"},
 "2040444000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040444000_01_attack"]]],"s":"2040444000"},
-"2040445000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040445000_01_attack"]]],"s":"2040445000"}
+"2040445000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040445000_01_attack"]]],"s":"2040445000"},
+"2040446000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040446000_01_attack"]]],"s":"2040446000"},
+"2040447000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040447000_01_attack"]]],"s":"2040447000"}
 },
 "weapons":
 {
@@ -4419,7 +4422,13 @@
 "1040319700":{"w":["1040319700","1040319700"],"v":[["Gran","bsk_ax_0_01","mortal_A","phit_1040319700",["sp_1040319700_0_s2"]],["Djeeta","bsk_ax_1_01","mortal_A","phit_1040319700",["sp_1040319700_1_s2"]]]},
 "1040621300":{"w":["1040621300","1040621300"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621300",["sp_1040621300_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621300",["sp_1040621300_1_s2"]]]},
 "1040220700":{"w":["1040220700","1040220700"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040220700",["sp_1040220700_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040220700",["sp_1040220700_1_s2"]]]},
-"1040122600":{"w":["1040122600","1040122600"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122600",["sp_1040122600_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122600",["sp_1040122600_1_s2"]]]}
+"1040122600":{"w":["1040122600","1040122600"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122600",["sp_1040122600_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122600",["sp_1040122600_1_s2"]]]},
+"1040714900":{"w":["1040714900","1040714900"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040714900",["sp_1040714900_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040714900",["sp_1040714900_1_s2"]]]},
+"1040518800":{"w":["1040518800","1040518800"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040518800",["sp_1040518800_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040518800",["sp_1040518800_1_s2"]]]},
+"1040220800":{"w":["1040220800","1040220800"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040220800",["sp_1040220800_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040220800",["sp_1040220800_1_s2"]]]},
+"1040621400":{"w":["1040621400","1040621400"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621400",["sp_1040621400_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621400",["sp_1040621400_1_s2"]]]},
+"1040425500":{"w":["1040425500","1040425500"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425500",["sp_1040425500_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425500",["sp_1040425500_1_s2"]]]},
+"1040029000":{"w":["1040029000","1040029000"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029000",["sp_1040029000_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029000",["sp_1040029000_1_s2"]]]}
 },
 "enemies":
 {
@@ -7167,7 +7176,9 @@
 "9102942":{"v":[["","enemy_9102942",null,"phit_0000000000",["esp_9102942_01_all","esp_9102942_03_all"]]]},
 "9103003":{"v":[["","enemy_9103003",null,"phit_0000000000",[]]]},
 "9102973":{"v":[["","enemy_9102973",null,"phit_0000000000",[]]]},
-"9102943":{"v":[["","enemy_9102943",null,"ehit_9102943",["esp_9102943_01","esp_9102943_02","esp_9102943_03"]]],"ra":["raid_appear_9102943"]}
+"9102943":{"v":[["","enemy_9102943",null,"ehit_9102943",["esp_9102943_01","esp_9102943_02","esp_9102943_03"]]],"ra":["raid_appear_9102943"]},
+"9102843":{"v":[["","enemy_9102843",null,"ehit_9102843",["esp_9102843_01","esp_9102843_02","esp_9102843_03","esp_9102843_04"]]],"ra":["raid_appear_9102843"]},
+"9102823":{"v":[["","enemy_9102823",null,"ehit_9102823",["esp_9102823_01","esp_9102823_02","esp_9102823_03","esp_9102823_04"]]],"ra":["raid_appear_9102823"]}
 },
 "skins":
 {
@@ -8373,7 +8384,8 @@
 "20014":0,
 "70010":0,
 "70020":0,
-"23001":0
+"23001":0,
+"24001":0
 },
 "lookup":
 {
@@ -19541,7 +19553,55 @@
 "9102942":"null bonitomurai other-boss",
 "9102943":"null bonitomurai other-boss",
 "9102973":"null bonitomurai other-boss",
-"9103003":"null bonitomurai other-boss"
+"9103003":"null bonitomurai other-boss",
+"3994200000":"seox eternals erune male シス nobuyuki hiyama 檜山修之 gbf-versus-rising",
+"3994201000":"narmaya draph female ナルメア mao ichimichi m・a・o gbf-versus-rising gbf-relink",
+"3994202000":"narmaya draph female ナルメア mao ichimichi m・a・o gbf-versus-rising gbf-relink",
+"3994203000":"sandalphon primal male サンダルフォン kenichi suzumura 鈴村健一 gbf-versus-rising gbf-relink",
+"3994204000":"white knight's form caesar human male 白騎士 yūki kaji 梶裕貴",
+"3994205000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
+"3994206000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
+"3994207000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
+"3994208000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
+"3994209000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
+"3994210000":"fylkis's relation andorinha",
+"3994211000":"darydara harvin male ダリダラ taito ban 坂泰斗",
+"3994212000":"narmaya draph female ナルメア mao ichimichi m・a・o gbf-versus-rising gbf-relink",
+"3994213000":"maminas unknown female マミナス yumi uchiyama 内山夕実",
+"3994214000":"maminas unknown female マミナス yumi uchiyama 内山夕実",
+"3994215000":"maminas's son jherion unknown male ジェリオン shoya ishige 石毛翔弥",
+"3994216000":"maminas's son jherion unknown male ジェリオン shoya ishige 石毛翔弥",
+"3994217000":"maminas's daughter miamint unknown female ミアミント ayaka ohashi 大橋彩香",
+"3994218000":"maminas's daughter miamint unknown female ミアミント ayaka ohashi 大橋彩香",
+"3994219000":"notus primal female ノトス rui tanabe 田辺留依",
+"3994220000":"notus primal female ノトス rui tanabe 田辺留依",
+"3994221000":"phos unknown other フォス yuina ito 伊藤ゆいな",
+"3994222000":"uran unknown other ウラン natsune inui 乾夏寧",
+"3994223000":"missing-help-wanted",
+"3994224000":"strange woman other female",
+"3994225000":"missing-help-wanted",
+"3994226000":"missing-help-wanted",
+"3994227000":"demon",
+"3994228000":"demon's relation draph male",
+"3994229000":"demon's relation draph male",
+"3994230000":"stray dog",
+"3994231000":"demon's relation stray dog",
+"3994250000":"white knight human male 白騎士 yūki kaji 梶裕貴",
+"3994251000":"white knight human male 白騎士 yūki kaji 梶裕貴",
+"3994275000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
+"3994276000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
+"9102823":"fire prosperity is forbidden other-boss",
+"9102843":"water mortality is forbidden other-boss",
+"3040631000":"@@Darydara water ssr darydara harvin male defense axe taito ban 坂泰斗 2025-12-27",
+"2040446000":"@@Belmervolk fire ssr belmervolk odious ベルメルヴォルク 2025-12-27",
+"2040447000":"@@Nihuyvintae water ssr nihuyvintae odious ニフイヴィンテ 2025-12-27",
+"1040621400":"@@Blazefist_of_Prosperity_Verboten fire melee ssr blazefist of prosperity verboten odious 2025-12-27",
+"1040425500":"@@Cyclestaff_of_Mortality_Verboten water staff ssr cyclestaff of mortality verboten odious 2025-12-27",
+"1040518800":"@@Deathcannon_of_Prosperity_Verboten fire gun ssr deathcannon of prosperity verboten odious 2025-12-27",
+"1040220800":"@@Demonspear_of_Prosperity_Verboten fire spear ssr demonspear of prosperity verboten odious 2025-12-27",
+"1040029000":"@@Demonsword_of_Mortality_Verboten water sabre ssr demonsword of mortality verboten odious 2025-12-27",
+"1040714900":"@@Terrorbow_of_Mortality_Verboten water bow ssr terrorbow of mortality verboten odious 2025-12-27",
+"3710251000":"@@Indala indala's relation no rest for the sleepless indala 2025-12-25"
 },
 "mypage":
 {
