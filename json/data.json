@@ -978,7 +978,9 @@
 "3040626000":{"v":[["0★","npc_3040626000_01","mortal_A","phit_3040626000",["nsp_3040626000_01_s2"]],["0★ B","npc_3040626000_01_f1","mortal_A","phit_3040626000_f1",["nsp_3040626000_01_f1_s2"]],["4★","npc_3040626000_02","mortal_A","phit_3040626000_02",["nsp_3040626000_02_s2"]],["4★ B","npc_3040626000_02_f1","mortal_A","phit_3040626000_02_f1",["nsp_3040626000_02_f1_s2"]]],"ab":["ab_3040626000_01","ab_3040626000_02","ab_3040626000_03","ab_3040626000_04","ab_3040626000_05"]},
 "3040629000":{"v":[["0★","npc_3040629000_01","mortal_A","phit_3040629000",["nsp_3040629000_01_s2"]],["4★","npc_3040629000_02","mortal_A","phit_3040629000_02",["nsp_3040629000_02_s2"]]],"ab":["ab_all_3040629000_01","ab_all_3040629000_02","ab_all_3040629000_03"]},
 "3040628000":{"v":[["0★","npc_3040628000_01","mortal_A","phit_3040628000",["nsp_3040628000_01_s2"]],["4★","npc_3040628000_02","mortal_A","phit_3040628000",["nsp_3040628000_02_s2"]]],"ab":["ab_3040628000_01","ab_3040628000_02","ab_all_3040628000_01"]},
-"3040631000":{"v":[["0★","npc_3040631000_01","mortal_A","phit_3040631000",["nsp_3040631000_01_s2"]],["4★","npc_3040631000_02","mortal_A","phit_3040631000_02",["nsp_3040631000_02_s2"]]],"ab":["ab_3040631000_01","ab_3040631000_02","ab_3040631000_03"]}
+"3040631000":{"v":[["0★","npc_3040631000_01","mortal_A","phit_3040631000",["nsp_3040631000_01_s2"]],["4★","npc_3040631000_02","mortal_A","phit_3040631000_02",["nsp_3040631000_02_s2"]]],"ab":["ab_3040631000_01","ab_3040631000_02","ab_3040631000_03"]},
+"3040634000":{"v":[["0★","npc_3040634000_01","mortal_A","phit_3040634000",["nsp_3040634000_01_s2"]],["4★","npc_3040634000_02","mortal_A","phit_3040634000_02",["nsp_3040634000_02_s2"]]],"ab":["ab_3040634000_01","ab_all_3040634000_02"]},
+"3040630000":{"v":[["0★","npc_3040630000_01","mortal_A","phit_3040630000",["nsp_3040630000_01_s2"]],["4★","npc_3040630000_02","mortal_A","phit_3040630000_02",["nsp_3040630000_02_s2"]]],"ab":["ab_all_3040630000_01","ab_all_3040630000_02"]}
 },
 "partners":
 {
@@ -4428,7 +4430,9 @@
 "1040220800":{"w":["1040220800","1040220800"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040220800",["sp_1040220800_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040220800",["sp_1040220800_1_s2"]]]},
 "1040621400":{"w":["1040621400","1040621400"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621400",["sp_1040621400_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621400",["sp_1040621400_1_s2"]]]},
 "1040425500":{"w":["1040425500","1040425500"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425500",["sp_1040425500_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425500",["sp_1040425500_1_s2"]]]},
-"1040029000":{"w":["1040029000","1040029000"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029000",["sp_1040029000_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029000",["sp_1040029000_1_s2"]]]}
+"1040029000":{"w":["1040029000","1040029000"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029000",["sp_1040029000_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029000",["sp_1040029000_1_s2"]]]},
+"1040818000":{"w":["1040818000","1040818000"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040818000",["sp_1040818000_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040818000",["sp_1040818000_1_s2"]]]},
+"1040425600":{"w":["1040425600","1040425600"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425600",["sp_1040425600_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425600",["sp_1040425600_1_s2"]]]}
 },
 "enemies":
 {
@@ -19560,23 +19564,23 @@
 "3994203000":"sandalphon primal male サンダルフォン kenichi suzumura 鈴村健一 gbf-versus-rising gbf-relink",
 "3994204000":"white knight's form caesar human male 白騎士 yūki kaji 梶裕貴",
 "3994205000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
-"3994206000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
+"3994206000":"@@Fylkis_(NPC) fylkis unknown female フィルキス misaki akiyama 秋山実咲 2025-12-27",
 "3994207000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
 "3994208000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
 "3994209000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
 "3994210000":"fylkis's relation andorinha",
-"3994211000":"darydara harvin male ダリダラ taito ban 坂泰斗",
+"3994211000":"@@Darydara_(NPC) darydara harvin male ダリダラ taito ban 坂泰斗 2025-12-27",
 "3994212000":"narmaya draph female ナルメア mao ichimichi m・a・o gbf-versus-rising gbf-relink",
-"3994213000":"maminas unknown female マミナス yumi uchiyama 内山夕実",
+"3994213000":"@@Maminas_(NPC) maminas unknown female マミナス yumi uchiyama 内山夕実 2025-12-27",
 "3994214000":"maminas unknown female マミナス yumi uchiyama 内山夕実",
-"3994215000":"maminas's son jherion unknown male ジェリオン shoya ishige 石毛翔弥",
+"3994215000":"@@Jherion_(NPC) maminas's son jherion unknown male ジェリオン shōya ishige 石毛翔弥 2025-12-27",
 "3994216000":"maminas's son jherion unknown male ジェリオン shoya ishige 石毛翔弥",
-"3994217000":"maminas's daughter miamint unknown female ミアミント ayaka ohashi 大橋彩香",
+"3994217000":"@@Miamint_(NPC) miamint unknown female ミアミント ayaka ōhashi 大橋彩香 2025-12-27",
 "3994218000":"maminas's daughter miamint unknown female ミアミント ayaka ohashi 大橋彩香",
-"3994219000":"notus primal female ノトス rui tanabe 田辺留依",
+"3994219000":"@@Notus_(NPC) notus primal female ノトス rui tanabe 田辺留依 2025-12-27",
 "3994220000":"notus primal female ノトス rui tanabe 田辺留依",
-"3994221000":"phos unknown other フォス yuina ito 伊藤ゆいな",
-"3994222000":"uran unknown other ウラン natsune inui 乾夏寧",
+"3994221000":"@@Phos_(NPC) phos unknown other フォス yuina ito 伊藤ゆいな 2025-12-27",
+"3994222000":"@@Uran_(NPC) uran unknown other ウラン natsune inui 乾夏寧 2025-12-27",
 "3994223000":"missing-help-wanted",
 "3994224000":"strange woman other female",
 "3994225000":"missing-help-wanted",
@@ -19590,9 +19594,9 @@
 "3994251000":"white knight human male 白騎士 yūki kaji 梶裕貴",
 "3994275000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
 "3994276000":"fylkis unknown female フィルキス misaki akiyama 秋山実咲",
-"9102823":"fire prosperity is forbidden other-boss",
-"9102843":"water mortality is forbidden other-boss",
-"3040631000":"@@Darydara water ssr darydara harvin male defense axe taito ban 坂泰斗 2025-12-27",
+"9102823":"fire belmervolk other-boss",
+"9102843":"water nihuyvintae other-boss",
+"3040631000":"@@Darydara water ssr darydara harvin male defense axe ダリダラ taito ban 坂泰斗 2025-12-27",
 "2040446000":"@@Belmervolk fire ssr belmervolk odious ベルメルヴォルク 2025-12-27",
 "2040447000":"@@Nihuyvintae water ssr nihuyvintae odious ニフイヴィンテ 2025-12-27",
 "1040621400":"@@Blazefist_of_Prosperity_Verboten fire melee ssr blazefist of prosperity verboten odious 2025-12-27",
@@ -19601,7 +19605,11 @@
 "1040220800":"@@Demonspear_of_Prosperity_Verboten fire spear ssr demonspear of prosperity verboten odious 2025-12-27",
 "1040029000":"@@Demonsword_of_Mortality_Verboten water sabre ssr demonsword of mortality verboten odious 2025-12-27",
 "1040714900":"@@Terrorbow_of_Mortality_Verboten water bow ssr terrorbow of mortality verboten odious 2025-12-27",
-"3710251000":"@@Indala indala's relation no rest for the sleepless indala 2025-12-25"
+"3710251000":"@@Indala indala's relation no rest for the sleepless indala 2025-12-25",
+"3040634000":"@@Amaterasu light ssr amaterasu primal heal staff yuka iguchi",
+"3040630000":"@@Bhaisa earth ssr bhaisa grand erune heal staff manaka iwami",
+"1040425600":"@@Staff_of_the_Medicinal_Master earth staff ssr staff of the medicinal master",
+"1040818000":"@@Sunwheel_Chime light harp ssr sunwheel chime"
 },
 "mypage":
 {
@@ -19618,7 +19626,8 @@
 "3040068000":{"v":[["1","mypage_3040068000_01",null,null,[]],["2","mypage_3040068000_02",null,null,[]],["3","mypage_3040068000_03",null,null,[]]]},
 "3040077000":{"v":[["1","mypage_3040077000_01",null,null,[]],["2","mypage_3040077000_02",null,null,[]],["3","mypage_3040077000_03",null,null,[]]]},
 "3040082000":{"v":[["1","mypage_3040082000_01",null,null,[]],["2","mypage_3040082000_02",null,null,[]],["3","mypage_3040082000_03",null,null,[]]]},
-"3040101000":{"v":[["1","mypage_3040101000_01",null,null,[]],["2","mypage_3040101000_02",null,null,[]]]}
+"3040101000":{"v":[["1","mypage_3040101000_01",null,null,[]],["2","mypage_3040101000_02",null,null,[]]]},
+"3040630000":{"v":[["1","mypage_3040630000_01",null,null,[]],["2","mypage_3040630000_02",null,null,[]]]}
 },
 "styles":
 {
