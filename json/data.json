@@ -980,7 +980,9 @@
 "3040628000":{"v":[["0★","npc_3040628000_01","mortal_A","phit_3040628000",["nsp_3040628000_01_s2"]],["4★","npc_3040628000_02","mortal_A","phit_3040628000",["nsp_3040628000_02_s2"]]],"ab":["ab_3040628000_01","ab_3040628000_02","ab_all_3040628000_01"]},
 "3040631000":{"v":[["0★","npc_3040631000_01","mortal_A","phit_3040631000",["nsp_3040631000_01_s2"]],["4★","npc_3040631000_02","mortal_A","phit_3040631000_02",["nsp_3040631000_02_s2"]]],"ab":["ab_3040631000_01","ab_3040631000_02","ab_3040631000_03"]},
 "3040634000":{"v":[["0★","npc_3040634000_01","mortal_A","phit_3040634000",["nsp_3040634000_01_s2"]],["4★","npc_3040634000_02","mortal_A","phit_3040634000_02",["nsp_3040634000_02_s2"]]],"ab":["ab_3040634000_01","ab_all_3040634000_02"]},
-"3040630000":{"v":[["0★","npc_3040630000_01","mortal_A","phit_3040630000",["nsp_3040630000_01_s2"]],["4★","npc_3040630000_02","mortal_A","phit_3040630000_02",["nsp_3040630000_02_s2"]]],"ab":["ab_all_3040630000_01","ab_all_3040630000_02"]}
+"3040630000":{"v":[["0★","npc_3040630000_01","mortal_A","phit_3040630000",["nsp_3040630000_01_s2"]],["4★","npc_3040630000_02","mortal_A","phit_3040630000_02",["nsp_3040630000_02_s2"]]],"ab":["ab_all_3040630000_01","ab_all_3040630000_02"]},
+"3040633000":{"v":[["0★","npc_3040633000_01","mortal_A","phit_3040633000",["nsp_3040633000_01_s2"]],["4★","npc_3040633000_02","mortal_A","phit_3040633000_02",["nsp_3040633000_02_s2"]]],"ab":["ab_3040633000_01","ab_3040633000_02","ab_all_3040633000_01","ab_all_3040633000_02"]},
+"3040632000":{"v":[["0★","npc_3040632000_01","mortal_A","phit_3040632000",["nsp_3040632000_01_s2"]],["4★","npc_3040632000_02","mortal_A","phit_3040632000",["nsp_3040632000_02_s2"]]],"ab":["ab_3040632000_01","ab_all_3040632000_02","ab_all_3040632000_03"]}
 },
 "partners":
 {
@@ -1464,7 +1466,8 @@
 "2040444000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040444000_01_attack"]]],"s":"2040444000"},
 "2040445000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040445000_01_attack"]]],"s":"2040445000"},
 "2040446000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040446000_01_attack"]]],"s":"2040446000"},
-"2040447000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040447000_01_attack"]]],"s":"2040447000"}
+"2040447000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040447000_01_attack"]]],"s":"2040447000"},
+"2040448000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040448000_01_attack"]]],"s":"2040448000"}
 },
 "weapons":
 {
@@ -4434,7 +4437,9 @@
 "1040818000":{"w":["1040818000","1040818000"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040818000",["sp_1040818000_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040818000",["sp_1040818000_1_s2"]]]},
 "1040425600":{"w":["1040425600","1040425600"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425600",["sp_1040425600_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425600",["sp_1040425600_1_s2"]]]},
 "1030903900":{"w":["1030903900","1030903900"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1030903900",["sp_1030903900_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1030903900",["sp_1030903900_1_s2"]]]},
-"1040029100":{"w":["1040029100","1040029100"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029100",["sp_1040029100_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029100",["sp_1040029100_1_s2"]]]}
+"1040029100":{"w":["1040029100","1040029100"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029100",["sp_1040029100_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029100",["sp_1040029100_1_s2"]]]},
+"1040715000":{"w":["1040715000","1040715000"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715000",["sp_1040715000_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715000",["sp_1040715000_1_s2"]]]},
+"1040029200":{"w":["1040029200","1040029200"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029200",["sp_1040029200_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029200",["sp_1040029200_1_s2"]]]}
 },
 "enemies":
 {
@@ -7428,7 +7433,10 @@
 "3710144000":{"v":[["0★","npc_3710144000_01","mortal_A","phit_3710144000",["nsp_3710144000_01_s2"]]],"ab":[]},
 "3710243000":{"v":[["0★","npc_3710243000_01","mortal_A","phit_3710243000",["nsp_3710243000_01_s2"]]],"ab":[]},
 "3710250000":{"v":[["0★","npc_3710250000_01","mortal_A","phit_3710250000",["nsp_3710250000_01_s2"]]],"ab":[]},
-"3710251000":{"v":[["0★","npc_3710251000_01","mortal_A","phit_3710251000",["nsp_3710251000_01_s2"]]],"ab":[]}
+"3710251000":{"v":[["0★","npc_3710251000_01","mortal_A","phit_3710251000",["nsp_3710251000_01_s2"]]],"ab":[]},
+"3710252000":{"v":[["0★","npc_3710252000_01","mortal_A","phit_3710252000",["nsp_3710252000_01_s2"]]],"ab":[]},
+"3710253000":{"v":[["0★","npc_3710253000_01","mortal_A","phit_3710253000",["nsp_3710253000_01_s2"]]],"ab":[]},
+"3710254000":{"v":[["0★","npc_3710254000_01","mortal_A","phit_3710254000",["nsp_3710254000_01_s2"]]],"ab":[]}
 },
 "job":
 {
@@ -9921,7 +9929,7 @@
 "3990153000":"@@Imperial_Prime_Minister_Freesia_(NPC) freezie's relation imperial prime minister freesia erune female エルステ帝国宰相 フリーシア yūko kaida 甲斐田裕子",
 "3990156000":"@@Monika_(NPC) enforcer's group monika human female モニカ ayumi tsuji 辻あゆみ voiced",
 "3990165000":"@@Piña_Colata_(NPC) piña colata collab unknown other ぴにゃこら太 ayaka ōhashi 大橋彩香",
-"3990152000":"@@Ardora_(NPC) ardora draph female アルドラ hiromi igarashi 五十嵐裕美 2014-09-12 voiced",
+"3990152000":"@@Ardora_(NPC) agielba's daughter ardora draph female アルドラ hiromi igarashi 五十嵐裕美 2014-09-12 voiced",
 "3990163000":"@@Ranko_Kanzaki_(Brunnhilde) ranko kanzaki brunnhilde collab human female 神崎蘭子 ブリュンヒルデ maaya uchida 内田真礼 voiced",
 "3990159000":"@@Poseidon_(NPC) poseidon primal male ポセイドン daisuke ono 小野大輔 2014-09-30 voiced",
 "3990157000":"@@Lecia_(NPC) enforcer's group lecia human female リーシャ ayako kawasumi 川澄綾子 voiced",
@@ -9997,7 +10005,7 @@
 "3990419000":"@@Golden_Knight_(NPC) luminary knight's group golden knight erune female 黄金の騎士 ai kayano 茅野愛衣",
 "3990412000":"@@Necalli_(NPC) necalli collab human male ネカリ takashi matsuyama 松山鷹志 2016-04-15 voiced",
 "3990446000":"@@Alicia_(NPC) aliza's mother alicia draph female アリシア tomo sakurai 櫻井智 2016-05-02",
-"3990443000":"@@Bowman_(NPC) bowman human male ボーマン yoshimasa hosoya 細谷佳正 2016-05-18 voiced",
+"3990443000":"@@Bowman_(NPC) ayer's relation bowman human male ボーマン yoshimasa hosoya 細谷佳正 2016-05-18 voiced",
 "3990471000":"@@Muskel_(NPC) abomination's group muskel draph male 四天王ムスケル ryūzaburō ōtomo 大友龍三郎 2016-06-30",
 "3990454000":"@@Ichiro_Ogami_(NPC) ichiro ogami collab human male 大神一郎 akio suyama 陶山章央 2016-05-13",
 "3990453000":"@@Aoi_Satan_(NPC) aoi satan collab human male 葵叉丹 hiroshi yanaka 家中宏 2016-05-13",
@@ -10342,7 +10350,7 @@
 "3992358000":"@@Kagura_(NPC) kagura collab unknown female 神楽 rie kugimiya 釘宮理恵 2021-10-15",
 "3992368000":"@@Prince_Hata_(NPC) prince hata collab unknown male ハタ皇子 kōichi sakaguchi 坂口候一 2021-10-20",
 "3992408000":"@@Osanne_(NPC) osanne human male オサム toshiyuki morikawa nanami yamashita 森川智之 山下七海 2021-10-29",
-"3992418000":"@@Tristette_(NPC) tristette draph female トリステット mikako komatsu 小松未可子 2021-11-29",
+"3992418000":"@@Tristette_(NPC) cupitan's relation tristette draph female トリステット mikako komatsu 小松未可子 2021-11-29",
 "3992438000":"@@Shizuka_(NPC) shizuka collab human female しずか yumi kakazu かかずゆみ 2021-12-08",
 "3993020000":"@@Kuromi_(NPC) kuromi collab unknown female クロミ ??? ？？？ 2023-04-01",
 "3992636000":"@@Spartan_Therapist_(NPC) spartan therapist human female スパルタ☆セラピスト aoi yūki 悠木碧 2022-03-29",
@@ -13952,7 +13960,7 @@
 "3990409000":"rafflesia",
 "3990410000":"mimic",
 "3990413000":"vega m. bison",
-"3990414000":"imperial prime minister freesia erune female エルステ帝国宰相 フリーシア yūko kaida 甲斐田裕子",
+"3990414000":"freesia's relation imperial prime minister freesia erune female エルステ帝国宰相 フリーシア yūko kaida 甲斐田裕子",
 "3990415000":"reactor",
 "3990428000":"vulcanrio",
 "3990429000":"sleepyhead スリーピィ",
@@ -17700,7 +17708,7 @@
 "3992498000":"coner",
 "3992499000":"cidala 12generals erune female シンダラ ai kakuma 加隈亜衣",
 "3992500000":"cidala 12generals erune female シンダラ ai kakuma 加隈亜衣",
-"3992501000":"laolao",
+"3992501000":"cidala's relation laolao",
 "3992502000":"wilnas human other ウィルナス masaaki mizunaka 水中雅章 gbf-versus-rising",
 "3992503000":"wamdus harvin other ワムデュス maria naganawa 長縄まりあ",
 "3992504000":"galleon unknown other ガレヲン suzuko mimori 三森すずこ gbf-versus-rising",
@@ -18961,10 +18969,10 @@
 "3993871000":"hundred-year lapis brilliance",
 "3993872000":"@@Bhadra_(NPC) bhadra draph male バドラ inori minase 水瀬いのり 2025-03-11",
 "3993873000":"@@Mapra_(NPC) mapra human male マプラ koki uchiyama 内山昂輝 2025-03-11",
-"3993874000":"@@Sankara_(NPC) sankara erune female サンカラ shuka saitō 斉藤朱夏 2025-03-11",
+"3993874000":"@@Sankara_(NPC) shukra's relation sankara erune female サンカラ shuka saitō 斉藤朱夏 2025-03-11",
 "3993875000":"@@Shukra_(NPC) shukra erune female シュクラ kana ichinose 市ノ瀬加那 2025-03-11",
 "3993876000":"dharma gate",
-"3993888000":"samantha",
+"3993888000":"bhadra's relation samantha",
 "4200493":"water tropical fruits mountain aberration-boss",
 "4200503":"water tropical fruits mountain aberration-boss",
 "4200513":"water tropical fruits mountain aberration-boss",
@@ -19039,7 +19047,7 @@
 "3993901000":"djeeta human female ジータ gbf-versus-rising gbf-relink",
 "3993902000":"rosamia human female ロザミア yui ishikawa 石川由依",
 "3993903000":"rosamia human female ロザミア yui ishikawa 石川由依",
-"3993904000":"@@Cherine_(NPC) cherine erune female シェリーネ hina suguta 直田姫奈 2025-03-29",
+"3993904000":"@@Cherine_(NPC) rosamia's relation cherine erune female シェリーネ hina suguta 直田姫奈 2025-03-29",
 "3993905000":"cherine erune female シェリーネ hina suguta 直田姫奈",
 "3993906000":"cherine erune female シェリーネ hina suguta 直田姫奈",
 "3993907000":"cherine erune female シェリーネ hina suguta 直田姫奈",
@@ -19154,7 +19162,7 @@
 "3101253":"wind golden tortoise fish-boss",
 "5200323":"dark maleficurse regina undead-boss",
 "3040593000":"@@Cagliostro_and_Clarisse wind ssr cagliostro and clarisse human female special staff 可憐なる師弟 カリオストロ＆クラリス sakura tange ayane sakura 丹下桜 佐倉綾音 2025-05-15 gbf-versus-rising gbf-relink",
-"3040594000":"@@Kou_(Light) light ssr kou erune male balanced katana harp 小林裕介 yusuke kobayashi コウ 2025-05-15",
+"3040594000":"@@Kou_(Light) light ssr kou erune male balanced katana harp コウ yusuke kobayashi 小林裕介 2025-05-15",
 "3993972000":"ringmaster masked noble human male",
 "3993989000":"vyrn unknown other ビィ rie kugimiya 釘宮理恵 gbf-versus-rising gbf-relink",
 "3993990000":"lyria human female ルリア nao tōyama 東山奈央 gbf-versus-rising gbf-relink",
@@ -19579,7 +19587,7 @@
 "3994214000":"maminas unknown female マミナス yumi uchiyama 内山夕実",
 "3994215000":"@@Jherion_(NPC) maminas's son jherion unknown male ジェリオン shōya ishige 石毛翔弥 2025-12-27",
 "3994216000":"maminas's son jherion unknown male ジェリオン shoya ishige 石毛翔弥",
-"3994217000":"@@Miamint_(NPC) miamint unknown female ミアミント ayaka ōhashi 大橋彩香 2025-12-27",
+"3994217000":"@@Miamint_(NPC) maminas's daughter miamint unknown female ミアミント ayaka ōhashi 大橋彩香 2025-12-27",
 "3994218000":"maminas's daughter miamint unknown female ミアミント ayaka ohashi 大橋彩香",
 "3994219000":"@@Notus_(NPC) notus primal female ノトス rui tanabe 田辺留依 2025-12-27",
 "3994220000":"notus primal female ノトス rui tanabe 田辺留依",
@@ -19607,7 +19615,7 @@
 "1040425500":"@@Cyclestaff_of_Mortality_Verboten water staff ssr cyclestaff of mortality verboten odious 2025-12-27",
 "1040518800":"@@Deathcannon_of_Prosperity_Verboten fire gun ssr deathcannon of prosperity verboten odious 2025-12-27",
 "1040220800":"@@Demonspear_of_Prosperity_Verboten fire spear ssr demonspear of prosperity verboten odious 2025-12-27",
-"1040029000":"@@Demonsword_of_Mortality_Verboten water sabre ssr demonsword of mortality verboten odious 2025-12-27",
+"1040029000":"@@Demonsword_of_Mortality_Verboten water sabre ssr demonsword of mortality verboten odious 禁命の禍剣 2025-12-27",
 "1040714900":"@@Terrorbow_of_Mortality_Verboten water bow ssr terrorbow of mortality verboten odious 2025-12-27",
 "3710251000":"@@Indala indala's relation no rest for the sleepless indala 2025-12-25",
 "3040634000":"@@Amaterasu light ssr amaterasu primal female heal staff アマテラス yuka iguchi 井口裕香 2025-12-28",
@@ -19616,19 +19624,30 @@
 "1040818000":"@@Sunwheel_Chime light harp ssr sunwheel chime 日輪鈴 2025-12-28",
 "3994189000":"kurokko & shirokko's relation sandira 12generals human female サンチラ megumi nakajima 中島愛",
 "3994191000":"sandira 12generals human female サンチラ megumi nakajima 中島愛",
-"3994192000":"sandira 12generals human female サンチラ megumi nakajima 中島愛",
-"3994193000":"sandira's relation kurokko & shirokko unknown other くろっこ&しろっこ 竹内順子",
-"3994194000":"shirokko unknown other しろっこ 竹内順子",
-"3994195000":"kurokko & shirokko's form shirokko unknown other しろっこ 竹内順子",
-"3994196000":"kurokko & shirokko's form kurokko unknown other くろっこ 竹内順子",
-"3994197000":"kurokko unknown other くろっこ 竹内順子",
-"3994198000":"kurokko & shirokko's form kurokko unknown other くろっこ 竹内順子",
-"3994199000":"kurokko & shirokko's form kurokko unknown other くろっこ 竹内順子",
+"3994192000":"@@Sandira_(NPC) sandira 12generals human female サンチラ megumi nakajima 中島愛 2025-12-29",
+"3994193000":"@@Kurokko_&_Shirokko_(NPC) kurokko & shirokko unknown female くろっこ&しろっこ junko takeuchi 竹内順子 2025-12-29",
+"3994194000":"shirokko unknown female しろっこ 竹内順子",
+"3994195000":"kurokko & shirokko's form shirokko unknown female しろっこ 竹内順子",
+"3994196000":"kurokko & shirokko's form kurokko unknown female くろっこ 竹内順子",
+"3994197000":"kurokko unknown female くろっこ 竹内順子",
+"3994198000":"kurokko & shirokko's form kurokko unknown female くろっこ 竹内順子",
+"3994199000":"kurokko & shirokko's form kurokko unknown female くろっこ 竹内順子",
 "3994232000":"joya's relation klesha of forgetfulness primal",
 "3994233000":"homa primal",
 "3994271000":"sandira 12generals human female サンチラ megumi nakajima 中島愛",
 "9102953":"fire homa other-boss",
-"9102963":"fire klesha of forgetfulness other-boss"
+"9102963":"fire klesha of forgetfulness other-boss",
+"3994243000":"caesar human male 白騎士 yūki kaji 梶裕貴 young",
+"3040632000":"@@Caesar light ssr caesar grand human male balanced sabre シーザー yūki kaji 梶裕貴 2025-12-31",
+"3040633000":"@@Sandira fire ssr sandira 12generals human female attack bow harp サンチラ megumi nakajima 中島愛 2025-12-31",
+"2040448000":"@@Versusia fire ssr versusia providence 2025-12-31 gbf-versus-rising",
+"1040029100":"@@Blade_of_Calamity's_Bane fire sabre ssr blade of calamity's bane 厄除之利剣 2025-12-29",
+"1040715000":"@@Equinius fire bow ssr equinius 2025-12-31",
+"1030903900":"@@Mindfade_Edge fire katana sr mindfade edge 煩濁ノ忘刀 2025-12-29",
+"1040029200":"@@White_Sword_of_Splendor light sabre ssr white sword of splendor grand 2025-12-31",
+"3710252000":"@@Albert albert's relation captain's festive visiting attire albert 2025-12-31",
+"3710254000":"@@Caim caim's relation raiments of spring winds past caim 2025-12-31",
+"3710253000":"@@Medusa medusa's relation snake princess of new year's fun medusa 2025-12-31"
 },
 "mypage":
 {
@@ -19646,7 +19665,9 @@
 "3040077000":{"v":[["1","mypage_3040077000_01",null,null,[]],["2","mypage_3040077000_02",null,null,[]],["3","mypage_3040077000_03",null,null,[]]]},
 "3040082000":{"v":[["1","mypage_3040082000_01",null,null,[]],["2","mypage_3040082000_02",null,null,[]],["3","mypage_3040082000_03",null,null,[]]]},
 "3040101000":{"v":[["1","mypage_3040101000_01",null,null,[]],["2","mypage_3040101000_02",null,null,[]]]},
-"3040630000":{"v":[["1","mypage_3040630000_01",null,null,[]],["2","mypage_3040630000_02",null,null,[]]]}
+"3040630000":{"v":[["1","mypage_3040630000_01",null,null,[]],["2","mypage_3040630000_02",null,null,[]]]},
+"2040448000":{"v":[["1","mypage_2040448000",null,null,[]]]},
+"3040632000":{"v":[["1","mypage_3040632000_01",null,null,[]],["2","mypage_3040632000_02",null,null,[]]]}
 },
 "styles":
 {
