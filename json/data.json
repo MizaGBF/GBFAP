@@ -1467,7 +1467,9 @@
 "2040445000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040445000_01_attack"]]],"s":"2040445000"},
 "2040446000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040446000_01_attack"]]],"s":"2040446000"},
 "2040447000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040447000_01_attack"]]],"s":"2040447000"},
-"2040448000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040448000_01_attack"]]],"s":"2040448000"}
+"2040448000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040448000_01_attack"]]],"s":"2040448000"},
+"2040449000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040449000_01_attack"]]],"s":"2040449000"},
+"2040450000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040450000_01_attack"]]],"s":"2040450000"}
 },
 "weapons":
 {
@@ -7191,7 +7193,9 @@
 "9102843":{"v":[["","enemy_9102843",null,"ehit_9102843",["esp_9102843_01","esp_9102843_02","esp_9102843_03","esp_9102843_04"]]],"ra":["raid_appear_9102843"]},
 "9102823":{"v":[["","enemy_9102823",null,"ehit_9102823",["esp_9102823_01","esp_9102823_02","esp_9102823_03","esp_9102823_04"]]],"ra":["raid_appear_9102823"]},
 "9102953":{"v":[["","enemy_9102953",null,"ehit_9102953",["esp_9102953_01","esp_9102953_02","esp_9102953_03"]]],"ra":["raid_appear_9102953"]},
-"9102963":{"v":[["","enemy_9102963",null,"phit_0000000000",["esp_9102963_03_all"]]],"ra":["raid_appear_9102963"]}
+"9102963":{"v":[["","enemy_9102963",null,"phit_0000000000",["esp_9102963_03_all"]]],"ra":["raid_appear_9102963"]},
+"9102983":{"v":[["","enemy_9102983",null,"ehit_9102983",["esp_9102983_01","esp_9102983_02","esp_9102983_03"]]],"ra":["raid_appear_9102983"]},
+"9102993":{"v":[["","enemy_9102993",null,"ehit_9102993",["esp_9102993_01","esp_9102993_02_all","esp_9102993_03_all"]]],"ra":["raid_appear_9102993"]}
 },
 "skins":
 {
@@ -19640,11 +19644,11 @@
 "3994243000":"caesar human male 白騎士 yūki kaji 梶裕貴 young",
 "3040632000":"@@Caesar light ssr caesar grand human male balanced sabre シーザー yūki kaji 梶裕貴 2025-12-31",
 "3040633000":"@@Sandira fire ssr sandira 12generals human female attack bow harp サンチラ megumi nakajima 中島愛 2025-12-31",
-"2040448000":"@@Versusia fire ssr versusia providence 2025-12-31 gbf-versus-rising",
+"2040448000":"@@Versusia fire ssr versusia providence ヴェルサシア 2025-12-31 gbf-versus-rising",
 "1040029100":"@@Blade_of_Calamity's_Bane fire sabre ssr blade of calamity's bane 厄除之利剣 2025-12-29",
-"1040715000":"@@Equinius fire bow ssr equinius 2025-12-31",
+"1040715000":"@@Equinius fire bow ssr equinius 天干地支弓・午之飾 2025-12-31",
 "1030903900":"@@Mindfade_Edge fire katana sr mindfade edge 煩濁ノ忘刀 2025-12-29",
-"1040029200":"@@White_Sword_of_Splendor light sabre ssr white sword of splendor grand 2025-12-31",
+"1040029200":"@@White_Sword_of_Splendor light sabre ssr white sword of splendor grand 白耀剣 2025-12-31",
 "3710252000":"@@Albert albert's relation captain's festive visiting attire albert 2025-12-31",
 "3710254000":"@@Caim caim's relation raiments of spring winds past caim 2025-12-31",
 "3710253000":"@@Medusa medusa's relation snake princess of new year's fun medusa 2025-12-31",
@@ -19653,7 +19657,13 @@
 "3994237000":"albert human male アルベール hikaru midorikawa 緑川光",
 "3994238000":"medusa primal female メドゥーサ kaori mizuhashi 水橋かおり",
 "3994241000":"lyria human female ルリア nao tōyama 東山奈央 gbf-versus-rising gbf-relink",
-"3994242000":"vyrn unknown other ビィ rie kugimiya 釘宮理恵 gbf-versus-rising gbf-relink"
+"3994242000":"vyrn unknown other ビィ rie kugimiya 釘宮理恵 gbf-versus-rising gbf-relink",
+"3994272000":"huanglong's form virtuous huanglong",
+"3994273000":"qilin's form stygian qilin",
+"9102983":"light virtuous huanglong other-boss",
+"9102993":"dark stygian qilin other-boss",
+"2040450000":"@@Stygian_Qilin dark ssr stygian qilin 2026-01-07",
+"2040449000":"@@Virtuous_Huanglong light ssr virtuous huanglong 2026-01-07"
 },
 "mypage":
 {
