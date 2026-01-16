@@ -982,7 +982,9 @@
 "3040634000":{"v":[["0★","npc_3040634000_01","mortal_A","phit_3040634000",["nsp_3040634000_01_s2"]],["4★","npc_3040634000_02","mortal_A","phit_3040634000_02",["nsp_3040634000_02_s2"]]],"ab":["ab_3040634000_01","ab_all_3040634000_02"]},
 "3040630000":{"v":[["0★","npc_3040630000_01","mortal_A","phit_3040630000",["nsp_3040630000_01_s2"]],["4★","npc_3040630000_02","mortal_A","phit_3040630000_02",["nsp_3040630000_02_s2"]]],"ab":["ab_all_3040630000_01","ab_all_3040630000_02"]},
 "3040633000":{"v":[["0★","npc_3040633000_01","mortal_A","phit_3040633000",["nsp_3040633000_01_s2"]],["4★","npc_3040633000_02","mortal_A","phit_3040633000_02",["nsp_3040633000_02_s2"]]],"ab":["ab_3040633000_01","ab_3040633000_02","ab_all_3040633000_01","ab_all_3040633000_02"]},
-"3040632000":{"v":[["0★","npc_3040632000_01","mortal_A","phit_3040632000",["nsp_3040632000_01_s2"]],["4★","npc_3040632000_02","mortal_A","phit_3040632000",["nsp_3040632000_02_s2"]]],"ab":["ab_3040632000_01","ab_all_3040632000_02","ab_all_3040632000_03"]}
+"3040632000":{"v":[["0★","npc_3040632000_01","mortal_A","phit_3040632000",["nsp_3040632000_01_s2"]],["4★","npc_3040632000_02","mortal_A","phit_3040632000",["nsp_3040632000_02_s2"]]],"ab":["ab_3040632000_01","ab_all_3040632000_02","ab_all_3040632000_03"]},
+"3040635000":{"v":[["0★","npc_3040635000_01","mortal_A","phit_3040635000",["nsp_3040635000_01_s2"]],["4★","npc_3040635000_02","mortal_A","phit_3040635000_02",["nsp_3040635000_02_s2"]]],"ab":["ab_3040635000_01","ab_all_3040635000_01","ab_all_3040635000_03","ab_all_3040635000_04"]},
+"3040636000":{"v":[["0★","npc_3040636000_01","mortal_A","phit_3040636000",["nsp_3040636000_01_s2"]],["4★","npc_3040636000_02","mortal_A","phit_3040636000_02",["nsp_3040636000_02_s2"]]],"ab":["ab_3040636000_01","ab_all_3040636000_01","ab_all_3040636000_02","ab_all_3040636000_03"]}
 },
 "partners":
 {
@@ -4441,7 +4443,9 @@
 "1030903900":{"w":["1030903900","1030903900"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1030903900",["sp_1030903900_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1030903900",["sp_1030903900_1_s2"]]]},
 "1040029100":{"w":["1040029100","1040029100"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029100",["sp_1040029100_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029100",["sp_1040029100_1_s2"]]]},
 "1040715000":{"w":["1040715000","1040715000"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715000",["sp_1040715000_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715000",["sp_1040715000_1_s2"]]]},
-"1040029200":{"w":["1040029200","1040029200"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029200",["sp_1040029200_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029200",["sp_1040029200_1_s2"]]]}
+"1040029200":{"w":["1040029200","1040029200"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029200",["sp_1040029200_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029200",["sp_1040029200_1_s2"]]]},
+"1040425800":{"w":["1040425800","1040425800"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425800",["sp_1040425800_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425800",["sp_1040425800_1_s2"]]]},
+"1040425700":{"w":["1040425700","1040425700"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425700",["sp_1040425700_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425700",["sp_1040425700_1_s2"]]]}
 },
 "enemies":
 {
@@ -18184,9 +18188,9 @@
 "3993182000":"gran human male グラン gbf-versus-rising gbf-relink",
 "3993183000":"djeeta human female ジータ gbf-versus-rising gbf-relink",
 "3993184000":"athena primal female アテナ ayako kawasumi 川澄綾子",
-"3993185000":"dorothy human female ドロシー sora amamiya 雨宮天",
-"3993186000":"claudia human female クラウディア miho arakawa 荒川美穂",
-"3993187000":"constance erune female コンスタンツィア yūko gotō 後藤邑子",
+"3993185000":"maid's group dorothy human female ドロシー sora amamiya 雨宮天",
+"3993186000":"maid's group claudia human female クラウディア miho arakawa 荒川美穂",
+"3993187000":"maid's group constance erune female コンスタンツィア yūko gotō 後藤邑子",
 "3993189000":"yuji itadori collab human male 虎杖悠仁 junya enoki 榎木淳弥",
 "3993191000":"megumi fushiguro collab human male 伏黒 恵 yuma uchida 内田雄馬",
 "3993193000":"nobara kugisaki collab human female 釘崎野薔薇 asami seto 瀬戸麻沙美",
@@ -19615,12 +19619,12 @@
 "3040631000":"@@Darydara water ssr darydara harvin male defense axe ダリダラ taito ban 坂泰斗 2025-12-27",
 "2040446000":"@@Belmervolk fire ssr belmervolk odious ベルメルヴォルク 2025-12-27",
 "2040447000":"@@Nihuyvintae water ssr nihuyvintae odious ニフイヴィンテ 2025-12-27",
-"1040621400":"@@Blazefist_of_Prosperity_Verboten fire melee ssr blazefist of prosperity verboten odious 2025-12-27",
-"1040425500":"@@Cyclestaff_of_Mortality_Verboten water staff ssr cyclestaff of mortality verboten odious 2025-12-27",
-"1040518800":"@@Deathcannon_of_Prosperity_Verboten fire gun ssr deathcannon of prosperity verboten odious 2025-12-27",
-"1040220800":"@@Demonspear_of_Prosperity_Verboten fire spear ssr demonspear of prosperity verboten odious 2025-12-27",
+"1040621400":"@@Blazefist_of_Prosperity_Verboten fire melee ssr blazefist of prosperity verboten odious 禁栄の灼拳 2025-12-27",
+"1040425500":"@@Cyclestaff_of_Mortality_Verboten water staff ssr cyclestaff of mortality verboten odious 禁命の廻杖 2025-12-27",
+"1040518800":"@@Deathcannon_of_Prosperity_Verboten fire gun ssr deathcannon of prosperity verboten odious 禁栄の絶砲 2025-12-27",
+"1040220800":"@@Demonspear_of_Prosperity_Verboten fire spear ssr demonspear of prosperity verboten odious 禁栄の禍槍 2025-12-27",
 "1040029000":"@@Demonsword_of_Mortality_Verboten water sabre ssr demonsword of mortality verboten odious 禁命の禍剣 2025-12-27",
-"1040714900":"@@Terrorbow_of_Mortality_Verboten water bow ssr terrorbow of mortality verboten odious 2025-12-27",
+"1040714900":"@@Terrorbow_of_Mortality_Verboten water bow ssr terrorbow of mortality verboten odious 禁命の悍弓 2025-12-27",
 "3710251000":"@@Indala indala's relation no rest for the sleepless indala 2025-12-25",
 "3040634000":"@@Amaterasu light ssr amaterasu primal female heal staff アマテラス yuka iguchi 井口裕香 2025-12-28",
 "3040630000":"@@Bhaisa earth ssr bhaisa grand erune female heal staff バイシュラ manaka iwami 石見舞菜香 2025-12-28",
@@ -19662,8 +19666,12 @@
 "3994273000":"qilin's form stygian qilin",
 "9102983":"light virtuous huanglong other-boss",
 "9102993":"dark stygian qilin other-boss",
-"2040450000":"@@Stygian_Qilin dark ssr stygian qilin 2026-01-07",
-"2040449000":"@@Virtuous_Huanglong light ssr virtuous huanglong 2026-01-07"
+"2040450000":"@@Stygian_Qilin dark ssr stygian qilin 紫禍黒麒麟 2026-01-07",
+"2040449000":"@@Virtuous_Huanglong light ssr virtuous huanglong 護徳黄龍 2026-01-07",
+"3994274000":"salria human female サリエリア hazuki ogino 荻野葉月",
+"3994277000":"constance erune female コンスタンツィア yūko gotō 後藤邑子",
+"1040425800":"@@Erlkoenig-Nachweis dark staff ssr erlkoenig-nachweis エルケーニヒ・アウスヴァイス 2026-01-16",
+"1040425700":"@@Use_a_Gold_Brick wind staff ssr use a gold brick ヒヒイロカネ飾ってみた 2026-01-16"
 },
 "mypage":
 {
