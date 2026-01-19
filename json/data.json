@@ -789,7 +789,7 @@
 "3040438000":{"v":[["0★","npc_3040438000_01","mortal_A","phit_3040438000",["nsp_3040438000_01_s2"]],["4★","npc_3040438000_02","mortal_A","phit_3040438000_02",["nsp_3040438000_02_s2"]]],"ab":["ab_3040438000_01","ab_all_3040438000_01","ab_all_3040438000_02"]},
 "3040439000":{"v":[["0★","npc_3040439000_01","mortal_A","phit_3040439000",["nsp_3040439000_01_s2"]],["4★","npc_3040439000_02","mortal_A","phit_3040439000",["nsp_3040439000_02_s2"]]],"ab":["ab_3040439000_01","ab_all_3040439000_01","ab_all_3040439000_02","ab_all_3040439000_03"]},
 "3040440000":{"v":[["0★","npc_3040440000_01","mortal_A","phit_3040440000",["nsp_3040440000_01_s2"]],["4★","npc_3040440000_02","mortal_A","phit_3040440000_02",["nsp_3040440000_02_s2"]]],"ab":["ab_3040440000_01","ab_all_3040440000_01","ab_all_3040440000_02"]},
-"3040441000":{"v":[["0★","npc_3040441000_01","mortal_A","phit_3040441000",["nsp_3040441000_01_s2"]],["4★","npc_3040441000_02","mortal_A","phit_3040441000_02",["nsp_3040441000_02_s2"]]],"ab":["ab_3040441000_01","ab_3040441000_02","ab_3040441000_03","ab_3040441000_04"]},
+"3040441000":{"v":[["0★","npc_3040441000_01","mortal_A","phit_3040441000",["nsp_3040441000_01_s2"]],["4★","npc_3040441000_02","mortal_A","phit_3040441000_02",["nsp_3040441000_02_s2"]],["5★","npc_3040441000_03","mortal_A","phit_3040441000_03",["nsp_3040441000_03_s2"]]],"ab":["ab_3040441000_01","ab_3040441000_02","ab_3040441000_03","ab_3040441000_04","ab_3040441000_05"]},
 "3040442000":{"v":[["0★","npc_3040442000_01","mortal_A","phit_3040442000",["nsp_3040442000_01_s2"]],["4★","npc_3040442000_02","mortal_A","phit_3040442000",["nsp_3040442000_02_s2"]]],"ab":["ab_3040442000_01","ab_3040442000_02","ab_all_3040442000_02"]},
 "3040443000":{"v":[["0★","npc_3040443000_01","mortal_A","phit_3040443000",["nsp_3040443000_01_s2"]],["4★","npc_3040443000_02","mortal_A","phit_3040443000_02",["nsp_3040443000_02_s2"]]],"ab":[]},
 "3040444000":{"v":[["0★","npc_3040444000_01","mortal_A","phit_3040444000",["nsp_3040444000_01_s2"]],["4★","npc_3040444000_02","mortal_A","phit_3040444000_02",["nsp_3040444000_02_s2"]]],"ab":["ab_3040444000_01","ab_all_3040444000_02"]},
@@ -7199,7 +7199,8 @@
 "9102953":{"v":[["","enemy_9102953",null,"ehit_9102953",["esp_9102953_01","esp_9102953_02","esp_9102953_03"]]],"ra":["raid_appear_9102953"]},
 "9102963":{"v":[["","enemy_9102963",null,"phit_0000000000",["esp_9102963_03_all"]]],"ra":["raid_appear_9102963"]},
 "9102983":{"v":[["","enemy_9102983",null,"ehit_9102983",["esp_9102983_01","esp_9102983_02","esp_9102983_03"]]],"ra":["raid_appear_9102983"]},
-"9102993":{"v":[["","enemy_9102993",null,"ehit_9102993",["esp_9102993_01","esp_9102993_02_all","esp_9102993_03_all"]]],"ra":["raid_appear_9102993"]}
+"9102993":{"v":[["","enemy_9102993",null,"ehit_9102993",["esp_9102993_01","esp_9102993_02_all","esp_9102993_03_all"]]],"ra":["raid_appear_9102993"]},
+"8104693":{"v":[["","enemy_8104693",null,"ehit_8104693",["esp_8104693_01","esp_8104693_02","esp_8104693_03_all","esp_8104693_04"]]],"ra":["raid_appear_8104693"]}
 },
 "skins":
 {
@@ -10612,9 +10613,9 @@
 "3993342000":"@@Fenrir_(God-Slaying_Form) fenrir's form fenrir god-slaying form primal female フェンリル 神殺しの姿 yuki matsuoka 松岡由貴 2023-12-11",
 "3993341000":"@@Otherworld_Dragon_(NPC) otherworld dragon unknown other 幽世の竜 2023-12-11",
 "3993372000":"@@Tyrannocreatures_(NPC) tyrannocreatures unknown other ティラノクリーチャーズ 2023-12-28",
-"3993363000":"@@Millie_(NPC) millie human female ミリー tomoyo takayanagi 高柳知葉 2023-12-28",
+"3993363000":"@@Millie_(NPC) tyra's relation millie human female ミリー tomoyo takayanagi 高柳知葉 2023-12-28",
 "3993367000":"@@Levido_(NPC) levido erune male レヴィード taisuke nakano 中野泰佑 2023-12-28",
-"3993366000":"@@Lulou_Holou_(NPC) lulou holou harvin female ルロウホロウ hisako tōjō 東城日沙子 2023-12-28",
+"3993366000":"@@Lulou_Holou_(NPC) tyra's relation lulou holou harvin female ルロウホロウ hisako tōjō 東城日沙子 2023-12-28",
 "3993400000":"@@Twice_(NPC) twice collab human male トゥワイス daichi endō 遠藤大智 2024-01-12",
 "3993391000":"@@Izuku_Midoriya_(NPC) izuku midoriya collab human male 緑谷出久 daiki yamashita 山下大輝 2024-01-12",
 "3993398000":"@@Himiko_Toga_(NPC) himiko toga collab human female トガヒミコ misato fukuen 福圓美里 2024-01-12",
@@ -19668,10 +19669,16 @@
 "9102993":"dark stygian qilin other-boss",
 "2040450000":"@@Stygian_Qilin dark ssr stygian qilin 紫禍黒麒麟 2026-01-07",
 "2040449000":"@@Virtuous_Huanglong light ssr virtuous huanglong 護徳黄龍 2026-01-07",
-"3994274000":"salria human female サリエリア hazuki ogino 荻野葉月",
+"3994274000":"maid's group salria human female サリエリア hazuki ogino 荻野葉月",
 "3994277000":"constance erune female コンスタンツィア yūko gotō 後藤邑子",
 "1040425800":"@@Erlkoenig-Nachweis dark staff ssr erlkoenig-nachweis エルケーニヒ・アウスヴァイス 2026-01-16",
-"1040425700":"@@Use_a_Gold_Brick wind staff ssr use a gold brick ヒヒイロカネ飾ってみた 2026-01-16"
+"1040425700":"@@Use_a_Gold_Brick wind staff ssr use a gold brick ヒヒイロカネ飾ってみた 2026-01-16",
+"3040636000":"@@Constance dark ssr constance erune female special staff コンスタンツィア yūko gotō 後藤邑子 2026-01-16",
+"3040635000":"@@Lulou_Holou wind ssr lulou holou harvin female special gun ルロウホロウ hisako tōjō 東城日沙子 2026-01-16",
+"3994239000":"blanche primal female voiced voice-only",
+"3994269000":"missing-help-wanted",
+"3994270000":"missing-help-wanted",
+"8104693":"water blanche primal-boss"
 },
 "mypage":
 {
