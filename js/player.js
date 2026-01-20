@@ -95,6 +95,7 @@ class Player
 		MORTAL_K_2: "mortal_K_2",
 		MORTAL_SP: "mortal_SP",
 		ATTACK: "attack",
+		ATTACK_BACK: "attack_back", // the world
 		ATTACK_SHORT: "short_attack",
 		ATTACK_SHORT_ADV: "short_attack_adv",
 		ATTACK_DOUBLE: "double",
@@ -176,7 +177,7 @@ class Player
 		ENEMY_DAMAGE_STANDBY_G: "damage_standby_G",
 		ENEMY_DAMAGE_STANDBY_H: "damage_standby_H",
 		ENEMY_DAMAGE_STANDBY_I: "damage_standby_I",
-		LINK_PHASE_1: "setin_link",
+		LINK_PHASE_1: "setin_link", // lucilius black wing
 		LINK_PHASE_1_2: "setin_link_2",
 		LINK_PHASE_1_F2: "setin_link_f2",
 		LINK_PHASE_1_F2_2: "setin_link_f2_2",
@@ -1699,6 +1700,7 @@ class Player
 			case Player.c_animations.MORTAL_K_2: return "Charge Attack K2";
 			case Player.c_animations.MORTAL_SP: return "Charge Ultimate";
 			case Player.c_animations.ATTACK: return "Attack";
+			case Player.c_animations.ATTACK_BACK: return "Attack (Back)";
 			case Player.c_animations.ATTACK_SHORT: return "Attack 1";
 			case Player.c_animations.ATTACK_SHORT_ADV: return "Attack 1 (Adv)";
 			case Player.c_animations.ATTACK_DOUBLE: return "Attack 2";
