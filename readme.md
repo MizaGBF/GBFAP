@@ -52,6 +52,14 @@ They are:
   
 Additionaly, the player in its purest form as presented in the [demo.html](https://github.com/MizaGBF/GBFAP/blob/main/demo.html) file uses GBFML [js/util.js](https://github.com/MizaGBF/GBFML/blob/main/js/util.js).  
   
+  
+# Tools  
+The `tools` folder got some scripts intended for debugging:  
+- `list_name.py` will go through all main animations to try to attempt to make a list of animation names, to find missing ones. Do note that it's imperfect, there are false positives. Manual checking must be performed after.  
+- `tester.py` go through all animations to look for specific terms, to ensure player compability.  
+  
+Those scripts must run from inside the folder.  
+  
 ## [updater.py](https://github.com/MizaGBF/GBFAP/blob/main/updater.py)  
 This script is in charge of updating the JSON files.  
 > [!CAUTION]  

@@ -5,7 +5,7 @@ import traceback
 
 class Tester():
     def __init__(self):
-        with open("json/data.json", mode="r", encoding="utf-8") as f:
+        with open("../json/data.json", mode="r", encoding="utf-8") as f:
             self.data = json.load(f)
         self.cache = set()
         self.set = set()
