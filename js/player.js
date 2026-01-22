@@ -33,232 +33,336 @@ class Player
 	static c_animations = Object.freeze({
 		// special ones added for the player innerworkings
 		// for summon
-		SUMMON_ATTACK: "summon_atk", 
-		SUMMON_DAMAGE: "summon_dmg",
+		SUMMON_ATTACK:{name:"Summon Call",key:"summon_atk"}, 
+		SUMMON_DAMAGE:{name:"Summon Damage",key:"summon_dmg"},
 		// for boss appear animations
-		RAID_APPEAR_0: "raid_appear_0",
-		RAID_APPEAR_1: "raid_appear_1",
-		RAID_APPEAR_2: "raid_appear_2",
-		RAID_APPEAR_3: "raid_appear_3",
-		RAID_APPEAR_4: "raid_appear_4",
-		RAID_APPEAR_5: "raid_appear_5",
-		RAID_APPEAR_6: "raid_appear_6",
-		RAID_APPEAR_7: "raid_appear_7",
-		RAID_APPEAR_8: "raid_appear_8",
-		RAID_APPEAR_9: "raid_appear_9",
+		RAID_APPEAR_0:{name:"Appear",key:"raid_appear_0"},
+		RAID_APPEAR_1:{name:"Appear A",key:"raid_appear_1"},
+		RAID_APPEAR_2:{name:"Appear B",key:"raid_appear_2"},
+		RAID_APPEAR_3:{name:"Appear C",key:"raid_appear_3"},
+		RAID_APPEAR_4:{name:"Appear D",key:"raid_appear_4"},
+		RAID_APPEAR_5:{name:"Appear E",key:"raid_appear_5"},
+		RAID_APPEAR_6:{name:"Appear F",key:"raid_appear_6"},
+		RAID_APPEAR_7:{name:"Appear G",key:"raid_appear_7"},
+		RAID_APPEAR_8:{name:"Appear H",key:"raid_appear_8"},
+		RAID_APPEAR_9:{name:"Appear I",key:"raid_appear_9"},
 		// GBF ones
-		WAIT: "wait",
-		WAIT_2: "wait_2",
-		WAIT_3: "wait_3",
-		TO_STB_WAIT: "setup",
-		STB_WAIT: "stbwait",
-		STB_WAIT_ADV: "stbwait_adv",
-		CHARA_SELECT: "chara_select",
-		CHARA_IN: "chara_in",
-		CHARA_OUT: "chara_out",
-		CHARGE: "charge",
-		ABILITY: "ability",
-		ABILITY_WAIT: "ability_wait",
-		MORTAL: "mortal",
-		MORTAL_A: "mortal_A",
-		MORTAL_A_1: "mortal_A_1",
-		MORTAL_A_2: "mortal_A_2",
-		MORTAL_B: "mortal_B",
-		MORTAL_B_1: "mortal_B_1",
-		MORTAL_B_2: "mortal_B_2",
-		MORTAL_C: "mortal_C",
-		MORTAL_C_1: "mortal_C_1",
-		MORTAL_C_2: "mortal_C_2",
-		MORTAL_D: "mortal_D",
-		MORTAL_D_1: "mortal_D_1",
-		MORTAL_D_2: "mortal_D_2",
-		MORTAL_E: "mortal_E",
-		MORTAL_E_1: "mortal_E_1",
-		MORTAL_E_2: "mortal_E_2",
-		MORTAL_F: "mortal_F",
-		MORTAL_F_1: "mortal_F_1",
-		MORTAL_F_2: "mortal_F_2",
-		MORTAL_G: "mortal_G",
-		MORTAL_G_1: "mortal_G_1",
-		MORTAL_G_2: "mortal_G_2",
-		MORTAL_H: "mortal_H",
-		MORTAL_H_1: "mortal_H_1",
-		MORTAL_H_2: "mortal_H_2",
-		MORTAL_I: "mortal_I",
-		MORTAL_I_1: "mortal_I_1",
-		MORTAL_I_2: "mortal_I_2",
-		MORTAL_J: "mortal_J",
-		MORTAL_J_1: "mortal_J_1",
-		MORTAL_J_2: "mortal_J_2",
-		MORTAL_K: "mortal_K",
-		MORTAL_K_1: "mortal_K_1",
-		MORTAL_K_2: "mortal_K_2",
-		MORTAL_SP: "mortal_SP",
-		ATTACK: "attack",
-		ATTACK_BACK: "attack_back", // the world
-		ATTACK_SHORT: "short_attack",
-		ATTACK_SHORT_ADV: "short_attack_adv",
-		ATTACK_DOUBLE: "double",
-		ATTACK_TRIPLE: "triple",
-		ATTACK_QUADRUPLE: "quadruple",
-		SPECIAL_ATTACK: "attack_2",
-		ENEMY_ATTACK: "attack_3",
-		CHANGE: "change",
-		CHANGE_TO: "change_1",
-		CHANGE_FROM: "change_2",
-		CHANGE_TO_2: "change_1_2",
-		CHANGE_FROM_2: "change_2_2",
-		DEAD: "dead",
-		DEAD_2: "dead_2",
-		DAMAGE: "damage",
-		DAMAGE_1: "damage_1",
-		DAMAGE_2: "damage_2",
-		DAMAGE_3: "damage_3",
-		DAMAGE_4: "damage_4",
-		DAMAGE_5: "damage_5",
-		WIN: "win",
-		WIN1: "win1",
-		WIN2: "win2",
-		WIN_1: "win_1",
-		WIN_2: "win_2",
-		WIN_3: "win_3",
-		INVISIBLE: "invisible",
-		HIDE: "hide",
-		DOWN: "down",
-		WAIT_SPECIAL: "pf",
-		WAIT_SPECIAL_1: "pf_1",
-		WAIT_SPECIAL_2: "pf_2",
-		WAIT_SPECIAL_3: "pf_3",
-		WAIT_SPECIAL_4: "pf_4",
-		WAIT_SPECIAL_5: "pf_5",
-		MISS: "miss",
-		SUMMON: "summon",
-		ABILITY_MOTION_OLD: "attack_noeffect",
-		ABILITY_MOTION: "ab_motion",
-		ABILITY_MOTION_2: "ab_motion_2",
-		ABILITY_MOTION_3: "ab_motion_3",
-		ABILITY_MOTION_4: "ab_motion_4",
-		VS_MOTION_1: "vs_motion_1",
-		VS_MOTION_2: "vs_motion_2",
-		VS_MOTION_3: "vs_motion_3",
-		VS_MOTION_4: "vs_motion_4",
-		VS_MOTION_5: "vs_motion_5",
-		VS_MOTION_6: "vs_motion_6",
-		ENEMY_PHASE_1: "setin",
-		ENEMY_PHASE_2: "setin_2",
-		ENEMY_PHASE_3: "setin_3",
-		ENEMY_PHASE_4: "setin_4",
-		ENEMY_PHASE_5: "setin_5",
-		ENEMY_FORM_CHANGE: "form_change",
-		ENEMY_STANDBY_A: "standby_A",
-		ENEMY_STANDBY_B: "standby_B",
-		ENEMY_STANDBY_C: "standby_C",
-		ENEMY_STANDBY_D: "standby_D",
-		ENEMY_STANDBY_E: "standby_E",
-		ENEMY_STANDBY_F: "standby_F",
-		ENEMY_STANDBY_G: "standby_G",
-		ENEMY_STANDBY_H: "standby_H",
-		ENEMY_STANDBY_I: "standby_I",
-		ENEMY_BREAK_STANDBY_A: "break_standby_A",
-		ENEMY_BREAK_STANDBY_B: "break_standby_B",
-		ENEMY_BREAK_STANDBY_C: "break_standby_C",
-		ENEMY_BREAK_STANDBY_D: "break_standby_D",
-		ENEMY_BREAK_STANDBY_E: "break_standby_E",
-		ENEMY_BREAK_STANDBY_F: "break_standby_F",
-		ENEMY_BREAK_STANDBY_G: "break_standby_G",
-		ENEMY_BREAK_STANDBY_H: "break_standby_H",
-		ENEMY_BREAK_STANDBY_I: "break_standby_I",
-		ENEMY_DAMAGE_STANDBY_A: "damage_standby_A",
-		ENEMY_DAMAGE_STANDBY_B: "damage_standby_B",
-		ENEMY_DAMAGE_STANDBY_C: "damage_standby_C",
-		ENEMY_DAMAGE_STANDBY_D: "damage_standby_D",
-		ENEMY_DAMAGE_STANDBY_E: "damage_standby_E",
-		ENEMY_DAMAGE_STANDBY_F: "damage_standby_F",
-		ENEMY_DAMAGE_STANDBY_G: "damage_standby_G",
-		ENEMY_DAMAGE_STANDBY_H: "damage_standby_H",
-		ENEMY_DAMAGE_STANDBY_I: "damage_standby_I",
-		LINK_PHASE_1: "setin_link", // lucilius black wing
-		LINK_PHASE_1_2: "setin_link_2",
-		LINK_PHASE_1_F2: "setin_link_f2",
-		LINK_PHASE_1_F2_2: "setin_link_f2_2",
-		LINK_PHASE_2: "setin_2_link",
-		LINK_PHASE_2_2: "setin_2_link_2",
-		LINK_PHASE_2_F2: "setin_2_link_f2",
-		LINK_PHASE_2_F2_2: "setin_2_link_f2_2",
-		LINK_PHASE_3: "setin_3_link",
-		LINK_PHASE_3_2: "setin_3_link_2",
-		LINK_PHASE_3_F2: "setin_3_link_f2",
-		LINK_PHASE_3_F2_2: "setin_3_link_f2_2",
-		LINK_PHASE_4: "setin_4_link",
-		LINK_PHASE_4_2: "setin_4_link_2",
-		LINK_PHASE_4_F2: "setin_4_link_f2",
-		LINK_PHASE_4_F2_2: "setin_4_link_f2_2",
-		LINK_PHASE_5: "setin_5_link",
-		LINK_PHASE_5_2: "setin_5_link_2",
-		LINK_PHASE_5_F2: "setin_5_link_f2",
-		LINK_PHASE_5_F2_2: "setin_5_link_f2_2",
-		LINK_DAMAGE: "damage_link",
-		LINK_DAMAGE_2: "damage_link_2",
-		LINK_DEAD: "dead_link",
-		LINK_DEAD_1: "dead_1_link",
-		LINK_DEAD_2: "dead_2_link",
-		LINK_DEAD_3: "dead_3_link",
-		LINK_DEAD_A: "dead_link_1",
-		LINK_DEAD_B: "dead_link_2",
-		LINK_DEAD_C: "dead_link_3",
-		LINK_MORTAL_A: "mortal_A_link",
-		LINK_MORTAL_A_2: "mortal_A_link_2",
-		LINK_MORTAL_A_F2: "mortal_A_link_f2",
-		LINK_MORTAL_A_F2_2: "mortal_A_link_f2_2",
-		LINK_MORTAL_B: "mortal_B_link",
-		LINK_MORTAL_B_2: "mortal_B_link_2",
-		LINK_MORTAL_B_F2: "mortal_B_link_f2",
-		LINK_MORTAL_B_F2_2: "mortal_B_link_f2_2",
-		LINK_MORTAL_C: "mortal_C_link",
-		LINK_MORTAL_C_2: "mortal_C_link_2",
-		LINK_MORTAL_C_F2: "mortal_C_link_f2",
-		LINK_MORTAL_C_F2_2: "mortal_C_link_f2_2",
-		LINK_MORTAL_D: "mortal_D_link",
-		LINK_MORTAL_D_2: "mortal_D_link_2",
-		LINK_MORTAL_D_F2: "mortal_D_link_f2",
-		LINK_MORTAL_D_F2_2: "mortal_D_link_f2_2",
-		LINK_MORTAL_E: "mortal_E_link",
-		LINK_MORTAL_E_2: "mortal_E_link_2",
-		LINK_MORTAL_E_F2: "mortal_E_link_f2",
-		LINK_MORTAL_E_F2_2: "mortal_E_link_f2_2",
-		LINK_MORTAL_F: "mortal_F_link",
-		LINK_MORTAL_F_2: "mortal_F_link_2",
-		LINK_MORTAL_F_F2: "mortal_F_link_f2",
-		LINK_MORTAL_F_F2_2: "mortal_F_link_f2_2",
-		LINK_MORTAL_G: "mortal_G_link",
-		LINK_MORTAL_G_2: "mortal_G_link_2",
-		LINK_MORTAL_G_F2: "mortal_G_link_f2",
-		LINK_MORTAL_G_F2_2: "mortal_G_link_f2_2",
-		LINK_MORTAL_H: "mortal_H_link",
-		LINK_MORTAL_H_2: "mortal_H_link_2",
-		LINK_MORTAL_H_F2: "mortal_H_link_f2",
-		LINK_MORTAL_H_F2_2: "mortal_H_link_f2_2",
-		LINK_MORTAL_I: "mortal_I_link",
-		LINK_MORTAL_I_2: "mortal_I_link_2",
-		LINK_MORTAL_I_F2: "mortal_I_link_f2",
-		LINK_MORTAL_I_F2_2: "mortal_I_link_f2_2",
-		LINK_MORTAL_J: "mortal_J_link",
-		LINK_MORTAL_J_2: "mortal_J_link_2",
-		LINK_MORTAL_J_F2: "mortal_J_link_f2",
-		LINK_MORTAL_J_F2_2: "mortal_J_link_f2_2",
-		LINK_MORTAL_K: "mortal_K_link",
-		LINK_MORTAL_K_2: "mortal_K_link_2",
-		LINK_MORTAL_K_F2: "mortal_K_link_f2",
-		LINK_MORTAL_K_F2_2: "mortal_K_link_f2_2",
-		LINK_ATTACK: "attack_link",
-		LINK_ATTACK_2: "attack_link_2",
-		LINK_ATTACK_F2: "attack_link_f2",
-		LINK_ATTACK_F2_2: "attack_link_f2_2",
-		LINK_FORM_CHANGE: "form_change_link",
-		LINK_FORM_CHANGE_2: "form_change_link_2",
-		MY_PAGE: "mypage",
+		WAIT:{name:"Idle",key:"wait"},
+		WAIT_2:{name:"Idle 2 (OD)",key:"wait_2"},
+		WAIT2:{name:"Idle 2' (OD)",key:"wait2"},
+		WAIT_3:{name:"Idle 3 (Break)",key:"wait_3"},
+		WAIT_3_SETIN:{name:"Idle 3 (Phase)",key:"wait_3_setin"}, // fruit mountain
+		WAIT_C:{name:"Idle C",key:"wait_C"},
+		WAIT_2_C:{name:"Idle 2 C",key:"wait_2_C"},
+		WAIT_2_C_BACK:{name:"Idle 2 C (Back)",key:"wait_2_c_back"},
+		WAIT_2_C_FRONT:{name:"Idle 2 C (Front)",key:"wait_2_c_front"},
+		WAIT_3_C:{name:"Idle 3 C",key:"wait_3_C"},
+		TO_STB_WAIT:{name:"Weapon Drew",key:"setup"},
+		STB_WAIT:{name:"Wpn. Drew (Idle)",key:"stbwait"},
+		STB_WAIT_O:{name:"Wpn. Drew (Orchis)",key:"stbwait_o"}, // BK & Orchis
+		STB_WAIT_ADV:{name:"Wpn. Drew (Idle)(Adv)",key:"stbwait_adv"},
+		CHARA_SELECT:{name:"Selection",key:"chara_select"},
+		CHARA_IN:{name:"Fade In",key:"chara_in"},
+		CHARA_OUT:{name:"Fade Out",key:"chara_out"},
+		CHARGE:{name:"Charger",key:"charge"},
+		COUNTER:{name:"Counter",key:"counter"},
+		ABILITY:{name:"C.A Charged",key:"ability"},
+		ABILITY_WAIT:{name:"Skill (Wait)",key:"ability_wait"},
+		MORTAL:{name:"Charge Attack",key:"mortal"},
+		MORTAL_A:{name:"Charge Attack A",key:"mortal_A"},
+		MORTAL_A_EF:{name:"C.A. A (Effect)",key:"mortal_A_ef"},
+		MORTAL_A_FRONT:{name:"C.A. A (Front)",key:"mortal_A_front"},
+		MORTAL_A_FRONT_EF:{name:"C.A. A (Front)(Effect)",key:"mortal_A_front_ef"},
+		MORTAL_A_BACK:{name:"C.A. A (Back)",key:"mortal_A_back"},
+		MORTAL_A_BACK_EF:{name:"C.A. A (Back)(Effect)",key:"mortal_A_back_ef"},
+		MORTAL_A_SKIP:{name:"C.A. A (Skip)",key:"mortal_A_skip"},
+		MORTAL_A_1:{name:"Charge Attack A1",key:"mortal_A_1"},
+		MORTAL_A_2:{name:"Charge Attack A2",key:"mortal_A_2"},
+		MORTAL_A_B:{name:"Charge Attack AB",key:"mortal_A_B"},
+		MORTAL_A_C:{name:"Charge Attack AC",key:"mortal_A_C"},
+		MORTAL_B:{name:"Charge Attack B",key:"mortal_B"},
+		MORTAL_B_EF:{name:"C.A. B (Effect)",key:"mortal_B_ef"},
+		MORTAL_B_FRONT:{name:"C.A. B (Front)",key:"mortal_B_front"},
+		MORTAL_B_FRONT_EF:{name:"C.A. B (Front)(Effect)",key:"mortal_B_front_ef"},
+		MORTAL_B_BACK:{name:"C.A. B (Back)",key:"mortal_B_back"},
+		MORTAL_B_BACK_EF:{name:"C.A. B (Back)(Effect)",key:"mortal_B_back_ef"},
+		MORTAL_B_SKIP:{name:"C.A. B (Skip)",key:"mortal_B_skip"},
+		MORTAL_B_1:{name:"Charge Attack B1",key:"mortal_B_1"},
+		MORTAL_B_2:{name:"Charge Attack B2",key:"mortal_B_2"},
+		MORTAL_B_B:{name:"Charge Attack BB",key:"mortal_B_B"},
+		MORTAL_B_C:{name:"Charge Attack BC",key:"mortal_B_C"},
+		MORTAL_C:{name:"Charge Attack C",key:"mortal_C"},
+		MORTAL_C_EF:{name:"C.A. C (Effect)",key:"mortal_C_ef"},
+		MORTAL_C_FRONT:{name:"C.A. C (Front)",key:"mortal_C_front"},
+		MORTAL_C_FRONT_EF:{name:"C.A. C (Front)(Effect)",key:"mortal_C_front_ef"},
+		MORTAL_C_CACK:{name:"C.A. C (Cack)",key:"mortal_C_back"},
+		MORTAL_C_CACK_EF:{name:"C.A. C (Cack)(Effect)",key:"mortal_C_back_ef"},
+		MORTAL_C_SKIP:{name:"C.A. C (Skip)",key:"mortal_C_skip"},
+		MORTAL_C_1:{name:"Charge Attack C1",key:"mortal_C_1"},
+		MORTAL_C_2:{name:"Charge Attack C2",key:"mortal_C_2"},
+		MORTAL_C_B:{name:"Charge Attack CB",key:"mortal_C_B"},
+		MORTAL_C_C:{name:"Charge Attack CC",key:"mortal_C_C"},
+		MORTAL_D:{name:"Charge Attack D",key:"mortal_D"},
+		MORTAL_D_EF:{name:"C.A. D (Effect)",key:"mortal_D_ef"},
+		MORTAL_D_FRONT:{name:"C.A. D (Front)",key:"mortal_D_front"},
+		MORTAL_D_FRONT_EF:{name:"C.A. D (Front)(Effect)",key:"mortal_D_front_ef"},
+		MORTAL_D_DACK:{name:"C.A. D (Dack)",key:"mortal_D_back"},
+		MORTAL_D_DACK_EF:{name:"C.A. D (Dack)(Effect)",key:"mortal_D_back_ef"},
+		MORTAL_D_SKIP:{name:"C.A. D (Skip)",key:"mortal_D_skip"},
+		MORTAL_D_1:{name:"Charge Attack D1",key:"mortal_D_1"},
+		MORTAL_D_2:{name:"Charge Attack D2",key:"mortal_D_2"},
+		MORTAL_E:{name:"Charge Attack E",key:"mortal_E"},
+		MORTAL_E_1:{name:"Charge Attack E1",key:"mortal_E_1"},
+		MORTAL_E_2:{name:"Charge Attack E2",key:"mortal_E_2"},
+		MORTAL_F:{name:"Charge Attack F",key:"mortal_F"},
+		MORTAL_F_1:{name:"Charge Attack F1",key:"mortal_F_1"},
+		MORTAL_F_2:{name:"Charge Attack F2",key:"mortal_F_2"},
+		MORTAL_G:{name:"Charge Attack G",key:"mortal_G"},
+		MORTAL_G_1:{name:"Charge Attack G1",key:"mortal_G_1"},
+		MORTAL_G_2:{name:"Charge Attack G2",key:"mortal_G_2"},
+		MORTAL_H:{name:"Charge Attack H",key:"mortal_H"},
+		MORTAL_H_1:{name:"Charge Attack H1",key:"mortal_H_1"},
+		MORTAL_H_2:{name:"Charge Attack H2",key:"mortal_H_2"},
+		MORTAL_I:{name:"Charge Attack I",key:"mortal_I"},
+		MORTAL_I_1:{name:"Charge Attack I1",key:"mortal_I_1"},
+		MORTAL_I_2:{name:"Charge Attack I2",key:"mortal_I_2"},
+		MORTAL_J:{name:"Charge Attack J",key:"mortal_J"},
+		MORTAL_J_1:{name:"Charge Attack J1",key:"mortal_J_1"},
+		MORTAL_J_2:{name:"Charge Attack J2",key:"mortal_J_2"},
+		MORTAL_K:{name:"Charge Attack K",key:"mortal_K"},
+		MORTAL_K_1:{name:"Charge Attack K1",key:"mortal_K_1"},
+		MORTAL_K_2:{name:"Charge Attack K2",key:"mortal_K_2"},
+		MORTAL_SP:{name:"Charge Ultimate",key:"mortal_SP"},
+		ATTACK:{name:"Attack",key:"attack"},
+		ATTACK_EWIYAR:{name:"Attack (Ewiyar)",key:"attack_Ewiyar"},
+		ATTACK_SHORT:{name:"Attack 1",key:"short_attack"},
+		ATTACK_SHORT_ADV:{name:"Attack 1 (Adv)",key:"short_attack_adv"},
+		ATTACK_DOUBLE:{name:"Attack 2",key:"double"},
+		ATTACK_TRIPLE:{name:"Attack 3",key:"triple"},
+		ATTACK_QUADRUPLE:{name:"Attack 4",key:"quadruple"},
+		SPECIAL_ATTACK:{name:"Attack B (Alt/OD)",key:"attack_2"},
+		ENEMY_ATTACK:{name:"Attack C (Break)",key:"attack_3"},
+		CHANGE:{name:"Change Form",key:"change"},
+		CHANGE_TO:{name:"Change Form 1",key:"change_1"},
+		CHANGE_FROM:{name:"Change Form 2",key:"change_2"},
+		CHANGE_TO_2:{name:"Change Form 3",key:"change_1_2"},
+		CHANGE_FROM_2:{name:"Change Form 4",key:"change_2_2"},
+		CHANGE_FULL:{name:"Change Form (Full)",key:"change_full"},
+		DEAD:{name:"Dead",key:"dead"},
+		DEAD_2:{name:"Dead 2",key:"dead_2"},
+		DODGE:{name:"Dodge",key:"dodge"},
+		DODGE_2:{name:"Dodge 2",key:"dodge_2"},
+		DODGE_3:{name:"Dodge 3",key:"dodge_3"},
+		ESCAPE:{name:"Escape",key:"escape"},
+		DAMAGE:{name:"Damaged",key:"damage"},
+		DAMAGE_1:{name:"Damaged A",key:"damage_1"},
+		DAMAGE_2:{name:"Damaged B (OD)",key:"damage_2"},
+		DAMAGE_2_B:{name:"Damaged B B",key:"damage_2_B"},
+		DAMAGE_3:{name:"Damaged C (Break)",key:"damage_3"},
+		DAMAGE_3_B:{name:"Damaged C B",key:"damage_3_B"},
+		DAMAGE_3_C:{name:"Damaged C C",key:"damage_3_C"},
+		DAMAGE_4:{name:"Damaged D",key:"damage_4"},
+		DAMAGE_5:{name:"Damaged E",key:"damage_5"},
+		WIN:{name:"Win",key:"win"},
+		WIN1:{name:"Win 1",key:"win1"},
+		WIN2:{name:"Win 2",key:"win2"},
+		WIN01:{name:"Win 01",key:"win01"},
+		WIN02:{name:"Win 02",key:"win02"},
+		WIN_1:{name:"Win Alt. 1",key:"win_1"},
+		WIN_2:{name:"Win Alt. 2",key:"win_2"},
+		WIN_3:{name:"Win Alt. 3",key:"win_3"},
+		WIN_4:{name:"Win Alt. 4",key:"win_4"},
+		WIN_A:{name:"Win Alt. A",key:"win_A"},
+		WIN_B:{name:"Win Alt. B",key:"win_B"},
+		WIN_C:{name:"Win Alt. C",key:"win_C"},
+		WIN_D:{name:"Win Alt. D",key:"win_D"},
+		WIN_E:{name:"Win Alt. E",key:"win_E"},
+		WIN_F:{name:"Win Alt. F",key:"win_F"},
+		INVISIBLE:{name:"Invisible",key:"invisible"},
+		HIDE:{name:"Hide",key:"hide"},
+		DOWN:{name:"Low HP",key:"down"},
+		DOWN_2_MOTION:{name:"Low HP 2 (motion)",key:"down2_motion"},
+		WAIT_SPECIAL:{name:"Idle (Spe)",key:"pf"},
+		WAIT_SPECIAL_1:{name:"Idle (Spe) A",key:"pf_1"},
+		WAIT_SPECIAL_2:{name:"Idle (Spe) B",key:"pf_2"},
+		WAIT_SPECIAL_3:{name:"Idle (Spe) C",key:"pf_3"},
+		WAIT_SPECIAL_4:{name:"Idle (Spe) D",key:"pf_4"},
+		WAIT_SPECIAL_5:{name:"Idle (Spe) E",key:"pf_5"},
+		WAIT_NO_CHANGE:{name:"Idle (No Change)",key:"pf_no_change_with_damage"}, // rei ayanami
+		MISS:{name:"Miss",key:"miss"},
+		SUMMON:{name:"Summoning",key:"summon"},
+		ABILITY_MOTION_OLD:{name:"Miss (Old)",key:"attack_noeffect"},
+		ABILITY_MOTION:{name:"Skill A",key:"ab_motion"},
+		ABILITY_MOTION_2:{name:"Skill B",key:"ab_motion_2"},
+		ABILITY_MOTION_3:{name:"Skill C",key:"ab_motion_3"},
+		ABILITY_MOTION_4:{name:"Skill D",key:"ab_motion_4"},
+		ABILITY_MOTION_5:{name:"Skill E",key:"ab_motion_5"},
+		VS_MOTION_1:{name:"Custom Skill A",key:"vs_motion_1"},
+		VS_MOTION_2:{name:"Custom Skill B",key:"vs_motion_2"},
+		VS_MOTION_3:{name:"Custom Skill C",key:"vs_motion_3"},
+		VS_MOTION_4:{name:"Custom Skill D",key:"vs_motion_4"},
+		VS_MOTION_5:{name:"Custom Skill E",key:"vs_motion_5"},
+		VS_MOTION_6:{name:"Custom Skill F",key:"vs_motion_6"},
+		ENEMY_PHASE_1:{name:"Phase 1 (Entry)",key:"setin"},
+		ENEMY_PHASE_2:{name:"Phase 2 (OD)",key:"setin_2"},
+		ENEMY_PHASE2:{name:"Phase 2' (OD)",key:"setin2"},
+		ENEMY_PHASE_3:{name:"Phase 3 (Break)",key:"setin_3"},
+		ENEMY_PHASE3:{name:"Phase 3' (Break)",key:"setin3"},
+		ENEMY_PHASE_3_B:{name:"Phase 3B (Break)",key:"setin_3_B"},
+		ENEMY_PHASE_4:{name:"Phase 4",key:"setin_4"},
+		ENEMY_PHASE_4A:{name:"Phase 4 (Alt)",key:"setin_4a"},
+		ENEMY_PHASE_5:{name:"Phase 5",key:"setin_5"},
+		ENEMY_PHASE_A:{name:"Phase A",key:"setin_A"},
+		ENEMY_PHASE_B:{name:"Phase B",key:"setin_B"},
+		ENEMY_PHASE_EWIYAR:{name:"Phase Ewiyar",key:"setin_Ewiyar"},
+		ENEMY_PHASE_OTHER:{name:"Phase (Other)",key:"setin_other"},
+		ENEMY_FORM_CHANGE:{name:"Form Change",key:"form_change"},
+		ENEMY_STANDBY_A:{name:"Standby A",key:"standby_A"},
+		ENEMY_STANDBY_A_EWIYAR:{name:"Standby A (Ewiyar)",key:"standby_A_Ewiyar"},
+		ENEMY_STANDBY_B:{name:"Standby B",key:"standby_B"},
+		ENEMY_STANDBY_C:{name:"Standby C",key:"standby_C"},
+		ENEMY_STANDBY_C_UNDER:{name:"Standby C (Under)",key:"standby_C_under"},
+		ENEMY_STANDBY_D:{name:"Standby D",key:"standby_D"},
+		ENEMY_STANDBY_E:{name:"Standby E",key:"standby_E"},
+		ENEMY_STANDBY_F:{name:"Standby F",key:"standby_F"},
+		ENEMY_STANDBY_G:{name:"Standby G",key:"standby_G"},
+		ENEMY_STANDBY_H:{name:"Standby H",key:"standby_H"},
+		ENEMY_STANDBY_I:{name:"Standby I",key:"standby_I"},
+		ENEMY_BREAK_STANDBY_A:{name:"Standby A (Break)",key:"break_standby_A"},
+		ENEMY_BREAK_STANDBY_B:{name:"Standby B (Break)",key:"break_standby_B"},
+		ENEMY_BREAK_STANDBY_C:{name:"Standby C (Break)",key:"break_standby_C"},
+		ENEMY_BREAK_STANDBY_D:{name:"Standby D (Break)",key:"break_standby_D"},
+		ENEMY_BREAK_STANDBY_E:{name:"Standby E (Break)",key:"break_standby_E"},
+		ENEMY_BREAK_STANDBY_F:{name:"Standby F (Break)",key:"break_standby_F"},
+		ENEMY_BREAK_STANDBY_G:{name:"Standby G (Break)",key:"break_standby_G"},
+		ENEMY_BREAK_STANDBY_H:{name:"Standby H (Break)",key:"break_standby_H"},
+		ENEMY_BREAK_STANDBY_I:{name:"Standby I (Break)",key:"break_standby_I"},
+		ENEMY_DAMAGE_STANDBY_A:{name:"Standby A (Dmgd)",key:"damage_standby_A"},
+		ENEMY_DAMAGE_STANDBY_B:{name:"Standby B (Dmgd)",key:"damage_standby_B"},
+		ENEMY_DAMAGE_STANDBY_C:{name:"Standby C (Dmgd)",key:"damage_standby_C"},
+		ENEMY_DAMAGE_STANDBY_D:{name:"Standby D (Dmgd)",key:"damage_standby_D"},
+		ENEMY_DAMAGE_STANDBY_E:{name:"Standby E (Dmgd)",key:"damage_standby_E"},
+		ENEMY_DAMAGE_STANDBY_F:{name:"Standby F (Dmgd)",key:"damage_standby_F"},
+		ENEMY_DAMAGE_STANDBY_G:{name:"Standby G (Dmgd)",key:"damage_standby_G"},
+		ENEMY_DAMAGE_STANDBY_H:{name:"Standby H (Dmgd)",key:"damage_standby_H"},
+		ENEMY_DAMAGE_STANDBY_I:{name:"Standby I (Dmgd)",key:"damage_standby_I"},
+		// the world ozma form
+		ATTACK_BACK:{name:"Attack (Back)",key:"attack_back"},
+		// hiro ryugasaki
+		CARD_STBWAIT:{name:"Wpn. Drew (Card)",key:"card_stbwait"},
+		DRAGON_STBWAIT:{name:"Wpn. Drew (Dragon)",key:"dragon_stbwait"},
+		// lucilius/wing, neptune/leverrier, other pets...
+		LINK_PHASE_1:{name:"Phase 1 (Entry)(Lk)",key:"setin_link"},
+		LINK_PHASE_1_2:{name:"Phase 1B (Entry)(Lk)",key:"setin_link_2"},
+		LINK_PHASE_1_F2:{name:"Phase 1C (Entry)(Lk)",key:"setin_link_f2"},
+		LINK_PHASE_1_F2_2:{name:"Phase 1D (Entry)(Lk)",key:"setin_link_f2_2"},
+		LINK_PHASE_2:{name:"Phase 2 (OD)(Lk)",key:"setin_2_link"},
+		LINK_PHASE_2_2:{name:"Phase 2B (OD)(Lk)",key:"setin_2_link_2"},
+		LINK_PHASE_2_F2:{name:"Phase 2C (OD)(Lk)",key:"setin_2_link_f2"},
+		LINK_PHASE_2_F2_2:{name:"Phase 2D (OD)(Lk)",key:"setin_2_link_f2_2"},
+		LINK_PHASE_3:{name:"Phase 3 (Break)(Lk)",key:"setin_3_link"},
+		LINK_PHASE_3_2:{name:"Phase 3B (Break)(Lk)",key:"setin_3_link_2"},
+		LINK_PHASE_3_F2:{name:"Phase 3C (Break)(Lk)",key:"setin_3_link_f2"},
+		LINK_PHASE_3_F2_2:{name:"Phase 3D (Break)(Lk)",key:"setin_3_link_f2_2"},
+		LINK_PHASE_4:{name:"Phase 4 (Lk)",key:"setin_4_link"},
+		LINK_PHASE_4_2:{name:"Phase 4B (Lk)",key:"setin_4_link_2"},
+		LINK_PHASE_4_F2:{name:"Phase 4C (Lk)",key:"setin_4_link_f2"},
+		LINK_PHASE_4_F2_2:{name:"Phase 4D (Lk)",key:"setin_4_link_f2_2"},
+		LINK_PHASE_5:{name:"Phase 5 (Lk)",key:"setin_5_link"},
+		LINK_PHASE_5_2:{name:"Phase 5B (Lk)",key:"setin_5_link_2"},
+		LINK_PHASE_5_F2:{name:"Phase 5C (Lk)",key:"setin_5_link_f2"},
+		LINK_PHASE_5_F2_2:{name:"Phase 5D (Lk)",key:"setin_5_link_f2_2"},
+		LINK_DAMAGE:{name:"Damaged (Link)",key:"damage_link"},
+		LINK_DAMAGE_2:{name:"Damaged 2 (Link)",key:"damage_link_2"},
+		LINK_2_DAMAGE:{name:"Damaged B (Link)",key:"damage_2_link"},
+		LINK_3_DAMAGE:{name:"Damaged C (Link)",key:"damage_3_link"},
+		LINK_DOWN:{name:"Low HP (Link)",key:"down_link"},
+		LINK_DEAD:{name:"Dead (Link)",key:"dead_link"},
+		LINK_DEAD_1:{name:"Dead 1 (Link)",key:"dead_1_link"},
+		LINK_DEAD_2:{name:"Dead 2 (Link)",key:"dead_2_link"},
+		LINK_DEAD_3:{name:"Dead 3 (Link)",key:"dead_3_link"},
+		LINK_DEAD_A:{name:"Dead 1B (Link)",key:"dead_link_1"},
+		LINK_DEAD_B:{name:"Dead 2B (Link)",key:"dead_link_2"},
+		LINK_DEAD_C:{name:"Dead 3B (Link)",key:"dead_link_3"},
+		LINK_MORTAL_A:{name:"Charge Atk. A (Lk)",key:"mortal_A_link"},
+		LINK_MORTAL_A_2:{name:"Charge Atk. A2 (Lk)",key:"mortal_A_link_2"},
+		LINK_MORTAL_A_F2:{name:"Charge Atk. A3 (Lk)",key:"mortal_A_link_f2"},
+		LINK_MORTAL_A_F2_2:{name:"Charge Atk. A4 (Lk)",key:"mortal_A_link_f2_2"},
+		LINK_MORTAL_B:{name:"Charge Atk. B (Lk)",key:"mortal_B_link"},
+		LINK_MORTAL_B_2:{name:"Charge Atk. B2 (Lk)",key:"mortal_B_link_2"},
+		LINK_MORTAL_B_F2:{name:"Charge Atk. B3 (Lk)",key:"mortal_B_link_f2"},
+		LINK_MORTAL_B_F2_2:{name:"Charge Atk. B4 (Lk)",key:"mortal_B_link_f2_2"},
+		LINK_MORTAL_C:{name:"Charge Atk. C (Lk)",key:"mortal_C_link"},
+		LINK_MORTAL_C_2:{name:"Charge Atk. C2 (Lk)",key:"mortal_C_link_2"},
+		LINK_MORTAL_C_F2:{name:"Charge Atk. C3 (Lk)",key:"mortal_C_link_f2"},
+		LINK_MORTAL_C_F2_2:{name:"Charge Atk. C4 (Lk)",key:"mortal_C_link_f2_2"},
+		LINK_MORTAL_D:{name:"Charge Atk. D (Lk)",key:"mortal_D_link"},
+		LINK_MORTAL_D_2:{name:"Charge Atk. D2 (Lk)",key:"mortal_D_link_2"},
+		LINK_MORTAL_D_F2:{name:"Charge Atk. D3 (Lk)",key:"mortal_D_link_f2"},
+		LINK_MORTAL_D_F2_2:{name:"Charge Atk. D4 (Lk)",key:"mortal_D_link_f2_2"},
+		LINK_MORTAL_E:{name:"Charge Atk. E (Lk)",key:"mortal_E_link"},
+		LINK_MORTAL_E_2:{name:"Charge Atk. E2 (Lk)",key:"mortal_E_link_2"},
+		LINK_MORTAL_E_F2:{name:"Charge Atk. E3 (Lk)",key:"mortal_E_link_f2"},
+		LINK_MORTAL_E_F2_2:{name:"Charge Atk. E4 (Lk)",key:"mortal_E_link_f2_2"},
+		LINK_MORTAL_F:{name:"Charge Atk. F (Lk)",key:"mortal_F_link"},
+		LINK_MORTAL_F_2:{name:"Charge Atk. F2 (Lk)",key:"mortal_F_link_2"},
+		LINK_MORTAL_F_F2:{name:"Charge Atk. F3 (Lk)",key:"mortal_F_link_f2"},
+		LINK_MORTAL_F_F2_2:{name:"Charge Atk. F4 (Lk)",key:"mortal_F_link_f2_2"},
+		LINK_MORTAL_G:{name:"Charge Atk. G (Lk)",key:"mortal_G_link"},
+		LINK_MORTAL_G_2:{name:"Charge Atk. G2 (Lk)",key:"mortal_G_link_2"},
+		LINK_MORTAL_G_F2:{name:"Charge Atk. G3 (Lk)",key:"mortal_G_link_f2"},
+		LINK_MORTAL_G_F2_2:{name:"Charge Atk. G4 (Lk)",key:"mortal_G_link_f2_2"},
+		LINK_MORTAL_H:{name:"Charge Atk. H (Lk)",key:"mortal_H_link"},
+		LINK_MORTAL_H_2:{name:"Charge Atk. H2 (Lk)",key:"mortal_H_link_2"},
+		LINK_MORTAL_H_F2:{name:"Charge Atk. H3 (Lk)",key:"mortal_H_link_f2"},
+		LINK_MORTAL_H_F2_2:{name:"Charge Atk. H4 (Lk)",key:"mortal_H_link_f2_2"},
+		LINK_MORTAL_I:{name:"Charge Atk. I (Lk)",key:"mortal_I_link"},
+		LINK_MORTAL_I_2:{name:"Charge Atk. I2 (Lk)",key:"mortal_I_link_2"},
+		LINK_MORTAL_I_F2:{name:"Charge Atk. I3 (Lk)",key:"mortal_I_link_f2"},
+		LINK_MORTAL_I_F2_2:{name:"Charge Atk. I4 (Lk)",key:"mortal_I_link_f2_2"},
+		LINK_MORTAL_J:{name:"Charge Atk. J (Lk)",key:"mortal_J_link"},
+		LINK_MORTAL_J_2:{name:"Charge Atk. J2 (Lk)",key:"mortal_J_link_2"},
+		LINK_MORTAL_J_F2:{name:"Charge Atk. J3 (Lk)",key:"mortal_J_link_f2"},
+		LINK_MORTAL_J_F2_2:{name:"Charge Atk. J4 (Lk)",key:"mortal_J_link_f2_2"},
+		LINK_MORTAL_K:{name:"Charge Atk. K (Lk)",key:"mortal_K_link"},
+		LINK_MORTAL_K_2:{name:"Charge Atk. K2 (Lk)",key:"mortal_K_link_2"},
+		LINK_MORTAL_K_F2:{name:"Charge Atk. K3 (Lk)",key:"mortal_K_link_f2"},
+		LINK_MORTAL_K_F2_2:{name:"Charge Atk. K4 (Lk)",key:"mortal_K_link_f2_2"},
+		LINK_ATTACK:{name:"Attack (Link)",key:"attack_link"},
+		LINK_ATTACK_2L:{name:"Attack B (Link)",key:"attack_2_link"},
+		LINK_ATTACK_3L:{name:"Attack C (Link)",key:"attack_3_link"},
+		LINK_ATTACK_2:{name:"Attack B (Link)",key:"attack_link_2"},
+		LINK_ATTACK_F2:{name:"Attack C (Link)",key:"attack_link_f2"},
+		LINK_ATTACK_F2_2:{name:"Attack D (Link)",key:"attack_link_f2_2"},
+		LINK_FORM_CHANGE:{name:"Form Change (Link)",key:"form_change_link"},
+		LINK_FORM_CHANGE_2:{name:"Form Change 2 (Link)",key:"form_change_link_2"},
+		// sturm and drang
+		DAMAGE_2_DRANG:{name:"Damaged B (Drang)",key:"damage_2_Drank"},
+		WAIT_DRANG:{name:"Idle (Drang)",key:"wait_Drank"},
+		WAIT_2_DRANG:{name:"Idle (Drang)(OD)",key:"wait_2_Drank"},
+		WAIT_3_DRANG:{name:"Idle (Drang)(Break)",key:"wait_3_Drank"},
+		// juana and ellis
+		WAIT_ELLIS:{name:"Idle (Ellis)",key:"wait_eld"},
+		WAIT_2_ELLIS:{name:"Idle (Ellis)(OD)",key:"wait_2_eld"},
+		WAIT_3_ELLIS:{name:"Idle (Ellis)(Break)",key:"wait_3_eld"},
+		// akasha
+		AKASHA_EXB:{name:"EXB",key:"exb"},
+		AKASHA_EXF:{name:"EXF",key:"exf"},
+		// quetzalcoatl
+		MOTION_EFFECT:{name:"Motion Effect",key:"mEF"},
+		MOTION_EFFECT_BG:{name:"Motion Effect (BG)",key:"mEFBG"},
+		// omni-magia witch
+		WAIT_BG:{name:"Idle (Background)",key:"wait_BG"},
+		WAIT_FAMILIAR:{name:"Idle (Familiar)",key:"wait_familiar"},
+		// my page
+		MY_PAGE:{name:"My Page",key:"mypage"},
 	});
-	
+	static c_animation_name_table = Object.freeze(
+		Object.entries(this.c_animations).reduce((acc, [id, v]) => {
+		  acc[v.key] = id;
+		  return acc;
+		}, {})
+	);
 	// PlayerLayoutMode must be passed in parameter
 	// it will affect the player behavior
 	constructor(mode = PlayerLayoutMode.normal)
@@ -1060,40 +1164,40 @@ class Player
 		switch(motion)
 		{
 			// Charge attacks / specials
-			case Player.c_animations.MORTAL:
-			case Player.c_animations.MORTAL_A:
-			case Player.c_animations.MORTAL_A_1:
-			case Player.c_animations.MORTAL_A_2:
-			case Player.c_animations.MORTAL_B:
-			case Player.c_animations.MORTAL_B_1:
-			case Player.c_animations.MORTAL_B_2:
-			case Player.c_animations.MORTAL_C:
-			case Player.c_animations.MORTAL_C_1:
-			case Player.c_animations.MORTAL_C_2:
-			case Player.c_animations.MORTAL_D:
-			case Player.c_animations.MORTAL_D_1:
-			case Player.c_animations.MORTAL_D_2:
-			case Player.c_animations.MORTAL_E:
-			case Player.c_animations.MORTAL_E_1:
-			case Player.c_animations.MORTAL_E_2:
-			case Player.c_animations.MORTAL_F:
-			case Player.c_animations.MORTAL_F_1:
-			case Player.c_animations.MORTAL_F_2:
-			case Player.c_animations.MORTAL_G:
-			case Player.c_animations.MORTAL_G_1:
-			case Player.c_animations.MORTAL_G_2:
-			case Player.c_animations.MORTAL_H:
-			case Player.c_animations.MORTAL_H_1:
-			case Player.c_animations.MORTAL_H_2:
-			case Player.c_animations.MORTAL_I:
-			case Player.c_animations.MORTAL_I_1:
-			case Player.c_animations.MORTAL_I_2:
-			case Player.c_animations.MORTAL_J:
-			case Player.c_animations.MORTAL_J_1:
-			case Player.c_animations.MORTAL_J_2:
-			case Player.c_animations.MORTAL_K:
-			case Player.c_animations.MORTAL_K_1:
-			case Player.c_animations.MORTAL_K_2:
+			case Player.c_animations.MORTAL.key:
+			case Player.c_animations.MORTAL_A.key:
+			case Player.c_animations.MORTAL_A_1.key:
+			case Player.c_animations.MORTAL_A_2.key:
+			case Player.c_animations.MORTAL_B.key:
+			case Player.c_animations.MORTAL_B_1.key:
+			case Player.c_animations.MORTAL_B_2.key:
+			case Player.c_animations.MORTAL_C.key:
+			case Player.c_animations.MORTAL_C_1.key:
+			case Player.c_animations.MORTAL_C_2.key:
+			case Player.c_animations.MORTAL_D.key:
+			case Player.c_animations.MORTAL_D_1.key:
+			case Player.c_animations.MORTAL_D_2.key:
+			case Player.c_animations.MORTAL_E.key:
+			case Player.c_animations.MORTAL_E_1.key:
+			case Player.c_animations.MORTAL_E_2.key:
+			case Player.c_animations.MORTAL_F.key:
+			case Player.c_animations.MORTAL_F_1.key:
+			case Player.c_animations.MORTAL_F_2.key:
+			case Player.c_animations.MORTAL_G.key:
+			case Player.c_animations.MORTAL_G_1.key:
+			case Player.c_animations.MORTAL_G_2.key:
+			case Player.c_animations.MORTAL_H.key:
+			case Player.c_animations.MORTAL_H_1.key:
+			case Player.c_animations.MORTAL_H_2.key:
+			case Player.c_animations.MORTAL_I.key:
+			case Player.c_animations.MORTAL_I_1.key:
+			case Player.c_animations.MORTAL_I_2.key:
+			case Player.c_animations.MORTAL_J.key:
+			case Player.c_animations.MORTAL_J_1.key:
+			case Player.c_animations.MORTAL_J_2.key:
+			case Player.c_animations.MORTAL_K.key:
+			case Player.c_animations.MORTAL_K_1.key:
+			case Player.c_animations.MORTAL_K_2.key:
 			{
 				// get the duration in the element
 				duration = this.get_animation_duration(cjs[name + "_" + motion]);
@@ -1141,7 +1245,7 @@ class Player
 				break;
 			}
 			// special ougis for origin classes
-			case Player.c_animations.MORTAL_SP:
+			case Player.c_animations.MORTAL_SP.key:
 			{
 				// get the duration in the element
 				duration = this.get_animation_duration(cjs[name + "_" + motion]);
@@ -1158,10 +1262,10 @@ class Player
 			}
 			// Summon files
 			// Note: this isn't native and kinda hacked on top
-			case Player.c_animations.SUMMON_ATTACK:
-			case Player.c_animations.SUMMON_DAMAGE:
+			case Player.c_animations.SUMMON_ATTACK.key:
+			case Player.c_animations.SUMMON_DAMAGE.key:
 			{
-				let summon_cjs_name = motion == Player.c_animations.SUMMON_DAMAGE
+				let summon_cjs_name = motion == Player.c_animations.SUMMON_DAMAGE.key
 					? animation.specials[0].replace("attack", "damage") // update attack to damage accordingly
 					: animation.specials[0];
 				
@@ -1191,14 +1295,14 @@ class Player
 				break;
 			}
 			// auto attack animation
-			case Player.c_animations.ATTACK:
-			case Player.c_animations.ATTACK_SHORT:
-			case Player.c_animations.ATTACK_SHORT_ADV:
-			case Player.c_animations.ATTACK_DOUBLE:
-			case Player.c_animations.ATTACK_TRIPLE:
-			case Player.c_animations.ATTACK_QUADRUPLE:
-			case Player.c_animations.SPECIAL_ATTACK:
-			case Player.c_animations.ENEMY_ATTACK:
+			case Player.c_animations.ATTACK.key:
+			case Player.c_animations.ATTACK_SHORT.key:
+			case Player.c_animations.ATTACK_SHORT_ADV.key:
+			case Player.c_animations.ATTACK_DOUBLE.key:
+			case Player.c_animations.ATTACK_TRIPLE.key:
+			case Player.c_animations.ATTACK_QUADRUPLE.key:
+			case Player.c_animations.SPECIAL_ATTACK.key:
+			case Player.c_animations.ENEMY_ATTACK.key:
 			{
 				debug_extra_cjs = animation.attack;
 				// retrieve and play file
@@ -1211,9 +1315,9 @@ class Player
 				// i.e. if the following move is another attack...
 				let next_motion = this.next_motion();
 				if([
-					Player.c_animations.ATTACK_DOUBLE,
-					Player.c_animations.ATTACK_TRIPLE,
-					Player.c_animations.ATTACK_QUADRUPLE
+					Player.c_animations.ATTACK_DOUBLE.key,
+					Player.c_animations.ATTACK_TRIPLE.key,
+					Player.c_animations.ATTACK_QUADRUPLE.key
 				].includes(next_motion))
 				{
 					duration = 10; // limit to 10 frames so that they follow right away
@@ -1228,9 +1332,10 @@ class Player
 				break;
 			}
 			// form change
-			case Player.c_animations.CHANGE:
-			case Player.c_animations.CHANGE_FROM:
-			case Player.c_animations.CHANGE_FROM_2:
+			case Player.c_animations.CHANGE.key:
+			case Player.c_animations.CHANGE_FROM.key:
+			case Player.c_animations.CHANGE_FROM_2.key:
+			case Player.c_animations.CHANGE_FULL.key:
 			{
 				// Note: does nothing different from default
 				// keeping it this way in case it must be changed / improved
@@ -1238,16 +1343,17 @@ class Player
 				break;
 			}
 			// skill / ability use
-			case Player.c_animations.ABILITY_MOTION:
-			case Player.c_animations.ABILITY_MOTION_2:
-			case Player.c_animations.ABILITY_MOTION_3:
-			case Player.c_animations.ABILITY_MOTION_4:
-			case Player.c_animations.VS_MOTION_1:
-			case Player.c_animations.VS_MOTION_2:
-			case Player.c_animations.VS_MOTION_3:
-			case Player.c_animations.VS_MOTION_4:
-			case Player.c_animations.VS_MOTION_5:
-			case Player.c_animations.VS_MOTION_6:
+			case Player.c_animations.ABILITY_MOTION.key:
+			case Player.c_animations.ABILITY_MOTION_2.key:
+			case Player.c_animations.ABILITY_MOTION_3.key:
+			case Player.c_animations.ABILITY_MOTION_4.key:
+			case Player.c_animations.ABILITY_MOTION_5.key:
+			case Player.c_animations.VS_MOTION_1.key:
+			case Player.c_animations.VS_MOTION_2.key:
+			case Player.c_animations.VS_MOTION_3.key:
+			case Player.c_animations.VS_MOTION_4.key:
+			case Player.c_animations.VS_MOTION_5.key:
+			case Player.c_animations.VS_MOTION_6.key:
 			{
 				// get the animation duration
 				let base_duration = this.get_animation_duration(cjs[name + "_" + motion]);
@@ -1286,16 +1392,16 @@ class Player
 				}
 				break;
 			}
-			case Player.c_animations.RAID_APPEAR_0:
-			case Player.c_animations.RAID_APPEAR_1:
-			case Player.c_animations.RAID_APPEAR_2:
-			case Player.c_animations.RAID_APPEAR_3:
-			case Player.c_animations.RAID_APPEAR_4:
-			case Player.c_animations.RAID_APPEAR_5:
-			case Player.c_animations.RAID_APPEAR_6:
-			case Player.c_animations.RAID_APPEAR_7:
-			case Player.c_animations.RAID_APPEAR_8:
-			case Player.c_animations.RAID_APPEAR_9:
+			case Player.c_animations.RAID_APPEAR_0.key:
+			case Player.c_animations.RAID_APPEAR_1.key:
+			case Player.c_animations.RAID_APPEAR_2.key:
+			case Player.c_animations.RAID_APPEAR_3.key:
+			case Player.c_animations.RAID_APPEAR_4.key:
+			case Player.c_animations.RAID_APPEAR_5.key:
+			case Player.c_animations.RAID_APPEAR_6.key:
+			case Player.c_animations.RAID_APPEAR_7.key:
+			case Player.c_animations.RAID_APPEAR_8.key:
+			case Player.c_animations.RAID_APPEAR_9.key:
 			{
 				let appear_index = parseInt(motion.split('_')[2]);
 				// get file to play
@@ -1341,22 +1447,22 @@ class Player
 		cjs.addEventListener("animationComplete", this.m_animation_completed_callback);
 		// play animation
 		if(![
-				Player.c_animations.SUMMON_ATTACK,
-				Player.c_animations.SUMMON_DAMAGE,
-				Player.c_animations.RAID_APPEAR_0,
-				Player.c_animations.RAID_APPEAR_1,
-				Player.c_animations.RAID_APPEAR_2,
-				Player.c_animations.RAID_APPEAR_3,
-				Player.c_animations.RAID_APPEAR_4,
-				Player.c_animations.RAID_APPEAR_5,
-				Player.c_animations.RAID_APPEAR_6,
-				Player.c_animations.RAID_APPEAR_7,
-				Player.c_animations.RAID_APPEAR_8,
-				Player.c_animations.RAID_APPEAR_9
+				Player.c_animations.SUMMON_ATTACK.key,
+				Player.c_animations.SUMMON_DAMAGE.key,
+				Player.c_animations.RAID_APPEAR_0.key,
+				Player.c_animations.RAID_APPEAR_1.key,
+				Player.c_animations.RAID_APPEAR_2.key,
+				Player.c_animations.RAID_APPEAR_3.key,
+				Player.c_animations.RAID_APPEAR_4.key,
+				Player.c_animations.RAID_APPEAR_5.key,
+				Player.c_animations.RAID_APPEAR_6.key,
+				Player.c_animations.RAID_APPEAR_7.key,
+				Player.c_animations.RAID_APPEAR_8.key,
+				Player.c_animations.RAID_APPEAR_9.key
 				
 			].includes(motion))
 		{
-			// the check is a hack to avoid character moving during summoning
+			// the check is a hack to avoid character moving during certain animations
 			cjs.gotoAndPlay(motion);
 		}
 		// handle dispatch stack
@@ -1636,236 +1742,13 @@ class Player
 	// Unofficial/Made up and Non exhaustive.
 	translate_motion(motion)
 	{
-		switch(motion)
+		if(motion in Player.c_animation_name_table)
 		{
-			// specials
-			case Player.c_animations.SUMMON_ATTACK: return "Summon Call";
-			case Player.c_animations.SUMMON_DAMAGE: return "Summon Damage";
-			case Player.c_animations.RAID_APPEAR_0: return "Appear";
-			case Player.c_animations.RAID_APPEAR_1: return "Appear A";
-			case Player.c_animations.RAID_APPEAR_2: return "Appear B";
-			case Player.c_animations.RAID_APPEAR_3: return "Appear C";
-			case Player.c_animations.RAID_APPEAR_4: return "Appear D";
-			case Player.c_animations.RAID_APPEAR_5: return "Appear E";
-			case Player.c_animations.RAID_APPEAR_6: return "Appear F";
-			case Player.c_animations.RAID_APPEAR_7: return "Appear G";
-			case Player.c_animations.RAID_APPEAR_8: return "Appear H";
-			case Player.c_animations.RAID_APPEAR_9: return "Appear I";
-			// game
-			case Player.c_animations.WAIT: return "Idle";
-			case Player.c_animations.WAIT_2: return "Idle (Overdrive)";
-			case Player.c_animations.WAIT_3: return "Idle (Break)";
-			case Player.c_animations.TO_STB_WAIT: return "Weapon Drew";
-			case Player.c_animations.STB_WAIT: return "Wpn. Drew (Idle)";
-			case Player.c_animations.STB_WAIT_ADV: return "Wpn. Drew (Idle)(Adv)";
-			case Player.c_animations.CHARA_SELECT: return "Selection";
-			case Player.c_animations.CHARA_IN: return "Fade In";
-			case Player.c_animations.CHARA_OUT: return "Fade Out";
-			case Player.c_animations.CHARGE: return "Charged";
-			case Player.c_animations.ABILITY: return "C.A. Charged";
-			case Player.c_animations.ABILITY_WAIT: return "Skill (Wait)";
-			case Player.c_animations.MORTAL: return "Charge Attack";
-			case Player.c_animations.MORTAL_A: return "Charge Attack A";
-			case Player.c_animations.MORTAL_A_1: return "Charge Attack A1";
-			case Player.c_animations.MORTAL_A_2: return "Charge Attack A2";
-			case Player.c_animations.MORTAL_B: return "Charge Attack B";
-			case Player.c_animations.MORTAL_B_1: return "Charge Attack B1";
-			case Player.c_animations.MORTAL_B_2: return "Charge Attack B2";
-			case Player.c_animations.MORTAL_C: return "Charge Attack C";
-			case Player.c_animations.MORTAL_C_1: return "Charge Attack C1";
-			case Player.c_animations.MORTAL_C_2: return "Charge Attack C2";
-			case Player.c_animations.MORTAL_D: return "Charge Attack D";
-			case Player.c_animations.MORTAL_D_1: return "Charge Attack D1";
-			case Player.c_animations.MORTAL_D_2: return "Charge Attack D2";
-			case Player.c_animations.MORTAL_E: return "Charge Attack E";
-			case Player.c_animations.MORTAL_E_1: return "Charge Attack E1";
-			case Player.c_animations.MORTAL_E_2: return "Charge Attack E2";
-			case Player.c_animations.MORTAL_F: return "Charge Attack F";
-			case Player.c_animations.MORTAL_F_1: return "Charge Attack F1";
-			case Player.c_animations.MORTAL_F_2: return "Charge Attack F2";
-			case Player.c_animations.MORTAL_G: return "Charge Attack G";
-			case Player.c_animations.MORTAL_G_1: return "Charge Attack G1";
-			case Player.c_animations.MORTAL_G_2: return "Charge Attack G2";
-			case Player.c_animations.MORTAL_H: return "Charge Attack H";
-			case Player.c_animations.MORTAL_H_1: return "Charge Attack H1";
-			case Player.c_animations.MORTAL_H_2: return "Charge Attack H2";
-			case Player.c_animations.MORTAL_I: return "Charge Attack I";
-			case Player.c_animations.MORTAL_I_1: return "Charge Attack I1";
-			case Player.c_animations.MORTAL_I_2: return "Charge Attack I2";
-			case Player.c_animations.MORTAL_J: return "Charge Attack J";
-			case Player.c_animations.MORTAL_J_1: return "Charge Attack J1";
-			case Player.c_animations.MORTAL_J_2: return "Charge Attack J2";
-			case Player.c_animations.MORTAL_K: return "Charge Attack K";
-			case Player.c_animations.MORTAL_K_1: return "Charge Attack K1";
-			case Player.c_animations.MORTAL_K_2: return "Charge Attack K2";
-			case Player.c_animations.MORTAL_SP: return "Charge Ultimate";
-			case Player.c_animations.ATTACK: return "Attack";
-			case Player.c_animations.ATTACK_BACK: return "Attack (Back)";
-			case Player.c_animations.ATTACK_SHORT: return "Attack 1";
-			case Player.c_animations.ATTACK_SHORT_ADV: return "Attack 1 (Adv)";
-			case Player.c_animations.ATTACK_DOUBLE: return "Attack 2";
-			case Player.c_animations.ATTACK_TRIPLE: return "Attack 3";
-			case Player.c_animations.ATTACK_QUADRUPLE: return "Attack 4";
-			case Player.c_animations.SPECIAL_ATTACK: return "Attack B (Alt/OD)";
-			case Player.c_animations.ENEMY_ATTACK: return "Attack C (Break)";
-			case Player.c_animations.CHANGE: return "Change Form";
-			case Player.c_animations.CHANGE_TO: return "Change Form 1";
-			case Player.c_animations.CHANGE_FROM: return "Change Form 2";
-			case Player.c_animations.CHANGE_TO_2: return "Change Form 3";
-			case Player.c_animations.CHANGE_FROM_2: return "Change Form 4";
-			case Player.c_animations.DEAD: return "Dead";
-			case Player.c_animations.DEAD_1: return "Dead 1";
-			case Player.c_animations.DEAD_2: return "Dead 2";
-			case Player.c_animations.DAMAGE: return "Damaged";
-			case Player.c_animations.DAMAGE_1: return "Damaged A";
-			case Player.c_animations.DAMAGE_2: return "Damaged B (OD)";
-			case Player.c_animations.DAMAGE_3: return "Damaged C (Break)";
-			case Player.c_animations.DAMAGE_4: return "Damaged D";
-			case Player.c_animations.DAMAGE_5: return "Damaged E";
-			case Player.c_animations.WIN: return "Win";
-			case Player.c_animations.WIN1: return "Win 1";
-			case Player.c_animations.WIN2: return "Win 2";
-			case Player.c_animations.WIN_1: return "Win Alt. 1";
-			case Player.c_animations.WIN_2: return "Win Alt. 2";
-			case Player.c_animations.WIN_3: return "Win Alt. 3";
-			case Player.c_animations.INVISIBLE: return "Invisible";
-			case Player.c_animations.HIDE: return "Hide";
-			case Player.c_animations.DOWN: return "Low HP";
-			case Player.c_animations.WAIT_SPECIAL: return "Idle (Spe)";
-			case Player.c_animations.WAIT_SPECIAL_1: return "Idle (Spe) A";
-			case Player.c_animations.WAIT_SPECIAL_2: return "Idle (Spe) B";
-			case Player.c_animations.WAIT_SPECIAL_3: return "Idle (Spe) C";
-			case Player.c_animations.WAIT_SPECIAL_4: return "Idle (Spe) D";
-			case Player.c_animations.WAIT_SPECIAL_5: return "Idle (Spe) E";
-			case Player.c_animations.MISS:  return "Miss";
-			case Player.c_animations.SUMMON: return "Summoning";
-			case Player.c_animations.ABILITY_MOTION_OLD: return "Miss (Old)";
-			case Player.c_animations.ABILITY_MOTION: return "Skill A";
-			case Player.c_animations.ABILITY_MOTION_2: return "Skill B";
-			case Player.c_animations.ABILITY_MOTION_3: return "Skill C";
-			case Player.c_animations.ABILITY_MOTION_4: return "Skill D";
-			case Player.c_animations.VS_MOTION_1: return "Custom Skill A";
-			case Player.c_animations.VS_MOTION_2: return "Custom Skill B";
-			case Player.c_animations.VS_MOTION_3: return "Custom Skill C";
-			case Player.c_animations.VS_MOTION_4: return "Custom Skill D";
-			case Player.c_animations.VS_MOTION_5: return "Custom Skill E";
-			case Player.c_animations.VS_MOTION_6: return "Custom Skill F";
-			case Player.c_animations.ENEMY_PHASE_1: return "Phase 1 (Entry)";
-			case Player.c_animations.ENEMY_PHASE_2: return "Phase 2 (OD)";
-			case Player.c_animations.ENEMY_PHASE_3: return "Phase 3 (Break)";
-			case Player.c_animations.ENEMY_PHASE_4: return "Phase 4";
-			case Player.c_animations.ENEMY_PHASE_5: return "Phase 5";
-			case Player.c_animations.ENEMY_FORM_CHANGE: return "Form Change";
-			case Player.c_animations.ENEMY_STANDBY_A: return "Standby A";
-			case Player.c_animations.ENEMY_STANDBY_B: return "Standby B";
-			case Player.c_animations.ENEMY_STANDBY_C: return "Standby C";
-			case Player.c_animations.ENEMY_STANDBY_D: return "Standby D";
-			case Player.c_animations.ENEMY_STANDBY_E: return "Standby E";
-			case Player.c_animations.ENEMY_STANDBY_F: return "Standby F";
-			case Player.c_animations.ENEMY_STANDBY_G: return "Standby G";
-			case Player.c_animations.ENEMY_STANDBY_H: return "Standby H";
-			case Player.c_animations.ENEMY_STANDBY_I: return "Standby I";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_A: return "Standby A (Break)";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_B: return "Standby B (Break)";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_C: return "Standby C (Break)";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_D: return "Standby D (Break)";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_E: return "Standby E (Break)";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_F: return "Standby F (Break)";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_G: return "Standby G (Break)";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_H: return "Standby H (Break)";
-			case Player.c_animations.ENEMY_BREAK_STANDBY_I: return "Standby I (Break)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_A: return "Standby A (Dmgd)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_B: return "Standby B (Dmgd)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_C: return "Standby C (Dmgd)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_D: return "Standby D (Dmgd)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_E: return "Standby E (Dmgd)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_F: return "Standby F (Dmgd)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_G: return "Standby G (Dmgd)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_H: return "Standby H (Dmgd)";
-			case Player.c_animations.ENEMY_DAMAGE_STANDBY_I: return "Standby I (Dmgd)";
-			case Player.c_animations.LINK_PHASE_1: return "Phase 1 (Entry)(Lk)";
-			case Player.c_animations.LINK_PHASE_1_2: return "Phase 1B (Entry)(Lk)";
-			case Player.c_animations.LINK_PHASE_1_F2: return "Phase 1C (Entry)(Lk)";
-			case Player.c_animations.LINK_PHASE_1_F2_2: return "Phase 1D (Entry)(Lk)";
-			case Player.c_animations.LINK_PHASE_2: return "Phase 2 (OD)(Lk)";
-			case Player.c_animations.LINK_PHASE_2_2: return "Phase 2B (OD)(Lk)";
-			case Player.c_animations.LINK_PHASE_2_F2: return "Phase 2C (OD)(Lk)";
-			case Player.c_animations.LINK_PHASE_2_F2_2: return "Phase 2D (OD)(Lk)";
-			case Player.c_animations.LINK_PHASE_3: return "Phase 3 (Break)(Lk)";
-			case Player.c_animations.LINK_PHASE_3_2: return "Phase 3B (Break)(Lk)";
-			case Player.c_animations.LINK_PHASE_3_F2: return "Phase 3C (Break)(Lk)";
-			case Player.c_animations.LINK_PHASE_3_F2_2: return "Phase 3D (Break)(Lk)";
-			case Player.c_animations.LINK_PHASE_4: return "Phase 4 (Lk)";
-			case Player.c_animations.LINK_PHASE_4_2: return "Phase 4B (Lk)";
-			case Player.c_animations.LINK_PHASE_4_F2: return "Phase 4C (Lk)";
-			case Player.c_animations.LINK_PHASE_4_F2_2: return "Phase 4D (Lk)";
-			case Player.c_animations.LINK_PHASE_5: return "Phase 5 (Lk)";
-			case Player.c_animations.LINK_PHASE_5_2: return "Phase 5B (Lk)";
-			case Player.c_animations.LINK_PHASE_5_F2: return "Phase 5C (Lk)";
-			case Player.c_animations.LINK_PHASE_5_F2_2: return "Phase 5D (Lk)";
-			case Player.c_animations.LINK_DAMAGE: return "Damaged (Link)";
-			case Player.c_animations.LINK_DAMAGE_2: return "Damaged 2 (Link)";
-			case Player.c_animations.LINK_DEAD: return "Dead (Link)";
-			case Player.c_animations.LINK_DEAD_1: return "Dead 1 (Link)";
-			case Player.c_animations.LINK_DEAD_2: return "Dead 2 (Link)";
-			case Player.c_animations.LINK_DEAD_3: return "Dead 3 (Link)";
-			case Player.c_animations.LINK_DEAD_A: return "Dead 1B (Link)";
-			case Player.c_animations.LINK_DEAD_B: return "Dead 2B (Link)";
-			case Player.c_animations.LINK_DEAD_C: return "Dead 3B (Link)";
-			case Player.c_animations.LINK_MORTAL_A: return "Charge Atk. A (Lk)";
-			case Player.c_animations.LINK_MORTAL_A_2: return "Charge Atk. A2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_A_F2: return "Charge Atk. A3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_A_F2_2: return "Charge Atk. A4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_B: return "Charge Atk. B (Lk)";
-			case Player.c_animations.LINK_MORTAL_B_2: return "Charge Atk. B2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_B_F2: return "Charge Atk. B3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_B_F2_2: return "Charge Atk. B4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_C: return "Charge Atk. C (Lk)";
-			case Player.c_animations.LINK_MORTAL_C_2: return "Charge Atk. C2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_C_F2: return "Charge Atk. C3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_C_F2_2: return "Charge Atk. C4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_D: return "Charge Atk. D (Lk)";
-			case Player.c_animations.LINK_MORTAL_D_2: return "Charge Atk. D2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_D_F2: return "Charge Atk. D3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_D_F2_2: return "Charge Atk. D4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_E: return "Charge Atk. E (Lk)";
-			case Player.c_animations.LINK_MORTAL_E_2: return "Charge Atk. E2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_E_F2: return "Charge Atk. E3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_E_F2_2: return "Charge Atk. E4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_F: return "Charge Atk. F (Lk)";
-			case Player.c_animations.LINK_MORTAL_F_2: return "Charge Atk. F2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_F_F2: return "Charge Atk. F3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_F_F2_2: return "Charge Atk. F4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_G: return "Charge Atk. G (Lk)";
-			case Player.c_animations.LINK_MORTAL_G_2: return "Charge Atk. G2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_G_F2: return "Charge Atk. G3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_G_F2_2: return "Charge Atk. G4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_H: return "Charge Atk. H (Lk)";
-			case Player.c_animations.LINK_MORTAL_H_2: return "Charge Atk. H2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_H_F2: return "Charge Atk. H3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_H_F2_2: return "Charge Atk. H4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_I: return "Charge Atk. I (Lk)";
-			case Player.c_animations.LINK_MORTAL_I_2: return "Charge Atk. I2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_I_F2: return "Charge Atk. I3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_I_F2_2: return "Charge Atk. I4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_J: return "Charge Atk. J (Lk)";
-			case Player.c_animations.LINK_MORTAL_J_2: return "Charge Atk. J2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_J_F2: return "Charge Atk. J3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_J_F2_2: return "Charge Atk. J4 (Lk)";
-			case Player.c_animations.LINK_MORTAL_K: return "Charge Atk. K (Lk)";
-			case Player.c_animations.LINK_MORTAL_K_2: return "Charge Atk. K2 (Lk)";
-			case Player.c_animations.LINK_MORTAL_K_F2: return "Charge Atk. K3 (Lk)";
-			case Player.c_animations.LINK_MORTAL_K_F2_2: return "Charge Atk. K4 (Lk)";
-			case Player.c_animations.LINK_ATTACK: return "Attack (Link)";
-			case Player.c_animations.LINK_ATTACK_2: return "Attack B (Link)";
-			case Player.c_animations.LINK_ATTACK_F2: return "Attack C (Link)";
-			case Player.c_animations.LINK_ATTACK_F2_2: return "Attack D (Link)";
-			case Player.c_animations.LINK_FORM_CHANGE: return "Form Change (Link)";
-			case Player.c_animations.LINK_FORM_CHANGE_2: return "Form Change 2 (Link)"
-			case Player.c_animations.MY_PAGE: return "My Page"
-			// Unknown name
-			default: return "??? (" + motion + ")";
-		};
+			const i = Player.c_animation_name_table[motion];
+			return Player.c_animations[i].name;
+		}
+		// Unknown name
+		return "??? (" + motion + ")";
 	}
 	
 	// pause the player
