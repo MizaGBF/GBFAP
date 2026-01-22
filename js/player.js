@@ -811,34 +811,23 @@ class Player
 				swap: null
 			}
 		}
-		// priming textures
-		for(let fn of Object.keys(lib)) // instantiate everything once
-		{
-			let elem = new lib[fn];
-			try
-			{
-				this.m_stage.addChild(elem); // and add to stage
-				this.m_stage.update(); // force renderer update
-			}
-			catch(unused)
-			{
-			}
-			this.m_stage.removeChild(elem);
-			
-		}
 		
 		// instantiate all main animations
 		for(let i = 0; i < this.m_animations.length; ++i)
 		{
 			this.m_cjs.push(this.add_element(this.m_animations[i].cjs));
-			if(i == 0) // add the first element
-			{
-				this.m_stage.addChild(this.m_cjs[0]);
-			}
+			// priming element textures
+			const last = this.m_cjs[this.m_cjs.length - 1];
+			// add and then removing seems to load them properly
+			this.m_stage.addChild(last);
+			this.m_stage.update();
+			this.m_stage.removeChild(last);
 		}
 		// start with the first version on default animations
 		if(this.m_cjs.length > 0)
 		{
+			// set the first element
+			this.m_stage.addChild(this.m_cjs[0]);
 			// fetch and store the motion list for all animations
 			this.set_motion_lists();
 			// make sure the state is reset
@@ -1510,8 +1499,11 @@ class Player
 		if(motion != "default" && !this.m_motion_lists[index].includes(motion))
 			motion = "default";
 		// terminate previous animation
-		let previous_cjs = this.m_cjs[this.m_current_cjs];
-		previous_cjs.dispatchEvent("animationComplete");
+		const data = this.get_current_animation_cjs()
+		if(data != null)
+		{
+			data.cjs[data.cjs.name].dispatchEvent("animationComplete");
+		}
 		// remove everything from the stage
 		this.m_stage.removeAllChildren();
 		this.m_special_cjs = null;
@@ -1530,9 +1522,12 @@ class Player
 			this.m_current_motion_list = this.get_animations()[index].demo_motions;
 		else
 			this.m_current_motion_list = [motion];
-		// update current motion (if needed)
+		// update current motion
+		this.m_current_motion--;
 		if(this.m_current_motion >= this.m_current_motion_list.length)
 			this.m_current_motion = 0;
+		else if(this.m_current_motion < 0)
+			this.m_current_motion = this.m_current_motion_list.length - 1;
 		// update main character main_hand
 		this.update_main_hand_weapon();
 		// play animation
@@ -1540,21 +1535,22 @@ class Player
 	}
 	
 	// called when a main tween is over to play the next animation
-	play_next(cjs)
+	play_next(previous_cjs)
 	{
 		if(this.m_looping_index == null)
 			return;
 		if(this.m_dispatch_stack[this.m_looping_index] == _.max(this.m_dispatch_stack))
 		{
 			this.m_dispatch_stack[this.m_looping_index] = 0;
-			cjs.dispatchEvent("animationComplete");
+			if(previous_cjs)
+				previous_cjs.dispatchEvent("animationComplete");
 		}
 		else
 		{
 			this.m_dispatch_stack[this.m_looping_index] = 0;
 			// if not looping or is mypage, we fire the dispatch
-			if(!this.m_looping || this.m_layout_mode == PlayerLayoutMode.mypage)
-				cjs.dispatchEvent("animationComplete");
+			if(previous_cjs && (!this.m_looping || this.m_layout_mode == PlayerLayoutMode.mypage))
+				previous_cjs.dispatchEvent("animationComplete");
 		}
 	}
 	
