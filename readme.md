@@ -55,7 +55,7 @@ Additionaly, the player in its purest form as presented in the [demo.html](https
   
 # Tools  
 The `tools` folder got some scripts intended for debugging:  
-- `list_name.py` will go through all main animations to try to attempt to make a list of animation names, to find missing ones. Do note that it's imperfect, there are false positives. Manual checking must be performed after.  
+- `list_name.py` will go through all main animations to try to attempt to make a list of animation names, to find missing ones. Manual checking is recommended after.  
 - `tester.py` go through all animations to look for specific terms, to ensure player compability.  
   
 Those scripts must run from inside the folder.  
