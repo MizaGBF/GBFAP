@@ -16,7 +16,10 @@ class Tester():
         try:
             if file is None or file in self.cache: return None
             self.cache.add(file)
-            req = await self.client.get("https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js/cjs/{}.js".format(file))
+            req = await self.client.get(
+                "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js/cjs/{}.js".format(file),
+                headers={"connection":"keep-alive", "accept-encoding":"gzip"}
+            )
             if req.status == 200:
                 return (await req.content.read()).decode("utf-8")
             else:
@@ -24,7 +27,6 @@ class Tester():
         except Exception as e:
             print(file)
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
-            input()
 
     def process_file(self, file, content):
         if content is None: return
@@ -71,13 +73,13 @@ class Tester():
         self.count -= 1
 
     async def run(self):
-        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
+        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=60)) as self.client:
             print("Looking for function calls in animation files...")
             for k, v in self.data.items():
                 if k in ["characters", "partners", "summons", "weapons", "enemies", "skins", "job", "mypage", "styles"]:
                     for eid, el in v.items():
-                        while self.count >= 80:
-                            await asyncio.sleep(0.5)
+                        while self.count >= 20:
+                            await asyncio.sleep(0.1)
                         asyncio.create_task(self.check(eid, el))
                         self.count += 1
             while self.count > 0:
