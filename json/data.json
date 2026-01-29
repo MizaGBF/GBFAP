@@ -4445,7 +4445,9 @@
 "1040715000":{"w":["1040715000","1040715000"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715000",["sp_1040715000_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715000",["sp_1040715000_1_s2"]]]},
 "1040029200":{"w":["1040029200","1040029200"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029200",["sp_1040029200_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029200",["sp_1040029200_1_s2"]]]},
 "1040425800":{"w":["1040425800","1040425800"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425800",["sp_1040425800_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425800",["sp_1040425800_1_s2"]]]},
-"1040425700":{"w":["1040425700","1040425700"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425700",["sp_1040425700_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425700",["sp_1040425700_1_s2"]]]}
+"1040425700":{"w":["1040425700","1040425700"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425700",["sp_1040425700_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425700",["sp_1040425700_1_s2"]]]},
+"1040715100":{"w":["1040715100","1040715100"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715100",["sp_1040715100_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715100",["sp_1040715100_1_s2"]]]},
+"1030610100":{"w":["1030610100","1030610100"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1030610100",["sp_1030610100_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1030610100",["sp_1030610100_1_s2"]]]}
 },
 "enemies":
 {
@@ -7200,7 +7202,11 @@
 "9102963":{"v":[["","enemy_9102963",null,"phit_0000000000",["esp_9102963_03_all"]]],"ra":["raid_appear_9102963"]},
 "9102983":{"v":[["","enemy_9102983",null,"ehit_9102983",["esp_9102983_01","esp_9102983_02","esp_9102983_03"]]],"ra":["raid_appear_9102983"]},
 "9102993":{"v":[["","enemy_9102993",null,"ehit_9102993",["esp_9102993_01","esp_9102993_02_all","esp_9102993_03_all"]]],"ra":["raid_appear_9102993"]},
-"8104693":{"v":[["","enemy_8104693",null,"ehit_8104693",["esp_8104693_01","esp_8104693_02","esp_8104693_03_all","esp_8104693_04"]]],"ra":["raid_appear_8104693"]}
+"8104693":{"v":[["","enemy_8104693",null,"ehit_8104693",["esp_8104693_01","esp_8104693_02","esp_8104693_03_all","esp_8104693_04"]]],"ra":["raid_appear_8104693"]},
+"9103113":{"v":[["","enemy_9103113",null,"ehit_9103113",["esp_9103113_01","esp_9103113_02","esp_9103113_03"]]],"ra":["raid_appear_9103113"]},
+"9103123":{"v":[["","enemy_9103123",null,"phit_0000000000",[]]]},
+"9103133":{"v":[["","enemy_9103133",null,"ehit_9103133",["esp_9103133_01","esp_9103133_02","esp_9103133_03"]]]},
+"9103103":{"v":[["","enemy_9103103",null,"ehit_9103103",["esp_9103103_01","esp_9103103_02","esp_9103103_03"]]],"ra":["raid_appear_9103103"]}
 },
 "skins":
 {
@@ -18594,7 +18600,7 @@
 "3993672000":"lucio summer unknown male ルシオ takahiro sakurai 櫻井孝宏",
 "6205993":"light venerable paragon people-boss",
 "3993656000":"@@The_Hunters_of_Agartha_(NPC) the hunters of agartha unknown other アガルタ猟団 jin ogasawara takashi matsuyama hideo ishikawa atsushi abe takeo ōtsuka kiyono yasuno yōhei azakami 小笠原仁 松山鷹志 石川英郎 阿部敦 大塚剛央 安野希世乃 阿座上洋平 2024-10-29 voiced",
-"3993657000":"nilhe male voiced voice-only",
+"3993657000":"ohma nilhe's relation nilhe male voiced voice-only",
 "3993677000":"nilhe male",
 "3993678000":"nilhe male",
 "3993679000":"nilhe male",
@@ -19678,7 +19684,28 @@
 "3994239000":"blanche primal female voiced voice-only",
 "3994269000":"makura's mother mayura erune female",
 "3994270000":"makura's mother mayura erune female",
-"8104693":"water blanche primal-boss"
+"8104693":"water blanche primal-boss",
+"3994244000":"heine's relation ohma heine male voiced voice-only",
+"3994245000":"heine's relation monsceity heine male voiced voice-only",
+"3994257000":"sia female",
+"3994258000":"arriet human female アンリエット chinatsu akasaki 赤﨑千夏",
+"3994259000":"heine male",
+"3994260000":"kyo male",
+"3994261000":"kartha female",
+"3994262000":"aries male",
+"3994263000":"aiden male",
+"3994264000":"julian male",
+"3994265000":"heine male",
+"3994266000":"heine male",
+"3994267000":"physalys demonic",
+"3994268000":"physalys lupine",
+"3994278000":"nilhe male",
+"3994279000":"heine male",
+"3994280000":"datura female",
+"9103103":"light ohma heine other-boss",
+"9103113":"light monsceity heine other-boss",
+"9103123":"light ohma heine other-boss",
+"9103133":"light monsceity heine other-boss"
 },
 "mypage":
 {
