@@ -16,7 +16,7 @@ import signal
 import argparse
 
 ### CONSTANT
-VERSION = '5.8'
+VERSION = '5.9'
 CONCURRENT_TASKS = 90
 SAVE_VERSION = 1
 # limit
@@ -1637,11 +1637,40 @@ class Updater():
 
     def list_spritesheets(self : Updater, manifest : bytes) -> list|None:
         try:
-            content : str = manifest.decode("utf-8")
-            st = content.find('manifest:') + len('manifest:')
-            ed = content.find(']', st) + 1
-            data = json.loads(content[st:ed].replace('Game.imgUri+"/sp/cjs/', '"').replace('src:', '"src":').replace('type:', '"type":').replace('id:', '"id":'))
-            return [entry["src"] for entry in data if entry["type"] == "image"]
+            # parse the content
+            res : list[str] = []
+            cur : int = 0
+            lstart : int = len(b'Game.imgUri+"')
+            while True:
+                # search start of img path
+                cur = manifest.find(b'Game.imgUri+"', cur)
+                if cur == -1:
+                    break
+                cur += lstart
+                # search end of img path
+                a = manifest.find(b'?', cur)
+                b = manifest.find(b'",', cur)
+                p : bytes
+                if a == -1 and b == -1:
+                    break
+                elif b == -1:
+                    p = manifest[cur:a]
+                    cur = a
+                elif a == -1:
+                    p = manifest[cur:b]
+                    cur = b
+                elif a < b:
+                    p = manifest[cur:a]
+                    cur = a
+                else:
+                    p = manifest[cur:b]
+                    cur = b
+                # check validity
+                if not p.endswith((b'.png', b'.jpg', b'.jpeg')):
+                    continue
+                # add result
+                res.append(p.decode("ascii"))
+            return res
         except:
             return None
 
