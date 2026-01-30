@@ -195,7 +195,7 @@ class TaskManager():
                 # auto save if needed
                 if time.time() - self.elapsed >= 3600:
                     if self.updater.modified:
-                        self.print("Progress: {} / {} Tasks, autosaving...".format(self.finished, self.total))
+                        self.print(f"Progress: {self.finished} / {self.total} Tasks, autosaving...")
                     self.updater.save()
                     self.elapsed = time.time()
                 to_sleep = False
@@ -241,9 +241,9 @@ class TaskManager():
             else:
                 self.print_flag = True
             if self.debug:
-                self.written_len = sys.stdout.write("P:{}/{} | R:{} | Q:{} {} {} {} {}".format(self.finished, self.total, len(self.running), len(self.queues[0]), len(self.queues[1]), len(self.queues[2]), len(self.queues[3]), len(self.queues[4])))
+                self.written_len = sys.stdout.write(f"P:{self.finished}/{self.total} | R:{len(self.running)} | Q:{len(self.queues[0])} {len(self.queues[1])} {len(self.queues[2])} {len(self.queues[3])} {len(self.queues[4])}")
             else:
-                self.written_len = sys.stdout.write("Progress: {} / {} Tasks".format(self.finished, self.total))
+                self.written_len = sys.stdout.write(f"Progress: {self.finished} / {self.total} Tasks")
             sys.stdout.flush()
 
     # print whatever you want, to use instead of print to handle the \r
@@ -266,10 +266,10 @@ class TaskManager():
             if self.written_len > 0:
                 sys.stdout.write((" " * self.written_len) + "\r")
         print("Process PAUSED")
-        print("{} / {} Tasks completed".format(self.finished, self.total))
-        print("{} Tasks running".format(len(self.running)))
+        print(f"{self.finished} / {self.total} Tasks completed")
+        print(f"{len(self.running)} Tasks running")
         for i, q in enumerate(self.queues):
-            print("Tasks in queue lv{}: {}".format(i, len(q)))
+            print(f"Tasks in queue lv{i}: {len(q)}")
         if self.updater.modified:
             print("Pending Data is waiting to be saved")
         print("Type 'help' for a command list, or a command to execute, anything else to resume")
@@ -444,9 +444,9 @@ class Updater():
                     k : str
                     v : Any
                     for k, v in self.data.items():
-                        outfile.write('"{}":\n'.format(k))
+                        outfile.write(f'"{k}":\n')
                         if isinstance(v, int): # INT
-                            outfile.write('{}\n'.format(v))
+                            outfile.write(f'{v}\n')
                             if k != keys[-1]:
                                 outfile.write(",")
                             outfile.write("\n")
@@ -470,7 +470,7 @@ class Updater():
                                 i : int
                                 d : Any
                                 for i, d in v.items():
-                                    outfile.write('"{}":'.format(i))
+                                    outfile.write(f'"{i}":')
                                     json.dump(d, outfile, separators=(',', ':'), ensure_ascii=False)
                                     if i != last:
                                         outfile.write(",")
@@ -536,7 +536,7 @@ class Updater():
             response : aiohttp.HTTPResponse = await self.client.get(url, headers={'connection':'keep-alive', 'accept-encoding':'gzip'})
             async with response:
                 if response.status != 200:
-                    raise Exception("HTTP error {}".format(response.status))
+                    raise Exception(f"HTTP error {response.status}")
                 return await response.content.read()
 
     # Generic HEAD request function
@@ -545,7 +545,7 @@ class Updater():
             response : aiohttp.HTTPResponse = await self.client.head(url, headers={'connection':'keep-alive'})
             async with response:
                 if response.status != 200:
-                    raise Exception("HTTP error {}".format(response.status))
+                    raise Exception(f"HTTP error {response.status}")
                 return response.headers
 
     async def head_manifest(self : Updater, js : str) -> None:
@@ -839,8 +839,9 @@ class Updater():
                         return False
             elif len(element_id) == 6: # classes
                 suffixes = []
+                ci : str = CLASS_LIST[element_id][0].split("_")[1]
                 for g in range(0, 2):
-                    suffixes.append("_{}_{}_01".format(CLASS_LIST[element_id][0].split("_")[1], g))
+                    suffixes.append(f"_{ci}_{g}_01")
                 add_type = ADD_JOB
             else:
                 self.tasks.print("Unsupported ID " + element_id + " for update_mypage")
@@ -863,7 +864,7 @@ class Updater():
                 self.tasks.print("Updated", element_id, "for mypage")
             return True
         except Exception as e:
-            self.tasks.print("Exception for id: {}, with style: {}\n{}".format(element_id, style, self.trbk(e)))
+            self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trbk(e)}")
             return False
 
     # search for existing mypage arts
@@ -891,7 +892,7 @@ class Updater():
 
     async def get_mypage_list_sub(self : Updater, element_id : str, suffix : str) -> str|None:
         try:
-            await self.head(IMG + "sp/assets/npc/my/{}{}.png".format(element_id, suffix))
+            await self.head(IMG + f"sp/assets/npc/my/{element_id}{suffix}.png")
             return suffix
         except:
             return None
@@ -925,14 +926,14 @@ class Updater():
             is_skin : bool = element_id.startswith("37")
             try:
                 if is_partner:
-                    await self.head(IMG + "/sp/assets/npc/raid_normal/" + element_id + "_01.jpg")
+                    await self.head(IMG + f"/sp/assets/npc/raid_normal/{element_id}_01.jpg")
                 else:
-                    await self.head(IMG + "/sp/assets/npc/m/" + element_id + "_01.jpg")
+                    await self.head(IMG + f"/sp/assets/npc/m/{element_id}_01.jpg")
             except:
                 return False
             if not is_partner and style == "":
                 try:
-                    await self.head(IMG + "/sp/assets/npc/m/" + id + "_01_st2.jpg")
+                    await self.head(IMG + f"/sp/assets/npc/m/{element_id}_01_st2.jpg")
                     self.tasks.add(self.update_character, parameters=(element_id, "_st2"))
                 except:
                     pass
@@ -949,9 +950,9 @@ class Updater():
                 for gender in ("", "_0", "_1"): # gender check (vgrim, catura, etc..)
                     for ftype in ("", "_s2"): # version (s2 is newer)
                         for form in ("", "_f1", "_f2", "_f"): # alternate stance/form (rosetta, nicholas, etc...)
-                            full_id : str = "{}_{}{}{}{}{}".format(tid, su, style, gender, form, ftype)
+                            full_id : str = f"{tid}_{su}{style}{gender}{form}{ftype}"
                             try:
-                                fn = "npc_{}".format(full_id) # create full filename
+                                fn = "npc_" + full_id # create full filename
                                 await self.head_manifest(fn) # check if exists, exception is raised otherwise
                                 vs = su + gender + ftype + form
                                 versions[vs] = fn # add in found versions
@@ -967,12 +968,12 @@ class Updater():
                                 if form == "":
                                     found = True
                                 try: # check attacks
-                                    fn = "phit_{}".format(full_id).replace("_01", "")
+                                    fn = f"phit_{full_id}".replace("_01", "")
                                     await self.head_manifest(fn)
                                     phits[vs] = fn
                                 except:
                                     try: # check simpler attack if not found
-                                        fn = "phit_{}_{}{}".format(tid, su, style).replace("_01", "")
+                                        fn = f"phit_{tid}_{su}{style}".replace("_01", "")
                                         await self.head_manifest(fn)
                                         phits[vs] = fn
                                     except: # if still not found, retrieve from lower uncaps
@@ -994,7 +995,7 @@ class Updater():
                                         for g in (("", "_0") if gender == "" else (gender,)): # and gender
                                             tasks = []
                                             for m in ("", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"): # and variations for multiple ougi like shiva grand
-                                                tasks.append(self.update_character_sub("nsp_{}_{}{}{}{}{}{}".format(tid, su, style, g, form, s, m)))
+                                                tasks.append(self.update_character_sub(f"nsp_{tid}_{su}{style}{g}{form}{s}{m}"))
                                             tmp = []
                                             for r in await asyncio.gather(*tasks):
                                                 if r is not None:
@@ -1012,7 +1013,7 @@ class Updater():
                                             for s in ("", "_s2", "_s3"):
                                                 tasks = []
                                                 for m in ("", "_a", "_b", "_c", "_d", "_e", "_f", "_g", "_h", "_i", "_j"):
-                                                    tasks.append(self.update_character_sub("nsp_{}{}{}".format(pid, s, m)))
+                                                    tasks.append(self.update_character_sub(f"nsp_{pid}{s}{m}"))
                                                 tmp = []
                                                 for r in await asyncio.gather(*tasks):
                                                     if r is not None:
@@ -1074,7 +1075,7 @@ class Updater():
                         star = 0
                     else:
                         star += 2
-                    name += "{}★".format(star) # format it
+                    name += f"{star}★" # format it
                 else:
                     name = "Style "
                 # add gender if needed
@@ -1129,7 +1130,7 @@ class Updater():
                 self.tasks.add(self.update_mypage, parameters=(element_id, "_st2"))
             return True
         except Exception as e:
-            self.tasks.print("Exception for id: {}, with style: {}\n{}".format(element_id, style, self.trbk(e)))
+            self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trbk(e)}")
             return False
 
     # subroutine for update_character
@@ -1178,7 +1179,7 @@ class Updater():
                         if un in call_found:
                             break
                         for m in ("", "_a", "_b", "_c", "_d", "_e"): # look for call animations (they can have multiples)
-                            fn = "summon_{}{}{}_attack".format(i, un, m)
+                            fn = f"summon_{i}{un}{m}_attack"
                             try:
                                 await self.head_manifest(fn)
                                 await self.head_manifest(fn.replace('attack', 'damage'))
@@ -1195,15 +1196,17 @@ class Updater():
                     if uncap == '_01':
                         for i in sid:
                             try:
-                                fn = "summon_{}".format(i)
+                                fn = "summon_" + i
                                 await self.head_manifest(fn)
                                 calls.append(fn)
                                 break
                             except:
                                 pass
                     if len(calls) == 0:
-                        if uncap == "_01": return False
-                        else: continue
+                        if uncap == "_01":
+                            return False
+                        else:
+                            continue
                 uncap_data = []
                 for i, sp in enumerate(calls): # for each call
                     uncap_data.append([str(2 + int(uncap.split('_')[1])) + '★' + (' ' + chr(ord('A') + i) if (i > 0 or len(calls) > 1) else ''), SUMMON_CLASS, '', None, [sp]]) # name, cjs, mortal, phit, sp
@@ -1218,7 +1221,7 @@ class Updater():
             self.tasks.add(self.update_mypage, parameters=(element_id,))
             return True
         except Exception as e:
-            self.tasks.print("Exception for id: {}\n{}".format(element_id, self.trbk(e)))
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
             return False
 
     async def update_weapon(self : Updater, element_id : str) -> bool:
@@ -1227,7 +1230,7 @@ class Updater():
                 return False
             self.updated_elements.add(element_id)
             try:
-                await self.head(IMG + "/sp/assets/weapon/m/" + element_id + ".jpg")
+                await self.head(IMG + f"/sp/assets/weapon/m/{element_id}.jpg")
             except:
                 return False
             # containers
@@ -1255,7 +1258,7 @@ class Updater():
                 phit = None
                 for i in ([element_id] if sid is None else [element_id, sid]):
                     for un in uns:
-                        for fn in ("phit_{}{}".format(i, un), "phit_{}{}_0".format(i, un)): # check attack
+                        for fn in (f"phit_{i}{un}", f"phit_{i}{un}_0"): # check attack
                             try:
                                 if phit is None:
                                     await self.head_manifest(fn)
@@ -1263,7 +1266,7 @@ class Updater():
                             except:
                                 pass
                         for spu in spus:
-                            for fn in ("sp_{}".format(i), "sp_{}_{}".format(i, spu), "sp_{}_{}_s2".format(i, spu), "sp_{}_s2".format(i)): # check ougi
+                            for fn in (f"sp_{i}", f"sp_{i}_{spu}", f"sp_{i}_{spu}_s2", f"sp_{i}_s2"): # check ougi
                                 try:
                                     if sp is None:
                                         await self.head_manifest(fn)
@@ -1274,9 +1277,10 @@ class Updater():
                     if uncap != "":
                         break
                 # update for gran (0) and djeeta (1)
+                mccjspart :str = mc_cjs.split('_')[1]
                 for i in range(2):
-                    nsp = (sp if sp is not None else 'sp_{}_01210001'.format(mc_cjs.split('_')[1]))
-                    tmp = [('Gran' if i == 0 else 'Djeeta') + name_suffix, mc_cjs.format(i), 'mortal_A', (phit if phit is not None else "phit_{}_0001".format(mc_cjs.split('_')[1])), [nsp]] # name, cjs, mortal, phit, sp
+                    nsp = (sp if sp is not None else f'sp_{mccjspart}_01210001')
+                    tmp = [('Gran' if i == 0 else 'Djeeta') + name_suffix, mc_cjs.format(i), 'mortal_A', (phit if phit is not None else f"phit_{mccjspart}_0001"), [nsp]] # name, cjs, mortal, phit, sp
                     if i == 1: # djeeta
                         # replace gran _0 by _1 for djeeta
                         if element_id in tmp[3] or (sid is not None and sid in tmp[3]):
@@ -1302,7 +1306,7 @@ class Updater():
                 self.tasks.print("Updated", element_id, "for index weapons")
             return True
         except Exception as e:
-            self.tasks.print("Exception for id: {}\n{}".format(element_id, self.trbk(e)))
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
             return False
 
     async def update_enemy(self : Updater, element_id : str) -> bool:
@@ -1312,17 +1316,17 @@ class Updater():
             self.updated_elements.add(element_id)
             # Check if exists
             try:
-                await self.head(IMG + "/sp/assets/enemy/s/" + element_id + ".png")
+                await self.head(IMG + f"/sp/assets/enemy/s/{element_id}.png")
             except:
                 return False
             try: # base cjs
-                fn = "enemy_{}".format(element_id)
+                fn = "enemy_" + element_id
                 await self.head_manifest(fn)
             except:
                 return False
             ehit = None
             try: # attack cjs
-                fn = "ehit_{}".format(element_id)
+                fn = "ehit_" + element_id
                 await self.head_manifest(fn)
                 ehit = fn
             except:
@@ -1332,11 +1336,11 @@ class Updater():
             tasks = []
             for i in range(0, 20): # look for ougis (can be single or AOE)
                 try:
-                    tasks.append(self.update_enemy_sub("esp_{}_{}".format(element_id, str(i).zfill(2))))
+                    tasks.append(self.update_enemy_sub(f"esp_{element_id}_{i:02}"))
                 except:
                     pass
                 try:
-                    tasks.append(self.update_enemy_sub("esp_{}_{}_all".format(element_id, str(i).zfill(2))))
+                    tasks.append(self.update_enemy_sub(f"esp_{element_id}_{i:02}_all"))
                 except:
                     pass
             mortals = []
@@ -1348,7 +1352,7 @@ class Updater():
             appear = []
             for k in ("", "_2", "_3", "_4", "_5", "_6", "_7", "_8", "_9", "_shade"):
                 try:
-                    fn = "raid_appear_{}{}".format(element_id, k)
+                    fn = f"raid_appear_{element_id}{k}"
                     await self.head_manifest(fn)
                     appear.append(fn)
                 except:
@@ -1364,7 +1368,7 @@ class Updater():
                 self.tasks.print("Updated", element_id, "for index enemies")
             return True
         except Exception as e:
-            self.tasks.print("Exception for id: {}\n{}".format(element_id, self.trbk(e)))
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
             return False
 
     # subroutine for update_enemy
@@ -1395,8 +1399,8 @@ class Updater():
             colors = []
             for i in ("01", "02", "03", "04", "05", "80") if element_id not in UNIQUE_SKIN else ("01", ): # check colors/alts
                 try:
-                    await self.head_manifest(CLASS_LIST[element_id][0] + "_0_{}".format(i))
-                    colors.append(CLASS_LIST[element_id][0] + "_0_{}".format(i))
+                    await self.head_manifest(CLASS_LIST[element_id][0] + f"_0_{i}")
+                    colors.append(CLASS_LIST[element_id][0] + f"_0_{i}")
                 except:
                     pass
             if len(colors) == 0:
@@ -1445,14 +1449,14 @@ class Updater():
                 wid = CLASS_DEFAULT_WEAPON[mc_cjs.split('_')[1]]
                 sp = None
                 phit = None
-                for fn in ("phit_{}".format(element_id), "phit_{}_0".format(element_id)): # check attack spritesheet
+                for fn in (f"phit_{element_id}", f"phit_{element_id}_0"): # check attack spritesheet
                     try:
                         if phit is None:
                             await self.head_manifest(fn)
                             phit = fn
                     except:
                         pass
-                for fn in ("sp_{}".format(element_id), "sp_{}_0".format(element_id), "sp_{}_0_s2".format(element_id), "sp_{}_s2".format(element_id)): # check ougi spritesheet
+                for fn in (f"sp_{element_id}", f"sp_{element_id}_0", f"sp_{element_id}_0_s2", f"sp_{element_id}_s2"): # check ougi spritesheet
                     try:
                         if sp is None:
                             await self.head_manifest(fn)
@@ -1508,7 +1512,7 @@ class Updater():
                                 except:
                                     self.tasks.print("Warning:", sp, "not found for", element_id)
                                     sp = None
-                    tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', '_{}_'.format(i)), mortal, phit, [] if sp is None else [sp]] # name, cjs, mortal, phit, sp
+                    tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', f'_{i}_'), mortal, phit, [] if sp is None else [sp]] # name, cjs, mortal, phit, sp
                     character_data['v'].append(tmp)
                     if wid is not None:
                         character_data['w'].append(wid)
@@ -1527,18 +1531,18 @@ class Updater():
             self.tasks.add(self.update_mypage, parameters=(element_id,))
             return True
         except Exception as e:
-            self.tasks.print("Exception for id: {}\n{}".format(element_id, self.trbk(e)))
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
             return False
 
     async def update_partner_main_character(self : Updater, element_id : str) -> int:
         try:
             try:
-                await self.head(IMG + "/sp/assets/npc/raid_normal/" + element_id + "_01_0.jpg")
+                await self.head(IMG + f"/sp/assets/npc/raid_normal/{element_id}_01_0.jpg")
             except:
                 return False
             try:
                 mortal = None
-                fn = "npc_{}_0_01".format(element_id) # create full filename
+                fn = f"npc_{element_id}_0_01" # create full filename
                 await self.head_manifest(fn) # check if exists, exception is raised otherwise
                 cjs = fn
                 # get cjs
@@ -1550,7 +1554,7 @@ class Updater():
             except:
                 return False
             try:
-                fn = "phit_{}".format(element_id)
+                fn = "phit_" + element_id
                 await self.head_manifest(fn)
                 phit = fn
             except:
@@ -1563,7 +1567,7 @@ class Updater():
             sp = None
             for s in ("", "_s2", "_s3"):
                 try:
-                    fn = "nsp_" + element_id + "_01" + s
+                    fn = f"nsp_{element_id}_01{s}"
                     await self.head_manifest(fn)
                     sp = fn
                     break
@@ -1574,14 +1578,14 @@ class Updater():
             abilities = []
             for s in range(1, 10): # single target skills
                 try:
-                    fn = "ab_" + element_id + "_" + str(s).zfill(2)
+                    fn = f"ab_{element_id}_{s:02}"
                     await self.head_manifest(fn)
                     abilities.append(fn)
                 except:
                     pass
             for s in range(1, 10): # AOE skills
                 try:
-                    fn = "ab_all_" + element_id + "_" + str(s).zfill(2)
+                    fn = f"ab_all_{element_id}_{s:02}"
                     await self.head_manifest(fn)
                     abilities.append(fn)
                 except:
@@ -1610,7 +1614,7 @@ class Updater():
                             except:
                                 self.tasks.print("Warning:", sp, "not found for", element_id)
                                 sp = None
-                character_data['v'].append([('Gran' if i == 0 else 'Djeeta'), cjs.replace('_0_', '_{}_'.format(i)), mortal, phit, [] if sp is None else [sp]]) # name, cjs, mortal, phit, sp
+                character_data['v'].append([('Gran' if i == 0 else 'Djeeta'), cjs.replace('_0_', f'_{i}_'), mortal, phit, [] if sp is None else [sp]]) # name, cjs, mortal, phit, sp
             if str(character_data) != str(self.data["partners"].get(element_id, None)):
                 self.data["partners"][element_id] = character_data
                 self.modified = True
@@ -1618,7 +1622,7 @@ class Updater():
                 self.tasks.print("Updated", element_id, "for index partners")
             return True
         except Exception as e:
-            self.tasks.print("Exception for id: {}\n{}".format(element_id, self.trbk(e)))
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
             return False
 
     ### Others #################################################################################################################
@@ -1785,7 +1789,7 @@ class Updater():
     # Start function
     async def start(self : Updater) -> None:
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=50)) as self.client:
-            self.tasks.print("GBFAP Updater v{}".format(VERSION))
+            self.tasks.print(f"GBFAP Updater v{VERSION}")
             # set Ctrl+C
             try: # unix
                 asyncio.get_event_loop().add_signal_handler(signal.SIGINT, self.tasks.interrupt)
@@ -1796,7 +1800,7 @@ class Updater():
             try: prog_name = sys.argv[0].replace('\\', '/').split('/')[-1]
             except: prog_name = "updater.py" # fallback to default
             # Set Argument Parser
-            parser : argparse.ArgumentParser = argparse.ArgumentParser(prog=prog_name, description="Animation Updater v{} for GBFAP https://mizagbf.github.io/GBFAP/".format(VERSION))
+            parser : argparse.ArgumentParser = argparse.ArgumentParser(prog=prog_name, description=f"Animation Updater v{VERSION} for GBFAP https://mizagbf.github.io/GBFAP/")
             primary = parser.add_argument_group('primary', 'main commands to update the data.')
             primary.add_argument('-r', '--run', help="search for new content.", action='store_const', const=True, default=False, metavar='')
             primary.add_argument('-u', '--update', help="update given elements.", nargs='+', default=None)
