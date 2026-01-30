@@ -100,8 +100,6 @@ function load(conf, changelog)
 
 function start(conf, changelog)
 {
-	init_lists(changelog, index_onclick);
-	init_index(conf, changelog, index_onclick);
 	search = new Search(
 		document.getElementById("filter"),
 		document.getElementById("search-area"),
@@ -126,6 +124,8 @@ function start(conf, changelog)
 	);
 	search.populate_search_area();
 	search.load_url_param();
+	init_lists(changelog, index_onclick);
+	init_index(conf, changelog, index_onclick);
 	// set config now
 	config = conf;
 	// if id is in url parameter
