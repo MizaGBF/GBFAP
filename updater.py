@@ -1673,7 +1673,7 @@ class Updater():
                 if not p.endswith((b'.png', b'.jpg', b'.jpeg')):
                     continue
                 # add result
-                res.append(p.decode("ascii"))
+                res.append(p.rsplit(b'/', 1)[-1].decode("ascii"))
             return res
         except:
             return None
