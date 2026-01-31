@@ -984,7 +984,9 @@
 "3040633000":{"v":[["0★","npc_3040633000_01","mortal_A","phit_3040633000",["nsp_3040633000_01_s2"]],["4★","npc_3040633000_02","mortal_A","phit_3040633000_02",["nsp_3040633000_02_s2"]]],"ab":["ab_3040633000_01","ab_3040633000_02","ab_all_3040633000_01","ab_all_3040633000_02"]},
 "3040632000":{"v":[["0★","npc_3040632000_01","mortal_A","phit_3040632000",["nsp_3040632000_01_s2"]],["4★","npc_3040632000_02","mortal_A","phit_3040632000",["nsp_3040632000_02_s2"]]],"ab":["ab_3040632000_01","ab_all_3040632000_02","ab_all_3040632000_03"]},
 "3040635000":{"v":[["0★","npc_3040635000_01","mortal_A","phit_3040635000",["nsp_3040635000_01_s2"]],["4★","npc_3040635000_02","mortal_A","phit_3040635000_02",["nsp_3040635000_02_s2"]]],"ab":["ab_3040635000_01","ab_all_3040635000_01","ab_all_3040635000_03","ab_all_3040635000_04"]},
-"3040636000":{"v":[["0★","npc_3040636000_01","mortal_A","phit_3040636000",["nsp_3040636000_01_s2"]],["4★","npc_3040636000_02","mortal_A","phit_3040636000_02",["nsp_3040636000_02_s2"]]],"ab":["ab_3040636000_01","ab_all_3040636000_01","ab_all_3040636000_02","ab_all_3040636000_03"]}
+"3040636000":{"v":[["0★","npc_3040636000_01","mortal_A","phit_3040636000",["nsp_3040636000_01_s2"]],["4★","npc_3040636000_02","mortal_A","phit_3040636000_02",["nsp_3040636000_02_s2"]]],"ab":["ab_3040636000_01","ab_all_3040636000_01","ab_all_3040636000_02","ab_all_3040636000_03"]},
+"3040637000":{"v":[["0★","npc_3040637000_01","mortal_A","phit_3040637000",["nsp_3040637000_01_s2"]],["4★","npc_3040637000_02","mortal_A","phit_3040637000_02",["nsp_3040637000_02_s2"]]],"ab":["ab_3040637000_01","ab_3040637000_02","ab_3040637000_03","ab_all_3040637000_01","ab_all_3040637000_02","ab_all_3040637000_03"]},
+"3040638000":{"v":[["0★","npc_3040638000_01","mortal_A","phit_3040638000",["nsp_3040638000_01_s2"]],["4★","npc_3040638000_02","mortal_A","phit_3040638000_02",["nsp_3040638000_02_s2"]]],"ab":["ab_3040638000_01","ab_3040638000_02"]}
 },
 "partners":
 {
@@ -4447,7 +4449,9 @@
 "1040425800":{"w":["1040425800","1040425800"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425800",["sp_1040425800_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425800",["sp_1040425800_1_s2"]]]},
 "1040425700":{"w":["1040425700","1040425700"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425700",["sp_1040425700_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425700",["sp_1040425700_1_s2"]]]},
 "1040715100":{"w":["1040715100","1040715100"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715100",["sp_1040715100_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715100",["sp_1040715100_1_s2"]]]},
-"1030610100":{"w":["1030610100","1030610100"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1030610100",["sp_1030610100_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1030610100",["sp_1030610100_1_s2"]]]}
+"1030610100":{"w":["1030610100","1030610100"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1030610100",["sp_1030610100_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1030610100",["sp_1030610100_1_s2"]]]},
+"1040122700":{"w":["1040122700","1040122700"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122700",["sp_1040122700_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122700",["sp_1040122700_1_s2"]]]},
+"1040029300":{"w":["1040029300","1040029300"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029300",["sp_1040029300_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029300",["sp_1040029300_1_s2"]]]}
 },
 "enemies":
 {
@@ -15884,7 +15888,7 @@
 "6205733":"dark overzealous trouper people-boss",
 "6205743":"earth siegfried human male people-boss gbf-versus-rising gbf-relink",
 "6205753":"earth tragic detective shylo people-boss",
-"6205763":"wind sword saint in the sea of stars seofon eternals human male people-boss",
+"6205763":"wind sword saint in the sea of stars people-boss",
 "6205773":"wind seofon eternals human male people-boss gbf-versus-rising gbf-relink",
 "6205783":"earth malevomacho tomoi erune male people-boss",
 "6205792":"earth musclebrained cadet people-boss",
@@ -18034,7 +18038,7 @@
 "3992933000":"lolo harvin male ロロ hina tachibana 立花日菜",
 "3992934000":"gelt human male",
 "3992935000":"girl in the sea of tears shinsha unknown female シンシャ mai aizawa 相沢舞 voiced voice-only",
-"3992936000":"sword saint in the sea of stars seofon eternals human male シエテ junichi suwabe 諏訪部順一 voiced voice-only",
+"3992936000":"seofon's form sword saint in the sea of stars junichi suwabe 諏訪部順一 voiced voice-only",
 "3992937000":"orologia unknown other オロロジャイア satoshi hino sora tokui 日野聡 徳井青空 voiced voice-only",
 "3992938000":"orologia unknown other オロロジャイア satoshi hino sora tokui 日野聡 徳井青空 voiced voice-only",
 "3992939000":"delilah harvin female",
@@ -18623,7 +18627,7 @@
 "3993688000":"sia female",
 "3993691000":"helmsman male",
 "3993692000":"aries male",
-"3993693000":"mccoy human male",
+"3993693000":"mccoy human male マッコイ shinichiro miki 三木眞一郎",
 "1040120900":"@@Agarthan_Hunter's_Dagger earth dagger ssr agarthan hunter's dagger アガルタ猟団制式短剣 2024-10-29",
 "1040120800":"@@Diadem_Moulinet_(Dark) dark dagger ssr diadem moulinet ccw ダイアデム・ムーリネ 2024-10-29",
 "1040120500":"@@Diadem_Moulinet_(Earth) earth dagger ssr diadem moulinet ccw ダイアデム・ムーリネ 2024-10-29",
@@ -19705,7 +19709,13 @@
 "9103103":"light ohma heine other-boss",
 "9103113":"light monsceity heine other-boss",
 "9103123":"light ohma heine other-boss",
-"9103133":"light monsceity heine other-boss"
+"9103133":"light monsceity heine other-boss",
+"3040638000":"@@Arriet_(Light) light ssr arriet human female balanced sabre harp アンリエット chinatsu akasaki 赤﨑千夏 2026-01-31",
+"3040637000":"@@McCoy earth ssr mccoy human male special dagger マッコイ shinichiro miki 三木眞一郎 2026-01-31",
+"1040029300":"@@Con_Tenerezza light sabre ssr con tenerezza コンテネレッツァ 2026-01-31",
+"1030610100":"@@Orichalcum_Claw light melee sr orichalcum claw オリハルコンの鉤爪 2026-01-29",
+"1040715100":"@@Ravenous_Wingbow light bow ssr ravenous wingbow 飢命の翼弓 2026-01-29",
+"1040122700":"@@Spy’s_Sleeve_Dagger earth dagger ssr spy’s sleeve dagger 密偵の懐剣 2026-01-31"
 },
 "mypage":
 {
