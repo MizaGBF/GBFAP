@@ -7210,7 +7210,10 @@
 "9103113":{"v":[["","enemy_9103113",null,"ehit_9103113",["esp_9103113_01","esp_9103113_02","esp_9103113_03"]]],"ra":["raid_appear_9103113"]},
 "9103123":{"v":[["","enemy_9103123",null,"phit_0000000000",[]]]},
 "9103133":{"v":[["","enemy_9103133",null,"ehit_9103133",["esp_9103133_01","esp_9103133_02","esp_9103133_03"]]]},
-"9103103":{"v":[["","enemy_9103103",null,"ehit_9103103",["esp_9103103_01","esp_9103103_02","esp_9103103_03"]]],"ra":["raid_appear_9103103"]}
+"9103103":{"v":[["","enemy_9103103",null,"ehit_9103103",["esp_9103103_01","esp_9103103_02","esp_9103103_03"]]],"ra":["raid_appear_9103103"]},
+"4101083":{"v":[["","enemy_4101083",null,"phit_0000000000",[]]],"ra":["raid_appear_4101083"]},
+"4301073":{"v":[["","enemy_4301073",null,"phit_0000000000",[]]],"ra":["raid_appear_4301073"]},
+"4301063":{"v":[["","enemy_4301063",null,"phit_0000000000",[]]],"ra":["raid_appear_4301063"]}
 },
 "skins":
 {
@@ -18613,7 +18616,7 @@
 "3993682000":"kyo male",
 "3993683000":"kartha female",
 "3993684000":"kartha female",
-"3993685000":"heine male",
+"3993685000":"@@Heine_(NPC) heine unknown male ハイネ atsushi abe 阿部敦 2026-01-29",
 "3993686000":"heine male",
 "3993689000":"aiden male",
 "3993690000":"julian male",
@@ -19715,7 +19718,10 @@
 "1040029300":"@@Con_Tenerezza light sabre ssr con tenerezza コンテネレッツァ 2026-01-31",
 "1030610100":"@@Orichalcum_Claw light melee sr orichalcum claw オリハルコンの鉤爪 2026-01-29",
 "1040715100":"@@Ravenous_Wingbow light bow ssr ravenous wingbow 飢命の翼弓 2026-01-29",
-"1040122700":"@@Spy’s_Sleeve_Dagger earth dagger ssr spy’s sleeve dagger 密偵の懐剣 2026-01-31"
+"1040122700":"@@Spy’s_Sleeve_Dagger earth dagger ssr spy’s sleeve dagger 密偵の懐剣 2026-01-31",
+"4101083":"fire cepharoid golem-boss",
+"4301063":"fire destructive frame machine-boss",
+"4301073":"fire leotron machine-boss"
 },
 "mypage":
 {
