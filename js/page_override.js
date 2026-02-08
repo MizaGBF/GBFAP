@@ -153,7 +153,7 @@ function override_GBFML()
 		{
 			uncap_string = "_0" + JSON.stringify(uncap);
 			onerr = function() {
-				this.src=gbf.endpoint + "assets_en/img_low/sp/assets/weapon/m/"+id+".jpg";
+				this.src=gbf.endpoint() + "assets_en/img_low/sp/assets/weapon/m/"+id+".jpg";
 				this.onerror=default_onerror;
 			};
 		}
@@ -195,7 +195,7 @@ function override_GBFML()
 			return null;
 		let className = (data && "ra" in data && data.ra.length > 0) ? "preview vs" : "preview";
 		return [{id:id, path:"GBF/assets_en/img/sp/assets/enemy/s/" + id + ".png", onerr:function() {
-			this.src=gbf.endpoint + "assets_en/img_low/sp/assets/enemy/m/"+id+".png";
+			this.src=gbf.endpoint() + "assets_en/img_low/sp/assets/enemy/m/"+id+".png";
 			this.onerror=default_onerror;
 		}, class:className, link:false}];
 	}
