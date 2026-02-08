@@ -17,7 +17,7 @@ class Tester():
             if file is None or file in self.cache: return None
             self.cache.add(file)
             req = await self.client.get(
-                "https://prd-game-a3-granbluefantasy.akamaized.net/assets_en/js/cjs/{}.js".format(file),
+                "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/cjs/{}.js".format(file),
                 headers={"connection":"keep-alive", "accept-encoding":"gzip"}
             )
             if req.status == 200:
