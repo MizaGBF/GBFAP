@@ -47,7 +47,7 @@ class Loader
 		// Each manifest has an equivalent animation in the cjs folder
 		var cjs_deferred = new $.Deferred();
 		var load_queue = new createjs.LoadQueue(false, Game.jsUri + "/", true);
-		load_queue.setMaxConnections(5);
+		load_queue.setMaxConnections(20);
 		
 		// set events
 		load_queue.on("complete", function() {
@@ -315,7 +315,7 @@ class Loader
 			var queue_deferred = new $.Deferred();
 			// 3rd parameter is the cross origin, we set it to true (Anonymous) if game_config isn't local
 			var load_queue = new createjs.LoadQueue(false, "", config.use_game_config != "local");
-			load_queue.setMaxConnections(5);
+			load_queue.setMaxConnections(20);
 			// to keep track of the progress
 			const total = to_load.length;
 			var count = 0;

@@ -1,5 +1,5 @@
 import asyncio
-import aiohttp
+from pyreqwest.client import ClientBuilder
 import json
 import re
 import traceback
@@ -23,12 +23,14 @@ class NameLister():
         try:
             if file is None or file in self.cache: return None
             self.cache.add(file)
-            req = await self.client.get(
-                "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/cjs/{}.js".format(file),
-                headers={"connection":"keep-alive", "accept-encoding":"gzip"}
+            req = (
+                await self.client.get("https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js/cjs/{}.js".format(file))
+                .header("Accept-Encoding", "gzip")
+                .build()
+                .send()
             )
             if req.status == 200:
-                return (await req.content.read()).decode("utf-8")
+                return (await req.bytes()).to_bytes().decode("utf-8")
             else:
                 return None
         except Exception as e:
@@ -98,7 +100,18 @@ class NameLister():
         return motions
 
     async def run(self):
-        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=60)) as self.client:
+        async with (
+            ClientBuilder()
+            .user_agent(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+            )
+            .gzip(True)
+            .brotli(False)
+            .zstd(False)
+            .deflate(False)
+            .http2(True)
+            .build()
+        ) as self.client:
             print("Looking for function calls in animation files...")
             for k, v in self.data.items():
                 if k in ["characters", "partners", "summons", "weapons", "enemies", "skins", "job", "mypage", "styles"]:
