@@ -14,9 +14,10 @@ from pathlib import Path
 import traceback
 import signal
 import argparse
+from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.10'
+VERSION = '5.11'
 CONCURRENT_TASKS = 100
 SAVE_VERSION = 1
 # addition type
@@ -102,23 +103,23 @@ class TaskManager():
     is_running : bool
     updater : Updater
     queues : tuple[deque, ...]
-    running : deque[asyncio.Task]
+    running : set[asyncio.Task]
     total : int
     finished : int
     print_flag : bool
     elapsed : float
-    written_len : int
+    pbar : tqdm|None
     def __init__(self : TaskManager, updater : Updater) -> None:
         self.debug = False
         self.is_running = False
         self.updater = updater
         self.queues = (deque(), deque(), deque(), deque(), deque())
-        self.running = deque()
+        self.running = set()
         self.total = 0
         self.finished = 0
         self.print_flag = False
         self.elapsed = 0
-        self.written_len = 0
+        self.pbar = None
 
     # reinitialize variables
     def reset(self : TaskManager) -> None:
@@ -145,82 +146,73 @@ class TaskManager():
 
     # run tasks in queue
     async def run(self : TaskManager, *, skip : int = 0) -> None:
-        if self.is_running:
-            self.print("ERROR: run() is already running, ignoring...)")
-            return
-        self.is_running = True
-        start_time : float = time.time()
-        self.elapsed : float = start_time
-        to_sleep : bool = False
-        i : int
-        # loop
-        while len(self.running) > 0 or not self.queues_are_empty():
-            # remove from queue and run
-            for i, q in enumerate(self.queues):
-                while len(self.running) < CONCURRENT_TASKS and len(q) > 0:
-                    try:
-                        t : Task = q.popleft()
-                        if skip <= 0:
-                            if t.parameters is not None:
-                                self.running.append(asyncio.create_task(t.awaitable(*t.parameters)))
-                            else:
-                                self.running.append(asyncio.create_task(t.awaitable()))
-                        else:
-                            skip -= 1
-                    except Exception as e:
-                        self.print("Can't start task, the following exception occured in queue", i)
-                        self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
-                        self.finished += 1
-                        break
-            # remove completed tasks
-            prev : int = self.finished
-            for i in range(len(self.running)):
-                t : asyncio.Task = self.running.popleft()
-                if t.done():
-                    try:
-                        t.result()
-                    except Exception as e:
-                        self.print("The following exception occured:")
-                        self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
-                    self.finished += 1
-                    # t is discarded
-                else:
-                    self.running.append(t) # put back in
-            # update status
-            if prev != self.finished: # number of finished task changed
-                # print t he progress
-                self.print_progress()
+        try:
+            if self.is_running:
+                self.print("ERROR: run() is already running, ignoring...)")
+                return
+            self.is_running = True
+            start_time : float = time.time()
+            self.elapsed : float = start_time
+            i : int
+            self.running = set()
+            self.pbar = tqdm(
+                total=self.total,
+                unit=" Task",
+                unit_scale=True,
+                unit_divisor=1000,
+                mininterval=1,
+                bar_format='{percentage:3.1f}%|{bar}{r_bar}'
+            )
+            # loop
+            while len(self.running) > 0 or not self.queues_are_empty():
+                # remove from queue and run
+                n_step : int = 0
+                for i, q in enumerate(self.queues):
+                    while len(self.running) < CONCURRENT_TASKS and len(q) > 0:
+                        try:
+                            task : Task = q.popleft()
+                            if skip > 0:
+                                skip -= 1
+                                n_step += 1
+                                continue
+                            # Create the task
+                            coro = (
+                                task.awaitable(*task.parameters)
+                                if task.parameters
+                                else task.awaitable()
+                            )
+                            t = asyncio.create_task(coro)
+                            self.running.add(t)
+                        except Exception as e:
+                            self.print("Can't start task, the following exception occured in queue", i)
+                            self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+                            n_step += 1
+                            break
+                if n_step > 0:
+                    self.progress_step(n_step)
+                if len(self.running) > 0:
+                    done, _ = await asyncio.wait(
+                        self.running, 
+                        timeout=60.0, # wake up every minute
+                        return_when=asyncio.FIRST_COMPLETED
+                    )
+                    for t in done:
+                        try:
+                            self.running.remove(t)
+                            t.result()
+                        except Exception as e:
+                            self.print("The following exception occured:")
+                            self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+                    self.progress_step(len(done))
                 # auto save if needed
                 if time.time() - self.elapsed >= 3600:
-                    if self.updater.modified:
-                        self.print(f"Progress: {self.finished} / {self.total} Tasks, autosaving...")
-                    self.updater.save()
-                    self.elapsed = time.time()
-                to_sleep = False
-            else:
-                to_sleep = True
-            # ... and sleep if we haven't finished tasks
-            if to_sleep:
-                await asyncio.sleep(0.1)
-        self.print("Complete")
-        # finished
-        diff : float = time.time() - start_time # elapsed time
-        # format to H:M:S
-        elapsed_s : int = int(diff)
-        h : int = elapsed_s // 3600 # hours
-        m : int = (elapsed_s % 3600) // 60 # minutes
-        s : int = elapsed_s % 60 # seconds
-        strings : list[str] = ["Run time: "]
-        if h > 0:
-            strings.append(str(h).zfill(2))
-            strings.append('h')
-        if m > 0:
-            strings.append(str(m).zfill(2))
-            strings.append('m')
-        strings.append(str(s).zfill(2))
-        strings.append('s')
-        self.reset()
-        print("".join(strings))
+                    self.autosave()
+        finally:
+            if self.pbar is not None:
+                self.pbar.close()
+            self.pbar = None
+            self.is_running = False
+            self.print("Complete")
 
     # start to run queued tasks
     async def start(self : TaskManager) -> bool:
@@ -229,41 +221,32 @@ class TaskManager():
         await self.run()
         return True
 
-    # print the progression string
-    def print_progress(self : TaskManager) -> None:
-        if self.running and self.total > 0:
-            if self.print_flag:
-                sys.stdout.write("\r")
-                if self.written_len > 0:
-                    sys.stdout.write((" " * self.written_len) + "\r")
-            else:
-                self.print_flag = True
-            if self.debug:
-                self.written_len = sys.stdout.write(f"P:{self.finished}/{self.total} | R:{len(self.running)} | Q:{len(self.queues[0])} {len(self.queues[1])} {len(self.queues[2])} {len(self.queues[3])} {len(self.queues[4])}")
-            else:
-                self.written_len = sys.stdout.write(f"Progress: {self.finished} / {self.total} Tasks")
-            sys.stdout.flush()
+    def autosave(self : TaskManager) -> None:
+        if self.updater.modified:
+            self.print(f"Progress: {self.finished} / {self.total} Tasks, autosaving...")
+        self.updater.save()
+        self.updater.save_resume()
+        self.elapsed = time.time()
+
+    # update the tqdm progress bar
+    def progress_step(self : TaskManager, step : int) -> None:
+        self.finished += step
+        self.pbar.total = self.total # update total in case it changed
+        self.pbar.update(step)
 
     # print whatever you want, to use instead of print to handle the \r
     def print(self : TaskManager, *args) -> None:
-        if self.print_flag:
-            self.print_flag = False
-            sys.stdout.write("\r")
-            if self.written_len > 0:
-                sys.stdout.write((" " * self.written_len) + "\r")
-        print(*args)
-        self.print_progress()
+        if self.pbar is not None:
+            self.pbar.write(" ".join(map(str, args)))
+            self.pbar.refresh()
+        else:
+            print(*args)
 
     # called when CTRL+C is used
     def interrupt(self : TaskManager, *args) -> None:
         if self.total <= 0 or self.finished >= self.total:
             return
-        if self.print_flag:
-            self.print_flag = False
-            sys.stdout.write("\r")
-            if self.written_len > 0:
-                sys.stdout.write((" " * self.written_len) + "\r")
-        print("Process PAUSED")
+        print("\nProcess PAUSED")
         print(f"{self.finished} / {self.total} Tasks completed")
         print(f"{len(self.running)} Tasks running")
         for i, q in enumerate(self.queues):
@@ -276,7 +259,7 @@ class TaskManager():
             match s[0]:
                 case 'help':
                     print("save    - call the save() function")
-                    print("exit    - force exit the process, changes won't be saved")
+                    print("exit    - force exit the process, changes won't be saved, but resume file will be updated if used")
                     print("peek    - check the content of data.json. Take two parameters: the index to look at and an id")
                     print("tchange - toggle update_changelog setting")
                 case 'save':
@@ -284,6 +267,7 @@ class TaskManager():
                         print("No changes waiting to be saved")
                     else:
                         self.updater.save()
+                    self.updater.save_resume()
                 case 'peek':
                     if len(s) < 3:
                         print("missing 1 parameter: ID")
@@ -306,6 +290,8 @@ class TaskManager():
                 case _:
                     print("Process RESUMING...")
                     break
+        if self.pbar is not None:
+            self.pbar.refresh()
 
 # A queued task
 @dataclass(frozen=True, slots=True)

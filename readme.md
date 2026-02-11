@@ -72,11 +72,11 @@ This script is in charge of updating the JSON files.
   
 ### Usage
 ```console
-GBFAP Updater v5.0
+GBFAP Updater v5.11
 usage: updater.py [-h] [-r] [-u UPDATE [UPDATE ...]] [-c] [-d [DOWNLOAD ...]] [-nc] [-fs]
                   [-al PATH] [-dg]
 
-Animation Updater v5.0 for GBFAP https://mizagbf.github.io/GBFAP/
+Animation Updater v5.11 for GBFAP https://mizagbf.github.io/GBFAP/
 
 options:
   -h, --help            show this help message and exit
