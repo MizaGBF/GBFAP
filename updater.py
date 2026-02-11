@@ -18,7 +18,7 @@ from tqdm import tqdm
 
 ### CONSTANT
 VERSION = '5.11'
-CONCURRENT_TASKS = 100
+CONCURRENT_TASKS = 200
 SAVE_VERSION = 1
 # addition type
 ADD_JOB = 0
