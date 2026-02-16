@@ -79,7 +79,7 @@
 "3020026000":{"v":[["0★","npc_3020026000_01","mortal_A","phit_kn_0004",["nsp_3020026000_01"]],["4★","npc_3020026000_02","mortal_A","phit_kn_0004",["nsp_3020026000_02"]]],"ab":[]},
 "3040023000":{"v":[["0★","npc_3040023000_01","mortal_A","phit_3040023000",["nsp_3040023000_01"]],["4★","npc_3040023000_02","mortal_A","phit_3040023000",["nsp_3040023000_02"]],["5★","npc_3040023000_03","mortal_A","phit_3040023000",["nsp_3040023000_03"]]],"ab":["ab_3040023000_01","ab_all_3040023000_01","ab_all_3040023000_02","ab_all_3040023000_03","ab_all_3040023000_04"]},
 "3030024000":{"v":[["0★","npc_3030024000_01","mortal_A","phit_bw_0014",["nsp_3030024000_01"]],["4★","npc_3030024000_02","mortal_A","phit_bw_0014",["nsp_3030024000_02"]]],"ab":[]},
-"3040024000":{"v":[["0★","npc_3040024000_01","mortal_A","phit_3040024000",["nsp_3040024000_01"]],["4★","npc_3040024000_02","mortal_A","phit_3040024000",["nsp_3040024000_02"]]],"ab":[]},
+"3040024000":{"v":[["0★","npc_3040024000_01","mortal_A","phit_3040024000",["nsp_3040024000_01"]],["4★","npc_3040024000_02","mortal_A","phit_3040024000",["nsp_3040024000_02"]],["5★","npc_3040024000_03","mortal_A","phit_3040024000_03",["nsp_3040024000_03_s2"]]],"ab":["ab_3040024000_01","ab_3040024000_02","ab_all_3040024000_02"]},
 "3020027000":{"v":[["0★","npc_3020027000_01","mortal_A","phit_sw_0003",["nsp_3020027000_01"]],["4★","npc_3020027000_02","mortal_A","phit_sw_0003",["nsp_3020027000_02"]]],"ab":[]},
 "3020028000":{"v":[["0★","npc_3020028000_01","mortal_A","phit_kn_0003",["nsp_3020028000_01"]],["4★","npc_3020028000_02","mortal_A","phit_kn_0003",["nsp_3020028000_02"]]],"ab":[]},
 "3020029000":{"v":[["0★","npc_3020029000_01","mortal_A","phit_3020029000",["nsp_3020029000_01"]],["4★","npc_3020029000_02","mortal_A","phit_3020029000",["nsp_3020029000_02"]]],"ab":[]},
@@ -5831,7 +5831,7 @@
 "8100293":{"v":[["","enemy_8100293",null,"phit_0000000000",["esp_8100293_01","esp_8100293_02","esp_8100293_03"]]],"ra":["raid_appear_8100293"]},
 "7300382":{"v":[["","enemy_7300382",null,"ehit_7300382",[]]]},
 "8200073":{"v":[["","enemy_8200073",null,"phit_0000000000",[]]]},
-"8100353":{"v":[["","enemy_8100353",null,"ehit_8100353",["esp_8100353_01","esp_8100353_02","esp_8100353_03"]]],"ra":["raid_appear_8100353"]},
+"8100353":{"v":[["","enemy_8100353",null,"ehit_8100353",["esp_8100353_01","esp_8100353_02","esp_8100353_03"]]],"ra":["raid_appear_8100353","raid_appear_8100353_2"]},
 "8200181":{"v":[["","enemy_8200181",null,"ehit_8200181",["esp_8200181_01","esp_8200181_02","esp_8200181_03"]]]},
 "8100323":{"v":[["","enemy_8100323",null,"ehit_8100323",["esp_8100323_01","esp_8100323_02","esp_8100323_03"]]],"ra":["raid_appear_8100323"]},
 "8200171":{"v":[["","enemy_8200171",null,"phit_0000000000",[]]]},
@@ -7218,7 +7218,10 @@
 "4101083":{"v":[["","enemy_4101083",null,"phit_0000000000",[]]],"ra":["raid_appear_4101083"]},
 "4301073":{"v":[["","enemy_4301073",null,"phit_0000000000",[]]],"ra":["raid_appear_4301073"]},
 "4301063":{"v":[["","enemy_4301063",null,"phit_0000000000",[]]],"ra":["raid_appear_4301063"]},
-"4101073":{"v":[["","enemy_4101073",null,"ehit_4101073",["esp_4101073_01","esp_4101073_02","esp_4101073_03"]]],"ra":["raid_appear_4101073"]}
+"4101073":{"v":[["","enemy_4101073",null,"ehit_4101073",["esp_4101073_01","esp_4101073_02","esp_4101073_03"]]],"ra":["raid_appear_4101073"]},
+"8104713":{"v":[["","enemy_8104713",null,"phit_0000000000",[]]],"ra":["raid_appear_8104713"]},
+"8104723":{"v":[["","enemy_8104723",null,"phit_0000000000",[]]],"ra":["raid_appear_8104723"]},
+"8104733":{"v":[["","enemy_8104733",null,"phit_0000000000",[]]],"ra":["raid_appear_8104733"]}
 },
 "skins":
 {
@@ -19733,7 +19736,16 @@
 "3994282000":"djeeta human female ジータ gbf-versus-rising gbf-relink",
 "3994283000":"vyrn unknown other ビィ rie kugimiya 釘宮理恵 gbf-versus-rising gbf-relink",
 "3994284000":"wamdus harvin other ワムデュス maria naganawa 長縄まりあ",
-"3994285000":"gawain human male ガウェイン tomokazu seki 関智一"
+"3994285000":"gawain human male ガウェイン tomokazu seki 関智一",
+"3994286000":"missing-help-wanted",
+"8104713":"earth raging vengeance primal-boss",
+"8104723":"earth glowing prosperity primal-boss",
+"8104733":"earth borderkeeper primal-boss",
+"3040640000":"@@Gawain_(Valentine) water ssr gawain valentine human male attack axe spear ガウェイン tomokazu seki 関智一 2026-02-14",
+"3040639000":"@@Wamdus_(Valentine) dark ssr wamdus valentine harvin other special staff axe ワムデュス maria naganawa 長縄まりあ 2026-02-14",
+"1040319800":"@@Bipenne_Galante water axe ssr bipenne galante ガラン・ビペンヌ 2026-02-14",
+"1040818100":"@@Dreamy_Mendiant dark harp ssr dreamy mendiant ドリームマンディアン 2026-02-14",
+"3710255000":"@@Nier nier's relation pathoholic's affection nier 2026-02-14"
 },
 "mypage":
 {
