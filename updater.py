@@ -1793,6 +1793,11 @@ class Updater():
             .zstd(False)
             .deflate(False)
             .http2(True)
+            .pool_max_idle_per_host(1)
+            .http2_prior_knowledge()
+            .http2_keep_alive_interval(timedelta(days=1))
+            .http2_keep_alive_timeout(timedelta(days=1))
+            .http2_keep_alive_while_idle(True)
             .build()
         ) as self.client:
             self.tasks.print(f"GBFAP Updater v{VERSION}")
