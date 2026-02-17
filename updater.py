@@ -17,7 +17,7 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.11'
+VERSION = '5.12'
 CONCURRENT_TASKS = 200
 SAVE_VERSION = 1
 # addition type
@@ -310,6 +310,7 @@ class TaskStatus():
     err : int
     max_err : int
     running : int
+    _finished_event : asyncio.Event
     
     def __init__(self : TaskStatus, max_index : int, max_err : int, *, start : int = 0, running : int = 0):
         self.index = start
@@ -317,6 +318,7 @@ class TaskStatus():
         self.err = 0
         self.max_err = max_err
         self.running = running
+        self._finished_event = asyncio.Event()
 
     def get_next_index(self : TaskStatus) -> int:
         i : int = self.index
@@ -335,10 +337,16 @@ class TaskStatus():
 
     def finish(self : TaskStatus) -> None:
         self.running -= 1
+        if self.running <= 0:
+            self._finished_event.set()
 
     @property
     def finished(self : TaskStatus) -> bool:
         return self.running <= 0
+
+    async def wait_finish(self : TaskStatus) -> None:
+        if self.running > 0:
+            await self._finished_event.wait()
 
 
 @dataclass(slots=True)
