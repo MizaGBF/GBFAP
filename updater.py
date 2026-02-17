@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone, UTC
 import asyncio
 from pyreqwest.client import ClientBuilder, Client
+import pyreqwest.runtime as runtime
 import os
 import sys
 import re
@@ -1783,8 +1784,11 @@ class Updater():
 
     # Start function
     async def start(self : Updater) -> None:
+        runtime.runtime_multithreaded_default(True)
+        runtime.runtime_worker_threads(8)
         async with (
             ClientBuilder()
+            .runtime_multithreaded(True)
             .user_agent(
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
             )
@@ -1794,6 +1798,7 @@ class Updater():
             .deflate(False)
             .http2(True)
             .pool_max_idle_per_host(1)
+            .max_connections(70)
             .http2_prior_knowledge()
             .http2_keep_alive_interval(timedelta(days=1))
             .http2_keep_alive_timeout(timedelta(days=1))
