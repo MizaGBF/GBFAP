@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Any, Callable
 from collections import deque
 from dataclasses import dataclass
-from datetime import datetime, timezone, UTC
+from datetime import datetime, timedelta, timezone, UTC
 import asyncio
 from pyreqwest.client import ClientBuilder, Client
 import pyreqwest.runtime as runtime
