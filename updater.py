@@ -1784,6 +1784,32 @@ class Updater():
 
     # Start function
     async def start(self : Updater) -> None:
+        self.tasks.print(f"GBFAP Updater v{VERSION}")
+        # set Ctrl+C
+        try: # unix
+            asyncio.get_event_loop().add_signal_handler(signal.SIGINT, self.tasks.interrupt)
+        except: # windows fallback
+            signal.signal(signal.SIGINT, self.tasks.interrupt)
+        # parse parameters
+        prog_name : str
+        try: prog_name = sys.argv[0].replace('\\', '/').split('/')[-1]
+        except: prog_name = "updater.py" # fallback to default
+        # Set Argument Parser
+        parser : argparse.ArgumentParser = argparse.ArgumentParser(prog=prog_name, description=f"Animation Updater v{VERSION} for GBFAP https://mizagbf.github.io/GBFAP/")
+        primary = parser.add_argument_group('primary', 'main commands to update the data.')
+        primary.add_argument('-r', '--run', help="search for new content.", action='store_const', const=True, default=False, metavar='')
+        primary.add_argument('-u', '--update', help="update given elements.", nargs='+', default=None)
+        primary.add_argument('-c', '--classes', help="update new classes.", action='store_const', const=True, default=False, metavar='')
+        primary.add_argument('-d', '--download', help="download all assets. Can specific IDs. Time and Disk space consuming.", nargs='*', default=None)
+        
+        settings = parser.add_argument_group('settings', 'commands to alter the updater behavior.')
+        settings.add_argument('-nc', '--nochange', help="disable update of the New category of changelog.json.", action='store_const', const=True, default=False, metavar='')
+        settings.add_argument('-fs', '--fixsummon', help="update all summons default classes.", action='store_const', const=True, default=False, metavar='')
+        settings.add_argument('-al', '--gbfal', help="import data.json from GBFAL.", action='store', nargs=1, type=str, metavar='PATH')
+        settings.add_argument('-dg', '--debug', help="enable the debug infos in the progress string.", action='store_const', const=True, default=False, metavar='')
+        args : argparse.Namespace = parser.parse_args()
+        
+        # init HTTP client
         runtime.runtime_multithreaded_default(True)
         runtime.runtime_worker_threads(8)
         async with (
@@ -1805,30 +1831,6 @@ class Updater():
             .http2_keep_alive_while_idle(True)
             .build()
         ) as self.client:
-            self.tasks.print(f"GBFAP Updater v{VERSION}")
-            # set Ctrl+C
-            try: # unix
-                asyncio.get_event_loop().add_signal_handler(signal.SIGINT, self.tasks.interrupt)
-            except: # windows fallback
-                signal.signal(signal.SIGINT, self.tasks.interrupt)
-            # parse parameters
-            prog_name : str
-            try: prog_name = sys.argv[0].replace('\\', '/').split('/')[-1]
-            except: prog_name = "updater.py" # fallback to default
-            # Set Argument Parser
-            parser : argparse.ArgumentParser = argparse.ArgumentParser(prog=prog_name, description=f"Animation Updater v{VERSION} for GBFAP https://mizagbf.github.io/GBFAP/")
-            primary = parser.add_argument_group('primary', 'main commands to update the data.')
-            primary.add_argument('-r', '--run', help="search for new content.", action='store_const', const=True, default=False, metavar='')
-            primary.add_argument('-u', '--update', help="update given elements.", nargs='+', default=None)
-            primary.add_argument('-c', '--classes', help="update new classes.", action='store_const', const=True, default=False, metavar='')
-            primary.add_argument('-d', '--download', help="download all assets. Can specific IDs. Time and Disk space consuming.", nargs='*', default=None)
-            
-            settings = parser.add_argument_group('settings', 'commands to alter the updater behavior.')
-            settings.add_argument('-nc', '--nochange', help="disable update of the New category of changelog.json.", action='store_const', const=True, default=False, metavar='')
-            settings.add_argument('-fs', '--fixsummon', help="update all summons default classes.", action='store_const', const=True, default=False, metavar='')
-            settings.add_argument('-al', '--gbfal', help="import data.json from GBFAL.", action='store', nargs=1, type=str, metavar='PATH')
-            settings.add_argument('-dg', '--debug', help="enable the debug infos in the progress string.", action='store_const', const=True, default=False, metavar='')
-            args : argparse.Namespace = parser.parse_args()
             # load self.data NOW
             self.load()
             # settings
