@@ -20,6 +20,7 @@ from tqdm import tqdm
 ### CONSTANT
 VERSION = '5.13'
 CONCURRENT_TASKS = 100
+BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
 SAVE_VERSION = 1
 # addition type
 ADD_JOB = 0
@@ -1789,7 +1790,7 @@ class Updater():
             ClientBuilder()
             .runtime_multithreaded(True)
             .user_agent(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+                BASE_USER_AGENT
             )
             .gzip(True)
             .brotli(False)
