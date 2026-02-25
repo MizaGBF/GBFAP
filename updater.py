@@ -18,7 +18,7 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.12'
+VERSION = '5.13'
 CONCURRENT_TASKS = 100
 SAVE_VERSION = 1
 # addition type
@@ -381,7 +381,6 @@ class Updater():
             "mypage":{},
             "styles":{}
         }
-        self.load() # load self.data NOW
         self.modified = False # if set to true, data.json will be written on the next call of save()
         self.addition = set() # new elements for changelog.json
         self.updated_elements = set() # set of elements ran through update_element()
@@ -1829,6 +1828,8 @@ class Updater():
             settings.add_argument('-al', '--gbfal', help="import data.json from GBFAL.", action='store', nargs=1, type=str, metavar='PATH')
             settings.add_argument('-dg', '--debug', help="enable the debug infos in the progress string.", action='store_const', const=True, default=False, metavar='')
             args : argparse.Namespace = parser.parse_args()
+            # load self.data NOW
+            self.load()
             # settings
             run_help : bool = True
             if args.nochange:
