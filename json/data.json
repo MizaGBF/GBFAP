@@ -4463,7 +4463,9 @@
 "1040122800":{"w":["1040122800","1040122800"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122800",["sp_1040122800_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122800",["sp_1040122800_1_s2"]]]},
 "1040918300":{"w":["1040918300","1040918300"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040918300",["sp_1040918300_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040918300",["sp_1040918300_1_s2"]]]},
 "1040818200":{"w":["1040818200","1040818200"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040818200",["sp_1040818200_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040818200",["sp_1040818200_1_s2"]]]},
-"1040715200":{"w":["1040715200","1040715200"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715200",["sp_1040715200_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715200",["sp_1040715200_1_s2"]]]}
+"1040715200":{"w":["1040715200","1040715200"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715200",["sp_1040715200_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715200",["sp_1040715200_1_s2"]]]},
+"1040425900":{"w":["1040425900","1040425900"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040425900",["sp_1040425900_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040425900",["sp_1040425900_1_s2"]]]},
+"1030208200":{"w":["1030208200","1030208200"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1030208200",["sp_1030208200_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1030208200",["sp_1030208200_1_s2"]]]}
 },
 "enemies":
 {
@@ -7231,7 +7233,8 @@
 "8104723":{"v":[["","enemy_8104723",null,"phit_0000000000",[]]],"ra":["raid_appear_8104723"]},
 "8104733":{"v":[["","enemy_8104733",null,"phit_0000000000",[]]],"ra":["raid_appear_8104733"]},
 "9102863":{"v":[["","enemy_9102863",null,"ehit_9102863",["esp_9102863_01_all","esp_9102863_02","esp_9102863_03_all","esp_9102863_04_all"]]],"ra":["raid_appear_9102863"]},
-"9102883":{"v":[["","enemy_9102883",null,"ehit_9102883",["esp_9102883_01","esp_9102883_02","esp_9102883_03","esp_9102883_04"]]],"ra":["raid_appear_9102883"]}
+"9102883":{"v":[["","enemy_9102883",null,"ehit_9102883",["esp_9102883_01","esp_9102883_02","esp_9102883_03","esp_9102883_04"]]],"ra":["raid_appear_9102883"]},
+"9103153":{"v":[["","enemy_9103153",null,"ehit_9103153",["esp_9103153_01","esp_9103153_02","esp_9103153_03","esp_9103153_04_all"]]],"ra":["raid_appear_9103153"]}
 },
 "skins":
 {
@@ -10719,7 +10722,7 @@
 "230301":"@@Glorybringer main character's related glorybringer class ザ・グローリー 2018-03-22",
 "250301":"@@Nekomancer main character's related nekomancer class 黒猫道士 2018-03-22",
 "220301":"@@Kengo main character's related kengo class 剣豪 2018-05-17",
-"210301":"@@Runeslayer main character's related runeslayer class 魔法戦士 2018-05-17",
+"210301":"@@Runeslayer main character's related runeslayer class 魔法戦士 2018-09-28",
 "200301":"@@Doctor main character's related doctor class ドクター 2018-12-18",
 "300201":"@@Gladiator main character's related gladiator class グラディエーター 2019-03-22",
 "300301":"@@Chrysaor main character's related chrysaor class クリュサオル 2019-03-22",
@@ -17098,7 +17101,7 @@
 "3991594000":"katalina human female カタリナ miyuki sawashiro 沢城みゆき gbf-versus-rising gbf-relink",
 "3991595000":"lyria human female ルリア nao tōyama 東山奈央 gbf-versus-rising gbf-relink",
 "3991596000":"sovell human male",
-"3991597000":"mika unknown female ミカ satomi satō 佐藤聡美",
+"3991597000":"mikaboshi's form mika unknown female ミカ satomi satō 佐藤聡美",
 "3991598000":"meteon human male ミュオン masakazu morita 森田成一",
 "3991602000":"catherine erune female キャサリン chiaki takahashi たかはし智秋",
 "3991604000":"dorothy human female ドロシー sora amamiya 雨宮天",
@@ -19759,7 +19762,28 @@
 "3994121000":"gran human male グラン gbf-versus-rising gbf-relink",
 "3994122000":"djeeta human female ジータ gbf-versus-rising gbf-relink",
 "9102863":"earth narophirmidas other-boss",
-"9102883":"fire macutanmacar other-boss"
+"9102883":"fire macutanmacar other-boss",
+"2040452000":"@@Macutanmacar wind ssr macutanmacar odious マクタンマカル 2026-02-24",
+"2040451000":"@@Narophirmidas earth ssr narophirmidas odious ナロフィルミダス 2026-02-24",
+"1040122800":"@@Demondagger_of_Liberation_Verboten wind dagger ssr demondagger of liberation verboten odious 禁破の禍刃 2026-02-24",
+"1040918300":"@@Demonedge_of_Desire_Verboten earth katana ssr demonedge of desire verboten odious 禁望の禍刀 2026-02-24",
+"1040220900":"@@Gougelance_of_Liberation_Verboten wind spear ssr gougelance of liberation verboten odious 禁破の抉槍 2026-02-24",
+"1040818200":"@@Heartstrings_of_Desire_Verboten earth harp ssr heartstrings of desire verboten odious 禁望の憧弦 2026-02-24",
+"1040715200":"@@Lusterbow_of_Desire_Verboten earth bow ssr lusterbow of desire verboten odious 禁望の輝弓 2026-02-24",
+"1040319900":"@@Sealhammer_of_Liberation_Verboten wind axe ssr sealhammer of liberation verboten odious 禁破の封槌 2026-02-24",
+"3994287000":"ahhazu the plaguefist's form ahhazu male unknown アッハーズ shinpachi tsuji 辻親八 voiced voice-only",
+"3994289000":"black rabbit",
+"3994298000":"lecia human female リーシャ ayako kawasumi 川澄綾子",
+"3994299000":"monika human female モニカ ayumi tsuji 辻あゆみ",
+"3994300000":"monika human female モニカ ayumi tsuji 辻あゆみ",
+"3994301000":"proculus male unknown",
+"3994303000":"norisuke's form onoskelis",
+"3994304000":"ahhazu male unknown アッハーズ shinpachi tsuji 辻親八",
+"3994305000":"chiyou male unknown",
+"3994306000":"mikaboshi unknown female ミカボシ satomi satō 佐藤聡美",
+"3994307000":"green knight's form octavia human female 緑の騎士オクタヴィア aya suzaki 洲崎綾",
+"3994323000":"scarlet knight draph male 緋色の騎士 ryōtarō okiayu 置鮎龍太郎",
+"9103153":"earth ahhazu the plaguefist other-boss"
 },
 "mypage":
 {
