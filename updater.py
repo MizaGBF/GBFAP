@@ -18,7 +18,7 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.13'
+VERSION = '5.14'
 CONCURRENT_TASKS = 100
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
 SAVE_VERSION = 1
@@ -380,7 +380,8 @@ class Updater():
             "mypage_bg":{},
             "lookup":{},
             "mypage":{},
-            "styles":{}
+            "styles":{},
+            "mypage_styles":{}
         }
         self.modified = False # if set to true, data.json will be written on the next call of save()
         self.addition = set() # new elements for changelog.json
@@ -852,12 +853,13 @@ class Updater():
                     pass
             if len(character_data["v"]) == 0:
                 return False
-            if str(character_data) != str(self.data["mypage"].get(element_id, None)):
-                self.data["mypage"][element_id] = character_data
+            index = "mypage" if style == "" else "mypage_styles"
+            if str(character_data) != str(self.data[index].get(element_id, None)):
+                self.data[index][element_id] = character_data
                 self.modified = True
                 if add_type is not None:
                     self.add(element_id, add_type)
-                self.tasks.print("Updated", element_id, "for mypage")
+                self.tasks.print("Updated", element_id, "for", index)
             return True
         except Exception as e:
             self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trbk(e)}")
@@ -873,9 +875,9 @@ class Updater():
                 uncap : str = str(i + j).zfill(2)
                 found : bool = False
                 task_params : list = []
-                for g in ("", "_0", "_1"): # gender
-                    for m in ("", "_101", "_102", "_103", "_104"): # multi
-                        for n in ("", "_01"): # null (lyria...)
+                for n in ("", "_01"): # null (lyria...)
+                    for g in ("", "_0", "_1"): # gender
+                        for m in ("", "_101", "_102", "_103", "_104"): # multi
                             task_params.append((element_id, "_{}{}{}{}{}".format(uncap, style, g, m, n)))
                 futures = await asyncio.gather(*[self.get_mypage_list_sub(*p) for p in task_params])
                 for future in futures:
@@ -927,7 +929,7 @@ class Updater():
                     await self.head(IMG + f"/sp/assets/npc/m/{element_id}_01.jpg")
             except:
                 return False
-            if not is_partner and style == "":
+            if not is_partner and not is_skin and style == "":
                 try:
                     await self.head(IMG + f"/sp/assets/npc/m/{element_id}_01_st2.jpg")
                     self.tasks.add(self.update_character, parameters=(element_id, "_st2"))
@@ -1113,10 +1115,7 @@ class Updater():
                     self.modified = True
                     self.add(element_id, ADD_CHAR if target != "partners" else ADD_PARTNER)
                     self.tasks.print("Updated", element_id, "for index", target)
-                if not is_partner:
-                    if not is_skin:
-                        self.tasks.add(self.update_character, parameters=(element_id, "_st2"))
-                    self.tasks.add(self.update_mypage, parameters=(element_id,))
+                self.tasks.add(self.update_mypage, parameters=(element_id,))
             else:
                 if str(character_data) != str(self.data["styles"].get(element_id, None)):
                     self.data["styles"][element_id] = character_data

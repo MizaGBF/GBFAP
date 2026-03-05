@@ -272,6 +272,10 @@ function load_element(id, target, data, is_mypage = false)
 	if(is_mypage)
 	{
 		animations = list_animation(target, index["mypage"][id]);
+		if(id in index["mypage_styles"])
+		{
+			animations = animations.concat(list_animation(target, index["mypage"][id]));
+		}
 	}
 	else
 	{
