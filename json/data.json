@@ -7488,7 +7488,9 @@
 "3710252000":{"v":[["0★","npc_3710252000_01","mortal_A","phit_3710252000",["nsp_3710252000_01_s2"]]],"ab":[]},
 "3710253000":{"v":[["0★","npc_3710253000_01","mortal_A","phit_3710253000",["nsp_3710253000_01_s2"]]],"ab":[]},
 "3710254000":{"v":[["0★","npc_3710254000_01","mortal_A","phit_3710254000",["nsp_3710254000_01_s2"]]],"ab":[]},
-"3710255000":{"v":[["0★ Gran","npc_3710255000_01","mortal_A","phit_3710255000",["nsp_3710255000_01_0_s2"]],["0★ Djeeta","npc_3710255000_01","mortal_A","phit_3710255000",["nsp_3710255000_01_1_s2"]]],"ab":[]}
+"3710255000":{"v":[["0★ Gran","npc_3710255000_01","mortal_A","phit_3710255000",["nsp_3710255000_01_0_s2"]],["0★ Djeeta","npc_3710255000_01","mortal_A","phit_3710255000",["nsp_3710255000_01_1_s2"]]],"ab":[]},
+"3710257000":{"v":[["0★","npc_3710257000_01","mortal_A","phit_3710257000",["nsp_3710257000_01_s2"]]],"ab":[]},
+"3710256000":{"v":[["0★","npc_3710256000_01","mortal_A","phit_3710256000",["nsp_3710256000_01_s2"]]],"ab":[]}
 },
 "job":
 {
@@ -19803,7 +19805,9 @@
 "3040643000":"/w Lyria_(Event_SSR) /e any /a ssr /n lyria /b human /s female /t special /p melee /y ルリア nao tōyama 東山奈央 2026-03-04 /1 /2",
 "6206223":"/e water /n katalina /f people-boss /1 /2",
 "6206233":"/e fire /n rackam /f people-boss /1 /2",
-"190501":"/w Lancer_Origin /x main character /n lancer origin /m class /y ランサー・オリジン 2026-03-10"
+"190501":"/w Lancer_Origin /x main character /n lancer origin /m class /y ランサー・オリジン 2026-03-10",
+"3710257000":"/w Seofon /x seofon /k espada preciosa /n seofon /y 2026-03-10 /1 /2",
+"3710256000":"/w Vikala /x vikala /k vicky's soiree night /n vikala /y 2026-03-10 /1"
 },
 "mypage":
 {
