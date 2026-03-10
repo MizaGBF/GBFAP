@@ -566,15 +566,13 @@ class Updater():
             # class import
             count : int = 0
             for k, jd in self.gbfal["job"].items():
-                if k not in CLASS_LIST:
+                if k not in CLASS_LIST and k not in self.data["job"]:
                     CLASS_LIST[k] = self.gbfal['job'][k][6] # add mh
                     for x, v in self.gbfal['job_wpn'].items():
                         if v == k:
                             CLASS_WEAPON_LIST[k] = x # add class weapon
-                    for x, v in self.gbfal['job_id'].items():
-                        if v == k:
-                            for i in range(len(CLASS_LIST[k])): # add missing classes
-                                CLASS_LIST[k] = x + "_" + CLASS_LIST[k]
+                    for i in range(len(CLASS_LIST[k])): # add missing classes
+                        CLASS_LIST[k] = x + "_" + CLASS_LIST[k]
                     count += 1
                 else:
                     # mypage section
