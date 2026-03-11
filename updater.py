@@ -896,7 +896,14 @@ class Updater():
     # custom sort for the version sorting of characters
     def name_sort(self : Updater, name : str):
         parts : list[str] = name.split(' ')
-        star : int = int(parts[0].replace('★', ''))
+        star : int
+        if "Style" in name:
+            p : list[str] = name.split("Style")
+            if p[1].strip() == "":
+                p[1] = "1"
+            star = int(p[1])
+        else:
+            star = int(parts[0].replace('★', ''))
         name_order : int = 0
         if len(parts) > 1:
             if parts[1] == 'Gran':

@@ -7242,7 +7242,12 @@
 "9103153":{"v":[["","enemy_9103153",null,"ehit_9103153",["esp_9103153_01","esp_9103153_02","esp_9103153_03","esp_9103153_04_all"]]],"ra":["raid_appear_9103153"]},
 "7300943":{"v":[["","enemy_7300943",null,"ehit_7300943",["esp_7300943_01","esp_7300943_02","esp_7300943_03","esp_7300943_04"]]],"ra":["raid_appear_7300943"]},
 "6206223":{"v":[["","enemy_6206223",null,"ehit_6206223",["esp_6206223_01","esp_6206223_02"]]]},
-"6206233":{"v":[["","enemy_6206233",null,"ehit_6206233",["esp_6206233_01","esp_6206233_02"]]]}
+"6206233":{"v":[["","enemy_6206233",null,"ehit_6206233",["esp_6206233_01","esp_6206233_02"]]]},
+"9103193":{"v":[["","enemy_9103193",null,"phit_0000000000",["esp_9103193_04_all"]]]},
+"9103203":{"v":[["","enemy_9103203",null,"phit_0000000000",["esp_9103203_04_all"]]]},
+"9103163":{"v":[["","enemy_9103163",null,"phit_0000000000",["esp_9103163_01_all","esp_9103163_02_all","esp_9103163_03_all"]]],"ra":["raid_appear_9103163"]},
+"9103183":{"v":[["","enemy_9103183",null,"phit_0000000000",[]]]},
+"9103173":{"v":[["","enemy_9103173",null,"phit_0000000000",[]]]}
 },
 "skins":
 {
@@ -8426,7 +8431,8 @@
 "event_550":[["event_550"]],
 "event_551":[["event_551"]],
 "event_552":[["event_552"]],
-"28ra":[["28ra_1","28ra_2","28ra_3"]]
+"28ra":[["28ra_1","28ra_2","28ra_3"]],
+"event_553":[["event_553"]]
 },
 "mypage_bg":
 {
@@ -8669,7 +8675,7 @@
 "3990248000":"/n belphegor /c collab /b primal /s other /y ベルフェゴール ??? ？？？",
 "3990249000":"/w Belphegor_(NPC) /n belphegor /c collab /b primal /s other /y ベルフェゴール ??? ？？？",
 "3990250000":"/x romeo /w Juliet_(NPC) /n juliet /b human /s female /y ジュリエット kaori ishihara 石原夏織 2015-05-31 /!",
-"3990251000":"/w Imperial_Lieutenant_General_Gandharva_(NPC) /n imperial lieutenant general gandharva /b draph /s male /y エルステ帝国軍 中将ガンダルヴァ atsushi miyauchi 宮内敦士",
+"3990251000":"/x gandharva /w Imperial_Lieutenant_General_Gandharva_(NPC) /n imperial lieutenant general gandharva /b draph /s male /y エルステ帝国軍 中将ガンダルヴァ atsushi miyauchi 宮内敦士",
 "3990252000":"/x juliet /w Paris_(NPC) /n paris /b human /s male /y パリス tomokazu sugita 杉田智和 2015-05-31",
 "3990253000":"/w Mercutio_(NPC) /n mercutio /b human /s male /y マキューシオ anri katsu 勝杏里 2015-05-31",
 "3990254000":"/w Tybalt_(NPC) /n tybalt /b human /s male /y ティボルト takuya satō 佐藤拓也 2015-05-31",
@@ -9911,7 +9917,7 @@
 "3991853000":"/n harie /b human /s female /y ハリエ yui ogura 小倉唯",
 "3991854000":"/n canna /b human /s female /y カンナ yumi uchiyama 内山夕実",
 "3991855000":"/n diola /b human /s female /y ジオラ minami takahashi 高橋未奈美",
-"3991856000":"/n tezcatlipoca /y テスカトリポカ",
+"3991856000":"/n tezcatlipoca /b primal /y テスカトリポカ",
 "3991857000":"/n citlali /b human /s female",
 "3991858000":"/n leere /b human /s female",
 "3991859000":"/n xolotl /b primal /s other /y ショロトル ??? ？？？",
@@ -10637,7 +10643,7 @@
 "3992646000":"/n pickle /c collab",
 "3992648000":"/w Guillota_(NPC) /n guillota /b human /s female /y ギヨタ chiwa saitō 斎藤千和 2022-04-14",
 "3992649000":"/w Llewig_(NPC) /n llewig /b unknown /s male /y ルウェイグ kazuhiro nakaya 中谷一博 2022-04-14",
-"3992650000":"/w Irotis_(NPC) /n irotis /b unknown /s female /y ヰロティス chika anzai 安済知佳 2022-04-14",
+"3992650000":"/x shitori /w Irotis_(NPC) /n irotis /b unknown /s female /y ヰロティス chika anzai 安済知佳 2022-04-14",
 "3992651000":"/x alliah /n tau'luk /b erune /s male /y タウルーク naoya uchida 内田直哉",
 "3992652000":"/n duat viceroy /b draph /s male",
 "3992653000":"/w Maat's_Scales_(NPC) /n maat's scales /b primal /s other /y 星晶獣メアトの天秤 2022-04-14",
@@ -11962,7 +11968,7 @@
 "3994087000":"/n astralia astral god /y 星の神アストロリア nao tōyama 東山奈央",
 "3994088000":"/w Byleistr_(NPC) /n byleistr /b unknown /s male /y ビューレイスト hirofumi nojima 野島裕史 2025-08-21",
 "3994089000":"/n zen /b unknown /s male",
-"3994090000":"/n lilit /b unknown /s female /y リリト kaori maeda 前田佳織里",
+"3994090000":"/x lilith /n lilit /b unknown /s female /y リリト kaori maeda 前田佳織里",
 "3994091000":"/n vyrn /b unknown /s other /y ビィ rie kugimiya 釘宮理恵 /1 /2",
 "3994092000":"/x rein /w Versusia_Genesis_(NPC) /n versusia genesis /b unknown /s female /y ヴェルサシア・ジェネシス maki kawase 河瀬茉希 2025-08-21",
 "3994093000":"/x versusia /n versusia genesis /b unknown /s female /y ヴェルサシア・ジェネシス maki kawase 河瀬茉希",
@@ -12142,8 +12148,8 @@
 "3994298000":"/n lecia /b human /s female /y リーシャ ayako kawasumi 川澄綾子",
 "3994299000":"/n monika /b human /s female /y モニカ ayumi tsuji 辻あゆみ",
 "3994300000":"/n monika /b human /s female /y モニカ ayumi tsuji 辻あゆみ",
-"3994301000":"/x white knight /n proculus /b unknown /s male",
-"3994303000":"/x norisuke /n onoskelis /b unknown /s female",
+"3994301000":"/x white knight /n proculus /b unknown /s male /y プロクルス takeshi kusao 草尾毅",
+"3994303000":"/x norisuke /n onoskelis /b unknown /s female /y オノスケリス kanna nakamura 中村カンナ",
 "3994304000":"/w Ahhazu_(NPC) /n ahhazu /b unknown /s male /y アッハーズ shinpachi tsuji 辻親八 2026-02-26",
 "3994305000":"/w Chiyou_(NPC) /n chiyou /b unknown /s male /y シユウ toshinari fukamachi 深町寿成 2026-03-04",
 "3994306000":"/w Mikaboshi_(NPC) /n mikaboshi /b unknown /s female /y ミカボシ satomi satō 佐藤聡美 2026-02-26",
@@ -19796,7 +19802,7 @@
 "1040505600":"/c cut-content",
 "1040400400":"/c cut-content",
 "6099502":"/c cut-content",
-"3994308000":"/x white knight /n proculus /b unknown /s male",
+"3994308000":"/n proculus /b unknown /s male /y プロクルス takeshi kusao 草尾毅",
 "3994309000":"/x lyria /n lilit /b unknown /s female /y リリト kaori maeda 前田佳織里",
 "3994310000":"/w Lilit_(NPC) /n lilit /b unknown /s female /y リリト kaori maeda 前田佳織里 2026-03-04",
 "3994312000":"/x astralia astral god /w Corpse_Dragon_Astralia_(NPC) /n corpse dragon astralia /b unknown /s other /y 骸の竜アストロリア 2026-03-04",
@@ -19807,7 +19813,23 @@
 "6206233":"/e fire /n rackam /f people-boss /1 /2",
 "190501":"/w Lancer_Origin /x main character /n lancer origin /m class /y ランサー・オリジン 2026-03-10",
 "3710257000":"/w Seofon /x seofon /k espada preciosa /n seofon /y 2026-03-10 /1 /2",
-"3710256000":"/w Vikala /x vikala /k vicky's soiree night /n vikala /y 2026-03-10 /1"
+"3710256000":"/w Vikala /x vikala /k vicky's soiree night /n vikala /y 2026-03-10 /1",
+"3994288000":"/n astral husk singularity proculus /b unknown /s male /y 星骸特異点プロクルス takeshi kusao 草尾毅 /! /!!",
+"3994311000":"/x magus /n astaroth /b unknown /s male /y アスタロト tsuyoshi koyama 小山剛志",
+"3994313000":"/x proculus /n astral husk singularity proculus /b unknown /s male /y 星骸特異点プロクルス takeshi kusao 草尾毅",
+"3994314000":"/x lecia /n blue knight lecia /b human /s female /y リーシャ ayako kawasumi 川澄綾子",
+"3994315000":"/n tezcatlipoca /b primal /y テスカトリポカ",
+"3994316000":"/n quetzalcoatl /b primal",
+"3994317000":"/n behemot /2",
+"3994318000":"/n revived astral",
+"3994319000":"/n lecia /b human /s female /y リーシャ ayako kawasumi 川澄綾子 /_",
+"3994320000":"/n gandharva /b draph /s male /y ガンダルヴァ atsushi miyauchi 宮内敦士",
+"3994330000":"/x proculus /n apep /b unknown /s male /y アペプ",
+"9103163":"/e light /n astral husk singularity proculus /f other-boss",
+"9103173":"/e light /n astral husk singularity proculus /f other-boss",
+"9103183":"/e light /n astral husk singularity proculus /f other-boss",
+"9103193":"/e light /n astral husk singularity proculus /f other-boss",
+"9103203":"/e light /n astral husk singularity proculus /f other-boss"
 },
 "mypage":
 {
@@ -19833,9 +19855,11 @@
 "styles":
 {
 "3040377000":{"v":[["Style ","npc_3040377000_01_st2","mortal_A","phit_3040377000_st2",["nsp_3040377000_01_st2_s2"]]],"ab":["ab_3040377000_01","ab_3040377000_02","ab_3040377000_03","ab_3040377000_04","ab_3040377000_05","ab_3040377000_06","ab_3040377000_07","ab_3040377000_08","ab_3040377000_09","ab_3040377000_10","ab_3040377000_11","ab_3040377000_12","ab_3040377000_13","ab_all_3040377000_01"]},
-"3040088000":{"v":[["Style ","npc_3040088000_01_st2","mortal_A","phit_3040088000_st2",["nsp_3040088000_01_st2_s2"]],["Style  B","npc_3040088000_01_st2_f1","mortal_A","phit_3040088000_st2_f1",["nsp_3040088000_01_st2_f1_s2"]]],"ab":["ab_3040088000_01","ab_3040088000_02","ab_all_3040088000_01"]}
+"3040088000":{"v":[["Style ","npc_3040088000_01_st2","mortal_A","phit_3040088000_st2",["nsp_3040088000_01_st2_s2"]],["Style  B","npc_3040088000_01_st2_f1","mortal_A","phit_3040088000_st2_f1",["nsp_3040088000_01_st2_f1_s2"]]],"ab":["ab_3040088000_01","ab_3040088000_02","ab_all_3040088000_01"]},
+"3040101000":{"v":[["Style ","npc_3040101000_01_st2","mortal_A","phit_ax_0001",["nsp_3040101000_01_st2_s2"]]],"ab":["ab_3040101000_01","ab_3040101000_02","ab_all_3040101000_02","ab_all_3040101000_03","ab_all_3040101000_04"]}
 },
 "mypage_styles":
 {
+"3040101000":{"v":[["1","mypage_3040101000_01_st2",null,null,[]]]}
 }
 }
