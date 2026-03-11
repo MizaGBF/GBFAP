@@ -846,7 +846,21 @@ class Updater():
                 try:
                     f : str = "mypage_" + element_id + uncap
                     await self.head_manifest(f)
-                    character_data["v"].append([str(len(character_data["v"]) + 1), f, None, None, []])
+                    character_data["v"].append(
+                        [
+                            (
+                                (
+                                    "Style "
+                                    if style != ""
+                                    else ""
+                                ) + str(len(character_data["v"]) + 1)
+                            ),
+                            f,
+                            None,
+                            None,
+                            []
+                        ]
+                    )
                 except:
                     pass
             if len(character_data["v"]) == 0:
