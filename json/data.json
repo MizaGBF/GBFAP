@@ -7515,7 +7515,9 @@
 "3710254000":{"v":[["0★","npc_3710254000_01","mortal_A","phit_3710254000",["nsp_3710254000_01_s2"]]],"ab":[]},
 "3710255000":{"v":[["0★ Gran","npc_3710255000_01","mortal_A","phit_3710255000",["nsp_3710255000_01_0_s2"]],["0★ Djeeta","npc_3710255000_01","mortal_A","phit_3710255000",["nsp_3710255000_01_1_s2"]]],"ab":[]},
 "3710257000":{"v":[["0★","npc_3710257000_01","mortal_A","phit_3710257000",["nsp_3710257000_01_s2"]]],"ab":[]},
-"3710256000":{"v":[["0★","npc_3710256000_01","mortal_A","phit_3710256000",["nsp_3710256000_01_s2"]]],"ab":[]}
+"3710256000":{"v":[["0★","npc_3710256000_01","mortal_A","phit_3710256000",["nsp_3710256000_01_s2"]]],"ab":[]},
+"3710259000":{"v":[["0★","npc_3710259000_01","mortal_A","phit_3710259000",["nsp_3710259000_01_s2"]]],"ab":[]},
+"3710258000":{"v":[["0★","npc_3710258000_01","mortal_A","phit_3710258000",["nsp_3710258000_01_s2"]]],"ab":[]}
 },
 "job":
 {
@@ -11799,7 +11801,7 @@
 "3993867000":"/w Atman_(NPC) /n atman /b unknown /s male /y アートマン mitsuru miyamoto 宮本充 2025-03-11",
 "3993868000":"/n quetzalcoatl /b primal",
 "3993869000":"/n tropical fruits mountain",
-"3993870000":"/w Bhaisa_(NPC) /n bhaisa /b erune /s female /y バイシュラ manaka iwami 石見舞菜香 2025-03-11",
+"3993870000":"/x bhaisa /w Bhaisa_(NPC) /n bhaisa /b erune /s female /y バイシュラ manaka iwami 石見舞菜香 2025-03-11",
 "3993871000":"/n hundred-year lapis brilliance",
 "3993872000":"/w Bhadra_(NPC) /n bhadra /b draph /s male /y バドラ inori minase 水瀬いのり 2025-03-11",
 "3993873000":"/w Mapra_(NPC) /n mapra /b human /s male /y マプラ koki uchiyama 内山昂輝 2025-03-11",
@@ -19878,7 +19880,14 @@
 "3040648000":"/w Alliah_(Yukata) /e water /a ssr /n alliah /c yukata /b erune /s female /t defense /p sabre /y アリア ai kayano 茅野愛衣 2026-03-31",
 "3040647000":"/w Anthuria_(Summer) /e light /a ssr /n anthuria /c summer /b erune /s female /t special /p melee harp /y アンスリア yū asakawa 浅川悠 2026-03-31",
 "1040426100":"/w Forbidden_Sunset /e light /t staff /a ssr /n forbidden sunset /y 2026-03-31",
-"1040122900":"/w Morning_Glory_Fan /e water /t dagger /a ssr /n morning glory fan /y 2026-03-31"
+"1040122900":"/w Morning_Glory_Fan /e water /t dagger /a ssr /n morning glory fan /y 2026-03-31",
+"3994339000":"/n feower /c eternals /b erune /s male /y カトル jun fukuyama 福山潤",
+"3994340000":"/n feower /c eternals /b erune /s male /y カトル jun fukuyama 福山潤",
+"3994341000":"/n eustace /b erune /s male /y ユーステス kazuya nakai 中井和哉 /1 /2",
+"3994342000":"/n eustace /b erune /s male /y ユーステス kazuya nakai 中井和哉 /1 /2",
+"3994343000":"/n bhaisa /s female /b human /y バイシュラ manaka iwami 石見舞菜香",
+"3994344000":"/n bhaisa /s female /b human /y バイシュラ manaka iwami 石見舞菜香",
+"3994345000":"/n cagliostro /b human /s female /y カリオストロ sakura tange 丹下桜 /1 /2"
 },
 "mypage":
 {
