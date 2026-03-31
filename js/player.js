@@ -960,7 +960,15 @@ class Player
 		{
 			// newer "fullscreen" animations cover all the screen
 			// and have s2 or s3 in their file names
-			if(cjs.includes("_s2") || cjs.includes("_s3"))
+			if(cjs.includes("_s2"))
+			{
+				special.x = this.m_offset.fullscreen.x;
+				special.y = this.m_offset.fullscreen.y;
+				special.scaleX *= this.m_fullscreen_scale;
+				special.scaleY *= this.m_fullscreen_scale;
+				this.m_stage.setChildIndex(special, Player.c_zindex.MIDDLE);
+			}
+			else if(cjs.includes("_s3"))
 			{
 				special.x = this.m_offset.fullscreen.x;
 				special.y = this.m_offset.fullscreen.y;
