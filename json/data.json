@@ -994,7 +994,9 @@
 "3040643000":{"v":[["0★","npc_3040643000_01","mortal_A","phit_3040643000",["nsp_3040643000_01_s2"]],["4★","npc_3040643000_02","mortal_A","phit_3040643000_02",["nsp_3040643000_02_s2"]]],"ab":["ab_3040643000_01","ab_3040643000_02","ab_all_3040643000_01","ab_all_3040643000_02","ab_all_3040643000_03","ab_all_3040643000_04","ab_all_3040643000_05","ab_all_3040643000_06"]},
 "3040644000":{"v":[["0★","npc_3040644000_01","mortal_A","phit_3040644000",["nsp_3040644000_01_s2"]],["4★","npc_3040644000_02","mortal_A","phit_3040644000",["nsp_3040644000_02_s2"]]],"ab":["ab_3040644000_02","ab_all_3040644000_01","ab_all_3040644000_02"]},
 "3040645000":{"v":[["0★","npc_3040645000_01","mortal_A","phit_3040645000",["nsp_3040645000_01_s2"]],["4★","npc_3040645000_02","mortal_A","phit_3040645000_02",["nsp_3040645000_02_s2"]]],"ab":["ab_3040645000_01","ab_3040645000_02","ab_3040645000_03"]},
-"3040646000":{"v":[["0★ Gran","npc_3040646000_01","mortal_A","phit_3040646000",["nsp_3040646000_01_0_s2"]],["0★ Djeeta","npc_3040646000_01","mortal_A","phit_3040646000",["nsp_3040646000_01_1_s2"]],["4★ Gran","npc_3040646000_02","mortal_A","phit_3040646000",["nsp_3040646000_02_0_s2"]],["4★ Djeeta","npc_3040646000_02","mortal_A","phit_3040646000",["nsp_3040646000_02_1_s2"]]],"ab":["ab_3040646000_01","ab_all_3040646000_01","ab_all_3040646000_02","ab_all_3040646000_03","ab_all_3040646000_04"]}
+"3040646000":{"v":[["0★ Gran","npc_3040646000_01","mortal_A","phit_3040646000",["nsp_3040646000_01_0_s2"]],["0★ Djeeta","npc_3040646000_01","mortal_A","phit_3040646000",["nsp_3040646000_01_1_s2"]],["4★ Gran","npc_3040646000_02","mortal_A","phit_3040646000",["nsp_3040646000_02_0_s2"]],["4★ Djeeta","npc_3040646000_02","mortal_A","phit_3040646000",["nsp_3040646000_02_1_s2"]]],"ab":["ab_3040646000_01","ab_all_3040646000_01","ab_all_3040646000_02","ab_all_3040646000_03","ab_all_3040646000_04"]},
+"3040648000":{"v":[["0★","npc_3040648000_01","mortal_A","phit_3040648000",["nsp_3040648000_01_s3"]],["4★","npc_3040648000_02","mortal_A","phit_3040648000_02",["nsp_3040648000_02_s3"]]],"ab":["ab_3040648000_01","ab_3040648000_02","ab_3040648000_03","ab_3040648000_04"]},
+"3040647000":{"v":[["0★","npc_3040647000_01","mortal_A","phit_3040647000",["nsp_3040647000_01_s2"]],["4★","npc_3040647000_02","mortal_A","phit_3040647000_02",["nsp_3040647000_02_s2"]]],"ab":["ab_3040647000_01","ab_3040647000_02","ab_3040647000_03","ab_3040647000_04","ab_all_3040647000_01"]}
 },
 "partners":
 {
@@ -4478,7 +4480,9 @@
 "1040918400":{"w":["1040918400","1040918400"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040918400",["sp_1040918400_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040918400",["sp_1040918400_1_s2"]]]},
 "1040518900":{"w":["1040518900","1040518900"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040518900",["sp_1040518900_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040518900",["sp_1040518900_1_s2"]]]},
 "1030704900":{"w":["1030704900","1030704900"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1030704900",["sp_1030704900_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1030704900",["sp_1030704900_1_s2"]]]},
-"1040818300":{"w":["1040818300","1040818300"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040818300",["sp_1040818300_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040818300",["sp_1040818300_1_s2"]]]}
+"1040818300":{"w":["1040818300","1040818300"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040818300",["sp_1040818300_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040818300",["sp_1040818300_1_s2"]]]},
+"1040122900":{"w":["1040122900","1040122900"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040122900",["sp_1040122900_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040122900",["sp_1040122900_1_s2"]]]},
+"1040426100":{"w":["1040426100","1040426100"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040426100",["sp_1040426100_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040426100",["sp_1040426100_1_s2"]]]}
 },
 "enemies":
 {
@@ -19856,10 +19860,10 @@
 "1040426000":"/w Mysteries_of_the_Ocean /e earth /t staff /a ssr /n mysteries of the ocean /y 海の神秘 2026-03-16",
 "3994324000":"/n echidna /b primal /s female /y エキドナ haruna ikezawa 池澤春菜 /! /!!",
 "3994328000":"/n laruna /b draph /s female /y ラルナ yumi kakazu かかずゆみ",
-"3994335000":"/x anthuria /n liliana /b erune /s female /y リリアナ marie ooi 大井麻利衣",
+"3994335000":"/x anthuria /w Liliana_(NPC) /n liliana /b erune /s female /y リリアナ marie ooi 大井麻利衣 2026-03-29",
 "3994336000":"/n liliana /b erune /s female /y リリアナ marie ooi 大井麻利衣",
 "3994337000":"/n echidna /b primal /s female /y エキドナ haruna ikezawa 池澤春菜",
-"3994338000":"/n laruna /b draph /s female /y ラルナ yumi kakazu かかずゆみ",
+"3994338000":"/w Laruna_(NPC) /n laruna /b draph /s female /y ラルナ yumi kakazu かかずゆみ 2026-03-29",
 "3994356000":"/n alicia /b draph /s female /y アリシア tomo sakurai yoshino takamori 櫻井智 鷹森淑乃",
 "6206243":"/f people-boss /x thug man /e water /n the serial reject",
 "8104743":"/f primal-boss /x echidna /e water /n maximum mommy echidna",
@@ -19870,7 +19874,11 @@
 "8104793":"/f primal-boss /x echidna /e water /n maximum mommy echidna",
 "8104803":"/f primal-boss /x echidna /e water /n maximum mommy echidna",
 "1040818300":"/w Materpent_Lyre /e water /t harp /a ssr /n materpent lyre /y リラ・マテルペント 2026-03-29",
-"1030704900":"/w Motherly_Flower_Wreath /e water /t bow /a sr /n motherly flower wreath /y マザー・フラワーリース 2026-03-29"
+"1030704900":"/w Motherly_Flower_Wreath /e water /t bow /a sr /n motherly flower wreath /y マザー・フラワーリース 2026-03-29",
+"3040648000":"/w Alliah_(Yukata) /e water /a ssr /n alliah /c yukata /b erune /s female /t defense /p sabre /y アリア ai kayano 茅野愛衣 2026-03-31",
+"3040647000":"/w Anthuria_(Summer) /e light /a ssr /n anthuria /c summer /b erune /s female /t special /p melee harp /y アンスリア yū asakawa 浅川悠 2026-03-31",
+"1040426100":"/w Forbidden_Sunset /e light /t staff /a ssr /n forbidden sunset /y 2026-03-31",
+"1040122900":"/w Morning_Glory_Fan /e water /t dagger /a ssr /n morning glory fan /y 2026-03-31"
 },
 "mypage":
 {
