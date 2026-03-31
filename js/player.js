@@ -966,6 +966,7 @@ class Player
 				special.y = this.m_offset.fullscreen.y;
 				special.scaleX *= this.m_fullscreen_scale;
 				special.scaleY *= this.m_fullscreen_scale;
+				this.m_stage.setChildIndex(special, Player.c_zindex.BOTTOM);
 			}
 			else // regular ones
 			{
