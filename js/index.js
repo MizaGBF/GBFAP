@@ -128,6 +128,12 @@ function start(conf, changelog)
 	init_index(conf, changelog, index_onclick);
 	// set config now
 	config = conf;
+	// allow override for debug
+	const use_game_config = get_url_params().get("config");
+	if(use_game_config != null)
+	{
+		config.use_game_config = use_game_config;
+	}		
 	// if id is in url parameter
 	let id = get_url_params().get("id");
 	if(id != null)

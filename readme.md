@@ -124,6 +124,7 @@ It's designed to limit the memory usage while keeping the Updater always busy, t
 You might be interested in hosting your own copy.  
 There are three configurations provided in the included [config.json](https://github.com/MizaGBF/GBFAP/blob/main/json/config.json) file for you to play with.
 **You can select which configuration to use by change the value of `use_game_config`**.  
+Or for testing and debugging, in the URL parameter. Example: `?config=test`.
   
 > [!IMPORTANT]  
 > The sprite sheets cross-origin is automatically set to `Anonymous` if `use_game_config` is different from `local`. CTRL+F `Anonymous` to find the relevant part in `js/loader.js` if you need to change this behavior.  
