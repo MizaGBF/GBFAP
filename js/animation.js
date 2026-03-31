@@ -16,6 +16,66 @@ class Animation
 		this.abilities = obj.abilities ?? []; // list of skill effect ("ab") files
 		this.raid_appear = obj.raid_appear ?? []; // list of raid appear ("ra") files
 		this.ultimate = obj.ultimate ?? null; // mortal_SP ougi
+		this.animation_versions = {}; // table of animation file version
+		Animation.__init_animation_version__(this);
+	}
+	
+	// init animation_versions with the version (s2, s3, ...) found in file names
+	static __init_animation_version__(anim)
+	{
+		for(const key of ["cjs", "attack", "ultimate"])
+		{
+			if(anim[key] != null)
+			{
+				anim.animation_versions[anim[key]] = (
+					anim[key].includes("_s2")
+					? 2
+					: (
+						anim[key].includes("_s3")
+						? 3
+						: 1
+					)
+				);
+			}
+		}
+		for(const key of ["specials", "abilities", "raid_appear"])
+		{
+			for(const file of anim[key])
+			{
+				anim.animation_versions[file] = (
+					file.includes("_s2")
+					? 2
+					: (
+						file.includes("_s3")
+						? 3
+						: 1
+					)
+				);
+			}
+		}
+	}
+	
+	get_version(file)
+	{
+		if(file in this.animation_versions)
+		{
+			return this.animation_versions[file];
+		}
+		else // Fallback
+		{
+			if(file.includes("_s3"))
+			{
+				return 3;
+			}
+			else if(file.includes("_s2"))
+			{
+				return 2;
+			}
+			else
+			{
+				return 1;
+			}
+		}
 	}
 	
 	get manifests() // return a list of file to download

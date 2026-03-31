@@ -958,29 +958,35 @@ class Player
 		}
 		else // else player or weapon
 		{
-			// newer "fullscreen" animations cover all the screen
-			// and have s2 or s3 in their file names
-			if(cjs.includes("_s2"))
+			// newer "fullscreen" (s2 and s3) animations cover all the screen
+			const ver = animation.get_version(cjs);
+			switch(ver)
 			{
-				special.x = this.m_offset.fullscreen.x;
-				special.y = this.m_offset.fullscreen.y;
-				special.scaleX *= this.m_fullscreen_scale;
-				special.scaleY *= this.m_fullscreen_scale;
-				this.m_stage.setChildIndex(special, Player.c_zindex.MIDDLE);
-			}
-			else if(cjs.includes("_s3"))
-			{
-				special.x = this.m_offset.fullscreen.x;
-				special.y = this.m_offset.fullscreen.y;
-				special.scaleX *= this.m_fullscreen_scale;
-				special.scaleY *= this.m_fullscreen_scale;
-				this.m_stage.setChildIndex(special, Player.c_zindex.BOTTOM);
-			}
-			else // regular ones
-			{
-				special.x = this.m_offset.target.x;
-				special.y = this.m_offset.target.y + this.m_offset.special.y;
-				this.m_stage.setChildIndex(special, Player.c_zindex.BOTTOM);
+				case 2:
+				{
+					special.x = this.m_offset.fullscreen.x;
+					special.y = this.m_offset.fullscreen.y;
+					special.scaleX *= this.m_fullscreen_scale;
+					special.scaleY *= this.m_fullscreen_scale;
+					this.m_stage.setChildIndex(special, Player.c_zindex.MIDDLE);
+					break;
+				}
+				case 3:
+				{
+					special.x = this.m_offset.fullscreen.x;
+					special.y = this.m_offset.fullscreen.y;
+					special.scaleX *= this.m_fullscreen_scale;
+					special.scaleY *= this.m_fullscreen_scale;
+					this.m_stage.setChildIndex(special, Player.c_zindex.BOTTOM);
+					break;
+				}
+				default:
+				{
+					special.x = this.m_offset.target.x;
+					special.y = this.m_offset.target.y + this.m_offset.special.y;
+					this.m_stage.setChildIndex(special, Player.c_zindex.BOTTOM);
+					break;
+				}
 			}
 		}
 		// apply scaling
