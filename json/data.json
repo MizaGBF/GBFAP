@@ -19891,8 +19891,8 @@
 "3994345000":"/n cagliostro /b human /s female /y カリオストロ sakura tange 丹下桜 /1 /2",
 "3710259000":"/w Azazel /x azazel /k azaseal /n azazel /y 2026-04-01",
 "3710258000":"/w Catura /x catura /k caturagod /n catura /y 2026-04-01 /1",
-"3994348000":"/n lodern /b human /s male /! /!!",
-"8104813":"/f primal-boss /e fire /n lodern"
+"3994348000":"/n lodern /b primal /s male /! /!!",
+"8104813":"/f primal-boss /e fire /n primal"
 },
 "mypage":
 {
