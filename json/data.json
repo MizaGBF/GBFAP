@@ -7267,7 +7267,8 @@
 "8104773":{"v":[["","enemy_8104773",null,"phit_0000000000",[]]]},
 "8104783":{"v":[["","enemy_8104783",null,"phit_0000000000",[]]]},
 "8104763":{"v":[["","enemy_8104763",null,"phit_0000000000",[]]]},
-"6206243":{"v":[["","enemy_6206243",null,"phit_0000000000",[]]],"ra":["raid_appear_6206243"]}
+"6206243":{"v":[["","enemy_6206243",null,"phit_0000000000",[]]],"ra":["raid_appear_6206243"]},
+"8104813":{"v":[["","enemy_8104813",null,"ehit_8104813",["esp_8104813_01_all","esp_8104813_02","esp_8104813_03_all"]]],"ra":["raid_appear_8104813"]}
 },
 "skins":
 {
@@ -19887,7 +19888,11 @@
 "3994342000":"/n eustace /b erune /s male /y ユーステス kazuya nakai 中井和哉 /1 /2",
 "3994343000":"/n bhaisa /s female /b human /y バイシュラ manaka iwami 石見舞菜香",
 "3994344000":"/n bhaisa /s female /b human /y バイシュラ manaka iwami 石見舞菜香",
-"3994345000":"/n cagliostro /b human /s female /y カリオストロ sakura tange 丹下桜 /1 /2"
+"3994345000":"/n cagliostro /b human /s female /y カリオストロ sakura tange 丹下桜 /1 /2",
+"3710259000":"/w Azazel /x azazel /k azaseal /n azazel /y 2026-04-01",
+"3710258000":"/w Catura /x catura /k caturagod /n catura /y 2026-04-01 /1",
+"3994348000":"/n lodern /b human /s male /! /!!",
+"8104813":"/f primal-boss /e fire /n lodern"
 },
 "mypage":
 {
