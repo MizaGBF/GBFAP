@@ -72,11 +72,11 @@ This script is in charge of updating the JSON files.
   
 ### Usage
 ```console
-GBFAP Updater v5.13
+GBFAP Updater v5.15
 usage: updater.py [-h] [-r] [-u UPDATE [UPDATE ...]] [-c] [-d [DOWNLOAD ...]] [-nc] [-fs]
-                  [-al PATH] [-dg]
+                  [-al PATH]
 
-Animation Updater v5.13 for GBFAP https://mizagbf.github.io/GBFAP/
+Animation Updater v5.15 for GBFAP https://mizagbf.github.io/GBFAP/
 
 options:
   -h, --help            show this help message and exit
@@ -97,7 +97,6 @@ settings:
   -nc, --nochange       disable update of the New category of changelog.json.
   -fs, --fixsummon      update all summons default classes.
   -al, --gbfal PATH     import data.json from GBFAL.
-  -dg, --debug          enable the debug infos in the progress string.
 ```  
   
 > [!TIP]  

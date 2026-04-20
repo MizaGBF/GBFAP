@@ -18,7 +18,7 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.14'
+VERSION = '5.15'
 CONCURRENT_TASKS = 100
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
 SAVE_VERSION = 1
@@ -98,127 +98,116 @@ except Exception as e:
     raise Exception("Failed to load GBFAP Constants")
 NO_CHARGE_ATTACK = set(NO_CHARGE_ATTACK)
 
+
 # Handle tasks
 @dataclass(slots=True)
 class TaskManager():
-    debug : bool
     is_running : bool
     updater : Updater
     queues : tuple[deque, ...]
-    running : set[asyncio.Task]
+    workers : list[asyncio.Task]
+    work_available : asyncio.Event
+    all_done : asyncio.Event
     total : int
     finished : int
     print_flag : bool
     elapsed : float
     pbar : tqdm|None
+    
     def __init__(self : TaskManager, updater : Updater) -> None:
-        self.debug = False
         self.is_running = False
         self.updater = updater
-        self.queues = (deque(), deque(), deque(), deque(), deque())
-        self.running = set()
+        self.queues = tuple(deque() for _ in range(5))
+        self.workers = []
+        self.work_available = asyncio.Event()
+        self.all_done = asyncio.Event()
         self.total = 0
         self.finished = 0
         self.print_flag = False
         self.elapsed = 0
         self.pbar = None
 
-    # reinitialize variables
-    def reset(self : TaskManager) -> None:
-        self.total = 0
-        self.finished = 0
-        self.is_running = False
-        self.print_flag = False
-
     # add a task to one queue
     def add(self : TaskManager, awaitable : Callable, *, parameters : tuple[Any, ...]|None = None, priority : int = -1) -> None:
-        if parameters is not None and not(isinstance(parameters, tuple)):
-            raise Exception("Invalid parameters")
-        if priority < 0 or priority >= len(self.queues):
-            priority = len(self.queues) - 1
-        self.queues[priority].append(Task.make(awaitable, parameters))
-        self.total += 1
-
-    # return True if all queues are empty
-    def queues_are_empty(self : TaskManager) -> bool:
-        for q in self.queues:
-            if len(q) > 0:
-                return False
-        return True
-
-    # run tasks in queue
-    async def run(self : TaskManager, *, skip : int = 0) -> None:
-        try:
-            if self.is_running:
-                self.print("ERROR: run() is already running, ignoring...)")
-                return
-            self.is_running = True
-            start_time : float = time.time()
-            self.elapsed : float = start_time
-            i : int
-            self.running = set()
-            self.pbar = tqdm(
-                total=self.total,
-                unit=" Task",
-                unit_scale=True,
-                unit_divisor=1000,
-                mininterval=1,
-                bar_format='{percentage:3.1f}%|{bar}{r_bar}'
+        if priority < -1 or priority >= len(self.queues):
+            priority = - 1
+        self.queues[priority].append(
+            Task(
+                priority,
+                awaitable,
+                parameters or ()
             )
-            # loop
-            while len(self.running) > 0 or not self.queues_are_empty():
-                # remove from queue and run
-                n_step : int = 0
-                for i, q in enumerate(self.queues):
-                    while len(self.running) < CONCURRENT_TASKS and len(q) > 0:
-                        try:
-                            task : Task = q.popleft()
-                            if skip > 0:
-                                skip -= 1
-                                n_step += 1
-                                continue
-                            # Create the task
-                            coro = (
-                                task.awaitable(*task.parameters)
-                                if task.parameters
-                                else task.awaitable()
-                            )
-                            t = asyncio.create_task(coro)
-                            self.running.add(t)
-                        except Exception as e:
-                            self.print("Can't start task, the following exception occured in queue", i)
-                            self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
-                            n_step += 1
-                            break
-                if n_step > 0:
-                    self.progress_step(n_step)
-                if len(self.running) > 0:
-                    done, _ = await asyncio.wait(
-                        self.running, 
-                        timeout=60.0, # wake up every minute
-                        return_when=asyncio.FIRST_COMPLETED
-                    )
-                    for t in done:
-                        try:
-                            self.running.remove(t)
-                            t.result()
-                        except Exception as e:
-                            self.print("The following exception occured:")
-                            self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
-                    self.progress_step(len(done))
-                # auto save if needed
-                if time.time() - self.elapsed >= 3600:
-                    self.autosave()
+        )
+        self.total += 1
+        self.work_available.set()
+
+    async def _worker(self):
+        try:
+            task : Task|None
+            while True:
+                # wait for tasks to be available
+                await self.work_available.wait()
+                # get one (in order of queue priority)
+                task = None
+                for q in self.queues:
+                    if q:
+                        task = q.popleft()
+                        break
+                if not task:
+                    # if not, reset flag
+                    self.work_available.clear()
+                    continue
+                try:
+                    # execute
+                    await task.awaitable(*task.parameters)
+                except Exception as e:
+                    self.print("The following exception occured:")
+                    self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+                finally:
+                    self.finished += 1
+                    if self.total != self.pbar.total:
+                        self.pbar.total = self.total
+                    self.pbar.update(1)
+                    if self.finished >= self.total:
+                        self.all_done.set()
+        except asyncio.CancelledError:
+            return
+                
+    # run the tasks
+    async def run(self : TaskManager) -> None:
+        if self.is_running:
+            return
+        self.is_running = True
+        self.all_done.clear()
+        # start the workers pool
+        self.workers = [asyncio.create_task(self._worker()) for _ in range(CONCURRENT_TASKS)]
+        # set progress bar
+        if self.pbar is not None:
+            self.pbar.close()
+        self.pbar = tqdm(
+            total=self.total,
+            unit=" Task",
+            unit_scale=True,
+            unit_divisor=1000,
+            mininterval=2,
+            bar_format='{percentage:3.1f}%|{bar}{r_bar}'
+        )
+        try:
+            # wait until done
+            await self.all_done.wait()
         finally:
-            if self.pbar is not None:
-                self.pbar.close()
+            # clean up
+            for w in self.workers:
+                w.cancel()
+            await asyncio.gather(*self.workers, return_exceptions=True)
+            self.pbar.close()
             self.pbar = None
             self.is_running = False
             self.print("Complete")
 
     # start to run queued tasks
     async def start(self : TaskManager) -> bool:
-        if self.is_running or self.queues_are_empty(): # return if already running or no tasks pending
+        if self.is_running: # return if already running or no tasks pending
             return False
         await self.run()
         return True
@@ -229,12 +218,6 @@ class TaskManager():
         self.updater.save()
         self.updater.save_resume()
         self.elapsed = time.time()
-
-    # update the tqdm progress bar
-    def progress_step(self : TaskManager, step : int) -> None:
-        self.finished += step
-        self.pbar.total = self.total # update total in case it changed
-        self.pbar.update(step)
 
     # print whatever you want, to use instead of print to handle the \r
     def print(self : TaskManager, *args) -> None:
@@ -250,9 +233,6 @@ class TaskManager():
             return
         print("\nProcess PAUSED")
         print(f"{self.finished} / {self.total} Tasks completed")
-        print(f"{len(self.running)} Tasks running")
-        for i, q in enumerate(self.queues):
-            print(f"Tasks in queue lv{i}: {len(q)}")
         if self.updater.modified:
             print("Pending Data is waiting to be saved")
         print("Type 'help' for a command list, or a command to execute, anything else to resume")
@@ -296,14 +276,11 @@ class TaskManager():
             self.pbar.refresh()
 
 # A queued task
-@dataclass(frozen=True, slots=True)
-class Task():
-    awaitable : Callable
-    parameters : tuple[Any, ...]|None
-
-    @classmethod
-    def make(cls : Task, awaitable : Callable, parameters : tuple[Any, ...]|None) -> Task:
-        return cls(awaitable, parameters)
+@dataclass(slots=True, order=True)
+class Task:
+    priority: int
+    awaitable: Callable = field(compare=False)
+    parameters: tuple[Any, ...] = field(compare=False)
 
 @dataclass(slots=True)
 class TaskStatus():
@@ -1824,7 +1801,6 @@ class Updater():
         settings.add_argument('-nc', '--nochange', help="disable update of the New category of changelog.json.", action='store_const', const=True, default=False, metavar='')
         settings.add_argument('-fs', '--fixsummon', help="update all summons default classes.", action='store_const', const=True, default=False, metavar='')
         settings.add_argument('-al', '--gbfal', help="import data.json from GBFAL.", action='store', nargs=1, type=str, metavar='PATH')
-        settings.add_argument('-dg', '--debug', help="enable the debug infos in the progress string.", action='store_const', const=True, default=False, metavar='')
         args : argparse.Namespace = parser.parse_args()
         
         # init HTTP client
@@ -1855,8 +1831,6 @@ class Updater():
             run_help : bool = True
             if args.nochange:
                 self.update_changelog = False
-            if args.debug:
-                self.tasks.debug = True
             if args.fixsummon:
                 self.fixsummon()
                 run_help = False
