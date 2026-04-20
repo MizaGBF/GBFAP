@@ -19896,7 +19896,11 @@
 "3710259000":"/w Azazel /x azazel /k azaseal /n azazel /y 2026-04-01",
 "3710258000":"/w Catura /x catura /k caturagod /n catura /y 2026-04-01 /1",
 "3994348000":"/n lodern /b primal /s male /! /!!",
-"8104813":"/f primal-boss /e fire /n primal"
+"8104813":"/f primal-boss /e fire /n lodern",
+"3040649000":"/w Echidna /e wind /a ssr /n echidna /b primal /s female /t defense /p staff harp /y エキドナ haruna ikezawa 池澤春菜 2026-04-15",
+"3040650000":"/w Parashurama /e fire /a ssr /n parashurama /b primal /s male /t attack /p bow axe /y パラシュラーマ yohei azakami 阿座上洋平 2026-04-15",
+"1040818400":"/w Affectionate_Bell /e wind /t harp /a ssr /n affectionate bell /y 慈愛の揺鈴 2026-04-15",
+"1040715300":"/w Vijaya /e fire /t bow /a ssr /n vijaya /y ヴィジャヤ 2026-04-15"
 },
 "mypage":
 {
