@@ -12,7 +12,7 @@
             "testUri": null
         },
         "proxy": {
-            "corsProxy": "https://gbfccp.backupgbf1.workers.dev/",
+            "corsProxy": "https://gbfccp.mizagbf.workers.dev/",
             "xjsUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js",
             "jsUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js",
             "imgUri": "CORS/https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img",
