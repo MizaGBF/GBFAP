@@ -128,6 +128,10 @@ function player_start_fire(animations)
 			{
 				player_start_end();
 			}
+			if(typeof waiting_player !== "undefined")
+			{
+				waiting_player = false;
+			}
 		});
 	});
 }
