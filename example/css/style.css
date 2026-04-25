@@ -1,0 +1,250 @@
+@keyframes cyan-background-glow {
+	0% {
+		background-color: #181818;
+	}
+	70% {
+		background-color: #2bdada;
+	}
+	100% {
+		background-color: #181818;
+	}
+}
+
+.animation-switcher {
+	animation: cyan-background-glow 2s infinite;
+}
+
+#view {
+	background: #181818;
+	color: #ffffff;
+	font-size: 30px;
+	padding: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	position: relative;
+}
+
+#player-container {
+	min-width: 840px;
+	max-width:2000px;
+	margin:auto;
+}
+
+.player-control-part {
+	min-width:800px;
+	max-width:800px;
+	background: #1d1d1d;
+	border-radius: 5px;
+	padding: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.player-control-vpart {
+	margin-left: 1px;
+	margin-right: 1px;
+}
+
+.player-control-span {
+	background: #1d1d1d;
+	border-radius: 5px;
+	padding: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.player-control-label {
+	font-size: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.player-control-text {
+	font-size: 20px;
+}
+
+.player-select {
+	background-color: #ffffffb0;
+	border: none;
+	margin: 5px;
+	width: 200px;
+	font-size: 25px;
+}
+
+.player-control-slider {
+	width: 100%;
+}
+
+.player-control-button {
+	width: 50px;
+	height: 40px;
+	background: #2d2d30;
+	border-color: #000000;
+	border-radius: 5px;
+	border-style: solid;
+	border: none;
+	outline: none;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.player-control-button:disabled {
+	background: #525254;
+}
+
+.player-menu-button {
+	height: 40px;
+	background: #2d2d30;
+	border-color: #000000;
+	border-radius: 5px;
+	border-style: solid;
+	border: none;
+	outline: none;
+	color: white;
+	font-size: 20px;
+}
+
+.player-control-button:hover, .player-menu-button:hover {
+	outline: solid #ffffff;
+}
+
+.player-control-button:active, .player-menu-button:active {
+	animation: animation-button-press 0.1s;
+	outline: solid #007acc;
+}
+
+.player-control-button:disabled, .player-menu-button:disabled {
+	animation: none;
+}
+
+.player-menu {
+	background: #181818ed;
+	color: white;
+	border-color: #000000;
+	border-radius: 5px;
+	border-style: solid;
+}
+
+.player-scroll-list {
+	padding-right:10px;
+}
+
+.player-scroll-list-playlist {
+	width: 500px;
+}
+
+.player-scroll-list-texture {
+	width: 700px;
+}
+
+.player-button-enabled {
+	background: #004080;
+}
+
+.player-button-warning {
+	background: #bb0000;
+}
+
+.player-control-texture-delete-button {
+	background: #bb0000;
+}
+
+.user-prompt {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background: #181818db;
+	z-index:100;
+	width: 100%;
+	height: 100%;
+	padding-top:20%;
+}
+
+.user-prompt-button {
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* mobile/tablet layout */
+@media (hover: none) or (pointer: coarse) {
+	@media (orientation: portrait) {
+		#player-container {
+			will-change: transform;
+			transform-origin: top left;
+			/*margin-bottom: calc(-80vh);*/
+		}
+		
+		#view {
+		}
+
+		.player-select {
+			font-size: 40px;
+		}
+		
+		.player-control-hpart {
+			font-size: 30px;
+			text-overflow: clip;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		.player-control-text {
+			width: 180px;
+			font-size: 30px;
+			text-overflow: clip;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		.player-control-slider {
+			width: 100%;
+			min-height: 50px;
+		}
+
+		.player-control-label {
+			font-size: 30px;
+			text-overflow: clip;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+		
+		.player-control-button {
+			min-width: 100px;
+			min-height: 100px;
+			margin: 10px;
+		}
+		
+		.player-control-button > img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.player-menu-button {
+			height: 40px;
+			font-size: 30px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		
+		.user-prompt {
+			font-size: 24px;
+		}
+
+		.user-prompt-button {
+			width: 90%;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			font-size: 20px;
+		}
+	}
+
+	@media (orientation: landscape) {
+	}
+}

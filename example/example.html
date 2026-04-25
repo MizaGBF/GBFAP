@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Demo v9</title>
+	<title>Demo v10</title>
 	<script src="js/animation.js"></script>
 	<script src="js/load_player.js"></script>
-	<script src="../GBFML/js/util.js"></script>
+	<script src="js/util.js"></script>
 	<script src="js/vendors/require.js"></script>
 	<link rel="stylesheet" href="css/player.css">
 	<script>
@@ -24,9 +24,9 @@ function init()
 		game: {
 			local: {
 				corsProxy: null,
-				xjsUri: "./demo",
-				jsUri: "./demo",
-				imgUri: "./demo/img",
+				xjsUri: ".",
+				jsUri: ".",
+				imgUri: "./img",
 				soundUri: "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/sound",
 				extern: "https://prd-game-a-granbluefantasy.akamaized.net/assets_en",
 				bgUri: ".",
@@ -34,33 +34,29 @@ function init()
 			}
 		},
 		buttons:{ // button text
-			reset:"R",
-			pause:"P",
-			frame:"F",
-			loop:"L",
-			sound:"M",
-			beep:"b",
-			playlist:"P",
-			ability_target:"S",
-			bound_box:"B",
-			enemy_position:"E",
-			download:"D",
-			record:"R",
-			texture:"T",
-			delete:"Del",
-			upload:"Up"
+			reset:"Reset",
+			pause:"Pause",
+			frame:"Frame",
+			loop:"Loop",
+			sound:"Mute",
+			beep:"Beep",
+			playlist:"Playlist",
+			ability_target:"Skill",
+			bound_box:"Box",
+			enemy_position:"Enemy",
+			download:"Download",
+			record:"Record",
+			texture:"Texture",
+			delete:"Delete",
+			upload:"Upload"
 		},
 		disable_bounding_boxes:false,
 		default_background:"./assets/backgrounds/raid/grid.jpg",
 		backgrounds: {
-			"U":"upload",
-			"L":"last",
-			"<img src=\"assets/ui/controls/bg_grid.png\">":"./assets/backgrounds/raid/grid.jpg",
-			"<img src=\"assets/ui/controls/bg_black.png\">":"./assets/backgrounds/raid/black.jpg",
-			"<img src=\"assets/ui/controls/bg_green.png\">":"./assets/backgrounds/raid/green.jpg",
-			"<img src=\"assets/ui/controls/bg_blue.png\">":"./assets/backgrounds/raid/blue.jpg",
-			"<img src=\"assets/ui/controls/bg_red.png\">":"./assets/backgrounds/raid/red.jpg",
-			"<img src=\"assets/ui/controls/bg_pink.png\">":"./assets/backgrounds/raid/pink.jpg"
+			"Upload":"upload",
+			"Last":"last",
+			"Grid":"./assets/backgrounds/raid/grid.jpg",
+			"Black":"./assets/backgrounds/raid/black.jpg"
 		},
 		audio_disabled: true
 	});
@@ -73,7 +69,6 @@ function init()
 	<div id="player-container"></div>
 	<br>
 	Minimal example to embed the player in a HTML page.<br>
-	Check the content of demo.html and the readme file for details.<br>
-	Functions from <a href="https://github.com/MizaGBF/GBFML/blob/main/js/util.js">GBFML util.js</a> are used by the player.
+	Check the content of HTML and the readme file for details.<br>
 </body>
 </html>
