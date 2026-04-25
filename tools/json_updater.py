@@ -88,7 +88,7 @@ ORIGIN_CLASSES : list[str] = []
 SUMMON_CLASS : str = ""
 # load dynamic constants
 try:
-    with open("json/manual_constants.json", mode="r", encoding="utf-8") as f:
+    with open("../json/manual_constants.json", mode="r", encoding="utf-8") as f:
         globals().update(json.load(f)) # add to global scope
     del f
 except Exception as e:
@@ -371,7 +371,7 @@ class Updater():
     def load(self : Updater) -> None:
         try:
             # load file
-            with open('json/data.json', mode='r', encoding='utf-8') as f:
+            with open('../json/data.json', mode='r', encoding='utf-8') as f:
                 data : dict[str, Any] = json.load(f)
                 if not isinstance(data, dict):
                     return
@@ -406,7 +406,7 @@ class Updater():
             if self.modified:
                 self.modified = False
                 # json.dump isn't used to keep the file small AND easily editable by hand
-                with open('json/data.json', mode='w', encoding='utf-8') as outfile:
+                with open('../json/data.json', mode='w', encoding='utf-8') as outfile:
                     # custom json indentation
                     outfile.write("{\n")
                     keys : list[str] = list(self.data.keys())
@@ -455,7 +455,7 @@ class Updater():
                 issues : list[str]
                 help : bool
                 try: # load its content
-                    with open('json/changelog.json', mode='r', encoding='utf-8') as f:
+                    with open('../json/changelog.json', mode='r', encoding='utf-8') as f:
                         data = json.load(f)
                         stat = data.get('stat', None)
                         issues = data.get('issues', [])
@@ -486,7 +486,7 @@ class Updater():
                     new[now] = sorted(new[now], key=lambda x: (0 if isinstance(x[1], int) else 1, x[1], x[0]), reverse=True)
                     # clear self.addition
                     self.addition = set()
-                with open('json/changelog.json', mode='w', encoding='utf-8') as outfile: # the timestamp is upated below
+                with open('../json/changelog.json', mode='w', encoding='utf-8') as outfile: # the timestamp is upated below
                     json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new, 'stat':stat, 'issues':issues, 'help':help}, outfile, indent=2, separators=(',', ':'), ensure_ascii=False)
                 if self.update_changelog:
                     self.tasks.print("data.json and changelog.json updated")
