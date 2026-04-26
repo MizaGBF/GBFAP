@@ -21,6 +21,16 @@
             "bgUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en",
             "testUri": "CORS/https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/npc_arousal_form/form_1.png"
         },
+        "localserver": {
+            "corsProxy": "http://localhost:8000/proxy/",
+            "xjsUri": "CORS/https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js",
+            "jsUri": "CORS/https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js",
+            "imgUri": "CORS/https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img",
+            "soundUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/sound",
+            "externUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en",
+            "bgUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en",
+            "testUri": "CORS/https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/npc_arousal_form/form_1.png"
+        },
         "test": {
             "corsProxy": "http://localhost:8001/",
             "xjsUri": "CORS/https://prd-game-a-granbluefantasy.akamaized.net/assets_en/js",
