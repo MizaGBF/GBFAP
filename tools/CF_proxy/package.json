@@ -1,0 +1,14 @@
+{
+  "name": "gbfap-cloudflare-cors-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A CORS proxy for the Granblue Animation Player",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  }
+}
