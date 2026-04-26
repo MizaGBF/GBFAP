@@ -576,7 +576,8 @@ class PlayerUI
 					this.record_bitrate_update();
 					this.record_duration_update();
 					this.record_transparency_toggle();
-					beep();
+					if(typeof beep !== "undefined")
+						beep();
 				}
 			}
 		);
@@ -918,7 +919,8 @@ class PlayerUI
 	select_version()
 	{
 		this.player.change_version(parseInt(this.m_version.value), this.m_motion.value);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// m_motion onchange callback
@@ -933,7 +935,8 @@ class PlayerUI
 		else
 			this.player.m_current_motion_list = [motion];
 		this.player.get_current_animation_cjs().cjs.children[0].dispatchEvent("animationComplete");
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// m_ability onchange callback
@@ -956,7 +959,8 @@ class PlayerUI
 				this.player.m_ability_mode = 2;
 				break;
 		};
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// reset button
@@ -965,7 +969,8 @@ class PlayerUI
 		// reset to default 100
 		this.m_speed.value = "100";
 		this.control_speed_update();
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// speed slider onmouseup/ontouchend event
@@ -990,7 +995,8 @@ class PlayerUI
 		this.m_buttons.sound.classList.toggle("player-button-enabled", this.player.m_audio_enabled);
 		this.m_buttons.sound.classList.toggle("player-button-warning", !this.player.m_audio_enabled);
 		this.player.save_settings();
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// volume slider onmouseup/ontouchend event
@@ -1014,7 +1020,8 @@ class PlayerUI
 		else
 			this.player.pause();
 		this.m_buttons.pause.classList.toggle("player-button-warning", this.player.m_paused);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// frame advance button
@@ -1022,7 +1029,8 @@ class PlayerUI
 	{
 		this.player.next_frame();
 		this.m_buttons.pause.classList.toggle("player-button-warning", this.player.m_paused);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// loop toggle button
@@ -1035,7 +1043,8 @@ class PlayerUI
 			this.player.play_next(cjs[cjs.name]);
 		}
 		this.m_buttons.loop.classList.toggle("player-button-enabled", this.player.m_looping);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// beep toggle button
@@ -1044,7 +1053,8 @@ class PlayerUI
 		toggle_beep();
 		this.m_buttons.beep.classList.toggle("player-button-warning", !beep_enabled);
 		this.player.save_settings();
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// ability position toggle button
@@ -1052,7 +1062,8 @@ class PlayerUI
 	{
 		this.player.m_ability_target = !this.player.m_ability_target;
 		this.m_buttons.ability_target.classList.toggle("player-button-enabled", this.player.m_ability_target);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// enemy shift toggle
@@ -1060,7 +1071,8 @@ class PlayerUI
 	{
 		this.player.enemy_shift_toggle();
 		this.m_buttons.enemy_position.classList.toggle("player-button-enabled", this.player.m_enemy_shift);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// update displayed frame counter
@@ -1118,7 +1130,8 @@ class PlayerUI
 		this.playlist_update_menu();
 		// lock controls
 		this.set_control_lock(true);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// update the playlist menu motion select
@@ -1204,7 +1217,8 @@ class PlayerUI
 		this.player.reset();
 		// unpause if needed
 		this.player.resume();
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// playlist menu add button
@@ -1227,7 +1241,8 @@ class PlayerUI
 			// update displayed playlist
 			this.playlist_update_menu();
 		}
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// playlist menu del buttons
@@ -1237,7 +1252,8 @@ class PlayerUI
 		this.player.m_playlist.splice(i, 1);
 		// update menu
 		this.playlist_update_menu();
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// playlist menu reset button
@@ -1253,7 +1269,8 @@ class PlayerUI
 		}
 		// update displayed playlist
 		this.playlist_update_menu();
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// playlist menu close button
@@ -1263,7 +1280,8 @@ class PlayerUI
 		this.m_menus.playlist.style.display = "none";
 		// unlock control
 		this.set_control_lock(false);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// bounding box toggle button
@@ -1271,7 +1289,8 @@ class PlayerUI
 	{
 		bounding_box_state = !bounding_box_state;
 		this.m_buttons.bound_box.classList.toggle("player-button-enabled", bounding_box_state);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// download button
@@ -1305,7 +1324,8 @@ class PlayerUI
 				push_popup("An error occured. This feature might be unavailable on your device/browser.");
 		}
 		this.m_buttons.pause.classList.toggle("player-button-warning", this.player.m_paused);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// record button
@@ -1324,7 +1344,8 @@ class PlayerUI
 		this.m_menus.record.scrollIntoView();
 		// lock controls
 		this.set_control_lock(true);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// record menu close button
@@ -1334,7 +1355,8 @@ class PlayerUI
 		this.m_menus.record.style.display = "none";
 		// lock controls
 		this.set_control_lock(false);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	record_bitrate_update()
@@ -1506,7 +1528,8 @@ class PlayerUI
 		this.m_menus.texture.scrollIntoView();
 		// lock controls
 		this.set_control_lock(true);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// texture swap menu close button
@@ -1516,7 +1539,8 @@ class PlayerUI
 		this.m_menus.texture.style.display = "none";
 		// lock controls
 		this.set_control_lock(false);
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// texture swap menu upload buttons
@@ -1569,7 +1593,8 @@ class PlayerUI
 			if(typeof push_popup !== "undefined")
 				push_popup(display_name + " is already set to its original image.");
 		}
-		beep();
+		if(typeof beep !== "undefined")
+			beep();
 	}
 	
 	// un/lock ui buttons and inputs
