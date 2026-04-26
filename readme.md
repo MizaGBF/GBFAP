@@ -50,8 +50,7 @@ They are:
 - [Backbone.js](https://backbonejs.org/).  
 - [Underscore.js](https://underscorejs.org/).  
   
-Additionaly, the player in its purest form as presented in the [demo.html](https://github.com/MizaGBF/GBFAP/blob/main/demo.html) file uses GBFML [js/util.js](https://github.com/MizaGBF/GBFML/blob/main/js/util.js).  
-  
+Additionaly, you can find a demo of the player in its purest form as presented in the [demo.html](https://github.com/MizaGBF/GBFAP/blob/main/demo.html) file, with some test assets in the `demo` folder.  
   
 # Tools  
 The `tools` folder got some scripts intended for debugging:  

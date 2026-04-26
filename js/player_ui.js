@@ -86,29 +86,29 @@ class PlayerUI
 		// create fragment
 		let fragment = document.createDocumentFragment();
 		// Canvas container
-		this.m_canvas_container = add_to(fragment, "div", {id:"canvas-container"});
+		this.m_canvas_container = this.add_to(fragment, "div", {id:"canvas-container"});
 		// canvas
-		this.m_canvas = add_to(this.m_canvas_container, "canvas", {id:"canvas-player"});
+		this.m_canvas = this.add_to(this.m_canvas_container, "canvas", {id:"canvas-player"});
 		this.m_canvas.width = Player.c_canvas_size; // canvas size default is part of Player
 		this.m_canvas.height = Player.c_canvas_size;
 		this.m_canvas.style.maxWidth = "" + Player.c_canvas_size + "px";
 		this.m_canvas.style.maxHeight = "" + Player.c_canvas_size + "px";
 		// background
-		let bg = add_to(this.m_canvas_container, "div", {id:"canvas-bg"});
-		this.m_background = add_to(bg, "img", {id:"background-image"});
+		let bg = this.add_to(this.m_canvas_container, "div", {id:"canvas-bg"});
+		this.m_background = this.add_to(bg, "img", {id:"background-image"});
 		
 		// player controls
-		let controls = add_to(fragment, "div", {id:"player-controls"});
+		let controls = this.add_to(fragment, "div", {id:"player-controls"});
 		// top part
-		let top_part = add_to(controls, "div", {cls:["player-control-hpart"]});
-		let part = add_to(top_part, "div", {cls:["player-control-vpart"]});
+		let top_part = this.add_to(controls, "div", {cls:["player-control-hpart"]});
+		let part = this.add_to(top_part, "div", {cls:["player-control-vpart"]});
 		// version control
-		let span = add_to(part, "span", {cls:["player-control-span"]});
+		let span = this.add_to(part, "span", {cls:["player-control-span"]});
 		span.style.display = "none";
-		let label = add_to(span, "label", {cls:["player-control-label"]});
+		let label = this.add_to(span, "label", {cls:["player-control-label"]});
 		label.htmlFor = "player-version-select";
 		label.innerText = "Version";
-		this.m_version = add_to(
+		this.m_version = this.add_to(
 			span,
 			"select",
 			{
@@ -124,12 +124,12 @@ class PlayerUI
 		};
 		
 		// motion control
-		span = add_to(part, "span", {cls:["player-control-span"]});
+		span = this.add_to(part, "span", {cls:["player-control-span"]});
 		span.style.display = "none";
-		label = add_to(span, "label", {cls:["player-control-label"]});
+		label = this.add_to(span, "label", {cls:["player-control-label"]});
 		label.htmlFor = "player-motion-select";
 		label.innerText = "Motion";
-		this.m_motion = add_to(
+		this.m_motion = this.add_to(
 			span,
 			"select",
 			{
@@ -145,9 +145,9 @@ class PlayerUI
 		};
 		
 		// ability control
-		span = add_to(part, "span", {cls:["player-control-span"]});
+		span = this.add_to(part, "span", {cls:["player-control-span"]});
 		// this button is added as part of the span
-		this.m_buttons.ability_target = add_to(
+		this.m_buttons.ability_target = this.add_to(
 			span,
 			"button",
 			{
@@ -161,10 +161,10 @@ class PlayerUI
 		);
 		
 		span.style.display = "none";
-		label = add_to(span, "label", {cls:["player-control-label", "player-control-label-small"]}); // add player-control-label-small to reduce label size
+		label = this.add_to(span, "label", {cls:["player-control-label", "player-control-label-small"]}); // add player-control-label-small to reduce label size
 		label.htmlFor = "player-ability-select";
 		label.innerText = "Skill Effect";
-		this.m_ability = add_to(
+		this.m_ability = this.add_to(
 			span,
 			"select",
 			{
@@ -180,30 +180,30 @@ class PlayerUI
 		};
 		
 		// other displays
-		part = add_to(top_part, "div", {cls:["player-control-vpart"]});
+		part = this.add_to(top_part, "div", {cls:["player-control-vpart"]});
 		this.m_loop_frame = part;
 		this.m_loop_frame.style.display = "none";
-		span = add_to(part, "span", {cls:["player-control-hpart", "player-control-span"]});
-		add_to(span, "span", {cls:["player-control-text"], innertext:"Loop Frame"});
-		this.m_frame = add_to(
+		span = this.add_to(part, "span", {cls:["player-control-hpart", "player-control-span"]});
+		this.add_to(span, "span", {cls:["player-control-text"], innertext:"Loop Frame"});
+		this.m_frame = this.add_to(
 			span,
 			"span",
 			{cls:["player-control-text"], id:"player-control-frame"}
 		);
 		this.m_frame.innerText = "0";
 		
-		span = add_to(part, "span", {cls:["player-control-hpart", "player-control-span"]});
-		add_to(span, "span", {cls:["player-control-text"], innertext:"Current"});
-		this.m_motion_text = add_to(
+		span = this.add_to(part, "span", {cls:["player-control-hpart", "player-control-span"]});
+		this.add_to(span, "span", {cls:["player-control-text"], innertext:"Current"});
+		this.m_motion_text = this.add_to(
 			span,
 			"span",
 			{cls:["player-control-text"], id:"player-control-motion"}
 		);
 		this.m_motion_text.innerHTML = "?";
 		
-		span = add_to(part, "span", {cls:["player-control-hpart", "player-control-span"]});
-		add_to(span, "span", {cls:["player-control-text"], innertext:"Duration"});
-		this.m_duration = add_to(
+		span = this.add_to(part, "span", {cls:["player-control-hpart", "player-control-span"]});
+		this.add_to(span, "span", {cls:["player-control-text"], innertext:"Duration"});
+		this.m_duration = this.add_to(
 			span,
 			"span",
 			{cls:["player-control-text"], id:"player-control-duration"}
@@ -211,10 +211,10 @@ class PlayerUI
 		this.m_duration.innerText = "Downloading...";
 		
 		// other controls
-		part = add_to(controls, "div", {cls:["player-control-part", "player-control-hpart"]});
+		part = this.add_to(controls, "div", {cls:["player-control-part", "player-control-hpart"]});
 		// speed slider
-		span = add_to(part, "span", {cls:["player-control-hpart", "player-control-slider-container"]});
-		this.m_buttons.reset = add_to(
+		span = this.add_to(part, "span", {cls:["player-control-hpart", "player-control-slider-container"]});
+		this.m_buttons.reset = this.add_to(
 			span,
 			"button",
 			{
@@ -226,8 +226,8 @@ class PlayerUI
 				}
 			}
 		);
-		let sub_span = add_to(span, "span", {cls:["player-control-vpart", "player-control-sub-column"]});
-		this.m_speed = add_to(sub_span, "input", {cls:["player-control-slider"], id:"player-control-speed"});
+		let sub_span = this.add_to(span, "span", {cls:["player-control-vpart", "player-control-sub-column"]});
+		this.m_speed = this.add_to(sub_span, "input", {cls:["player-control-slider"], id:"player-control-speed"});
 		this.m_speed.type = "range";
 		this.m_speed.min = "10";
 		this.m_speed.max = "300";
@@ -237,13 +237,13 @@ class PlayerUI
 			this.control_speed_update();
 		};
 		this.m_speed.addEventListener("touchend", (event) => { this.control_speed_update(); });
-		this.m_speed_label = add_to(sub_span, "label", {cls:["player-control-label"]});
+		this.m_speed_label = this.add_to(sub_span, "label", {cls:["player-control-label"]});
 		this.m_speed_label.htmlFor = "player-control-speed";
 		this.m_speed_label.innerText = "100% Speed";
 		
 		// volume slider
-		span = add_to(part, "span", {cls:["player-control-hpart", "player-control-slider-container"]});
-		this.m_buttons.sound = add_to(
+		span = this.add_to(part, "span", {cls:["player-control-hpart", "player-control-slider-container"]});
+		this.m_buttons.sound = this.add_to(
 			span,
 			"button",
 			{
@@ -256,9 +256,9 @@ class PlayerUI
 			}
 		);
 		
-		sub_span = add_to(span, "span", {cls:["player-control-vpart", "player-control-sub-column"]});
+		sub_span = this.add_to(span, "span", {cls:["player-control-vpart", "player-control-sub-column"]});
 		
-		this.m_audio = add_to(sub_span, "input", {cls:["player-control-slider"], id:"player-control-audio"});
+		this.m_audio = this.add_to(sub_span, "input", {cls:["player-control-slider"], id:"player-control-audio"});
 		this.m_audio.type = "range";
 		this.m_audio.min = "0";
 		this.m_audio.max = "100";
@@ -268,15 +268,15 @@ class PlayerUI
 			this.control_audio_update();
 		};
 		this.m_audio.addEventListener("touchend", (event) => { this.control_audio_update(); });
-		this.m_audio_label = add_to(sub_span, "label", {cls:["player-control-label"]});
+		this.m_audio_label = this.add_to(sub_span, "label", {cls:["player-control-label"]});
 		this.m_audio_label.htmlFor = "player-control-audio";
 		this.m_audio_label.innerText = "50% Audio";
 		
 		// control buttons
-		part = add_to(controls, "div", {cls:["player-control-part"]});
-		span = add_to(part, "span", {cls:["player-control-hpart", "player-control-button-container"]});
+		part = this.add_to(controls, "div", {cls:["player-control-part"]});
+		span = this.add_to(part, "span", {cls:["player-control-hpart", "player-control-button-container"]});
 		
-		this.m_buttons.pause = add_to(
+		this.m_buttons.pause = this.add_to(
 			span,
 			"button",
 			{
@@ -289,7 +289,7 @@ class PlayerUI
 			}
 		);
 		
-		this.m_buttons.frame = add_to(
+		this.m_buttons.frame = this.add_to(
 			span,
 			"button",
 			{
@@ -302,7 +302,7 @@ class PlayerUI
 			}
 		);
 		
-		this.m_buttons.loop = add_to(
+		this.m_buttons.loop = this.add_to(
 			span,
 			"button",
 			{
@@ -316,7 +316,7 @@ class PlayerUI
 		);
 		this.m_buttons.loop.style.display = "none";
 		
-		this.m_buttons.beep = add_to(
+		this.m_buttons.beep = this.add_to(
 			span,
 			"button",
 			{
@@ -336,7 +336,7 @@ class PlayerUI
 			}
 		}
 		
-		this.m_buttons.enemy_position = add_to(
+		this.m_buttons.enemy_position = this.add_to(
 			span,
 			"button",
 			{
@@ -352,7 +352,7 @@ class PlayerUI
 		
 		if(this.m_bounding_boxes_enabled)
 		{
-			this.m_buttons.bound_box = add_to(
+			this.m_buttons.bound_box = this.add_to(
 				span,
 				"button",
 				{
@@ -366,7 +366,7 @@ class PlayerUI
 			);
 		}
 		
-		this.m_buttons.playlist = add_to(
+		this.m_buttons.playlist = this.add_to(
 			span,
 			"button",
 			{
@@ -380,7 +380,7 @@ class PlayerUI
 		);
 		this.m_buttons.playlist.style.display = "none";
 		
-		this.m_buttons.texture = add_to(
+		this.m_buttons.texture = this.add_to(
 			span,
 			"button",
 			{
@@ -393,7 +393,7 @@ class PlayerUI
 			}
 		);
 		
-		this.m_buttons.download = add_to(
+		this.m_buttons.download = this.add_to(
 			span,
 			"button",
 			{
@@ -406,7 +406,7 @@ class PlayerUI
 			}
 		);
 		
-		this.m_buttons.record = add_to(
+		this.m_buttons.record = this.add_to(
 			span,
 			"button",
 			{
@@ -419,25 +419,25 @@ class PlayerUI
 			}
 		);
 		// backgrounds
-		this.m_background_part = add_to(controls, "div", {cls:["player-control-part"]});
+		this.m_background_part = this.add_to(controls, "div", {cls:["player-control-part"]});
 		this.init_background_elements();
 		
 		// playlist menu
-		this.m_menus.playlist = add_to(fragment, "div", {cls:["player-menu", "player-control-hpart"]});
+		this.m_menus.playlist = this.add_to(fragment, "div", {cls:["player-menu", "player-control-hpart"]});
 		this.m_menus.playlist.style.display = "none";
 		
-		part = add_to(this.m_menus.playlist, "div", {cls:["player-control-vpart"]});
-		add_to(part, "b", {innertext:"Playlist"});
-		this.m_menus.playlist_list = add_to(part, "div", {cls:["player-scroll-list", "player-scroll-list-playlist"], innertext:"Playlist"});
+		part = this.add_to(this.m_menus.playlist, "div", {cls:["player-control-vpart"]});
+		this.add_to(part, "b", {innertext:"Playlist"});
+		this.m_menus.playlist_list = this.add_to(part, "div", {cls:["player-scroll-list", "player-scroll-list-playlist"], innertext:"Playlist"});
 		
-		part = add_to(this.m_menus.playlist, "div", {cls:["player-control-vpart"]});
-		this.m_menus.playlist_versions = add_to(part, "select", {cls:["player-select"]});
+		part = this.add_to(this.m_menus.playlist, "div", {cls:["player-control-vpart"]});
+		this.m_menus.playlist_versions = this.add_to(part, "select", {cls:["player-select"]});
 		this.m_menus.playlist_versions.onchange = () => {
 			this.playlist_update_motion();
 		};
 		
-		this.m_menus.playlist_motions = add_to(part, "select", {cls:["player-select"]});
-		add_to(
+		this.m_menus.playlist_motions = this.add_to(part, "select", {cls:["player-select"]});
+		this.add_to(
 			part,
 			"button",
 			{
@@ -448,7 +448,7 @@ class PlayerUI
 				}
 			}
 		);
-		add_to(
+		this.add_to(
 			part,
 			"button",
 			{
@@ -459,7 +459,7 @@ class PlayerUI
 				}
 			}
 		);
-		add_to(
+		this.add_to(
 			part,
 			"button",
 			{
@@ -470,7 +470,7 @@ class PlayerUI
 				}
 			}
 		);
-		add_to(
+		this.add_to(
 			part,
 			"button",
 			{
@@ -483,12 +483,12 @@ class PlayerUI
 		);
 		
 		// texture menu
-		this.m_menus.texture = add_to(fragment, "div", {cls:["player-menu", "player-control-hpart"]});
+		this.m_menus.texture = this.add_to(fragment, "div", {cls:["player-menu", "player-control-hpart"]});
 		this.m_menus.texture.style.display = "none";
-		part = add_to(this.m_menus.texture, "div", {cls:["player-control-vpart"]});
-		this.m_menus.texture_list = add_to(part, "div", {cls:["player-control-vpart", "player-scroll-list", "player-scroll-list-texture"]});
-		part = add_to(part, "div", {cls:["player-control-vpart"]});
-		add_to(
+		part = this.add_to(this.m_menus.texture, "div", {cls:["player-control-vpart"]});
+		this.m_menus.texture_list = this.add_to(part, "div", {cls:["player-control-vpart", "player-scroll-list", "player-scroll-list-texture"]});
+		part = this.add_to(part, "div", {cls:["player-control-vpart"]});
+		this.add_to(
 			part,
 			"button",
 			{
@@ -501,12 +501,12 @@ class PlayerUI
 		);
 		
 		// record menu
-		this.m_menus.record = add_to(fragment, "div", {cls:["player-menu", "player-control-hpart"]});
+		this.m_menus.record = this.add_to(fragment, "div", {cls:["player-menu", "player-control-hpart"]});
 		this.m_menus.record.style.display = "none";
-		part = add_to(this.m_menus.record, "div", {cls:["player-control-vpart", "player-control-slider-container"]});
+		part = this.add_to(this.m_menus.record, "div", {cls:["player-control-vpart", "player-control-slider-container"]});
 		// bitrate slider
-		add_to(part, "span", {cls:["player-control-label"], innertext:"Recording Bitrate"});
-		this.m_menus.record_bitrate = add_to(part, "input", {cls:["player-control-slider"], id:"player-record-bitrate"});
+		this.add_to(part, "span", {cls:["player-control-label"], innertext:"Recording Bitrate"});
+		this.m_menus.record_bitrate = this.add_to(part, "input", {cls:["player-control-slider"], id:"player-record-bitrate"});
 		this.m_menus.record_bitrate.type = "range";
 		this.m_menus.record_bitrate.min = "1";
 		this.m_menus.record_bitrate.max = "99";
@@ -515,13 +515,13 @@ class PlayerUI
 		this.m_menus.record_bitrate.oninput = () => {
 			this.record_bitrate_update();
 		};
-		this.m_menus.record_bitrate_label = add_to(part, "label", {cls:["player-control-label"]});
+		this.m_menus.record_bitrate_label = this.add_to(part, "label", {cls:["player-control-label"]});
 		this.m_menus.record_bitrate_label.htmlFor = "player-record-bitrate";
 		this.m_menus.record_bitrate_label.innerText = "50 Mbps";
 		// duration slider
-		this.m_menus.record_duration_br = add_to(part, "br");
-		this.m_menus.record_duration_text = add_to(part, "span", {cls:["player-control-label"], innertext:"Home Page duration"});
-		this.m_menus.record_duration = add_to(part, "input", {cls:["player-control-slider"], id:"player-record-duration"});
+		this.m_menus.record_duration_br = this.add_to(part, "br");
+		this.m_menus.record_duration_text = this.add_to(part, "span", {cls:["player-control-label"], innertext:"Home Page duration"});
+		this.m_menus.record_duration = this.add_to(part, "input", {cls:["player-control-slider"], id:"player-record-duration"});
 		this.m_menus.record_duration.type = "range";
 		this.m_menus.record_duration.min = "5";
 		this.m_menus.record_duration.max = "60";
@@ -530,13 +530,13 @@ class PlayerUI
 		this.m_menus.record_duration.oninput = () => {
 			this.record_duration_update();
 		};
-		this.m_menus.record_duration_label = add_to(part, "label", {cls:["player-control-label"]});
+		this.m_menus.record_duration_label = this.add_to(part, "label", {cls:["player-control-label"]});
 		this.m_menus.record_duration_label.htmlFor = "player-record-duration";
 		this.m_menus.record_duration_label.innerText = "10 s";
 		// transparency
-		add_to(part, "br");
-		add_to(part, "span", {cls:["player-control-label"], innertext:"BG. Transparency"});
-		this.m_menus.record_transparency = add_to(
+		this.add_to(part, "br");
+		this.add_to(part, "span", {cls:["player-control-label"], innertext:"BG. Transparency"});
+		this.m_menus.record_transparency = this.add_to(
 			part,
 			"button",
 			{
@@ -547,12 +547,12 @@ class PlayerUI
 				}
 			}
 		);
-		add_to(part, "span", {cls:["player-control-label"], innertext:"Chrome only"});
-		add_to(part, "span", {cls:["player-control-label", "small-text"], innerhtml:"(Only for color<br>and uploaded<br>backgrounds)"});
+		this.add_to(part, "span", {cls:["player-control-label"], innertext:"Chrome only"});
+		this.add_to(part, "span", {cls:["player-control-label", "small-text"], innerhtml:"(Only for color<br>and uploaded<br>backgrounds)"});
 		// buttons
-		part = add_to(this.m_menus.record, "div", {cls:["player-control-vpart"]});
-		add_to(part, "span", {cls:["player-control-label"], innertext:"Shift+W"});
-		add_to(
+		part = this.add_to(this.m_menus.record, "div", {cls:["player-control-vpart"]});
+		this.add_to(part, "span", {cls:["player-control-label"], innertext:"Shift+W"});
+		this.add_to(
 			part,
 			"button",
 			{
@@ -563,7 +563,7 @@ class PlayerUI
 				}
 			}
 		);
-		add_to(
+		this.add_to(
 			part,
 			"button",
 			{
@@ -580,7 +580,7 @@ class PlayerUI
 				}
 			}
 		);
-		add_to(
+		this.add_to(
 			part,
 			"button",
 			{
@@ -613,7 +613,7 @@ class PlayerUI
 		});
 		
 		// apply fragment next frame
-		update_next_frame(() => {
+		this.update_next_frame(() => {
 			this.m_html.innerHTML = "";
 			this.m_html.appendChild(fragment);
 			this.m_canvas_container.scrollIntoView();
@@ -648,12 +648,12 @@ class PlayerUI
 			{
 				this.m_background_part.style.display = "";
 				this.m_background_part.innerHTML = "";
-				let span = add_to(this.m_background_part, "span", {cls:["player-control-hpart", "player-control-button-container"]});
+				let span = this.add_to(this.m_background_part, "span", {cls:["player-control-hpart", "player-control-button-container"]});
 				for(const [icon, target] of Object.entries(config[background_config_key]))
 				{
 					if(target == null)
 						continue;
-					this.m_backgrounds[target] = add_to(
+					this.m_backgrounds[target] = this.add_to(
 						span,
 						"button",
 						{
@@ -803,7 +803,7 @@ class PlayerUI
 		this.m_version.innerHTML = "";
 		for(let i = 0; i < this.player.get_animations().length; ++i)
 		{
-			let option = add_to(this.m_version, "option");
+			let option = this.add_to(this.m_version, "option");
 			option.value = ""+i;
 			option.innerHTML = this.player.get_animations()[i].name;
 		}
@@ -830,7 +830,7 @@ class PlayerUI
 			let found_previous = false; // flag if previous setting exist in new list
 			
 			// add Demo option
-			let opt = add_to(this.m_motion, "option");
+			let opt = this.add_to(this.m_motion, "option");
 			opt.value = "default";
 			opt.innerText = "Demo";
 			if(current == "default")
@@ -841,7 +841,7 @@ class PlayerUI
 			// add motions
 			for(const i in motion_list)
 			{
-				opt = add_to(this.m_motion, "option");
+				opt = this.add_to(this.m_motion, "option");
 				opt.value = "" + motion_list[i];
 				opt.innerText = this.player.translate_motion(motion_list[i]);
 				if(opt.value == current)
@@ -868,19 +868,19 @@ class PlayerUI
 			this.m_ability.parentNode.style.display = "";
 			this.m_ability.innerHTML = "";
 			// add None option
-			let opt = add_to(this.m_ability, "option");
+			let opt = this.add_to(this.m_ability, "option");
 			opt.value = "default";
 			opt.innerText = "None";
 			opt.selected = true;
 			// add Cycle option
-			opt = add_to(this.m_ability, "option");
+			opt = this.add_to(this.m_ability, "option");
 			opt.value = "cycle";
 			opt.innerText = "Cycle";
 			// add others
 			for(const i in abilities)
 			{
 				let split_ab = abilities[i].split("_");
-				opt = add_to(this.m_ability, "option");
+				opt = this.add_to(this.m_ability, "option");
 				opt.value = ""+i;
 				if(abilities[i].includes("_all_"))
 					opt.innerText = "AOE " + split_ab[split_ab.length - 1];
@@ -1099,7 +1099,7 @@ class PlayerUI
 		for(let i in this.player.get_animations())
 		{
 			// set an option for each version
-			let opt = add_to(this.m_menus.playlist_versions, "option");
+			let opt = this.add_to(this.m_menus.playlist_versions, "option");
 			opt.value = i;
 			opt.innerText = this.player.get_animations()[i].name;
 			opt.selected = i == this.player.m_current_cjs;
@@ -1130,7 +1130,7 @@ class PlayerUI
 		this.m_menus.playlist_motions.innerHTML = "";
 		for(let i in motions)
 		{
-			let opt = add_to(this.m_menus.playlist_motions, "option");
+			let opt = this.add_to(this.m_menus.playlist_motions, "option");
 			opt.value = motions[i];
 			opt.innerText = this.player.translate_motion(motions[i]);
 		}
@@ -1148,9 +1148,9 @@ class PlayerUI
 		for(let i = 0; i < this.player.m_playlist.length; ++i)
 		{
 			const ci = i;
-			let span = add_to(fragment, "span", {cls:["player-control-hpart"]});
+			let span = this.add_to(fragment, "span", {cls:["player-control-hpart"]});
 			// add delete button
-			add_to(span, "button", {cls:["player-control-button"], innerhtml:this.get_button_html("delete"), onclick:() => {
+			this.add_to(span, "button", {cls:["player-control-button"], innerhtml:this.get_button_html("delete"), onclick:() => {
 				this.playlist_del(ci);
 			}});
 			// add text
@@ -1165,7 +1165,7 @@ class PlayerUI
 			// note: we don't display the version name is there is only one version
 		}
 		// add it next frame
-		update_next_frame(() => {
+		this.update_next_frame(() => {
 			this.m_menus.playlist_list.innerHTML = "";
 			this.m_menus.playlist_list.appendChild(fragment);
 		});
@@ -1376,7 +1376,7 @@ class PlayerUI
 		let fragment = document.createDocumentFragment();
 		for(const name of keys)
 		{
-			let span = add_to(fragment, "span", {cls:["player-control-hpart", "player-control-width"]});
+			let span = this.add_to(fragment, "span", {cls:["player-control-hpart", "player-control-width"]});
 			// generate a special name for the weapons
 			let display_name = name;
 			switch(name)
@@ -1455,7 +1455,7 @@ class PlayerUI
 			}
 			const c_display_name = display_name;
 			// reset button
-			let btn = add_to(
+			let btn = this.add_to(
 				span,
 				"button",
 				{
@@ -1469,7 +1469,7 @@ class PlayerUI
 			);
 			btn.disabled = true;
 			// upload button
-			add_to(
+			this.add_to(
 				span,
 				"button",
 				{
@@ -1481,7 +1481,7 @@ class PlayerUI
 				}
 			);
 			// add link to original
-			let a = add_to(
+			let a = this.add_to(
 				span,
 				"a",
 				{
@@ -1492,7 +1492,7 @@ class PlayerUI
 			a.href = Game.externUri + "/img/sp/cjs/" + split[split.length - 1];
 			a.target="_blank";
 		}
-		update_next_frame(() => {
+		this.update_next_frame(() => {
 			this.m_menus.texture_list.innerHTML = "";
 			this.m_menus.texture_list.appendChild(fragment);
 		});
@@ -1904,5 +1904,30 @@ class PlayerUI
 				this.m_debug.innerHTML = str;
 			}
 		}
+	}
+	
+	add_to(node, tagName, {cls = [], id = null, title = null, innertext = null, innerhtml = null, onload = null, onclick = null, onerror = null, disabled = false, br = false}={})
+	{
+		let tag = document.createElement(tagName);
+		for(let i = 0; i < cls.length; ++i)
+			tag.classList.add(cls[i]);
+		if(title) tag.title = title;
+		if(innertext) tag.innerText = innertext;
+		if(innerhtml) tag.innerHTML = innerhtml;
+		if(id) tag.id = id;
+		if(onload) tag.onload = onload;
+		if(onclick) tag.onclick = onclick;
+		if(onerror) tag.onerror = onerror;
+		if(disabled) tag.disabled = true;
+		if(node) node.appendChild(tag);
+		if(br) node.appendChild(document.createElement("br"));
+		return tag;
+	}
+	
+	update_next_frame(callback)
+	{
+		requestAnimationFrame(() => {
+			callback();
+		});
 	}
 }
