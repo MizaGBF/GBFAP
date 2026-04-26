@@ -160,7 +160,7 @@ With this method:
   
 If you require a CORS Proxy, there are many alternatives. Here are my own:  
 - [GBFCP](https://github.com/MizaGBF/GBFCP), the original that I used for many years. It works in Python and is intended for small servers with a limited amount of memory. You might want to update the `origin` variable to your domain, along with the maximum usable memory `MAX_CACHE_SIZE_BYTES`.  
-- In the `tools\CF_proxy` folder, there is a minimalist proxy usable with [Cloudflare Workers](https://developers.cloudflare.com/workers/). You might want to update the `valid_origins` in `index.js` to your domain.  
+- In the `tools\CF_proxy` folder, there is a minimalist proxy usable with [Cloudflare Workers](https://developers.cloudflare.com/workers/). You might want to update the `valid_origin` in `index.js` to your domain.  
     
 ### Hosting the Assets  
 > [!CAUTION]  

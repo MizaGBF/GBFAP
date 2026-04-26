@@ -1,6 +1,11 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "gbfap-cloudflare-cors-proxy",
+  "name": "gbfccp",
   "main": "index.js",
-  "compatibility_date": "2026-04-25"
+  "compatibility_date": "2026-04-25",
+  "observability": {
+    "logs": {
+      "enabled": true
+    }
+  }
 }
