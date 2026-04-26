@@ -115,8 +115,11 @@ When a Task or the Updater judges more Task are needed, they will be queued too.
 It's designed to limit the memory usage while keeping the Updater always busy, to not have idle/dead times.  
   
 ### Additional Notes  
-- For testing, just run `python-m http.server` in a terminal, in the parent folder of the project, with [GBFML](https://github.com/MizaGBF/GBFML) on the side.  
-- [GBFCP](https://github.com/MizaGBF/GBFCP) is the CORS Proxy used to fetch assets on the Github Page version.  
+For testing, either use:  
+- `local_server.py`. See the [For local and casual use](#for-local-and-casual-use) section below.  
+- Or run `python-m http.server` in a terminal alongside [GBFCP](https://github.com/MizaGBF/GBFCP), in the parent folder of the project.  
+  
+Regardless of the way, [GBFML](https://github.com/MizaGBF/GBFML) must be present alongside GBFAP.  
   
 # Hosting  
 You might be interested in hosting your own copy.  
