@@ -153,7 +153,11 @@ With this method:
 1. Copy/Download/Clone this repo.  
 2. Setup your CORS Proxy of choise. Make sure its own CORS policy only allows access from your website. [CORS Anywhere](https://github.com/Rob--W/cors-anywhere) is an option, or you can use my custom solution, [GBFCP](https://github.com/MizaGBF/GBFCP) (Be sure to modify its CORS Url).  
 3. Change the `corsProxy` in the configuration to the address of your proxy.  
-4. If you aren't using [GBFCP](https://github.com/MizaGBF/GBFCP), you might need to change `testUri` to another path. Any file the Proxy is able to fetch is fine. This is to test if the Proxy is working. If you don't need it, set it to null.  
+4. You might need to change `testUri` to another path in the configuration, or to `null` if you don't wish for the player to test if the proxy is alive.
+  
+If you require a CORS Proxy, there are many alternatives. Here are my own:  
+- [GBFCP](https://github.com/MizaGBF/GBFCP), the original that I used for many years. It works in Python and is intended for small servers with a limited amount of memory. You might want to update the `origin` variable to your domain, along with the maximum usable memory `MAX_CACHE_SIZE_BYTES`.  
+- In the `tools\CF_proxy` folder, there is a minimalist proxy usable with [Cloudflare Workers](https://developers.cloudflare.com/workers/).  
   
 ### Hosting the Assets  
 > [!CAUTION]  
