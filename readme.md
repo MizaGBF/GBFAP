@@ -176,6 +176,33 @@ The name of the configuration is `local`.
 > This also means if, for whatever reason, an old file is updated on the game side, the updater won't update it.  
 > You can also pass specific IDs after the parameter if you only want to download some.  
   
+### For local and casual use  
+  
+Included is `local_server.py`, an all-in-one [aiohttp Server](https://docs.aiohttp.org/en/stable/) also acting like a proxy.  
+You must install `aiohttp` to use it:
+```console
+python -m pip install aiohttp
+```  
+You must have [GBFML](https://github.com/MizaGBF/GBFML) as a folder alongside GBFAP.  
+Then simply run the script.  
+  
+> [!TIP]  
+> It will automatically ask you if you want to change the configuration to `localserver`.  
+> It will also automatically check if there are updated `changelog.json` and `data.json` available and ask you if you wish to download them.  
+  
+**For Windows users, if Python is too much for you:**  
+An executable version, `local_server.exe`, packing both Python and the script, is available in the `tools` folder.  
+Simply move it to the main folder, alongside `local_server.py` and the other files and execute it.  
+No installation required.  
+Windows might ask you if you wish to authorize it in your Firewall: There should be no need to, as this application shouldn't be exposed to the outside.  
+  
+If you wish to make your own version of the executable, Python is still required:  
+```console
+python -m pip install pyinstaller
+pyinstaller --onefile local_server.py
+```  
+The resulting executable will be in the `dist` folder.  
+  
 ### For Testing  
 > [!TIP]  
 > For testing and development purpose.  
