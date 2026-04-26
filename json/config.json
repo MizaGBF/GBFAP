@@ -19,7 +19,7 @@
             "soundUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/sound",
             "externUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en",
             "bgUri": "https://prd-game-a-granbluefantasy.akamaized.net/assets_en",
-            "testUri": null
+            "testUri": "CORS/https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/ui/icon/npc_arousal_form/form_1.png"
         },
         "test": {
             "corsProxy": "http://localhost:8001/",
