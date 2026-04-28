@@ -5,7 +5,6 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone, UTC
 import asyncio
 from pyreqwest.client import ClientBuilder, Client
-import pyreqwest.runtime as runtime
 import os
 import sys
 import re
@@ -20,6 +19,7 @@ from tqdm import tqdm
 ### CONSTANT
 VERSION = '5.15'
 CONCURRENT_TASKS = 100
+MAX_REQUEST = 60
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
 SAVE_VERSION = 1
 # addition type
@@ -332,6 +332,7 @@ class TaskStatus():
 class Updater():
     # other init
     client : Client|None
+    http_limit : asyncio.Semaphore
     tasks : TaskManager
     update_changelog : bool
     data : dict[str, Any]
@@ -342,6 +343,7 @@ class Updater():
     def __init__(self : Updater):
         # other init
         self.client = None # the http client
+        self.http_limit = asyncio.Semaphore(MAX_REQUEST)
         self.tasks = TaskManager(self) # the task manager
         self.update_changelog  = True # flag to enable or disable the generation of changelog.json
         self.data = { # data structure
@@ -501,23 +503,25 @@ class Updater():
 
     # Generic GET request function
     async def get(self : Updater, url : str) -> Any:
-        response = (
-            await self.client.get(url)
-            .header("Accept-Encoding", "gzip")
-            .build()
-            .send()
-        )
-        if response.status != 200:
-            raise Exception(f"HTTP error {response.status}")
-        return (await response.bytes()).to_bytes()
+        async with self.http_limit:
+            response = (
+                await self.client.get(url)
+                .header("Accept-Encoding", "gzip")
+                .build()
+                .send()
+            )
+            if response.status != 200:
+                raise Exception(f"HTTP error {response.status}")
+            return (await response.bytes()).to_bytes()
 
     # Generic HEAD request function
     async def head(self : Updater, url : str) -> Any:
-        response = (
-            await self.client.head(url)
-            .build()
-            .send()
-        )
+        async with self.http_limit:
+            response = (
+                await self.client.head(url)
+                .build()
+                .send()
+            )
         if response.status != 200:
             raise Exception(f"HTTP error {response.status}")
         return response.headers
@@ -1804,8 +1808,6 @@ class Updater():
         args : argparse.Namespace = parser.parse_args()
         
         # init HTTP client
-        runtime.runtime_multithreaded_default(True)
-        runtime.runtime_worker_threads(8)
         async with (
             ClientBuilder()
             .runtime_multithreaded(True)
@@ -1817,8 +1819,8 @@ class Updater():
             .zstd(False)
             .deflate(False)
             .http2(True)
-            .pool_max_idle_per_host(1)
-            .max_connections(70)
+            .pool_max_idle_per_host(MAX_REQUEST)
+            .max_connections(MAX_REQUEST)
             .http2_prior_knowledge()
             .http2_keep_alive_interval(timedelta(days=1))
             .http2_keep_alive_timeout(timedelta(days=1))
