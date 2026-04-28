@@ -1,6 +1,32 @@
 {
-  "timestamp":1776939034275,
+  "timestamp":1777378511394,
   "new":{
+    "2026-04-28":[
+      [
+        "1300463",
+        4
+      ],
+      [
+        "1300453",
+        4
+      ],
+      [
+        "1300443",
+        4
+      ],
+      [
+        "3040085000",
+        3
+      ],
+      [
+        "1040221200",
+        1
+      ],
+      [
+        "1030109500",
+        1
+      ]
+    ],
     "2026-04-23":[
       [
         "9102923",
@@ -114,55 +140,13 @@
         "1040122900",
         1
       ]
-    ],
-    "2026-03-29":[
-      [
-        "8104803",
-        4
-      ],
-      [
-        "8104793",
-        4
-      ],
-      [
-        "8104783",
-        4
-      ],
-      [
-        "8104773",
-        4
-      ],
-      [
-        "8104763",
-        4
-      ],
-      [
-        "8104753",
-        4
-      ],
-      [
-        "8104743",
-        4
-      ],
-      [
-        "6206243",
-        4
-      ],
-      [
-        "1040818300",
-        1
-      ],
-      [
-        "1030704900",
-        1
-      ]
     ]
   },
   "stat":null,
   "issues":[
     "<b>Latest Update:</b><br/>I'm testing one of the possible solutions I have left. Please report issues if you encounter any and don't hesitate to hammer the player down like you usually do.<br/>",
     "-",
-    "<b>The following is currently not definitive, in case I manage to find a solution, but prepare for the worst.</b><br/>The Animation Player Github page is getting discontinued on August, 1st, due to hosting issues and lack of viable alternatives. <a href=\"https://xcancel.com/mizak0/status/2047982944694718518\">Some Details</a>."
+    "TLDR: The Animation Player Github page is at risk of getting discontinued on August, 1st, due to hosting issues and lack of viable alternatives.<br/>The project itself will continue to be worked on regardless.<br/><a href=\"https://xcancel.com/mizak0/status/2047982944694718518\">Some Details</a>."
   ],
   "help":false
 }
