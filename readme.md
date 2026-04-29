@@ -123,7 +123,7 @@ Regardless of the way, [GBFML](https://github.com/MizaGBF/GBFML) must be present
   
 # Hosting  
 You might be interested in hosting your own copy.  
-There are three configurations provided in the included [config.json](https://github.com/MizaGBF/GBFAP/blob/main/json/config.json) file for you to play with.
+There are multiple configurations provided in the included [config.json](https://github.com/MizaGBF/GBFAP/blob/main/json/config.json) file for you to play with.
 **You can select which configuration to use by change the value of `use_game_config`**.  
 Or for testing and debugging, in the URL parameter. Example: `?config=test`.
   
@@ -154,7 +154,7 @@ With this method:
   
 **Setup:**  
 1. Copy/Download/Clone this repo.  
-2. Setup your CORS Proxy of choise. Make sure its own CORS policy only allows access from your website. [CORS Anywhere](https://github.com/Rob--W/cors-anywhere) is an option, or you can use my custom solution, [GBFCP](https://github.com/MizaGBF/GBFCP) (Be sure to modify its CORS Url).  
+2. Setup your CORS Proxy of choise. Make sure its own CORS policy only allows access from your website. [CORS Anywhere](https://github.com/Rob--W/cors-anywhere) is a general option, or you can use my custom solutions (see below). Be sure to adjust its CORS Url in [config.json](https://github.com/MizaGBF/GBFAP/blob/main/json/config.json), if needed.  
 3. Change the `corsProxy` in the configuration to the address of your proxy.  
 4. You might need to change `testUri` to another path in the configuration, or to `null` if you don't wish for the player to test if the proxy is alive.
   

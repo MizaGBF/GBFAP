@@ -453,7 +453,7 @@ function player_test_end(result)
 	let container = document.getElementById('player-header');
 	if(!result)
 	{
-		container.innerHTML = "An unexpected error occured.<br>Try to reload and contact the author if the issue persists.";
+		container.innerHTML = "An unexpected error occured.<br>Try to reload and contact the author if the issue persists.<br><br><small>If you're seeing this message on a local installation, you might need to change the configuration: <a href=\"https://github.com/MizaGBF/GBFAP/blob/main/readme.md#hosting\">1</a>, <a href=\"https://github.com/MizaGBF/GBFAP/blob/main/readme.md#for-local-and-casual-use\">2</a>, <a href=\"https://github.com/MizaGBF/GBFAP/blob/main/readme.md#for-testing\">3</a></small>";
 		if(player)
 		{
 			player.restart();
