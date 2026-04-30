@@ -48,7 +48,6 @@ export default {
 		let cached_response = await cache.match(cache_key);
 		if(cached_response)
 		{
-			console.log(`Cache HIT for: ${target_url}`);
 			return cached_response;
 		}
 
@@ -145,7 +144,6 @@ export default {
 			response_headers.set("cors-received-headers", JSON.stringify(all_received_headers));
 			response_headers.set("Cache-Control", "public, s-maxage=604800"); // cache for 7 days
 
-			console.log(`${request.method} | ${target_url} | From: ${origin} | Status: OK`);
 			const final_response = new Response(
 				is_preflight ? null : response.body,
 				{
@@ -156,7 +154,7 @@ export default {
 			);
 			if(final_response.status === 200 && !is_preflight)
 			{
-			  ctx.waitUntil(cache.put(cache_key, final_response.clone()));
+				ctx.waitUntil(cache.put(cache_key, final_response.clone()));
 			}
 			return final_response;
 		} catch (err) {
