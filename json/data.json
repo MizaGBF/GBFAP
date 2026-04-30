@@ -999,7 +999,9 @@
 "3040647000":{"v":[["0★","npc_3040647000_01","mortal_A","phit_3040647000",["nsp_3040647000_01_s2"]],["4★","npc_3040647000_02","mortal_A","phit_3040647000_02",["nsp_3040647000_02_s2"]]],"ab":["ab_3040647000_01","ab_3040647000_02","ab_3040647000_03","ab_3040647000_04","ab_all_3040647000_01"]},
 "3040650000":{"v":[["0★","npc_3040650000_01","mortal_A","phit_3040650000",["nsp_3040650000_01_s2"]],["4★","npc_3040650000_02","mortal_A","phit_3040650000_02",["nsp_3040650000_02_s2"]]],"ab":["ab_3040650000_02","ab_3040650000_04","ab_3040650000_05","ab_all_3040650000_03"]},
 "3040649000":{"v":[["0★","npc_3040649000_01","mortal_A","phit_3040649000",["nsp_3040649000_01_s2"]],["4★","npc_3040649000_02","mortal_A","phit_3040649000_02",["nsp_3040649000_02_s2"]]],"ab":["ab_3040649000_02","ab_all_3040649000_01","ab_all_3040649000_03"]},
-"3040651000":{"v":[["0★","npc_3040651000_01","mortal_A","phit_3040651000",["nsp_3040651000_01_s2"]],["4★","npc_3040651000_02","mortal_A","phit_3040651000_02",["nsp_3040651000_02_s2"]]],"ab":["ab_3040651000_01","ab_3040651000_02","ab_all_3040651000_01","ab_all_3040651000_02"]}
+"3040651000":{"v":[["0★","npc_3040651000_01","mortal_A","phit_3040651000",["nsp_3040651000_01_s2"]],["4★","npc_3040651000_02","mortal_A","phit_3040651000_02",["nsp_3040651000_02_s2"]]],"ab":["ab_3040651000_01","ab_3040651000_02","ab_all_3040651000_01","ab_all_3040651000_02"]},
+"3040653000":{"v":[["0★","npc_3040653000_01","mortal_A","phit_3040653000",["nsp_3040653000_01_s2"]],["4★","npc_3040653000_02","mortal_A","phit_3040653000_02",["nsp_3040653000_02_s2"]]],"ab":["ab_3040653000_01","ab_3040653000_02","ab_3040653000_03","ab_all_3040653000_01","ab_all_3040653000_02","ab_all_3040653000_03"]},
+"3040652000":{"v":[["0★","npc_3040652000_01","mortal_A","phit_3040652000",["nsp_3040652000_01_s2"]],["4★","npc_3040652000_02","mortal_A","phit_3040652000_02",["nsp_3040652000_02_s2"]]],"ab":["ab_all_3040652000_01","ab_all_3040652000_02","ab_all_3040652000_03","ab_all_3040652000_04","ab_all_3040652000_05"]}
 },
 "partners":
 {
@@ -4497,7 +4499,9 @@
 "1040621500":{"w":["1040621500","1040621500"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621500",["sp_1040621500_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621500",["sp_1040621500_1_s2"]]]},
 "1040029500":{"w":["1040029500","1040029500"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029500",["sp_1040029500_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029500",["sp_1040029500_1_s2"]]]},
 "1030109500":{"w":["1030109500","1030109500"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1030109500",["sp_1030109500_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1030109500",["sp_1030109500_1_s2"]]]},
-"1040221200":{"w":["1040221200","1040221200"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040221200",["sp_1040221200_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040221200",["sp_1040221200_1_s2"]]]}
+"1040221200":{"w":["1040221200","1040221200"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040221200",["sp_1040221200_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040221200",["sp_1040221200_1_s2"]]]},
+"1040320100":{"w":["1040320100","1040320100"],"v":[["Gran","bsk_ax_0_01","mortal_A","phit_1040320100",["sp_1040320100_0_s2"]],["Djeeta","bsk_ax_1_01","mortal_A","phit_1040320100",["sp_1040320100_1_s2"]]]},
+"1040221300":{"w":["1040221300","1040221300"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040221300",["sp_1040221300_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040221300",["sp_1040221300_1_s2"]]]}
 },
 "enemies":
 {
@@ -19958,14 +19962,14 @@
 "3994357000":"/x soul devorer hine-nui /n hine-nui /b unknown /s other /y ヒネ・ヌイ risae matsuda 松田利冴 /! /!!",
 "3994372000":"/n nemone /b erune /s female /y ネモネ ayahi takagaki 高垣彩陽",
 "3994374000":"/n ku-keoloewa /b unknown /s other /y クー・ケオロエワ haruhiko jō 壤晴彦",
-"3994376000":"/n hina /b erune /s female /y ヒナ risae matsuda 松田利冴",
+"3994376000":"/w Hina_(NPC) /n hina /b erune /s female /y ヒナ risae matsuda 松田利冴 2026-04-28",
 "3994377000":"/n hina /b erune /s female /y ヒナ risae matsuda 松田利冴",
 "3994378000":"/n hina /b erune /s female /y ヒナ risae matsuda 松田利冴",
-"3994379000":"/n hine-nui /b unknown /s other /y ヒネ・ヌイ risae matsuda 松田利冴",
+"3994379000":"/w Hine-Nui_(NPC) /n hine-nui /b unknown /s other /y ヒネ・ヌイ risae matsuda 松田利冴 2026-04-28",
 "3994380000":"/n hine-nui /b unknown /s other /y ヒネ・ヌイ risae matsuda 松田利冴",
-"3994381000":"/n nanaue /b human /s male /y ナナウエ yuuki shin 新祐樹",
+"3994381000":"/w Nanaue_(NPC) /n nanaue /b erune /s male /y ナナウエ yūki shin 新祐樹 2026-04-28",
 "3994382000":"/n nanaue /b human /s male /y ナナウエ yuuki shin 新祐樹",
-"3994383000":"/n papahana /b erune /s female /y パパ・ハナ aya kawakami 川上彩",
+"3994383000":"/w Papahana_(NPC) /n papahana /b erune /s female /y パパ・ハナ aya kawakami 川上彩 2026-04-28",
 "3994384000":"/n papahana /b erune /s female /y パパ・ハナ aya kawakami 川上彩",
 "3994385000":"/n sachy /b unknown",
 "3994386000":"/n sachy /b unknown",
@@ -19974,7 +19978,13 @@
 "3994389000":"/x kahua taika /n kahua taika shade /b unknown",
 "1300443":"/f monster-boss /e dark /n kahua taika shade",
 "1300453":"/f monster-boss /e dark /n soul devourer hine-nui",
-"1300463":"/f monster-boss /e dark /n soul devourer hine-nui"
+"1300463":"/f monster-boss /e dark /n soul devourer hine-nui",
+"3040652000":"/w Felluca /e earth /a ssr /n felluca /b erune /s female /t special /p staff axe /y フェルルカ misato fukuen 福圓美里 2026-04-30",
+"3040653000":"/w Manu_Ponumau /e dark /a ssr /n manu ponumau /b wolvir /s female /t defense /p spear melee /y マヌ＝ポヌマウ hikaru tono 遠野ひかる 2026-04-30",
+"1040320100":"/w 'Aina_Alaka'i /e earth /t axe /a ssr /n 'aina alaka'i /y 2026-04-30",
+"1030109500":"/w Kahuan_Pahoa /e dark /t dagger /a sr /n kahuan pahoa /y クフア・パホア 2026-04-28",
+"1040221200":"/w Kahuan_Pololu_Kahiko /e dark /t spear /a ssr /n kahuan pololu kahiko /y クフア・カヒコ・ポロウ 2026-04-28",
+"1040221300":"/w Massive_Mentor_Drill /e dark /t spear /a ssr /n massive mentor drill /y 2026-04-30"
 },
 "mypage":
 {
