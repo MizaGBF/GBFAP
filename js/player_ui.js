@@ -895,9 +895,13 @@ class PlayerUI
 	update_enemy_control(is_enemy)
 	{
 		if(is_enemy)
+		{
 			this.m_buttons.enemy_position.style.display = "";
+		}
 		else
+		{
 			this.m_buttons.enemy_position.style.display = "none";
+		}
 	}
 	
 	// get the innerhtml of a button based on given key found in config
@@ -1775,7 +1779,7 @@ class PlayerUI
 			}
 			case "e": case "E": // shift enemy position
 			{
-				if(!event.shiftKey && is_enemy)
+				if(!event.shiftKey && this.player.m_layout_mode == PlayerLayoutMode.enemy)
 				{
 					event.preventDefault();
 					this.m_buttons.enemy_position.click();

@@ -847,7 +847,7 @@ class Player
 			this.ui.update_motion_control(this.m_motion_lists[this.m_current_cjs]);
 			// update ui
 			this.ui.update_ability_control(this.m_animations[0].abilities);
-			this.ui.update_enemy_control(this.m_animations[0].is_enemy);
+			this.ui.update_enemy_control(this.m_animations[0].type == AnimationType.ENEMY);
 			this.ui.set_texture_list();
 			this.ui.set_playlist_versions();
 			// unlock button
@@ -950,7 +950,7 @@ class Player
 		special.name = cjs; // set name
 		// add to stage
 		this.m_stage.addChild(special);
-		if(animation.is_enemy) // if it's an enemy animation
+		if(animation.type == AnimationType.ENEMY) // if it's an enemy animation
 		{
 			special.x = this.m_offset.target.x;
 			special.y = this.m_offset.target.y;
@@ -993,7 +993,7 @@ class Player
 		special.scaleX *= this.m_scaling;
 		special.scaleY *= this.m_scaling;
 		// play the animation
-		if(animation.is_main_character && animation.weapon != null)
+		if(animation.type == AnimationType.MC && animation.weapon != null)
 		{
 			// for main character with specific weapon
 			// the animation we went is nested a bit further
@@ -1213,7 +1213,7 @@ class Player
 					let special_index = motion.split('_')[1].charCodeAt()-65;
 					// play the special file
 					let special_cjs = null;
-					if(animation.is_enemy)
+					if(animation.type == AnimationType.ENEMY)
 					{
 						// note: enemies need to match the proper file (if it exists) with the ougi motion
 						// so for mortal_A, we're looking for the file with _01_ in the name, and so on
@@ -1241,7 +1241,7 @@ class Player
 					// store it in class attriute
 					this.m_special_cjs = special_cjs;
 					// add file duration if it's a weapon animation
-					if(animation.is_main_character && animation.weapon != null)
+					if(animation.type == AnimationType.MC && animation.weapon != null)
 					{
 						duration += this.get_animation_duration(special_cjs[special_cjs.name][special_cjs.name + "_special"]);
 					}
@@ -1699,7 +1699,7 @@ class Player
 					if(motion_str.startsWith(cjs.name))
 					{
 						// hack to disable ougi options on mc beside mortal_B
-						if(animation.is_main_character
+						if(animation.type == AnimationType.MC
 							&& motion_str.includes("mortal")
 							&& !motion_str.endsWith("_mortal_SP")
 							&& (
@@ -1721,7 +1721,7 @@ class Player
 					}
 				}
 				// add appear animation
-				if(animation.is_enemy)
+				if(animation.type == AnimationType.ENEMY)
 				{
 					for(let i = 0; i < animation.raid_appear.length; ++i)
 					{

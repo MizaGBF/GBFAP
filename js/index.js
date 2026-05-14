@@ -323,17 +323,35 @@ function list_animation(target, data)
 	let animations = [];
 	// constants
 	const summon = data.s ?? null;
-	const is_main_character = ["summons", "weapons", "job"].includes(target);
-	const is_enemy = target == "enemies";
-	const is_mypage = target == "mypage";
+	const ani_type = AnimationType.CHARACTER;
+	switch(target)
+	{
+		case "summons":
+		case "weapons":
+		case "job":
+		{
+			ani_type = AnimationType.MC;
+			break;
+		}
+		case "enemies":
+		{
+			ani_type = AnimationType.ENEMY;
+			break;
+		}
+		case "target":
+		{
+			ani_type = AnimationType.MYPAGE;
+			break;
+		}
+	}
 	const raid_appear = data.ra ?? [];
 	// list of demo motions
 	let demo_list = [];
-	if(is_mypage)
+	if(ani_type == AnimationType.MYPAGE)
 	{
 		demo_list = ["mypage"];
 	}
-	else if(is_enemy)
+	else if(ani_type == AnimationType.ENEMY)
 	{
 		if(data.v[0][4].length == 0)
 		{
@@ -394,14 +412,12 @@ function list_animation(target, data)
 		animations.push(new Animation(version[0], {
 			demo_motions: current_demo,
 			cjs: version[1],
+			type: ani_type,
 			attack: version[3],
 			specials: version[4],
 			abilities: data.ab ?? [],
 			weapon: weapon,
 			summon: summon,
-			is_main_character: is_main_character,
-			is_enemy: is_enemy,
-			is_mypage: is_mypage,
 			raid_appear: raid_appear,
 			ultimate: ultimate
 		}));

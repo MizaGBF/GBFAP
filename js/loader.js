@@ -138,7 +138,7 @@ class Loader
 			// hot fix the main character weapon
 			// we replace the "weapon.png" files by "WEAPON_ID.png"
 			const first_anim = player.get_animations()[0];
-			if(first_anim.is_main_character && first_anim.weapon)
+			if(first_anim.type == AnimationType.MC && first_anim.weapon)
 			{
 				// only do it for the first weapon
 				let is_melee = first_anim.cjs.includes("_me_");

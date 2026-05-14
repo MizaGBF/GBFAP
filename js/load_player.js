@@ -108,12 +108,12 @@ function player_start_fire(animations)
 			// Note: GBF width is around 640 px, so this is ideal to avoid scaling
 			// If you want to go higher than 900px, you must increase the canvas size
 			// set_size can take an extra parameter to set the global scaling but it's untested
-			if(animations[0].is_enemy)
+			if(animations[0].type == AnimationType.ENEMY)
 			{
 				init_player(PlayerLayoutMode.enemy);
 				player.set_size(640, 640);
 			}
-			else if(animations[0].is_mypage)
+			else if(animations[0].type == AnimationType.MYPAGE)
 			{
 				init_player(PlayerLayoutMode.mypage);
 				player.set_size(640, 900);

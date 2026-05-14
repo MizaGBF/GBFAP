@@ -1,13 +1,22 @@
 // generic class to contain data for an animation
+const AnimationType = Object.freeze({
+	CHARACTER:0,
+	MC:1,
+	ENEMY:2,
+	MYPAGE:3
+});
+
 class Animation
 {
 	constructor(name, obj)
 	{
 		this.name = name; // name (to be displayed in the version selector)
 		this.demo_motions = obj.demo_motions; // default motions
-		this.is_main_character = obj.is_main_character ?? false; // if it uses the main character
-		this.is_enemy = obj.is_enemy ?? false; // if it's an enemy
-		this.is_mypage = obj.is_mypage ?? false; // if it's a mypage animation
+		this.type = obj.type; // type of animation
+		if(!(this.type in AnimationType))
+		{
+			throw new Error("Invalid AnimationType: " + this.type);
+		}
 		this.weapon = obj.weapon ?? null; // the weapon id (if any). Must be paired with a main character
 		this.summon = obj.summon ?? null; // the summon id (if any). Must be paired with a main character
 		this.cjs = obj.cjs; // main animation file
