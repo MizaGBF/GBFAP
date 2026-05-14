@@ -4,7 +4,7 @@ const AnimationType = Object.freeze({
 	CHARACTER:0,
 	MC:1,
 	ENEMY:2,
-	MYPAGE:3
+	MYPAGE:3,
 	__LAST__:3
 });
 
