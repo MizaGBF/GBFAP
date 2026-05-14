@@ -1,6 +1,6 @@
 // generic class to contain data for an animation
 const AnimationType = Object.freeze({
-	__START__:0
+	__START__:0,
 	CHARACTER:0,
 	MC:1,
 	ENEMY:2,
