@@ -15,7 +15,7 @@ class Animation
 		this.name = name; // name (to be displayed in the version selector)
 		this.demo_motions = obj.demo_motions; // default motions
 		this.type = obj.type; // type of animation
-		if(this.type < AnimationType.__START__ && this.type > AnimationType.__LAST__))
+		if(this.type < AnimationType.__START__ || this.type > AnimationType.__LAST__))
 		{
 			throw new Error("Invalid AnimationType: " + this.type);
 		}
