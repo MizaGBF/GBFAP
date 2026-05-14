@@ -323,7 +323,7 @@ function list_animation(target, data)
 	let animations = [];
 	// constants
 	const summon = data.s ?? null;
-	const ani_type = AnimationType.CHARACTER;
+	let ani_type = AnimationType.CHARACTER;
 	switch(target)
 	{
 		case "summons":
