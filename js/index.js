@@ -338,7 +338,7 @@ function list_animation(target, data)
 			ani_type = AnimationType.ENEMY;
 			break;
 		}
-		case "target":
+		case "mypage":
 		{
 			ani_type = AnimationType.MYPAGE;
 			break;
