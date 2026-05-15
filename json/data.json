@@ -1001,7 +1001,10 @@
 "3040649000":{"v":[["0★","npc_3040649000_01","mortal_A","phit_3040649000",["nsp_3040649000_01_s2"]],["4★","npc_3040649000_02","mortal_A","phit_3040649000_02",["nsp_3040649000_02_s2"]]],"ab":["ab_3040649000_02","ab_all_3040649000_01","ab_all_3040649000_03"]},
 "3040651000":{"v":[["0★","npc_3040651000_01","mortal_A","phit_3040651000",["nsp_3040651000_01_s2"]],["4★","npc_3040651000_02","mortal_A","phit_3040651000_02",["nsp_3040651000_02_s2"]]],"ab":["ab_3040651000_01","ab_3040651000_02","ab_all_3040651000_01","ab_all_3040651000_02"]},
 "3040653000":{"v":[["0★","npc_3040653000_01","mortal_A","phit_3040653000",["nsp_3040653000_01_s2"]],["4★","npc_3040653000_02","mortal_A","phit_3040653000_02",["nsp_3040653000_02_s2"]]],"ab":["ab_3040653000_01","ab_3040653000_02","ab_3040653000_03","ab_all_3040653000_01","ab_all_3040653000_02","ab_all_3040653000_03"]},
-"3040652000":{"v":[["0★","npc_3040652000_01","mortal_A","phit_3040652000",["nsp_3040652000_01_s2"]],["4★","npc_3040652000_02","mortal_A","phit_3040652000_02",["nsp_3040652000_02_s2"]]],"ab":["ab_all_3040652000_01","ab_all_3040652000_02","ab_all_3040652000_03","ab_all_3040652000_04","ab_all_3040652000_05"]}
+"3040652000":{"v":[["0★","npc_3040652000_01","mortal_A","phit_3040652000",["nsp_3040652000_01_s2"]],["4★","npc_3040652000_02","mortal_A","phit_3040652000_02",["nsp_3040652000_02_s2"]]],"ab":["ab_all_3040652000_01","ab_all_3040652000_02","ab_all_3040652000_03","ab_all_3040652000_04","ab_all_3040652000_05"]},
+"3040656000":{"v":[["0★","npc_3040656000_01","mortal_A","phit_3040656000",["nsp_3040656000_01_s2"]],["4★","npc_3040656000_02","mortal_A","phit_3040656000_02",["nsp_3040656000_02_s2"]]],"ab":["ab_3040656000_01","ab_3040656000_02","ab_3040656000_03","ab_all_3040656000_01"]},
+"3040654000":{"v":[["0★","npc_3040654000_01","mortal_A","phit_3040654000",["nsp_3040654000_01_s2"]],["4★","npc_3040654000_02","mortal_A","phit_3040654000_02",["nsp_3040654000_02_s2"]]],"ab":["ab_3040654000_01","ab_3040654000_02","ab_all_3040654000_01","ab_all_3040654000_02"]},
+"3040657000":{"v":[["0★","npc_3040657000_01","mortal_A","phit_3040657000",["nsp_3040657000_01_s2"]],["4★","npc_3040657000_02","mortal_A","phit_3040657000_02",["nsp_3040657000_02_s2"]]],"ab":["ab_3040657000_01","ab_3040657000_02","ab_all_3040657000_01","ab_all_3040657000_02"]}
 },
 "partners":
 {
@@ -1492,7 +1495,9 @@
 "2040452000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040452000_01_attack"]]],"s":"2040452000"},
 "2040451000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040451000_01_attack"]]],"s":"2040451000"},
 "2040453000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040453000_01_attack"]]],"s":"2040453000"},
-"2040454000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040454000_01_attack"]]],"s":"2040454000"}
+"2040454000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040454000_01_attack"]]],"s":"2040454000"},
+"2040455000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040455000_01_attack"]]],"s":"2040455000"},
+"2040456000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040456000_01_attack"]]],"s":"2040456000"}
 },
 "weapons":
 {
@@ -4501,7 +4506,11 @@
 "1030109500":{"w":["1030109500","1030109500"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1030109500",["sp_1030109500_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1030109500",["sp_1030109500_1_s2"]]]},
 "1040221200":{"w":["1040221200","1040221200"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040221200",["sp_1040221200_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040221200",["sp_1040221200_1_s2"]]]},
 "1040320100":{"w":["1040320100","1040320100"],"v":[["Gran","bsk_ax_0_01","mortal_A","phit_1040320100",["sp_1040320100_0_s2"]],["Djeeta","bsk_ax_1_01","mortal_A","phit_1040320100",["sp_1040320100_1_s2"]]]},
-"1040221300":{"w":["1040221300","1040221300"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040221300",["sp_1040221300_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040221300",["sp_1040221300_1_s2"]]]}
+"1040221300":{"w":["1040221300","1040221300"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040221300",["sp_1040221300_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040221300",["sp_1040221300_1_s2"]]]},
+"1040918500":{"w":["1040918500","1040918500"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040918500",["sp_1040918500_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040918500",["sp_1040918500_1_s2"]]]},
+"1040621700":{"w":["1040621700","1040621700"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621700",["sp_1040621700_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621700",["sp_1040621700_1_s2"]]]},
+"1040621600":{"w":["1040621600","1040621600"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621600",["sp_1040621600_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621600",["sp_1040621600_1_s2"]]]},
+"1040029600":{"w":["1040029600","1040029600"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029600",["sp_1040029600_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029600",["sp_1040029600_1_s2"]]]}
 },
 "enemies":
 {
@@ -7294,7 +7303,11 @@
 "6206253":{"v":[["","enemy_6206253",null,"ehit_6206253",["esp_6206253_01","esp_6206253_02","esp_6206253_03"]]],"ra":["raid_appear_6206253"]},
 "1300453":{"v":[["","enemy_1300453",null,"ehit_1300453",["esp_1300453_01","esp_1300453_02","esp_1300453_03"]]],"ra":["raid_appear_1300453"]},
 "1300443":{"v":[["","enemy_1300443",null,"ehit_1300443",["esp_1300443_01","esp_1300443_02","esp_1300443_03"]]],"ra":["raid_appear_1300443"]},
-"1300463":{"v":[["","enemy_1300463",null,"phit_0000000000",[]]]}
+"1300463":{"v":[["","enemy_1300463",null,"phit_0000000000",[]]]},
+"1300473":{"v":[["","enemy_1300473",null,"phit_0000000000",[]]]},
+"1100513":{"v":[["","enemy_1100513",null,"phit_0000000000",[]]]},
+"1201123":{"v":[["","enemy_1201123",null,"phit_0000000000",[]]]},
+"9103223":{"v":[["","enemy_9103223",null,"ehit_9103223",["esp_9103223_01","esp_9103223_02","esp_9103223_03"]]],"ra":["raid_appear_9103223"]}
 },
 "skins":
 {
@@ -19954,11 +19967,11 @@
 "2040453000":"/w Papahlukruva /e light /a ssr /n papahlukruva /c odious /y パパルクルヴァ 2026-04-23",
 "2040454000":"/w Zamalvoch /e dark /a ssr /n zamalvoch /c odious /y ザマルヴォッチ 2026-04-23",
 "1040519000":"/w Blightrifle_of_Knowledge_Verboten /e light /t gun /a ssr /n blightrifle of knowledge verboten /c odious /y 禁知の瘴銃 2026-04-23",
-"1040426200":"/w Codex_of_Sanctity_Verboten /e dark /t staff /a ssr /n codex of sanctity verboten /y 禁聖の写本 2026-04-23",
+"1040426200":"/w Codex_of_Sanctity_Verboten /e dark /t staff /a ssr /n codex of sanctity verboten /c odious /y 禁聖の写本 2026-04-23",
 "1040621500":"/w Machinahand_of_Knowledge_Verboten /e light /t melee /a ssr /n machinahand of knowledge verboten /c odious /y 禁知の機手 2026-04-23",
-"1040029500":"/w Ritesword_of_Sanctity_Verboten /e dark /t sabre /a ssr /n ritesword of sanctity verboten /y 禁聖の儀剣 2026-04-23",
+"1040029500":"/w Ritesword_of_Sanctity_Verboten /e dark /t sabre /a ssr /n ritesword of sanctity verboten /c odious /y 禁聖の儀剣 2026-04-23",
 "1040221100":"/w Spirelance_of_Knowledge_Verboten /e light /t spear /a ssr /n spirelance of knowledge verboten /c odious /y 禁知の尖塔 2026-04-23",
-"1040320000":"/w Spiritcleaver_of_Sanctity_Verboten /e dark /t axe /a ssr /n spiritcleaver of sanctity verboten /y 禁聖の憑斧 2026-04-23",
+"1040320000":"/w Spiritcleaver_of_Sanctity_Verboten /e dark /t axe /a ssr /n spiritcleaver of sanctity verboten /c odious /y 禁聖の憑斧 2026-04-23",
 "3994357000":"/x soul devorer hine-nui /n hine-nui /b unknown /s other /y ヒネ・ヌイ risae matsuda 松田利冴 /! /!!",
 "3994372000":"/n nemone /b erune /s female /y ネモネ ayahi takagaki 高垣彩陽",
 "3994374000":"/n ku-keoloewa /b unknown /s other /y クー・ケオロエワ haruhiko jō 壤晴彦",
@@ -19984,7 +19997,29 @@
 "1040320100":"/w 'Aina_Alaka'i /e earth /t axe /a ssr /n 'aina alaka'i /y 2026-04-30",
 "1030109500":"/w Kahuan_Pahoa /e dark /t dagger /a sr /n kahuan pahoa /y クフア・パホア 2026-04-28",
 "1040221200":"/w Kahuan_Pololu_Kahiko /e dark /t spear /a ssr /n kahuan pololu kahiko /y クフア・カヒコ・ポロウ 2026-04-28",
-"1040221300":"/w Massive_Mentor_Drill /e dark /t spear /a ssr /n massive mentor drill /y 2026-04-30"
+"1040221300":"/w Massive_Mentor_Drill /e dark /t spear /a ssr /n massive mentor drill /y 2026-04-30",
+"3994406000":"/n edward elric /b human /s male /c collab /y エドワード・エルリック romi park 朴ロ美",
+"3994407000":"/n edward elric /b human /s male /c collab /y エドワード・エルリック romi park 朴ロ美",
+"3994410000":"/n alphonse elric /b unknown /c collab /y アルフォンス・エルリック rie kugimiya 釘宮理恵",
+"3994411000":"/x ling yao /n greed /c collab",
+"3994413000":"/n greed /c collab",
+"3994414000":"/n ling yao /b human /s male /c collab",
+"3994417000":"/n roy mustang /b human /s male /c collab",
+"3994418000":"/n roy mustang /b human /s male /c collab",
+"3994420000":"/n olivier mira armstrong /b human /s female /c collab",
+"3994423000":"/n riza hawkeye /b human /s female /c collab",
+"3994424000":"/n alex louis armstrong /b human /s male /c collab",
+"3994425000":"/n may chang /b human /s female /c collab",
+"3994426000":"/n shao may /c collab",
+"3994427000":"/n diamant /c collab",
+"3994440000":"/n new alchemical beast /c collab",
+"3994441000":"/n elderly man /b human /s male /c collab",
+"1100513":"/f flying-boss /x piasa /e water /n spare specimen no.3 /c collab",
+"1201123":"/f beast-boss /x gallardoza /e water /n spare specimen no.10 /c collab",
+"1300473":"/f monster-boss /x leo noir /e water /n revised specimen no.11 /c collab",
+"9103223":"/f other-boss /e water /n new alchemical beast /c collab",
+"3994031000":"/n gran /b human /s male /y グラン /1 /2",
+"3994032000":"/n djeeta /b human /s female /y ジータ /1 /2"
 },
 "mypage":
 {
