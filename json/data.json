@@ -5177,7 +5177,7 @@
 "4200463":{"v":[["","enemy_4200463",null,"ehit_4200463",["esp_4200463_01","esp_4200463_02","esp_4200463_03"]]]},
 "4200482":{"v":[["","enemy_4200482",null,"ehit_4200482",["esp_4200482_01_all","esp_4200482_02_all","esp_4200482_03_all"]]]},
 "4200423":{"v":[["","enemy_4200423",null,"ehit_4200423",["esp_4200423_01","esp_4200423_02","esp_4200423_03"]]],"ra":["raid_appear_4200423"]},
-"4200393":{"v":[["","enemy_4200393",null,"phit_0000000000",[]]]},
+"4200393":{"v":[["","enemy_4200393",null,"phit_0000000000",[]]],"ra":["raid_appear_4200393_2"]},
 "4100823":{"v":[["","enemy_4100823",null,"phit_0000000000",[]]]},
 "4100862":{"v":[["","enemy_4100862",null,"phit_0000000000",[]]]},
 "4200433":{"v":[["","enemy_4200433",null,"ehit_4200433",["esp_4200433_01","esp_4200433_02","esp_4200433_03"]]]},
@@ -6178,7 +6178,7 @@
 "9100133":{"v":[["","enemy_9100133",null,"ehit_9100133",["esp_9100133_01","esp_9100133_02","esp_9100133_03"]]]},
 "6202222":{"v":[["","enemy_6202222",null,"phit_0000000000",[]]]},
 "9100182":{"v":[["","enemy_9100182",null,"phit_0000000000",[]]]},
-"8101213":{"v":[["","enemy_8101213",null,"ehit_8101213",["esp_8101213_01","esp_8101213_02","esp_8101213_03"]]],"ra":["raid_appear_8101213"]},
+"8101213":{"v":[["","enemy_8101213",null,"ehit_8101213",["esp_8101213_01","esp_8101213_02","esp_8101213_03"]]],"ra":["raid_appear_8101213","raid_appear_8101213_2"]},
 "8101193":{"v":[["","enemy_8101193",null,"phit_0000000000",["esp_8101193_01","esp_8101193_02","esp_8101193_03"]]],"ra":["raid_appear_8101193"]},
 "6202232":{"v":[["","enemy_6202232",null,"phit_0000000000",[]]]},
 "9100183":{"v":[["","enemy_9100183",null,"ehit_9100183",["esp_9100183_01","esp_9100183_02","esp_9100183_03"]]],"ra":["raid_appear_9100183"]},
@@ -7317,7 +7317,8 @@
 "9103283":{"v":[["","enemy_9103283",null,"phit_0000000000",[]]]},
 "9103263":{"v":[["","enemy_9103263",null,"phit_0000000000",[]]]},
 "9103293":{"v":[["","enemy_9103293",null,"phit_0000000000",[]]]},
-"8104843":{"v":[["","enemy_8104843",null,"phit_0000000000",[]]],"ra":["raid_appear_8104843"]}
+"8104843":{"v":[["","enemy_8104843",null,"phit_0000000000",[]]],"ra":["raid_appear_8104843"]},
+"9103303":{"v":[["","enemy_9103303",null,"ehit_9103303",["esp_9103303_01","esp_9103303_02","esp_9103303_03"]]],"ra":["raid_appear_9103303"]}
 },
 "skins":
 {
@@ -12937,7 +12938,7 @@
 "4200363":"/f aberration-boss /x fried shrimp /e water /n garlic bahamut with extra sauce triple the pork and sprouts to the sky",
 "4200373":"/f aberration-boss /x bonfire /e fire /n firewood",
 "4200383":"/f aberration-boss /e fire /n bonfire",
-"4200393":"/f aberration-boss /e wind /n obsidian void",
+"4200393":"/f aberration-boss /e wind /n obsidian void /% /n the fixated resister",
 "4200403":"/f aberration-boss /e earth /n wind-up gallery",
 "4200412":"/f aberration-boss /x ramen /e null /n sublime shio ramen",
 "4200413":"/f aberration-boss /e null /n sublime shio ramen",
@@ -14282,7 +14283,7 @@
 "8101183":"/f primal-boss /e dark /n celeste omega",
 "8101193":"/f primal-boss /e light /n reactor",
 "8101203":"/f primal-boss /e wind /n xolotl",
-"8101213":"/f primal-boss /e wind /n elder vestige",
+"8101213":"/f primal-boss /e wind /n elder vestige /% /n undestroyed gnarler",
 "8101223":"/f primal-boss /x zooey /e light /n grand order",
 "8101233":"/f primal-boss /e light /n grand order",
 "8101243":"/f primal-boss /e light /n grand order",
@@ -20058,8 +20059,9 @@
 "9103283":"/f other-boss /x perfected alchemist /e light /n vigor-filled philosopher's stone /c collab",
 "9103293":"/f other-boss /x chimera flock /e light /n alchemist beast experiment /c collab",
 "3994449000":"/x wulf and renie /n wulf /b unknown /s male /y ウーフ tomoaki maeno 前野智昭",
-"8104843":"/$",
-"3040655000":"/w Greed_and_Ling_Yao /e dark /a ssr /n greed and ling yao /c collab /b other /s male /t attack /p katana melee /y グリード＆リン・ヤオ yuichi nakamura mamoru miyano 中村悠一 宮野真守 2026-05-20"
+"8104843":"/f primal-boss /x nyarlathotep /e wind /n thousand-forms god",
+"3040655000":"/w Greed_and_Ling_Yao /e dark /a ssr /n greed and ling yao /c collab /b other /s male /t attack /p katana melee /y グリード＆リン・ヤオ yuichi nakamura mamoru miyano 中村悠一 宮野真守 2026-05-20",
+"9103303":"/f other-boss /e wind /n the wind walker"
 },
 "mypage":
 {
