@@ -468,9 +468,13 @@ class Player
 		this.pause();
 		// remove listeners
 		for(const cjs of this.m_cjs)
+		{
 			cjs.removeEventListener("animationComplete", this.m_animation_completed_callback);
+		}
 		if(this.m_tick_callback != null)
+		{
 			createjs.Ticker.removeEventListener("tick", this.m_tick_callback);
+		}
 		// clean createjs
 		this.m_stage.removeAllEventListeners();
 		this.m_stage.removeAllChildren();
@@ -481,7 +485,9 @@ class Player
 		this.init_attributes(mode);
 		loader.reset();
 		if(window.audio)
+		{
 			window.audio.reset();
+		}
 		this.ui.reset();
 		
 		// set speed
@@ -1509,10 +1515,14 @@ class Player
 	change_version(index, motion)
 	{
 		if(index == this.m_current_cjs) // same as current one, abort
+		{
 			return;
+		}
 		// check if it exists for upcoming version
 		if(motion != "default" && !this.m_motion_lists[index].includes(motion))
+		{
 			motion = "default";
+		}
 		// terminate previous animation
 		const data = this.get_current_animation_cjs()
 		if(data != null)
@@ -1526,7 +1536,9 @@ class Player
 		this.m_child_tweens = [];
 		// stop on going audios
 		if(window.audio)
+		{
 			window.audio.stop_all();
+		}
 		// select new cjs and add to stage
 		this.m_current_cjs = index;
 		this.m_stage.addChild(this.m_cjs[this.m_current_cjs]);
@@ -1534,15 +1546,23 @@ class Player
 		this.ui.update_motion_control(this.m_motion_lists[this.m_current_cjs]);
 		// set playlist
 		if(motion == "default")
+		{
 			this.m_current_motion_list = this.get_animations()[index].demo_motions;
+		}
 		else
+		{
 			this.m_current_motion_list = [motion];
+		}
 		// update current motion
 		this.m_current_motion--;
 		if(this.m_current_motion >= this.m_current_motion_list.length)
+		{
 			this.m_current_motion = 0;
+		}
 		else if(this.m_current_motion < 0)
+		{
 			this.m_current_motion = this.m_current_motion_list.length - 1;
+		}
 		// update main character main_hand
 		this.update_main_hand_weapon();
 		// play animation
@@ -1553,19 +1573,25 @@ class Player
 	play_next(previous_cjs)
 	{
 		if(this.m_looping_index == null)
+		{
 			return;
+		}
 		if(this.m_dispatch_stack[this.m_looping_index] == _.max(this.m_dispatch_stack))
 		{
 			this.m_dispatch_stack[this.m_looping_index] = 0;
 			if(previous_cjs)
+			{
 				previous_cjs.dispatchEvent("animationComplete");
+			}
 		}
 		else
 		{
 			this.m_dispatch_stack[this.m_looping_index] = 0;
 			// if not looping or is mypage, we fire the dispatch
 			if(previous_cjs && (!this.m_looping || this.m_layout_mode == PlayerLayoutMode.mypage))
+			{
 				previous_cjs.dispatchEvent("animationComplete");
+			}
 		}
 	}
 	
@@ -1583,7 +1609,9 @@ class Player
 		// increase motion index
 		this.m_current_motion++;
 		if(this.m_current_motion >= this.m_current_motion_list.length)
+		{
 			this.m_current_motion = 0;
+		}
 		// play next motion
 		this.play(this.m_current_motion_list[this.m_current_motion]);
 	}
@@ -1599,18 +1627,26 @@ class Player
 				{
 					this.m_texture_state[name].version == null;
 					if(this.m_texture_state[name].swap == null)
+					{
 						images[name].src = this.m_texture_state[name].ori;
+					}
 					else
+					{
 						images[name].src = this.m_texture_state[name].swap.url;
+					}
 				}
 				else if(alt + this.m_current_cjs in this.m_texture_state)
 				{
 					
 					this.m_texture_state[name].version = alt + this.m_current_cjs;
 					if(this.m_texture_state[this.m_texture_state[name].version].swap == null)
+					{
 						images[name].src = this.m_texture_state[this.m_texture_state[name].version].ori;
+					}
 					else
+					{
 						images[name].src = this.m_texture_state[this.m_texture_state[name].version].swap.url;
+					}
 				}
 			}
 		}
@@ -1634,8 +1670,15 @@ class Player
 		this.m_texture_state[name].swap.url = URL.createObjectURL(this.m_texture_state[name].swap.blob);
 		images[name].src = this.m_texture_state[name].swap.url;
 		// update main hand if we updated ones of those
-		if(["weapon", "weapon_l", "weapon_r", "weapon2a", "weapon2b", "familiar", "shield"].includes(name) || name.startsWith("weapon_version_") || name.startsWith("familiar_version_") || name.startsWith("shield_version"))
+		if(
+			["weapon", "weapon_l", "weapon_r", "weapon2a", "weapon2b", "familiar", "shield"].includes(name)
+			|| name.startsWith("weapon_version_")
+			|| name.startsWith("familiar_version_")
+			|| name.startsWith("shield_version")
+		)
+		{
 			this.update_main_hand_weapon();
+		}
 	}
 	
 	// reset a texture to its original
@@ -1677,8 +1720,10 @@ class Player
 				// there are two types
 				// attack + damage
 				// and old ones
-				if(animation.specials.length >= 1
-					&& animation.specials[0].includes("_attack"))
+				if(
+					animation.specials.length >= 1
+					&& animation.specials[0].includes("_attack")
+				)
 				{
 					// set list to character summon, summon atk and summon dmg
 					motion_list = ["summon", "summon_atk", "summon_dmg"];
@@ -1713,7 +1758,9 @@ class Player
 								)
 							)
 						)
+						{
 							continue;
+						}
 						// remove the file name part
 						motion_str = motion_str.substr(cjs.name.length + 1);
 						// add to list
@@ -1772,9 +1819,13 @@ class Player
 			createjs.Ticker.removeEventListener("tick", this.m_stage);
 			// pause all tweens
 			if(this.m_main_tween)
+			{
 				this.m_main_tween.paused = true;
+			}
 			for(let child of this.m_child_tweens)
+			{
 				child.paused = true;
+			}
 			this.ui.m_buttons.pause.classList.toggle("player-button-warning", true);
 		}
 	}
@@ -1789,9 +1840,13 @@ class Player
 			createjs.Ticker.addEventListener("tick", this.m_stage);
 			// unpause all tweens
 			if(this.m_main_tween)
+			{
 				this.m_main_tween.paused = false;
+			}
 			for(let child of this.m_child_tweens)
+			{
 				child.paused = false;
+			}
 			this.ui.m_buttons.pause.classList.toggle("player-button-warning", false);
 		}
 	}
@@ -1801,14 +1856,18 @@ class Player
 	{
 		// clean up extra animations
 		for(let ex of this.m_tween_sources)
+		{
 			this.m_stage.removeChild(ex);
+		}
 		this.m_tween_sources = [];
 		this.m_child_tweens = [];
 		// update stage to apply
 		this.m_stage.update();
 		// stop playing audio
 		if(window.audio)
+		{
 			window.audio.stop_all();
+		}
 		// set current motion to last one
 		this.m_current_motion = this.m_current_motion_list.length - 1;
 		// fire animation complete
@@ -1822,7 +1881,9 @@ class Player
 		if(this.m_tick_callback == null)
 		{
 			if(this.m_paused)
+			{
 				this.resume();
+			}
 			this.m_tick_callback = this.pause_next_tick.bind(this);
 			createjs.Ticker.addEventListener("tick", this.m_tick_callback);
 		}
@@ -1841,7 +1902,9 @@ class Player
 		try
 		{
 			if(this.m_tick_callback != null)
+			{
 				return;
+			}
 			// pause the player first
 			this.pause();
 			// detect the mimetype
@@ -1860,7 +1923,9 @@ class Player
 			{
 				console.error("This feature isn't supported on your device/browser.");
 				if(typeof push_popup !== "undefined")
+				{
 					push_popup("This feature isn't supported on your device/browser.");
+				}
 				return;
 			}
 			// set callback
@@ -1913,7 +1978,9 @@ class Player
 			this.m_recording.rec.ondataavailable = e => {
 				// when new data is available
 				if(e.data) // add data to chunks
+				{
 					this.m_recording.chunks.push(e.data);
+				}
 			}
 			this.m_recording.rec.onstop = e => {
 				// when recording is stopped
@@ -1956,7 +2023,9 @@ class Player
 			// send error messages
 			console.error("Exception thrown", err.stack);
 			if(typeof push_popup !== "undefined")
+			{
 				push_popup("An error occured. This feature might be unavailable on your device/browser.");
+			}
 		}
 	}
 	
@@ -2014,7 +2083,9 @@ class Player
 					this.m_tick_callback = null;
 					// add popup
 					if(typeof push_popup !== "undefined")
+					{
 						push_popup("Finalizing...");
+					}
 					// We wait a bit before ending the this.m_recording
 					// The delay is needed for to let MediaRecorder finishes what it's doing or frames might be missing
 					setTimeout(() => {
@@ -2104,7 +2175,9 @@ class Player
 			// send error messages
 			console.error("Exception thrown", err.stack);
 			if(typeof push_popup !== "undefined")
+			{
 				push_popup("An error occured. This feature might be unavailable on your device/browser.");
+			}
 		}
 	}
 	
@@ -2136,7 +2209,9 @@ class Player
 		link.click();
 		// add popup
 		if(typeof push_popup !== "undefined")
+		{
 			push_popup("Video saved as " + link.download);
+		}
 		// clean up object url
 		URL.revokeObjectURL(url);
 	}
@@ -2148,6 +2223,7 @@ function init_player(mode = PlayerLayoutMode.normal)
 	if(player != null)
 	{
 		player.restart(mode);
+		player.ui.m_canvas_container.scrollIntoView();
 	}
 	else
 	{
