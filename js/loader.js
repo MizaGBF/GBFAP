@@ -47,22 +47,22 @@ class Loader
 		// Each manifest has an equivalent animation in the cjs folder
 		var cjs_deferred = new $.Deferred();
 		var load_queue = new createjs.LoadQueue(false, Game.jsUri + "/", true);
-		load_queue.setMaxConnections(20);
+		load_queue.setMaxConnections(40);
 		
 		// set events
-		load_queue.on("complete", function() {
+		load_queue.on("complete", () => {
 			cjs_deferred.resolve();
 		});
 		
-		load_queue.on("fileload", function(event) {
-			if(event.item)
+		load_queue.on("fileload", (ev) => {
+			if(ev.item)
 			{
-				var id = event.item.id;
+				var id = ev.item.id;
 				if(id)
 				{
 					var file_name = id.split("/").pop();
 					// store in window.lib
-					window.lib[file_name].prototype.playFunc = function(callback) {
+					window.lib[file_name].prototype.playFunc = (callback) => {
 						createjs.Tween.get().wait(1).call(callback);
 					};
 					// set loading
@@ -71,14 +71,14 @@ class Loader
 			}
 		});
 
-		load_queue.on("error", function(event) {
-			console.error("Failed to load CJS", event);
+		load_queue.on("error", (ev) => {
+			console.error("Failed to load CJS", ev);
 			cjs_deferred.reject();
 			error_flag = true;
 		});
 		
 		// make list of cjs files to load
-		var cjs = to_load.map(function(file) {
+		var cjs = to_load.map((file) => {
 			var path = "cjs/" + file;
 			return {
 				id: path,
@@ -129,7 +129,7 @@ class Loader
 			);
 		}
 		// wait for both deferred to end
-		$.when(cjs_deferred, manifest_deferred).always(function() {
+		$.when(cjs_deferred, manifest_deferred).always(() => {
 			if(error_flag)
 			{
 				player.loading_draw_text("An error occured.");
@@ -315,31 +315,34 @@ class Loader
 			var queue_deferred = new $.Deferred();
 			// 3rd parameter is the cross origin, we set it to true (Anonymous) if game_config isn't local
 			var load_queue = new createjs.LoadQueue(false, "", config.use_game_config != "local");
-			load_queue.setMaxConnections(20);
+			load_queue.setMaxConnections(40);
+			load_queue.maintainScriptOrder = false;
 			// to keep track of the progress
 			const total = to_load.length;
 			var count = 0;
 		
 			// set events
-			load_queue.on("complete", function() {
+			load_queue.on("complete", () => {
 				queue_deferred.resolve();
 			});
 			
-			load_queue.on("fileload", function(event) {
-				if(event.item)
+			load_queue.on("fileload", (ev) => {
+				if(ev.item)
 				{
 					player.loading_draw_progress_bar(count++, total, "spritesheets");
-					var id = event.item.id;
-					if(id && event.item.type === createjs.Types.IMAGE)
+					var id = ev.item.id;
+					if(id && ev.item.type === createjs.Types.IMAGE)
 					{
-						window.images[id] = event.result;
+						window.images[id] = ev.result;
 					}
 				}
 			});
 
-			load_queue.on("error", function() {
-				if(event && event.srcElement)
-					console.error("Failed to download spritesheet", event.srcElement.src);
+			load_queue.on("error", (ev) => {
+				if(ev && ev.srcElement)
+				{
+					console.error("Failed to download spritesheet", ev.srcElement.src);
+				}
 				// still increase the count
 				player.loading_draw_progress_bar(count++, total, "spritesheets");
 				// don't reject, others might still download just fine
@@ -348,7 +351,7 @@ class Loader
 			// start download
 			load_queue.loadManifest(to_load, true, "./img/");
 			
-			queue_deferred.always(function() {
+			queue_deferred.always(() => {
 				// add extra versions
 				for(const [dupe, orig] of Object.entries(weapon_dupe_table))
 				{
