@@ -49,9 +49,6 @@ define([], (function() {
 						// nothing, this is just to mute the following errors:
 						// Uncaught (in promise) NotAllowedError: play() failed because the user didn't interact with the document first.
 					});
-					
-					
-					//this.instances.push(audio); // add to playing
 				} catch(err) {
 					console.error("Error attempting to play " + file, err);
 				}
