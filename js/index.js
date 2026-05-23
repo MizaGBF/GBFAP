@@ -133,6 +133,7 @@ function start(conf, changelog)
 	if(use_game_config != null)
 	{
 		config.use_game_config = use_game_config;
+		console.debug("Forced configuration to " + use_game_config);
 	}		
 	// if id is in url parameter
 	let id = get_url_params().get("id");
@@ -236,20 +237,25 @@ function init_load_element(id, target, is_mypage = null)
 		// set this to true to not attempt to load two elements at the same time
 		waiting_player = true;
 		if(player != null)
+		{
 			player.ui.set_control_lock(true);
-		document.getElementById("mypage-select").style.display = "";
-		document.getElementById("animation-select-battle").onclick = function() {
-			document.getElementById("mypage-select").style.display = "none";
+		}
+		const mypage_select = document.getElementById("mypage-select");
+		mypage_select.style.display = "";
+		document.getElementById("animation-select-battle").onclick = () => {
+			mypage_select.style.display = "none";
 			init_load_element(id, target, false);
 		};
-		document.getElementById("animation-select-mypage").onclick = function() {
-			document.getElementById("mypage-select").style.display = "none";
+		document.getElementById("animation-select-mypage").onclick = () => {
+			mypage_select.style.display = "none";
 			init_load_element(id, target, true);
 		};
-		document.getElementById("animation-select-cancel").onclick = function() {
-			document.getElementById("mypage-select").style.display = "none";
+		document.getElementById("animation-select-cancel").onclick = () => {
+			mypage_select.style.display = "none";
 			if(player != null)
+			{
 				player.ui.set_control_lock(false);
+			}
 			waiting_player = false;
 		};
 		return;
@@ -264,7 +270,9 @@ function init_load_element(id, target, is_mypage = null)
 	last_id = id;
 	last_target = target;
 	if(player)
+	{
 		push_popup("Reloading the player...");
+	}
 	// remove fav button before loading
 	init_bookmark_button(false);
 	// load element and player
@@ -293,7 +301,9 @@ function load_element(id, target, data, is_mypage = false)
 		}
 	}
 	if(animations.length == 0)
+	{
 		throw new Error("Element " + id + " doesn't have any animations.");
+	}
 	// display player tab
 	document.getElementById("tab-view").style.display = "";
 	// set bookmark, history and query
@@ -306,7 +316,7 @@ function load_element(id, target, data, is_mypage = false)
 	// open tab
 	open_tab("view");
 	// set the background index category to visible (next frame after index is done generating)
-	update_next_frame(function() {
+	update_next_frame(() => {
 		if(is_mypage)
 		{
 			document.getElementById("mypage-background").style.display = "";
@@ -529,7 +539,7 @@ function player_start_end()
 		add_to(div.getElementById("container-header-element-links"), "img", {
 			cls:["clickable", "img-link", "animation-switcher"],
 			title:"Load other animations",
-			onclick: function() {
+			onclick: () => {
 				if(player == null || waiting_player || player.is_busy())
 				{
 					push_popup("The player is busy, wait until it's available.");
@@ -538,13 +548,14 @@ function player_start_end()
 				{
 					waiting_player = true;
 					player.ui.set_control_lock(true);
-					document.getElementById("mypage-select-toggle").style.display = "";
-					document.getElementById("animation-toggle-confirm").onclick = function() {
-						document.getElementById("mypage-select-toggle").style.display = "none";
+					const mypage_select_toggle = document.getElementById("mypage-select-toggle");
+					mypage_select_toggle.style.display = "";
+					document.getElementById("animation-toggle-confirm").onclick = () => {
+						mypage_select_toggle.style.display = "none";
 						init_load_element(last_id, last_target, player.m_layout_mode != PlayerLayoutMode.mypage);
 					};
-					document.getElementById("animation-toggle-cancel").onclick = function() {
-						document.getElementById("mypage-select-toggle").style.display = "none";
+					document.getElementById("animation-toggle-cancel").onclick = () => {
+						mypage_select_toggle.style.display = "none";
 						player.ui.set_control_lock(false);
 						waiting_player = false;
 					};
@@ -553,7 +564,7 @@ function player_start_end()
 		}).src = "../GBFML/assets/ui/mypage.png";
 	}
 	
-	update_next_frame(function() {
+	update_next_frame(() => {
 		container.innerHTML = "";
 		container.appendChild(fragment);
 	});
