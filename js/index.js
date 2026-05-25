@@ -1,7 +1,6 @@
 /*jshint esversion: 11 */
 
 var settings = {};
-var gbf = null;
 var search = null;
 var timestamp = Date.now(); // last updated timestamp
 var index = null;
@@ -29,7 +28,6 @@ function init() // entry point, called by body onload
 	window.addEventListener('orientationchange', scale_player);
 	
 	// init var
-	gbf = new GBF();
 	bookmark_onclick = index_onclick;
 	history_onclick = index_onclick;
 	
