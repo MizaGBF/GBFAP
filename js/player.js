@@ -11,6 +11,17 @@ const PlayerLayoutMode = Object.freeze({
 	mypage: 2 // my page mode
 });
 
+const PlayerLoadingAssets = Object.freeze({
+	back:new Image(),
+	top:new Image()
+});
+PlayerLoadingAssets.back.src = "js/builtin_assets/loading_back.png";
+PlayerLoadingAssets.top.src = "js/builtin_assets/loading_top.png";
+const PlayerLoadingAssetSize = Object.freeze({
+	w:92,
+	h:92
+});
+
 // the animation player
 class Player
 {
@@ -749,34 +760,35 @@ class Player
 		const ctx = this.ui.m_canvas.getContext("2d");
 		ctx.clearRect(0, 0, Player.c_canvas_size, Player.c_canvas_size);
 		// back of the bar
-		ctx.beginPath();
-		ctx.fillStyle = "#111111";
-		ctx.roundRect(half_size - 200, half_size + 20, 400, 10, 5);
-		ctx.fill();
-		// fill part of the bar
-		ctx.beginPath();
-		// make gradient for the fill bar
-		const gradient = ctx.createLinearGradient(
-			half_size - 200,
-			half_size,
-			half_size + 200,
-			half_size
+		ctx.drawImage(
+			PlayerLoadingAssets.back,
+			half_size - PlayerLoadingAssetSize.w / 2,
+			half_size - 10
 		);
-		gradient.addColorStop(0, "#ff0000");
-		gradient.addColorStop(0.5, "#ffffff");
-		gradient.addColorStop(1, "#2bfafa");
-		ctx.fillStyle = gradient;
-		ctx.roundRect(half_size - 200, half_size + 20, 400 * count / limit, 10, 5);
-		ctx.fill();
+		const top_height = PlayerLoadingAssetSize.h * (count / limit);
+		if(top_height > 0)
+		{
+			ctx.drawImage(
+				PlayerLoadingAssets.top,
+				
+				0, 0,
+				PlayerLoadingAssetSize.w, top_height,
+
+				half_size - PlayerLoadingAssetSize.w / 2,
+				half_size - 10,
+				PlayerLoadingAssetSize.w,
+				top_height
+			);
+		}
 		// text
 		ctx.font = "20px Consolas, monospace";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		ctx.strokeStyle = "black";
 		ctx.lineWidth = 8;
-		ctx.strokeText(count + " / " + limit + (suffix != "" ? " " + suffix : ""), half_size, half_size); // outline
+		ctx.strokeText(count + " / " + limit + (suffix != "" ? " " + suffix : ""), half_size, half_size - 30); // outline
 		ctx.fillStyle = "white";
-		ctx.fillText(count + " / " + limit + (suffix != "" ? " " + suffix : ""), half_size, half_size);
+		ctx.fillText(count + " / " + limit + (suffix != "" ? " " + suffix : ""), half_size, half_size - 30);
 	}
 	
 	// set the Animation datas
