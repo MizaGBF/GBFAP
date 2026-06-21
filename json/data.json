@@ -7335,7 +7335,8 @@
 "6206283":{"v":[["","enemy_6206283",null,"phit_0000000000",["esp_6206283_04"]]],"ra":["raid_appear_6206283"]},
 "6206313":{"v":[["","enemy_6206313",null,"phit_0000000000",[]]]},
 "6206293":{"v":[["","enemy_6206293",null,"phit_0000000000",[]]]},
-"6206303":{"v":[["","enemy_6206303",null,"phit_0000000000",[]]]}
+"6206303":{"v":[["","enemy_6206303",null,"phit_0000000000",[]]]},
+"8105043":{"v":[["","enemy_8105043",null,"ehit_8105043",["esp_8105043_01","esp_8105043_02","esp_8105043_03"]]],"ra":["raid_appear_8105043"]}
 },
 "skins":
 {
@@ -20109,7 +20110,8 @@
 "3040661000":"/w Notus /e wind /a ssr /n notus /b primal /s female /t attack /p staff melee /y ノトス rui tanabe 田辺留依 2026-06-16",
 "3040660000":"/w Shao_(SSR) /e dark /a ssr /n shao /b erune /s male /t balanced /p staff /y シャオ takahiro sakurai 櫻井孝宏 2026-06-16",
 "1040426400":"/w Ever_a_Wanderer /e wind /t staff /a ssr /n ever a wanderer /y エバーワンダラー 2026-06-16",
-"1040123000":"/w Mixing_Spoon /e dark /t dagger /a ssr /n mixing spoon /y ミスチェ・コクレアーレ 2026-06-16"
+"1040123000":"/w Mixing_Spoon /e dark /t dagger /a ssr /n mixing spoon /y ミスチェ・コクレアーレ 2026-06-16",
+"8105043":"/$"
 },
 "mypage":
 {
