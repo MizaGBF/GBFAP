@@ -20106,12 +20106,12 @@
 "1040621800":"/w Nebula_Gauntlets /e fire /t melee /a ssr /n nebula gauntlets /c grand /y ネビュラ・ガントレット 2026-05-31",
 "1040426300":"/w Radiant_Rod /e earth /t staff /a ssr /n radiant rod /y レディエント・ロッド 2026-05-31",
 "1040320200":"/w Steelflame_Hornaxe /e fire /t axe /a ssr /n steelflame hornaxe /y 鋼炎の角斧 2026-05-29",
-"3994471000":"/$",
+"3994471000":"/n urhirsch /b primal",
 "3040661000":"/w Notus /e wind /a ssr /n notus /b primal /s female /t attack /p staff melee /y ノトス rui tanabe 田辺留依 2026-06-16",
 "3040660000":"/w Shao_(SSR) /e dark /a ssr /n shao /b erune /s male /t balanced /p staff /y シャオ takahiro sakurai 櫻井孝宏 2026-06-16",
 "1040426400":"/w Ever_a_Wanderer /e wind /t staff /a ssr /n ever a wanderer /y エバーワンダラー 2026-06-16",
 "1040123000":"/w Mixing_Spoon /e dark /t dagger /a ssr /n mixing spoon /y ミスチェ・コクレアーレ 2026-06-16",
-"8105043":"/$"
+"8105043":"/f primal-boss /e wind /n urhirsch"
 },
 "mypage":
 {
