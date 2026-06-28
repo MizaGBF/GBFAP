@@ -4522,7 +4522,9 @@
 "1040621800":{"w":["1040621800","1040621800"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040621800",["sp_1040621800_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040621800",["sp_1040621800_1_s2"]]]},
 "1040426300":{"w":["1040426300","1040426300"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040426300",["sp_1040426300_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040426300",["sp_1040426300_1_s2"]]]},
 "1040123000":{"w":["1040123000","1040123000"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040123000",["sp_1040123000_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040123000",["sp_1040123000_1_s2"]]]},
-"1040426400":{"w":["1040426400","1040426400"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040426400",["sp_1040426400_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040426400",["sp_1040426400_1_s2"]]]}
+"1040426400":{"w":["1040426400","1040426400"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040426400",["sp_1040426400_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040426400",["sp_1040426400_1_s2"]]]},
+"1030010600":{"w":["1030010600","1030010600"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1030010600",["sp_1030010600_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1030010600",["sp_1030010600_1_s2"]]]},
+"1040918600":{"w":["1040918600","1040918600"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040918600",["sp_1040918600_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040918600",["sp_1040918600_1_s2"]]]}
 },
 "enemies":
 {
@@ -7336,7 +7338,9 @@
 "6206313":{"v":[["","enemy_6206313",null,"phit_0000000000",[]]]},
 "6206293":{"v":[["","enemy_6206293",null,"phit_0000000000",[]]]},
 "6206303":{"v":[["","enemy_6206303",null,"phit_0000000000",[]]]},
-"8105043":{"v":[["","enemy_8105043",null,"ehit_8105043",["esp_8105043_01","esp_8105043_02","esp_8105043_03"]]],"ra":["raid_appear_8105043"]}
+"8105043":{"v":[["","enemy_8105043",null,"ehit_8105043",["esp_8105043_01","esp_8105043_02","esp_8105043_03"]]],"ra":["raid_appear_8105043"]},
+"2200923":{"v":[["","enemy_2200923",null,"ehit_2200923",["esp_2200923_01","esp_2200923_02","esp_2200923_03","esp_2200923_04"]]],"ra":["raid_appear_2200923"]},
+"9103341":{"v":[["","enemy_9103341",null,"phit_0000000000",[]]],"ra":["raid_appear_9103341"]}
 },
 "skins":
 {
@@ -10549,7 +10553,7 @@
 "3992424000":"/n cupitan /b human /s female /y クピタン ayana taketatsu 竹達彩奈 /_",
 "3992425000":"/n tristette /b draph /s female /y トリステット mikako komatsu 小松未可子 /_",
 "3992426000":"/n artemis /b primal /y アルテミス /! /!!",
-"3992427000":"/n giant cagliostro /b human /s female /y カリオストロ sakura tange 丹下桜 /! /!!",
+"3992427000":"/x cagliostro /n giant cagliostro /b human /s female /y カリオストロ sakura tange 丹下桜 /! /!!",
 "3992428000":"/n lu woh /y ル・オー /! /!!",
 "3992429000":"/n devourer of stars /!",
 "3992430000":"/n osiris /b primal /s female /! /!!",
@@ -17295,7 +17299,7 @@
 "1040317900":"/w Fight_Suppressor_(Light) /e light /t axe /a ssr /n fight suppressor /c ccw /y コンバットサプレッション 2024-05-29",
 "1040317600":"/w Fight_Suppressor_(Water) /e water /t axe /a ssr /n fight suppressor /c ccw /y コンバットサプレッション 2024-05-29",
 "1040317800":"/w Fight_Suppressor_(Wind) /e wind /t axe /a ssr /n fight suppressor /c ccw /y コンバットサプレッション 2024-05-29",
-"1040705000":"/w Fimbul /e water /t bow /a ssr /n fimbul /y フィン 2016-08-16",
+"1040705000":"/w Fimbul /e water /t bow /a ssr /n fimbul /y フィンブル 2016-08-16",
 "1030606600":"/w Fine_Banana /e water /t melee /a sr /n fine banana /y ファイン・バナナ 2018-05-31",
 "1020102000":"/w Fire_Baselard /e fire /t dagger /a r /n fire baselard /y ファイアバゼラード",
 "1020200400":"/w Fire_Glaive /e fire /t spear /a r /n fire glaive /y ファイアグレイブ",
@@ -20106,12 +20110,35 @@
 "1040621800":"/w Nebula_Gauntlets /e fire /t melee /a ssr /n nebula gauntlets /c grand /y ネビュラ・ガントレット 2026-05-31",
 "1040426300":"/w Radiant_Rod /e earth /t staff /a ssr /n radiant rod /y レディエント・ロッド 2026-05-31",
 "1040320200":"/w Steelflame_Hornaxe /e fire /t axe /a ssr /n steelflame hornaxe /y 鋼炎の角斧 2026-05-29",
-"3994471000":"/n urhirsch /b primal",
+"3994471000":"/x elmott /n fire spirit",
 "3040661000":"/w Notus /e wind /a ssr /n notus /b primal /s female /t attack /p staff melee /y ノトス rui tanabe 田辺留依 2026-06-16",
 "3040660000":"/w Shao_(SSR) /e dark /a ssr /n shao /b erune /s male /t balanced /p staff /y シャオ takahiro sakurai 櫻井孝宏 2026-06-16",
 "1040426400":"/w Ever_a_Wanderer /e wind /t staff /a ssr /n ever a wanderer /y エバーワンダラー 2026-06-16",
 "1040123000":"/w Mixing_Spoon /e dark /t dagger /a ssr /n mixing spoon /y ミスチェ・コクレアーレ 2026-06-16",
-"8105043":"/f primal-boss /e wind /n urhirsch"
+"8105043":"/f primal-boss /e wind /n urhirsch",
+"3994467000":"/n madam malmosquito /b unknown /s female /y ウェンツィー夫人 umeka shoji 庄司宇芽香 /! /!!",
+"3994472000":"/n atman /b unknown /s male /y アートマン mitsuru miyamoto 宮本充",
+"3994473000":"/n atman /b unknown /s male /y アートマン mitsuru miyamoto 宮本充",
+"3994474000":"/n atman /b unknown /s male /y アートマン mitsuru miyamoto 宮本充",
+"3994475000":"/n mari /b erune /s female /y まりっぺ azumi waki 和氣あず未",
+"3994476000":"/n osiris /b primal /s female",
+"3994477000":"/n osiris /b primal /s female",
+"3994478000":"/n sandira /c 12generals /b human /s female /y サンチラ megumi nakajima 中島愛",
+"3994479000":"/n lohr /b human /s male /y ロア tatsumaru tachibana 橘龍丸",
+"3994480000":"/n sakuna /b human /s female /y サクナ yuka nukui 貫井柚佳",
+"3994481000":"/x madam malmosquito /n madam wenzi /b unknown /s female /y ウェンツィー夫人 umeka shoji 庄司宇芽香",
+"3994482000":"/x madam malmosquito /n mosquito person /b unknown /s other /y 蚊人間",
+"3994483000":"/n madam malmosquito /b unknown /s female /y ウェンツィー夫人 umeka shoji 庄司宇芽香",
+"3994484000":"/n madam malmosquito /b unknown /s female /y ウェンツィー夫人 umeka shoji 庄司宇芽香",
+"3994485000":"/n madam malmosquito /b unknown /s female /y ウェンツィー夫人 umeka shoji 庄司宇芽香",
+"3994486000":"/n villager chief /b human /s male",
+"3994487000":"/n twin girl /b human /s female",
+"3994488000":"/n twin girl /b human /s female",
+"3994489000":"/n chisui shrine",
+"2200923":"/f insect-boss /e wind /n madam malmosquito",
+"9103341":"/f other-boss /e wind /n netherwood wraith",
+"3994037000":"/$",
+"3994126000":"/$"
 },
 "mypage":
 {
