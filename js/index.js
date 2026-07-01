@@ -118,7 +118,7 @@ function start(conf, changelog)
 				GBFType.job,
 				GBFType.enemy
 			],
-			allow_lookup:(config.allow_id_input ?? false),
+			allow_lookup:(conf.allow_id_input ?? false),
 			allow_search_param:true
 		}
 	);
