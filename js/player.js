@@ -70,6 +70,7 @@ class Player
 		WAIT_3_C:{name:"Idle 3 C",key:"wait_3_C"},
 		TO_STB_WAIT:{name:"Weapon Drew",key:"setup"},
 		STB_WAIT:{name:"Wpn. Drew (Idle)",key:"stbwait"},
+		STB_WAIT_NO_FAMILIAR:{name:"Wpn. Drew (No Manatura)",key:"stbwait_no_familiar"},
 		STB_WAIT_O:{name:"Wpn. Drew (Orchis)",key:"stbwait_o"}, // BK & Orchis
 		STB_WAIT_ADV:{name:"Wpn. Drew (Idle)(Adv)",key:"stbwait_adv"},
 		CHARA_SELECT:{name:"Selection",key:"chara_select"},
