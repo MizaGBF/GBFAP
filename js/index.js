@@ -308,7 +308,11 @@ function load_element(id, target, data, is_mypage = false)
 	document.getElementById("tab-view").style.display = "";
 	// set bookmark, history and query
 	update_query(id);
-	let type = gbf.index_to_type(target);
+	const type = (
+		is_mypage
+		? gbf.id_to_type(id)
+		: gbf.index_to_type(target)
+	);
 	update_history(id, type);
 	init_bookmark_button(true, id, type);
 	// load the player
