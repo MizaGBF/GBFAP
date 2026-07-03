@@ -565,7 +565,7 @@ function player_start_end()
 					};
 				}
 			}
-		}).src = "../GBFML/assets/ui/mypage.png";
+		}).src = "../GBFML/assets/ui/alt.png";
 	}
 	
 	update_next_frame(() => {
