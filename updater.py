@@ -539,7 +539,7 @@ class Updater():
             # background import
             bg_modified : bool = False
             for k, v in self.gbfal["background"].items():
-                if len(v[0]) != len(self.data["background"].get(k, [[]])[0]):
+                if v[0] != self.data["background"].get(k, [[]])[0]:
                     self.data["background"][k] = v
                     bg_modified = True
             if bg_modified:
