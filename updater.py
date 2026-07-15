@@ -17,7 +17,7 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.15'
+VERSION = '5.16'
 CONCURRENT_TASKS = 100
 MAX_REQUEST = 60
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
@@ -537,8 +537,12 @@ class Updater():
     def fetch_gbfal_data(self : Updater) -> None:
         try:
             # background import
-            if len(self.data["background"]) != len(self.gbfal["background"]):
-                self.data["background"] = self.gbfal["background"]
+            bg_modified : bool = False
+            for k, v in self.gbfal["background"].items():
+                if len(v[0]) != len(self.data["background"].get(k, [[]])[0]):
+                    self.data["background"][k] = v
+                    bg_modified = True
+            if bg_modified:
                 self.modified = True
                 self.tasks.print("New backgrounds imported from GBFAL")
             if len(self.data["mypage_bg"]) != len(self.gbfal["mypage_bg"]):
