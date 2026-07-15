@@ -1019,6 +1019,32 @@
             "hide":true,
             "childs":[
                 {
+                    "name":"Standards",
+                    "childs":[
+                        {
+                            "name":"Part 1",
+                            "icon":"../GBFML/assets/ui/icon/arc_1.png",
+                            "target":"background",
+                            "arg1":"",
+                            "pad":10
+                        },
+                        {
+                            "name":"Part 2",
+                            "icon":"../GBFML/assets/ui/icon/arc_2.png",
+                            "target":"background",
+                            "arg1":"e",
+                            "pad":10
+                        },
+                        {
+                            "name":"Part 3",
+                            "icon":"../GBFML/assets/ui/icon/arc_3.png",
+                            "target":"background",
+                            "arg1":"f",
+                            "pad":10
+                        }
+                    ]
+                },
+                {
                     "name":"Mains",
                     "target":"background",
                     "arg1":"main",
@@ -1036,14 +1062,6 @@
                     "name":"Events",
                     "target":"background",
                     "arg1":"event",
-                    "pad":1,
-                    "reverse":1
-                },
-                {
-                    "name":"Others",
-                    "target":"background",
-                    "arg1":"",
-                    "text": "No particular order",
                     "pad":1,
                     "reverse":1
                 }
