@@ -1011,7 +1011,9 @@
 "3040660000":{"v":[["0★","npc_3040660000_01","mortal_A","phit_3040660000",["nsp_3040660000_01_s2"]],["4★","npc_3040660000_02","mortal_A","phit_3040660000_02",["nsp_3040660000_02_s2"]]],"ab":["ab_3040660000_02","ab_3040660000_03","ab_3040660000_04","ab_all_3040660000_01","ab_all_3040660000_02"]},
 "3040661000":{"v":[["0★","npc_3040661000_01","mortal_A","phit_3040661000",["nsp_3040661000_01_s2"]],["4★","npc_3040661000_02","mortal_A","phit_3040661000_02",["nsp_3040661000_02_s2"]]],"ab":["ab_3040661000_02","ab_3040661000_03","ab_all_3040661000_01","ab_all_3040661000_02"]},
 "3040663000":{"v":[["0★","npc_3040663000_01","mortal_A","phit_3040663000",["nsp_3040663000_01_s2"]],["4★","npc_3040663000_02","mortal_A","phit_3040663000_02",["nsp_3040663000_02_s2"]]],"ab":["ab_3040663000_01","ab_3040663000_02","ab_3040663000_03","ab_3040663000_04","ab_all_3040663000_01","ab_all_3040663000_02"]},
-"3040662000":{"v":[["0★","npc_3040662000_01","mortal_A","phit_3040662000",["nsp_3040662000_01_s2"]],["4★","npc_3040662000_02","mortal_A","phit_3040662000_02",["nsp_3040662000_02_s2"]]],"ab":["ab_3040662000_01","ab_3040662000_05","ab_all_3040662000_03","ab_all_3040662000_04"]}
+"3040662000":{"v":[["0★","npc_3040662000_01","mortal_A","phit_3040662000",["nsp_3040662000_01_s2"]],["4★","npc_3040662000_02","mortal_A","phit_3040662000_02",["nsp_3040662000_02_s2"]]],"ab":["ab_3040662000_01","ab_3040662000_05","ab_all_3040662000_03","ab_all_3040662000_04"]},
+"3040665000":{"v":[["0★","npc_3040665000_01","mortal_A","phit_3040665000",["nsp_3040665000_01_s2"]],["4★","npc_3040665000_02","mortal_A","phit_3040665000",["nsp_3040665000_02_s2"]]],"ab":["ab_3040665000_01","ab_all_3040665000_01","ab_all_3040665000_02","ab_all_3040665000_03","ab_all_3040665000_04","ab_all_3040665000_05","ab_all_3040665000_06"]},
+"3040664000":{"v":[["0★","npc_3040664000_01","mortal_A","phit_3040664000",["nsp_3040664000_01_s2"]],["4★","npc_3040664000_02","mortal_A","phit_3040664000_02",["nsp_3040664000_02_s2"]]],"ab":["ab_3040664000_01","ab_all_3040664000_01","ab_all_3040664000_02"]}
 },
 "partners":
 {
@@ -4529,7 +4531,9 @@
 "1030010600":{"w":["1030010600","1030010600"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1030010600",["sp_1030010600_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1030010600",["sp_1030010600_1_s2"]]]},
 "1040918600":{"w":["1040918600","1040918600"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040918600",["sp_1040918600_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040918600",["sp_1040918600_1_s2"]]]},
 "1040818500":{"w":["1040818500","1040818500"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040818500",["sp_1040818500_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040818500",["sp_1040818500_1_s2"]]]},
-"1040715400":{"w":["1040715400","1040715400"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715400",["sp_1040715400_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715400",["sp_1040715400_1_s2"]]]}
+"1040715400":{"w":["1040715400","1040715400"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715400",["sp_1040715400_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715400",["sp_1040715400_1_s2"]]]},
+"1040221400":{"w":["1040221400","1040221400"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040221400",["sp_1040221400_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040221400",["sp_1040221400_1_s2"]]]},
+"1040320300":{"w":["1040320300","1040320300"],"v":[["Gran","bsk_ax_0_01","mortal_A","phit_1040320300",["sp_1040320300_0_s2"]],["Djeeta","bsk_ax_1_01","mortal_A","phit_1040320300",["sp_1040320300_1_s2"]]]}
 },
 "enemies":
 {
@@ -10563,7 +10567,7 @@
 "3992427000":"/x cagliostro /n giant cagliostro /b human /s female /y カリオストロ sakura tange 丹下桜 /! /!!",
 "3992428000":"/n lu woh /y ル・オー /! /!!",
 "3992429000":"/n devourer of stars /!",
-"3992430000":"/n osiris /b primal /s female /! /!!",
+"3992430000":"/x ennead /n osiris /b primal /s female /y オシリス asami yoshida 吉田麻実 /! /!!",
 "3992431000":"/n felt /b erune /s female /y フェルト",
 "3992432000":"/w Doraemon_(NPC) /n doraemon /c collab /b unknown /s male /y ドラえもん wasabi mizuta 水田わさび 2021-12-08",
 "3992433000":"/n doraemon /c collab /b unknown /s male /y ドラえもん wasabi mizuta 水田わさび",
@@ -10638,7 +10642,7 @@
 "3992519000":"/w Ramen_Musketeers_(NPC) /n ramen musketeers /b human /s male /y らぁめん三騎士 keiichi nakagawa kouji takeda mitsuaki kanuka 中川慶一 武田幸史 かぬか光明 2022-01-30 /!",
 "3992520000":"/n ramen musketeers /b human /s male /y らぁめん三騎士 keiichi nakagawa kouji takeda mitsuaki kanuka 中川慶一 武田幸史 かぬか光明 /! /!!",
 "3992521000":"/n ramen musketeers /b human /s male /y らぁめん三騎士 keiichi nakagawa kouji takeda mitsuaki kanuka 中川慶一 武田幸史 かぬか光明 /! /!!",
-"3992522000":"/n horus /b primal /s female /y ホルス misa ishii 石井未紗 /! /!!",
+"3992522000":"/x ennead /n horus /b primal /s female /y ホルス misa ishii 石井未紗 /! /!!",
 "3992523000":"/x yaia /n feino charley horse",
 "3992524000":"/n feino leos fairy fairies",
 "3992525000":"/x kumbhira /n kumbhira's brother /b draph /s male",
@@ -10713,10 +10717,10 @@
 "3992603000":"/n satyr /b primal /s female /y サテュロス manaka iwami 石見舞菜香",
 "3992604000":"/n swimsuit boy /b human /s male",
 "3992605000":"/n swimsuit girl /b human /s female",
-"3992606000":"/n bennu /b primal /s male /y ベンヌ /! /!!",
-"3992607000":"/n atum /b primal /s male /y アトゥム kengo takanashi 高梨謙吾 /! /!!",
-"3992608000":"/n tefnut /b primal /s female /y テフヌト yui kondo 近藤唯 テフヌト /! /!!",
-"3992609000":"/n ra /b primal /s female /y ラー /! /!!",
+"3992606000":"/x ennead /n bennu /b primal /s male /y ベンヌ /! /!!",
+"3992607000":"/x ennead /n atum /b primal /s male /y アトゥム kengo takanashi 高梨謙吾 /! /!!",
+"3992608000":"/x ennead /n tefnut /b primal /s female /y テフヌト yui kondo 近藤唯 テフヌト /! /!!",
+"3992609000":"/x ennead /n ra /b primal /s female /y ラー /! /!!",
 "3992610000":"/n zirnitra /b primal /s female /y ジルニトラ /! /!!",
 "3992612000":"/n anre /c eternals /b harvin /s male /y ウーノ ryūsei nakao 中尾隆聖 /1",
 "3992613000":"/n anre /c eternals /b harvin /s male /y ウーノ ryūsei nakao 中尾隆聖 /1",
@@ -11517,7 +11521,7 @@
 "3993456000":"/n tefnut /b primal /s female /y テフヌト yui kondo 近藤唯",
 "3993457000":"/n ra /b primal /s female",
 "3993458000":"/n horus /b primal /s female /y ホルス misa ishii 石井未紗",
-"3993459000":"/n osiris /b primal /s female",
+"3993459000":"/n osiris /b primal /s female /y オシリス asami yoshida 吉田麻実",
 "3993460000":"/x phoenix /w Fenie_(NPC) /n fenie /b unknown /s female /y フェニー konomi kohara 小原好美 2024-03-12",
 "3993461000":"/n repti /b unknown /s male /y レプティ akira ishida 石田彰",
 "3993462000":"/x sandalphon /n raziel /b primal /s female /y ラジエル ayaka nanase 七瀬彩夏",
@@ -11530,7 +11534,7 @@
 "3993470000":"/n tefnut /b primal /s female /y テフヌト yui kondo 近藤唯",
 "3993471000":"/n ra /b primal /s female",
 "3993472000":"/n horus /b primal /s female /y ホルス misa ishii 石井未紗",
-"3993473000":"/n osiris /b primal /s female",
+"3993473000":"/n osiris /b primal /s female /y オシリス asami yoshida 吉田麻実",
 "3993474000":"/n fenie /b unknown /s female /y フェニー konomi kohara 小原好美",
 "3993475000":"/n ceodric /b human /s male /y セオドリク kent itō 伊東健人",
 "3993476000":"/n magus astaroth /y メイガス nanako mori 森なな子",
@@ -20128,8 +20132,8 @@
 "3994473000":"/n atman /b unknown /s male /y アートマン mitsuru miyamoto 宮本充",
 "3994474000":"/n atman /b unknown /s male /y アートマン mitsuru miyamoto 宮本充",
 "3994475000":"/n mari /b erune /s female /y まりっぺ azumi waki 和氣あず未",
-"3994476000":"/n osiris /b primal /s female",
-"3994477000":"/n osiris /b primal /s female",
+"3994476000":"/n osiris /b primal /s female /y オシリス asami yoshida 吉田麻実",
+"3994477000":"/n osiris /b primal /s female /y オシリス asami yoshida 吉田麻実",
 "3994478000":"/n sandira /c 12generals /b human /s female /y サンチラ megumi nakajima 中島愛",
 "3994479000":"/w Lohr_(NPC) /n lohr /b human /s male /y ロア tatsumaru tachibana 橘龍丸 2026-06-28",
 "3994480000":"/w Sakuna_(NPC) /n sakuna /b human /s female /y サクナ yuka nukui 貫井柚佳 2026-06-28",
@@ -20157,7 +20161,12 @@
 "130501":"/w Wizard_Origin /x main character /n wizard origin /m class /y ウィザード・オリジン 2026-07-02",
 "2040458000":"/w The_Supreme_Conqueror /e dark /a ssr /n the supreme conqueror /c providence /y 至高無上の金剛覇者 2026-07-09 /2",
 "3994491000":"/x cucouroux /n clak /b wolvir /s female",
-"3994492000":"/n clak /b wolvir /s female"
+"3994492000":"/n clak /b wolvir /s female",
+"3994496000":"/n osiris /b primal /s female /y オシリス asami yoshida 吉田麻実",
+"3040665000":"/w Atman_(Summer) /e fire /a ssr /n atman /c summer /b unknown /s male /t special /p sabre harp /y アートマン mitsuru miyamoto 宮本充 2026-07-16",
+"3040664000":"/w Osiris_(Yukata) /e dark /a ssr /n osiris /c yukata /b primal /s female /t special /p staff /y オシリス asami yoshida 吉田麻実 2026-07-16",
+"1040320300":"/w Exhilarating_Banana /e fire /t axe /a ssr /n exhilarating banana /y エキサイトバナーナ 2026-07-16",
+"1040221400":"/w Netherbloom_Parasol /e dark /t spear /a ssr /n netherbloom parasol /y 冥絡の花傘 2026-07-16"
 },
 "mypage":
 {
