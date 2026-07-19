@@ -26,17 +26,29 @@
 	<script src="../GBFML/js/util.js"></script>
 	<script src="../GBFML/js/search.js"></script>
 	<script src="../GBFML/js/audio_player.js"></script>
+	<script src="../GBFML/js/theme.js"></script>
 	<script src="js/index.js"></script>
 	<script src="js/page_override.js"></script>
 	<script src="js/animation.js"></script>
 	<script src="js/load_player.js"></script>
 	<script src="js/vendors/require.js"></script>
 	<link rel="dns-prefetch" href="https://prd-game-a-granbluefantasy.akamaized.net/" />
+	<script>
+		const saved_theme = localStorage.getItem("gbfml-theme");
+		const prefer_light = window.matchMedia("(prefers-color-scheme: light)").matches;
+		switch(saved_theme)
+		{
+			case null: document.documentElement.setAttribute("data-theme", prefer_light ? "light" : "dark"); break;
+			case "1": document.documentElement.setAttribute("data-theme", "light"); break;
+			default: document.documentElement.setAttribute("data-theme", "dark"); break;
+		}
+	</script>
 </head>
 <body onload="init()">
+	<button class="theme-toggle" onclick="toggle_theme();"></button>
 	<a href="index.html"><img id="title-header" src="assets/ui/header.png" alt="header"></a>
 	<div id="header">
-		<div>v9.32</div>
+		<div>v9.33</div>
 		<div id="timestamp">Loading...</div>
 	</div>
 	<!-- Debug panel -->
@@ -77,14 +89,14 @@
 	</div>
 	<!-- animation select prompt -->
 	<div class="player-control-vpart user-prompt" id="mypage-select" style="display:none;">
-		Select the Animation
+		<div class="fullscreen-prompt">Select the Animation</div>
 		<button class="player-menu-button user-prompt-button" id="animation-select-battle">Battle</button>
 		<button class="player-menu-button user-prompt-button" id="animation-select-mypage">Home Page</button>
 		<button class="player-menu-button user-prompt-button" id="animation-select-cancel">Cancel</button>
 	</div>
 	<!-- animation toggle prompt -->
 	<div class="player-control-vpart user-prompt" id="mypage-select-toggle" style="display:none;">
-		Switch the Animation?
+		<div class="fullscreen-prompt">Switch the Animation?</div>
 		<button class="player-menu-button user-prompt-button" id="animation-toggle-confirm">Confirm</button>
 		<button class="player-menu-button user-prompt-button" id="animation-toggle-cancel">Cancel</button>
 	</div>

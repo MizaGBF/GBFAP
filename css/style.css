@@ -1,12 +1,12 @@
 @keyframes cyan-background-glow {
 	0% {
-		background-color: #181818;
+		background-color: var(--sub-bg);
 	}
 	70% {
 		background-color: #2bdada;
 	}
 	100% {
-		background-color: #181818;
+		background-color: var(--sub-bg);
 	}
 }
 
@@ -15,8 +15,8 @@
 }
 
 #view {
-	background: #181818;
-	color: #ffffff;
+	background: var(--sub-bg);
+	color: var(--font-col);
 	font-size: 30px;
 	padding: 5px;
 	margin-left: auto;
@@ -34,7 +34,7 @@
 .player-control-part {
 	min-width:800px;
 	max-width:800px;
-	background: #1d1d1d;
+	background: var(--sub-bg-dark);
 	border-radius: 5px;
 	padding: 5px;
 	margin-left: auto;
@@ -49,7 +49,7 @@
 }
 
 .player-control-span {
-	background: #1d1d1d;
+	background: var(--sub-bg-dark);
 	border-radius: 5px;
 	padding: 5px;
 	margin-left: auto;
@@ -69,7 +69,7 @@
 }
 
 .player-select {
-	background-color: #ffffffb0;
+	background-color: var(--select);
 	border: none;
 	margin: 5px;
 	width: 200px;
@@ -83,8 +83,8 @@
 .player-control-button {
 	width: 50px;
 	height: 40px;
-	background: #2d2d30;
-	border-color: #000000;
+	background: var(--main-bg);
+	border-color: var(--font-col);
 	border-radius: 5px;
 	border-style: solid;
 	border: none;
@@ -95,28 +95,28 @@
 }
 
 .player-control-button:disabled {
-	background: #525254;
+	background: var(--disabled);
 }
 
 .player-menu-button {
 	height: 40px;
-	background: #2d2d30;
-	border-color: #000000;
+	background: var(--main-bg);
+	border-color: var(--font-col);
 	border-radius: 5px;
 	border-style: solid;
 	border: none;
 	outline: none;
-	color: white;
+	color: var(--font-col);
 	font-size: 20px;
 }
 
 .player-control-button:hover, .player-menu-button:hover {
-	outline: solid #ffffff;
+	outline: solid var(--highlight);
 }
 
 .player-control-button:active, .player-menu-button:active {
 	animation: animation-button-press 0.1s;
-	outline: solid #007acc;
+	outline: solid var(--active);
 }
 
 .player-control-button:disabled, .player-menu-button:disabled {
@@ -124,9 +124,9 @@
 }
 
 .player-menu {
-	background: #181818ed;
-	color: white;
-	border-color: #000000;
+	background: var(--sub-bg-st);
+	color: var(--font-col-alt);
+	border-color: var(--font-col-alt);
 	border-radius: 5px;
 	border-style: solid;
 }
@@ -144,26 +144,27 @@
 }
 
 .player-button-enabled {
-	background: #004080;
+	background: var(--enabled);
+	color: var(--font-col-alt);
 }
 
 .player-button-warning {
-	background: #bb0000;
+	background: var(--warning);
+	color: var(--font-col-alt);
 }
 
 .player-control-texture-delete-button {
-	background: #bb0000;
+	background: var(--warning);
 }
 
 .user-prompt {
 	position: fixed;
 	top: 0px;
 	left: 0px;
-	background: #181818db;
+	background: var(--sub-bg-st);
 	z-index:100;
 	width: 100%;
 	height: 100%;
-	padding-top:20%;
 }
 
 .user-prompt-button {
