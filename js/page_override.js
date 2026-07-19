@@ -200,36 +200,71 @@ function override_GBFML()
 		}, class:className, link:false}];
 	}
 
-	get_background = function(id, data, key, unused = null)
+	get_background = function(id, data, key = null, unused = null)
 	{
-		if(!data)
-			return null;
 		let path = null;
 		switch(id.split('_')[0])
 		{
 			case "common":
-				if(key != "common")
+			{
+				if(key != null && key != "common")
+				{
 					return null;
+				}
 				path = ["sp/raid/bg/", ".jpg"];
 				break;
+			}
 			case "main":
-				if(key != "main")
+			{
+				if(key != null && key != "main")
+				{
 					return null;
+				}
 				path = ["sp/guild/custom/bg/", ".png"];
 				break;
+			}
 			case "event":
-				if(key != "event")
+			{
+				if(key != null && key != "event")
+				{
 					return null;
+				}
 				path = ["sp/raid/bg/", ".jpg"];
 				break;
+			}
 			default:
-				if(key != "")
+			{
+				const first_character = id[0];
+				if(
+					key != null
+					&& (
+						(
+							key != ""
+							&& key != first_character
+						) || (
+							key == ""
+							&& !"0123456789".includes(first_character)
+						)
+					)
+				)
+				{
 					return null;
+				}
 				path = ["sp/raid/bg/", ".jpg"];
 				break;
+			}
+		}
+		let list = [];
+		if(data)
+		{
+			list = data[0];
+		}
+		else
+		{
+			list = [id];
 		}
 		let ret = [];
-		for(const i of data[0])
+		for(let i of list)
 		{
 			ret.push({
 				id:i,
