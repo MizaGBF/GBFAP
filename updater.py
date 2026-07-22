@@ -17,7 +17,7 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.16'
+VERSION = '5.17'
 CONCURRENT_TASKS = 100
 MAX_REQUEST = 60
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
@@ -103,6 +103,7 @@ NO_CHARGE_ATTACK = set(NO_CHARGE_ATTACK)
 @dataclass(slots=True)
 class TaskManager():
     is_running : bool
+    last_save_time : float
     updater : Updater
     queues : tuple[deque, ...]
     workers : list[asyncio.Task]
@@ -111,11 +112,11 @@ class TaskManager():
     total : int
     finished : int
     print_flag : bool
-    elapsed : float
     pbar : tqdm|None
     
     def __init__(self : TaskManager, updater : Updater) -> None:
         self.is_running = False
+        self.last_save_time = 0
         self.updater = updater
         self.queues = tuple(deque() for _ in range(5))
         self.workers = []
@@ -124,7 +125,6 @@ class TaskManager():
         self.total = 0
         self.finished = 0
         self.print_flag = False
-        self.elapsed = 0
         self.pbar = None
 
     # add a task to one queue
@@ -141,7 +141,20 @@ class TaskManager():
         self.total += 1
         self.work_available.set()
 
-    async def _worker(self):
+    async def _autosave_worker(self : TaskManager) -> None:
+        try:
+            while True:
+                await asyncio.sleep(120)
+                now : float = time.perf_counter()
+                if now - self.last_save_time >= 3600:
+                    self.print("Autosaving...")
+                    self.self.updater.save()
+                    self.updater.save_resume()
+                    self.last_save_time = now
+        except asyncio.CancelledError:
+            return
+
+    async def _worker(self : TaskManager) -> None:
         try:
             task : Task|None
             while True:
@@ -179,8 +192,10 @@ class TaskManager():
             return
         self.is_running = True
         self.all_done.clear()
+        self.last_save_time = time.perf_counter()
         # start the workers pool
         self.workers = [asyncio.create_task(self._worker()) for _ in range(CONCURRENT_TASKS)]
+        self.workers.append(asyncio.create_task(self._autosave_worker()))
         # set progress bar
         if self.pbar is not None:
             self.pbar.close()
@@ -212,13 +227,6 @@ class TaskManager():
         if self.total > 0:
             await self.run()
         return True
-
-    def autosave(self : TaskManager) -> None:
-        if self.updater.modified:
-            self.print(f"Progress: {self.finished} / {self.total} Tasks, autosaving...")
-        self.updater.save()
-        self.updater.save_resume()
-        self.elapsed = time.time()
 
     # print whatever you want, to use instead of print to handle the \r
     def print(self : TaskManager, *args) -> None:
