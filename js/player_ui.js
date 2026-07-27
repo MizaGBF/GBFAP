@@ -1212,6 +1212,8 @@ class PlayerUI
 			// append the motion
 			this.player.m_current_motion_list.push(motion);
 		}
+		// reset motion select to demo
+		this.m_motion.selectedIndex = 0;
 		// send message
 		if(typeof push_popup !== "undefined")
 			push_popup("Your selection will now play.");
