@@ -7691,7 +7691,9 @@
 "3710257000":{"v":[["0★","npc_3710257000_01","mortal_A","phit_3710257000",["nsp_3710257000_01_s2"]]],"ab":[]},
 "3710256000":{"v":[["0★","npc_3710256000_01","mortal_A","phit_3710256000",["nsp_3710256000_01_s2"]]],"ab":[]},
 "3710259000":{"v":[["0★","npc_3710259000_01","mortal_A","phit_3710259000",["nsp_3710259000_01_s2"]]],"ab":[]},
-"3710258000":{"v":[["0★","npc_3710258000_01","mortal_A","phit_3710258000",["nsp_3710258000_01_s2"]]],"ab":[]}
+"3710258000":{"v":[["0★","npc_3710258000_01","mortal_A","phit_3710258000",["nsp_3710258000_01_s2"]]],"ab":[]},
+"3710261000":{"v":[["0★","npc_3710261000_01","mortal_A","phit_3710261000",["nsp_3710261000_01_s2"]]],"ab":[]},
+"3710260000":{"v":[["0★","npc_3710260000_01","mortal_A","phit_3710260000",["nsp_3710260000_01_s2"]],["0★ B","npc_3710260000_01_f1","mortal_A","phit_3710260000_f1",["nsp_3710260000_01_f1_s2"]]],"ab":[]}
 },
 "job":
 {
@@ -20426,7 +20428,9 @@
 "3040671000":"/w You_(Summer) /e water /a ssr /n you /c summer /b erune /s female /t attack /p melee katana /y ヨウ miho wataya 渡谷美帆 2026-07-31",
 "1040715500":"/w Float_of_Loving_Bonds /e water /t bow /a ssr /n float of loving bonds /y 愛沿之浮袋 2026-07-31",
 "1040622000":"/w Sagemon /e wind /t melee /a ssr /n sagemon /y 炸華紋 2026-07-31",
-"1040621900":"/w Seaside_Guardian /e earth /t melee /a ssr /n seaside guardian /y シーサイド・ガーディアン 2026-07-29"
+"1040621900":"/w Seaside_Guardian /e earth /t melee /a ssr /n seaside guardian /y シーサイド・ガーディアン 2026-07-29",
+"3710261000":"/w Lu_Woh /x lu woh /k spotlit parade /n lu woh /y 2026-08-04",
+"3710260000":"/w Narmaya /x narmaya /k martial majesty /n narmaya /y 2026-08-04 /1 /2"
 },
 "mypage":
 {
