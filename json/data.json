@@ -7441,7 +7441,9 @@
 "9102853":{"v":[["","enemy_9102853",null,"phit_0000000000",[]]],"ra":["raid_appear_9102853"]},
 "9103373":{"v":[["","enemy_9103373",null,"phit_0000000000",[]]]},
 "1201173":{"v":[["","enemy_1201173",null,"ehit_1201173",["esp_1201173_01","esp_1201173_02","esp_1201173_03"]]],"ra":["raid_appear_1201173"]},
-"1201183":{"v":[["","enemy_1201183",null,"phit_0000000000",["esp_1201183_04","esp_1201183_05","esp_1201183_06"]]]}
+"1201183":{"v":[["","enemy_1201183",null,"phit_0000000000",["esp_1201183_04","esp_1201183_05","esp_1201183_06"]]]},
+"4200542":{"v":[["","enemy_4200542",null,"phit_0000000000",[]]]},
+"4200552":{"v":[["","enemy_4200552",null,"phit_0000000000",[]]]}
 },
 "skins":
 {
@@ -20430,7 +20432,9 @@
 "1040622000":"/w Sagemon /e wind /t melee /a ssr /n sagemon /y 炸華紋 2026-07-31",
 "1040621900":"/w Seaside_Guardian /e earth /t melee /a ssr /n seaside guardian /y シーサイド・ガーディアン 2026-07-29",
 "3710261000":"/w Lu_Woh /x lu woh /k spotlit parade /n lu woh /y 2026-08-04",
-"3710260000":"/w Narmaya /x narmaya /k martial majesty /n narmaya /y 2026-08-04 /1 /2"
+"3710260000":"/w Narmaya /x narmaya /k martial majesty /n narmaya /y 2026-08-04 /1 /2",
+"4200542":"/f aberration-boss /x mr. blocky /e earth /n blocking rehearsal dummy",
+"4200552":"/f aberration-boss /x contraception mk /e earth /n working rehearsal dummy"
 },
 "mypage":
 {
