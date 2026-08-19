@@ -17,7 +17,7 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.17'
+VERSION = '5.18'
 CONCURRENT_TASKS = 100
 MAX_REQUEST = 60
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
@@ -111,6 +111,7 @@ class TaskManager():
     all_done : asyncio.Event
     total : int
     finished : int
+    updated : int
     print_flag : bool
     pbar : tqdm|None
     
@@ -124,6 +125,7 @@ class TaskManager():
         self.all_done = asyncio.Event()
         self.total = 0
         self.finished = 0
+        self.updated = 0
         self.print_flag = False
         self.pbar = None
 
@@ -154,6 +156,23 @@ class TaskManager():
         except asyncio.CancelledError:
             return
 
+    async def _tdqm_worker(self : TaskManager) -> None:
+        try:
+            while True:
+                await asyncio.sleep(1)
+                if self.total != self.pbar.total:
+                    self.pbar.total = self.total
+                if self.updated:
+                    self.pbar.update(self.updated)
+                    self.updated = 0
+        except asyncio.CancelledError:
+            if self.total != self.pbar.total:
+                self.pbar.total = self.total
+            if self.updated:
+                self.pbar.update(self.updated)
+                self.updated = 0
+            return
+
     async def _worker(self : TaskManager) -> None:
         try:
             task : Task|None
@@ -178,9 +197,7 @@ class TaskManager():
                     self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
                 finally:
                     self.finished += 1
-                    if self.total != self.pbar.total:
-                        self.pbar.total = self.total
-                    self.pbar.update(1)
+                    self.updated += 1
                     if self.finished >= self.total:
                         self.all_done.set()
         except asyncio.CancelledError:
@@ -196,6 +213,7 @@ class TaskManager():
         # start the workers pool
         self.workers = [asyncio.create_task(self._worker()) for _ in range(CONCURRENT_TASKS)]
         self.workers.append(asyncio.create_task(self._autosave_worker()))
+        self.workers.append(asyncio.create_task(self._tdqm_worker()))
         # set progress bar
         if self.pbar is not None:
             self.pbar.close()
@@ -205,6 +223,7 @@ class TaskManager():
             unit_scale=True,
             unit_divisor=1000,
             mininterval=2,
+            dynamic_ncols=True,
             bar_format='{percentage:3.1f}%|{bar}{r_bar}'
         )
         try:
@@ -240,6 +259,8 @@ class TaskManager():
     def interrupt(self : TaskManager, *args) -> None:
         if self.total <= 0 or self.finished >= self.total:
             return
+        if self.pbar is not None:
+            self.pbar.clear()
         print("\nProcess PAUSED")
         print(f"{self.finished} / {self.total} Tasks completed")
         if self.updater.modified:
@@ -274,7 +295,11 @@ class TaskManager():
                             print(e)
                 case 'tchange':
                     self.updater.update_changelog = not self.updater.update_changelog
-                    print("changelog.json updated list WILL be modified" if self.updater.update_changelog else "changelog.json updated list won't be modified")
+                    print(
+                        "changelog.json updated list WILL be modified"
+                        if self.updater.update_changelog
+                        else "changelog.json updated list won't be modified"
+                    )
                 case 'exit':
                     print("Exiting...")
                     os._exit(0)
