@@ -7451,7 +7451,8 @@
 "7100193":{"v":[["","enemy_7100193",null,"phit_0000000000",[]]],"ra":["raid_appear_7100193"]},
 "7300993":{"v":[["","enemy_7300993",null,"phit_0000000000",[]]]},
 "7300983":{"v":[["","enemy_7300983",null,"phit_0000000000",[]]],"ra":["raid_appear_7300983"]},
-"8105063":{"v":[["","enemy_8105063",null,"phit_0000000000",[]]],"ra":["raid_appear_8105063"]}
+"8105063":{"v":[["","enemy_8105063",null,"phit_0000000000",[]]],"ra":["raid_appear_8105063"]},
+"5200363":{"v":[["","enemy_5200363",null,"ehit_5200363",["esp_5200363_01","esp_5200363_02","esp_5200363_03"]]],"ra":["raid_appear_5200363"]}
 },
 "skins":
 {
@@ -7703,7 +7704,8 @@
 "3710259000":{"v":[["0★","npc_3710259000_01","mortal_A","phit_3710259000",["nsp_3710259000_01_s2"]]],"ab":[]},
 "3710258000":{"v":[["0★","npc_3710258000_01","mortal_A","phit_3710258000",["nsp_3710258000_01_s2"]]],"ab":[]},
 "3710261000":{"v":[["0★","npc_3710261000_01","mortal_A","phit_3710261000",["nsp_3710261000_01_s2"]]],"ab":[]},
-"3710260000":{"v":[["0★","npc_3710260000_01","mortal_A","phit_3710260000",["nsp_3710260000_01_s2"]],["0★ B","npc_3710260000_01_f1","mortal_A","phit_3710260000_f1",["nsp_3710260000_01_f1_s2"]]],"ab":[]}
+"3710260000":{"v":[["0★","npc_3710260000_01","mortal_A","phit_3710260000",["nsp_3710260000_01_s2"]],["0★ B","npc_3710260000_01_f1","mortal_A","phit_3710260000_f1",["nsp_3710260000_01_f1_s2"]]],"ab":[]},
+"3710262000":{"v":[["0★","npc_3710262000_01","mortal_A","phit_3710262000",["nsp_3710262000_01_s2"]]],"ab":[]}
 },
 "job":
 {
@@ -20452,7 +20454,29 @@
 "3040673000":"/w Seox_(Summer) /e earth /a ssr /n seox /c eternals summer /b erune /s male /t attack /p melee /y シス nobuyuki hiyama 檜山修之 2026-08-16 /1",
 "2040461000":"/w Ms._Tart_Man_(Summer) /e earth /a ssr /n ms. tart man /c summer /y タル子マン 2026-08-16",
 "1040622100":"/w Fifth_Bottle_of_the_Flight /e light /t melee /a ssr /n fifth bottle of the flight /y 2026-08-16",
-"1040622200":"/w Hidden_Fang_of_the_Heavenly_Howl /e earth /t melee /a ssr /n hidden fang of the heavenly howl /y 2026-08-16"
+"1040622200":"/w Hidden_Fang_of_the_Heavenly_Howl /e earth /t melee /a ssr /n hidden fang of the heavenly howl /y 2026-08-16",
+"3994556000":"/$ /! /!!",
+"3994559000":"/$",
+"3994560000":"/$",
+"3994561000":"/$",
+"3994562000":"/$",
+"3994563000":"/$",
+"3994564000":"/$",
+"3994565000":"/n patricia /b draph /s female /y パトリシア kanon takao 高尾奏音",
+"3994566000":"/n rachel /b harvin /s female /y レイチェル ayaka asai 朝井彩加",
+"3994567000":"/n yuba luize /b wolvir /s female /y ユバ＝ルイーズ ayaka fukuhara 福原綾香",
+"3994568000":"/n yuba luize /b wolvir /s female /y ユバ＝ルイーズ ayaka fukuhara 福原綾香",
+"3994569000":"/n nergal /b unknown /s male /y ネルガル shinshu fuji 藤真秀",
+"3994570000":"/n nergal /b unknown /s male /y ネルガル shinshu fuji 藤真秀",
+"3994571000":"/n krypton /b unknown /s other /y クリプトン ayako saito 齋藤彩夏",
+"3994572000":"/n vishas /b unknown /s other /y ヴィシャス masatomo nakazawa 中澤まさとも",
+"3994573000":"/n raziel /b primal /s female /y ラジエル ayaka nanase 七瀬彩夏",
+"3994574000":"/n magus /b primal /s female /y メイガス nanako mori 森なな子",
+"3994575000":"/n alba /b draph /s female /y アルバ kana asumi 阿澄佳奈",
+"3994576000":"/x koka fugel /n koka fugel father /b wolvir /s male",
+"3994602000":"/n nergal /b unknown /s male /y ネルガル shinshu fuji 藤真秀",
+"3994603000":"/$",
+"5200363":"/$"
 },
 "mypage":
 {
