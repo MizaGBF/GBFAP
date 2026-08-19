@@ -219,7 +219,7 @@ class TaskManager():
             self.pbar.close()
         self.pbar = tqdm(
             total=self.total,
-            unit=" Task",
+            unit=" t",
             unit_scale=True,
             unit_divisor=1000,
             mininterval=2,
