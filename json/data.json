@@ -6710,7 +6710,7 @@
 "8102783":{"v":[["","enemy_8102783",null,"ehit_8102783",["esp_8102783_01","esp_8102783_02","esp_8102783_03","esp_8102783_04"]]]},
 "9101683":{"v":[["","enemy_9101683",null,"ehit_9101683",["esp_9101683_01","esp_9101683_02","esp_9101683_03"]]],"ra":["raid_appear_9101683"]},
 "9101573":{"v":[["","enemy_9101573",null,"phit_0000000000",[]]]},
-"9101623":{"v":[["","enemy_9101623",null,"phit_0000000000",[]]],"ra":["raid_appear_9101623"]},
+"9101623":{"v":[["","enemy_9101623",null,"phit_0000000000",[]]],"ra":["raid_appear_9101623","raid_appear_9101623_2"]},
 "9101673":{"v":[["","enemy_9101673",null,"ehit_9101673",["esp_9101673_01","esp_9101673_02","esp_9101673_03"]]],"ra":["raid_appear_9101673"]},
 "9101643":{"v":[["","enemy_9101643",null,"ehit_9101643",["esp_9101643_01","esp_9101643_02","esp_9101643_03"]]]},
 "6203703":{"v":[["","enemy_6203703",null,"ehit_6203703",["esp_6203703_01","esp_6203703_02"]]]},
@@ -6921,7 +6921,7 @@
 "9102403":{"v":[["","enemy_9102403",null,"ehit_9102403",["esp_9102403_01","esp_9102403_02","esp_9102403_03"]]],"ra":["raid_appear_9102403"]},
 "6204342":{"v":[["","enemy_6204342",null,"ehit_6204342",["esp_6204342_01_all","esp_6204342_02","esp_6204342_03"]]]},
 "8103433":{"v":[["","enemy_8103433",null,"phit_0000000000",["esp_8103433_01"]]]},
-"9102453":{"v":[["","enemy_9102453",null,"ehit_9102453",["esp_9102453_01","esp_9102453_02","esp_9102453_03"]]],"ra":["raid_appear_9102453"]},
+"9102453":{"v":[["","enemy_9102453",null,"ehit_9102453",["esp_9102453_01","esp_9102453_02","esp_9102453_03"]]],"ra":["raid_appear_9102453","raid_appear_9102453_2"]},
 "9102463":{"v":[["","enemy_9102463",null,"ehit_9102463",["esp_9102463_01","esp_9102463_02","esp_9102463_03_all"]]],"ra":["raid_appear_9102463"]},
 "6204313":{"v":[["","enemy_6204313",null,"phit_0000000000",[]]]},
 "6204302":{"v":[["","enemy_6204302",null,"phit_0000000000",[]]]},
@@ -7452,7 +7452,8 @@
 "7300993":{"v":[["","enemy_7300993",null,"phit_0000000000",[]]]},
 "7300983":{"v":[["","enemy_7300983",null,"phit_0000000000",[]]],"ra":["raid_appear_7300983"]},
 "8105063":{"v":[["","enemy_8105063",null,"phit_0000000000",[]]],"ra":["raid_appear_8105063"]},
-"5200363":{"v":[["","enemy_5200363",null,"ehit_5200363",["esp_5200363_01","esp_5200363_02","esp_5200363_03"]]],"ra":["raid_appear_5200363"]}
+"5200363":{"v":[["","enemy_5200363",null,"ehit_5200363",["esp_5200363_01","esp_5200363_02","esp_5200363_03"]]],"ra":["raid_appear_5200363"]},
+"5101243":{"v":[["","enemy_5101243",null,"ehit_5101243",["esp_5101243_01","esp_5101243_02","esp_5101243_03"]]],"ra":["raid_appear_5101243"]}
 },
 "skins":
 {
@@ -15046,7 +15047,7 @@
 "9101593":"/f other-boss /e null /n shenxian",
 "9101603":"/f other-boss /e null /n shenxian",
 "9101613":"/f other-boss /x lord montague /e fire /n spirit of montague",
-"9101623":"/f other-boss /e dark /n unworldly eidolon /c collab",
+"9101623":"/f other-boss /e dark /n unworldly eidolon /c collab /% /n red-horned fiend",
 "9101633":"/f other-boss /e null /n chaos creeper",
 "9101643":"/f other-boss /e null /n chaosclops",
 "9101653":"/f other-boss /e dark /n dreadful scourge hybrid grisly organisms",
@@ -15134,7 +15135,7 @@
 "9102423":"/f other-boss /e fire /n pure phoenix",
 "9102433":"/f other-boss /e null /n vyrn /1 /2",
 "9102443":"/f other-boss /e null /n vyrn /1 /2",
-"9102453":"/f other-boss /e dark /n gokon",
+"9102453":"/f other-boss /e dark /n gokon /% /n shadow of feral claws",
 "9102463":"/f other-boss /e light /n bastet",
 "9102473":"/f other-boss /e earth /n tameemon",
 "9102483":"/f other-boss /e earth /n tameemon",
@@ -20476,7 +20477,8 @@
 "3994576000":"/x koka fugel /n koka fugel father /b wolvir /s male",
 "3994602000":"/n nergal /b unknown /s male /y ネルガル shinshu fuji 藤真秀",
 "3994603000":"/n krypton /b unknown /s other /y クリプトン ayako saito 齋藤彩夏",
-"5200363":"/$"
+"5200363":"/f undead-boss /x reaping beauty /e dark /n netherblade of vengeance",
+"5101243":"/f otherworld-boss /e dark /n dark-winged ascetic"
 },
 "mypage":
 {
