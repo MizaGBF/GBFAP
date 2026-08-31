@@ -1021,7 +1021,9 @@
 "3040670000":{"v":[["0★","npc_3040670000_01","mortal_A","phit_3040670000",["nsp_3040670000_01_s2"]],["4★","npc_3040670000_02","mortal_A","phit_3040670000_02",["nsp_3040670000_02_s2"]]],"ab":["ab_3040670000_01","ab_all_3040670000_01","ab_all_3040670000_02"]},
 "3040671000":{"v":[["0★","npc_3040671000_01","mortal_A","phit_3040671000",["nsp_3040671000_01_s2"]],["4★","npc_3040671000_02","mortal_A","phit_3040671000_02",["nsp_3040671000_02_s2"]]],"ab":["ab_3040671000_01","ab_3040671000_02","ab_all_3040671000_01","ab_all_3040671000_02"]},
 "3040673000":{"v":[["0★","npc_3040673000_01","mortal_A","phit_3040673000",["nsp_3040673000_01_s2"]],["4★","npc_3040673000_02","mortal_A","phit_3040673000_02",["nsp_3040673000_02_s2"]]],"ab":["ab_3040673000_01","ab_3040673000_02","ab_3040673000_03"]},
-"3040672000":{"v":[["0★","npc_3040672000_01","mortal_A","phit_3040672000",["nsp_3040672000_01_s2"]],["4★","npc_3040672000_02","mortal_A","phit_3040672000_02",["nsp_3040672000_02_s2"]]],"ab":["ab_all_3040672000_01","ab_all_3040672000_02"]}
+"3040672000":{"v":[["0★","npc_3040672000_01","mortal_A","phit_3040672000",["nsp_3040672000_01_s2"]],["4★","npc_3040672000_02","mortal_A","phit_3040672000_02",["nsp_3040672000_02_s2"]]],"ab":["ab_all_3040672000_01","ab_all_3040672000_02"]},
+"3040675000":{"v":[["0★","npc_3040675000_01","mortal_A","phit_3040675000",["nsp_3040675000_01_s2"]],["4★","npc_3040675000_02","mortal_A","phit_3040675000_02",["nsp_3040675000_02_s2"]]],"ab":["ab_3040675000_01","ab_3040675000_02","ab_all_3040675000_01","ab_all_3040675000_03"]},
+"3040674000":{"v":[["0★","npc_3040674000_01","mortal_A","phit_3040674000",["nsp_3040674000_01_s2"]],["4★","npc_3040674000_02","mortal_A","phit_3040674000_02",["nsp_3040674000_02_s2"]]],"ab":["ab_3040674000_01","ab_3040674000_02","ab_3040674000_03","ab_3040674000_04","ab_3040674000_05","ab_all_3040674000_02","ab_all_3040674000_03"]}
 },
 "partners":
 {
@@ -1520,7 +1522,8 @@
 "2040458000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040458000_01_attack"]]],"s":"2040458000"},
 "2040460000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040460000_01_attack"]]],"s":"2040460000"},
 "2040459000":{"v":[["3★ A","sdw_bw_0_01","",null,["summon_2040459000_01_a_attack"]],["3★ B","sdw_bw_0_01","",null,["summon_2040459000_01_b_attack"]],["3★ C","sdw_bw_0_01","",null,["summon_2040459000_01_c_attack"]]],"s":"2040459000"},
-"2040461000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040461000_01_attack"]]],"s":"2040461000"}
+"2040461000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040461000_01_attack"]]],"s":"2040461000"},
+"2040462000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040462000_01_attack"]]],"s":"2040462000"}
 },
 "weapons":
 {
@@ -4558,7 +4561,9 @@
 "1040622000":{"w":["1040622000","1040622000"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622000",["sp_1040622000_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622000",["sp_1040622000_1_s2"]]]},
 "1040622200":{"w":["1040622200","1040622200"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622200",["sp_1040622200_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622200",["sp_1040622200_1_s2"]]]},
 "1040622100":{"w":["1040622100","1040622100"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622100",["sp_1040622100_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622100",["sp_1040622100_1_s2"]]]},
-"1040426500":{"w":["1040426500","1040426500"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040426500",["sp_1040426500_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040426500",["sp_1040426500_1_s2"]]]}
+"1040426500":{"w":["1040426500","1040426500"],"v":[["Gran","wrk_wa_0_01","mortal_A","phit_1040426500",["sp_1040426500_0_s2"]],["Djeeta","wrk_wa_1_01","mortal_A","phit_1040426500",["sp_1040426500_1_s2"]]]},
+"1040320400":{"w":["1040320400","1040320400"],"v":[["Gran","bsk_ax_0_01","mortal_A","phit_1040320400",["sp_1040320400_0_s2"]],["Djeeta","bsk_ax_1_01","mortal_A","phit_1040320400",["sp_1040320400_1_s2"]]]},
+"1040029700":{"w":["1040029700","1040029700"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029700",["sp_1040029700_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029700",["sp_1040029700_1_s2"]]]}
 },
 "enemies":
 {
@@ -15303,7 +15308,7 @@
 "3040366000":"/w Benjamin /e earth /a ssr /n benjamin /c fantasy /b human /s male /t attack /p sabre harp /y ベンジャミン kishō taniyama 谷山紀章 2021-11-16",
 "3040627000":"/w Bennu_(Holiday) /e earth /a ssr /n bennu /c holiday /b primal /s male /t attack /p melee /y ベンヌ satoshi tsuruoka 鶴岡聡 2025-11-30",
 "3040612000":"/w Berceau /e earth /a ssr /n berceau /b primal /s female /t special /p staff /y ベルソー miyuri shimabukuro 島袋美由利 2025-08-31",
-"3040630000":"/w Bhaisa /e earth /a ssr /n bhaisa /c grand /b erune /s female /t heal /p staff /y バイシュラ manaka iwami 石見舞菜香 2025-12-28",
+"3040630000":"/w Bhaisa /e earth /a ssr /n bhaisa /c grand 13buddhas /b erune /s female /t heal /p staff /y バイシュラ manaka iwami 石見舞菜香 2025-12-28",
 "3040082000":"/w Black_Knight /e dark /a ssr /n black knight /c grand /b human /s female /t attack /p sabre gun /y 黒騎士 romi park 朴ロ美 2016-04-28",
 "3040270000":"/w Black_Knight_and_Orchis /e dark /a ssr /n black knight and orchis /b human /s female /t defense /p sabre /y エルステの要 黒騎士&オルキス romi park minori chihara 朴 璐美 茅原実里 2020-06-24",
 "3030203000":"/w Blazing_Teacher_Elmott /e fire /a sr /n blazing teacher elmott /b erune /s male /t balanced /p staff /y 炎獄先生エルモート tetsuya kakihara 柿原徹也 2017-08-31",
@@ -20489,8 +20494,8 @@
 "3994595000":"/n villager girl /b human /s female",
 "3710262000":"/w Zeta /x zeta /k guiding crimson /n zeta /y 2026-08-26 /1 /2",
 "3992324000":"/n merlin /b erune /s male /y マーリン daisuke namikawa 浪川大輔 /! /!!",
-"3994557000":"/n cuelebre /b unknown /s male /y 朧竜キュエレブーレ yutaka nakano 仲野裕",
-"3994558000":"/n ortrud /n unknown /s female /y オルトルート satomi arai 新井里美",
+"3994557000":"/w Cuelebre_(NPC) /n cuelebre /b unknown /s other /y 朧竜キュエレブーレ yutaka nakano 仲野裕 2026-08-29",
+"3994558000":"/w Ortrud_(NPC) /n ortrud /b unknown /s other /y オルトルート satomi arai 新井里美 2026-08-29",
 "3994577000":"/n lancelot /b human /s male /y ランスロット yūki ono 小野友樹 /1 /2",
 "3994578000":"/n siegfried /b human /s male /y ジークフリート kazuhiko inoue 井上和彦 /1 /2",
 "3994579000":"/n siegfried /b human /s male /y ジークフリート kazuhiko inoue 井上和彦 /1 /2",
@@ -20510,18 +20515,24 @@
 "3994597000":"/n vane /b human /s male /y ヴェイン takuya eguchi 江口拓也 /1 /2",
 "3994598000":"/n lancelot /b human /s male /y ランスロット yūki ono 小野友樹 /1 /2",
 "3994599000":"/n lancelot /b human /s male /y ランスロット yūki ono 小野友樹 /1 /2",
-"3994604000":"/n lindorm /y レンオアム",
-"3994605000":"/n merlin /b erune /s male /y マーリン daisuke namikawa 浪川大輔",
-"3994606000":"/n viviane /b unknwon /s female /y ヴィヴィアン sanae kobayashi 小林沙苗",
-"3994607000":"/n uther /b human /s male /y ユーサー takayuki kondo 近藤孝行",
-"3994608000":"/n uriens /b erune /s male /y ウリエンス isshin chiba 千葉一伸",
-"3994609000":"/n rowley /b human /s male /y ロウリー yuya hirose 広瀬裕也",
+"3994604000":"/w Lindorm_(NPC) /n lindorm /b unknown /s other /y レンオアム 2026-08-29",
+"3994605000":"/w Merlin_(NPC) /n merlin /b erune /s male /y マーリン daisuke namikawa 浪川大輔 2026-08-29",
+"3994606000":"/w Viviane_(NPC) /n viviane /b unknown /s female /y ヴィヴィアン sanae kobayashi 小林沙苗 2026-08-29",
+"3994607000":"/w Uriens_(NPC) /n uriens /b erune /s male /y ウリエンス isshin chiba 千葉一伸 2026-08-29",
+"3994608000":"/w Uther_(NPC) /n uther /b human /s male /y ユーサー takayuki kondo 近藤孝行 2026-08-29",
+"3994609000":"/w Rowley_(NPC) /n rowley /b unknown /s male /y ロウリー yuya hirose 広瀬裕也 2026-08-29",
 "5200373":"/f undead-boss /x shadowfog creature /e dark /n otherworldly risen souls",
 "6206353":"/f people-boss /e light /n merlin",
 "6206362":"/f people-boss /e light /n merlin",
 "6206372":"/f people-boss /x merlin /e light /n merlin barrier",
 "6206382":"/f people-boss /e light /n merlin barrier",
-"3993948000":"/$"
+"3993948000":"/$",
+"3040674000":"/w Bhadra /e light /a ssr /n bhadra /c grand 13buddhas /b draph /s male /t special /p staff /y バドラ inori minase 水瀬いのり 2026-08-31",
+"3040675000":"/w Mordred /e dark /a ssr /n mordred /b erune /s male /t attack /p sabre /y モルドレッド yusuke shirai 白井悠介 2026-08-31 /1",
+"2040462000":"/w Bastet /e light /a ssr /n bastet /c acies /y バステト 2026-08-31",
+"1040320400":"/w Bodhicitta_Hammer /e light /t axe /a ssr /n bodhicitta hammer /c grand /y 菩提心槌 2026-08-31",
+"1040029700":"/w Clarent /e dark /t sabre /a ssr /n clarent /y 宝剣クラレント 2026-08-31",
+"1040426500":"/w Prodigious_Tome_of_Crimson /e light /t staff /a ssr /n prodigious tome of crimson /y 天才魔術師の緋装書 2026-08-29"
 },
 "mypage":
 {
@@ -20557,7 +20568,8 @@
 "3040158000":{"v":[["1","mypage_3040158000_01",null,null,[]],["2","mypage_3040158000_02",null,null,[]],["3","mypage_3040158000_03",null,null,[]]]},
 "3040190000":{"v":[["1","mypage_3040190000_01",null,null,[]],["2","mypage_3040190000_02",null,null,[]],["3","mypage_3040190000_03",null,null,[]]]},
 "3040212000":{"v":[["1","mypage_3040212000_01",null,null,[]],["2","mypage_3040212000_02",null,null,[]],["3","mypage_3040212000_03",null,null,[]]]},
-"3040196000":{"v":[["1","mypage_3040196000_01",null,null,[]],["2","mypage_3040196000_02",null,null,[]],["3","mypage_3040196000_03",null,null,[]]]}
+"3040196000":{"v":[["1","mypage_3040196000_01",null,null,[]],["2","mypage_3040196000_02",null,null,[]],["3","mypage_3040196000_03",null,null,[]]]},
+"3040674000":{"v":[["1","mypage_3040674000_01",null,null,[]],["2","mypage_3040674000_02",null,null,[]]]}
 },
 "styles":
 {
