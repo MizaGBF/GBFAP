@@ -69,36 +69,11 @@ This script is in charge of updating the JSON files.
 * Run `pip install -r requirements.txt` in a command prompt.
 * See [requirements.txt](https://github.com/MizaGBF/GBFAP/blob/master/requirements.txt) for a list of third-party modules.  
   
-### Usage
-```console
-GBFAP Updater v5.15
-usage: updater.py [-h] [-r] [-u UPDATE [UPDATE ...]] [-c] [-d [DOWNLOAD ...]] [-nc] [-fs]
-                  [-al PATH]
-
-Animation Updater v5.15 for GBFAP https://mizagbf.github.io/GBFAP/
-
-options:
-  -h, --help            show this help message and exit
-
-primary:
-  main commands to update the data.
-
-  -r, --run             search for new content.
-  -u, --update UPDATE [UPDATE ...]
-                        update given elements.
-  -c, --classes         update new classes.
-  -d, --download [DOWNLOAD ...]
-                        download all assets. Can specific IDs. Time and Disk space consuming.
-
-settings:
-  commands to alter the updater behavior.
-
-  -nc, --nochange       disable update of the New category of changelog.json.
-  -fs, --fixsummon      update all summons default classes.
-  -al, --gbfal PATH     import data.json from GBFAL.
-```  
+### Usage  
   
-> [!TIP]  
+Run `python updater.py -h` for the help.  
+  
+> [!TIP]   
 > For an **"every day" use case**, you'll only need to:  
 > Use `-r` after game updates.  
 > Use `-u` for element uncaps or if an older NPC got new arts, with their IDs.  
