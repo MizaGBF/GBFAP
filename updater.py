@@ -17,7 +17,7 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.18'
+VERSION = '5.19'
 CONCURRENT_TASKS = 100
 MAX_REQUEST = 60
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
@@ -98,6 +98,29 @@ except Exception as e:
     raise Exception("Failed to load GBFAP Constants")
 NO_CHARGE_ATTACK = set(NO_CHARGE_ATTACK)
 
+# Additional tweaks to handle task bar progress
+class BetterTqdm(tqdm):
+    def display(self : BetterTqdm, *args, **kwargs) -> bool:
+        res = super().display(*args, **kwargs)
+        if self.total:
+            sys.stderr.write(f"\u001b]9;4;1;{100 * self.n / self.total:.0f}\u001b\\")
+            sys.stderr.flush()
+        return res
+
+    def pause(self : BetterTqdm) -> None:
+        if self.disable:
+            self.disable = False
+            self.refresh()
+        else:
+            self.disable = True
+            self.clear()
+            sys.stderr.write(f"\u001b]9;4;4;{100 * self.n / self.total:.0f}\u001b\\")
+            sys.stderr.flush()
+
+    def close(self : BetterTqdm) -> None:
+        super().close()
+        sys.stdout.write("\u001b]9;4;0\u001b\\")
+        sys.stdout.flush()
 
 # Handle tasks
 @dataclass(slots=True)
@@ -217,14 +240,14 @@ class TaskManager():
         # set progress bar
         if self.pbar is not None:
             self.pbar.close()
-        self.pbar = tqdm(
+        self.pbar = BetterTqdm(
             total=self.total,
-            unit=" t",
+            unit="t",
             unit_scale=True,
             unit_divisor=1000,
             mininterval=2,
             dynamic_ncols=True,
-            bar_format='{percentage:3.1f}%|{bar}{r_bar}'
+            bar_format='{percentage:3.1f}%|\u001b[32m{bar}\u001b[0m{r_bar}'
         )
         try:
             # wait until done
@@ -260,7 +283,7 @@ class TaskManager():
         if self.total <= 0 or self.finished >= self.total:
             return
         if self.pbar is not None:
-            self.pbar.clear()
+            self.pbar.pause()
         print("\nProcess PAUSED")
         print(f"{self.finished} / {self.total} Tasks completed")
         if self.updater.modified:
@@ -302,12 +325,14 @@ class TaskManager():
                     )
                 case 'exit':
                     print("Exiting...")
+                    if self.pbar is not None:
+                        self.pbar.close()
                     os._exit(0)
                 case _:
                     print("Process RESUMING...")
                     break
         if self.pbar is not None:
-            self.pbar.refresh()
+            self.pbar.pause()
 
 # A queued task
 @dataclass(slots=True, order=True)
