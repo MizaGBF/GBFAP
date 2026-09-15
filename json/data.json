@@ -578,7 +578,7 @@
 "3030270000":{"v":[["0★","npc_3030270000_01","mortal_A","phit_3030270000",["nsp_3030270000_01_s2"]],["4★","npc_3030270000_02","mortal_A","phit_3030270000",["nsp_3030270000_02_s2"]]],"ab":["ab_3030270000_01","ab_3030270000_02","ab_3030270000_03","ab_3030270000_04"]},
 "3030271000":{"v":[["0★","npc_3030271000_01","mortal_A","phit_3030271000",["nsp_3030271000_01_s2"]],["4★","npc_3030271000_02","mortal_A","phit_3030271000_02",["nsp_3030271000_02_s2"]]],"ab":["ab_3030271000_01","ab_all_3030271000_01","ab_all_3030271000_02"]},
 "3040243000":{"v":[["0★","npc_3040243000_01","mortal_A","phit_3040243000",["nsp_3040243000_01"]],["0★ B","npc_3040243000_01_f1","mortal_A","phit_3040243000",["nsp_3040043000_01"]],["4★","npc_3040243000_02","mortal_A","phit_3040243000",["nsp_3040243000_02"]],["4★ B","npc_3040243000_02_f1","mortal_A","phit_3040243000",["nsp_3040043000_02"]]],"ab":["ab_3040243000_01","ab_3040243000_02"]},
-"3040244000":{"v":[["0★","npc_3040244000_01","mortal_A","phit_3040244000",["nsp_3040244000_01_s3"]],["4★","npc_3040244000_02","mortal_A","phit_3040244000",["nsp_3040244000_02_s3"]]],"ab":["ab_3040244000_01","ab_all_3040244000_01","ab_all_3040244000_02"]},
+"3040244000":{"v":[["0★","npc_3040244000_01","mortal_A","phit_3040244000",["nsp_3040244000_01_s3"]],["4★","npc_3040244000_02","mortal_A","phit_3040244000",["nsp_3040244000_02_s3"]],["5★","npc_3040244000_03","mortal_A","phit_3040244000_03",["nsp_3040244000_03_s2"]]],"ab":["ab_3040244000_01","ab_all_3040244000_01","ab_all_3040244000_02","ab_all_3040244000_03","ab_all_3040244000_04"]},
 "3030272000":{"v":[["0★","npc_3030272000_01","mortal_A","phit_3040191000",["nsp_3030272000_01_s2"]],["4★","npc_3030272000_02","mortal_A","phit_3040191000",["nsp_3030272000_02_s2"]]],"ab":["ab_3030272000_01","ab_3030272000_02"]},
 "3040245000":{"v":[["0★","npc_3040245000_01","mortal_A","phit_3040245000",["nsp_3040245000_01_s2"]],["4★","npc_3040245000_02","mortal_A","phit_3040245000",["nsp_3040245000_02_s2"]]],"ab":["ab_3040245000_01","ab_3040245000_02","ab_all_3040245000_01","ab_all_3040245000_02"]},
 "3030273000":{"v":[["0★","npc_3030273000_01","mortal_A","phit_3030262000",["nsp_3030273000_01_s3"]],["4★","npc_3030273000_02","mortal_A","phit_3030262000",["nsp_3030273000_02_s3"]]],"ab":["ab_3030273000_02","ab_all_3030273000_01"]},
@@ -9913,7 +9913,7 @@
 "3991594000":"/n katalina /b human /s female /y カタリナ miyuki sawashiro 沢城みゆき /1 /2",
 "3991595000":"/n lyria /b human /s female /y ルリア nao tōyama 東山奈央 /1 /2",
 "3991596000":"/n sovell /b human /s male",
-"3991597000":"/x mikaboshi /n mika /b unknown /s female /y ミカ satomi satō 佐藤聡美",
+"3991597000":"/x shitori /x mikaboshi /n mika /b unknown /s female /y ミカ satomi satō 佐藤聡美",
 "3991598000":"/n meteon /b human /s male /y ミュオン masakazu morita 森田成一",
 "3991599000":"/w Beokaiser_(NPC) /n beokaiser /b unknown /s other /y ベオカイザー hisao egawa 江川央生 2019-11-28",
 "3991600000":"/w Fehr_(NPC) /n fehr /b erune /s male /y フェール yoshihiko aramaki 荒牧慶彦 2019-11-28",
@@ -20532,7 +20532,9 @@
 "2040462000":"/w Bastet /e light /a ssr /n bastet /c acies /y バステト 2026-08-31",
 "1040320400":"/w Bodhicitta_Hammer /e light /t axe /a ssr /n bodhicitta hammer /c grand /y 菩提心槌 2026-08-31",
 "1040029700":"/w Clarent /e dark /t sabre /a ssr /n clarent /y 宝剣クラレント 2026-08-31",
-"1040426500":"/w Prodigious_Tome_of_Crimson /e light /t staff /a ssr /n prodigious tome of crimson /y 天才魔術師の緋装書 2026-08-29"
+"1040426500":"/w Prodigious_Tome_of_Crimson /e light /t staff /a ssr /n prodigious tome of crimson /y 天才魔術師の緋装書 2026-08-29",
+"3994619000":"/n shitori /b human /s female /y シトリ chika anzai 安済 知佳",
+"3994620000":"/n shitori /b human /s female /y シトリ chika anzai 安済 知佳"
 },
 "mypage":
 {
