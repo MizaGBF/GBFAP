@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Demo v9</title>
+	<title>Demo v9.1</title>
 	<script src="js/animation.js"></script>
 	<script src="js/load_player.js"></script>
 	<script src="js/vendors/require.js"></script>
@@ -15,7 +15,7 @@ function init()
 		specials:["esp_demo_01"], // charge attacks
 		attack:"phit_demo", // attack effect
 		"demo_motions":["setin", "wait", "attack", "dead"], // animation playlist under the Demo action
-		is_enemy:true
+		type:AnimationType.ENEMY
 	})];
 	// the demo doesn't use config.json, we pass it through the function
 	load_player(animations, {
