@@ -1,2 +1,2 @@
-pyreqwest>=0.12.4
+pyreqwest>=0.13.0
 tqdm>=4.70.0
