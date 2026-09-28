@@ -20576,9 +20576,9 @@
 "4301093":"/f machine-boss /e water /n mobile defense unit",
 "4301103":"/f machine-boss /e water /n automagod ohr morhes",
 "4301113":"/f machine-boss /e water /n automagod ohr morhes",
-"8105123":"/$",
-"9102152":"/$",
-"9103493":"/$",
+"8105123":"/f primal-boss /e null /n fairy princess",
+"9102152":"/f other-boss /e null /n armonia animata",
+"9103493":"/f other-boss /e null /n the wind walker",
 "1040123100":"/w Fienddagger_of_Prosperity_Verboten /e fire /t dagger /a ssr /n fienddagger of prosperity verboten /c odious /y 禁栄の魔刃 2026-09-18",
 "1040029800":"/w Karmasword_of_Prosperity_Verboten /e fire /t sabre /a ssr /n karmasword of prosperity verboten /c odious /y 禁栄の業剣 2026-09-18"
 },
