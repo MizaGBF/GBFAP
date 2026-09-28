@@ -410,7 +410,6 @@ class TaskStatus():
     def __repr__(self : TaskStatus) -> str:
         return f"<Status: {self.index}/{self.max_index}, Errors: {self.err}/{self.max_err}, {"Running" if self.running else "Idle"}>"
 
-
 @dataclass(slots=True)
 class Updater():
     # other init
