@@ -218,7 +218,7 @@ class TaskManager():
                     # execute
                     await task.awaitable(*task.parameters)
                 except Exception as e:
-                    self.print("The following exception occured:")
+                    self.print(f"The following exception occured for task {task.awaitable} with parameters: {task.parameters}")
                     self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
                 finally:
                     self.finished += 1
