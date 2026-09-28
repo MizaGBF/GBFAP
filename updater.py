@@ -2,9 +2,10 @@ from __future__ import annotations
 from typing import Any, Callable, Sized, Iterable
 from collections import deque
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone, UTC
+from datetime import datetime, timezone, UTC
 import asyncio
-from pyreqwest.client import ClientBuilder, Client
+import httpx2
+import socket
 import os
 import sys
 import re
@@ -17,10 +18,10 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.19'
-CONCURRENT_TASKS = 100
-MAX_REQUEST = 60
-BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36'
+VERSION = '5.22'
+CONCURRENT_TASKS = 90
+MAX_REQUEST = CONCURRENT_TASKS
+BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36'
 SAVE_VERSION = 1
 # addition type
 ADD_JOB = 0
@@ -40,12 +41,12 @@ ADD_SHIELD = 13
 ADD_MANATURA = 14
 ADD_STORY1 = 15
 # CDN endpoints
-ENDPOINT = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/"
-JS = ENDPOINT + "js/"
+BASE_URL = httpx2.URL("https://prd-game-a-granbluefantasy.akamaized.net")
+JS = "/assets_en/js/"
 MANIFEST = JS + "model/manifest/"
 CJS = JS + "cjs/"
-IMG = ENDPOINT + "img/"
-SOUND = ENDPOINT + "sound/"
+IMG = "/assets_en/img/"
+SOUND = "/assets_en/sound/"
 VOICE = SOUND + "voice/"
 # MC classes
 CLASS = [
@@ -414,7 +415,7 @@ class TaskStatus():
 @dataclass(slots=True)
 class Updater():
     # other init
-    client : Client|None
+    client : httpx2.AsyncClient|None
     http_limit : asyncio.Semaphore
     tasks : TaskManager
     update_changelog : bool
@@ -585,35 +586,32 @@ class Updater():
         self.addition.add((element_id, element_type))
 
     # Generic GET request function
-    async def get(self : Updater, url : str) -> Any:
+    async def get(self : Updater, path : str) -> Any:
         async with self.http_limit:
-            response = (
-                await self.client.get(url)
-                .header("Accept-Encoding", "gzip")
-                .build()
-                .send()
+            response = await self.client.get(
+                BASE_URL.copy_with(path=path),
+                headers={"Accept-Encoding":"gzip"}
             )
-            if response.status != 200:
-                raise Exception(f"HTTP error {response.status}")
-            return (await response.bytes()).to_bytes()
+            if response.status_code != 200:
+                raise Exception(f"HTTP error {response.status_code}")
+            return response.read()
 
-    # Generic HEAD request function
-    async def head(self : Updater, url : str) -> Any:
+    # GBF HEAD request function
+    async def head(self : Updater, path : str) -> Any:
         async with self.http_limit:
-            response = (
-                await self.client.head(url)
-                .build()
-                .send()
+            response = await self.client.head(
+                BASE_URL.copy_with(path=path),
+                headers={"Accept-Encoding":"gzip"}
             )
-        if response.status != 200:
-            raise Exception(f"HTTP error {response.status}")
+            if response.status_code != 200:
+                raise Exception(f"HTTP error {response.status_code}")
         return response.headers
 
     async def head_manifest(self : Updater, js : str) -> None:
         await self.head(MANIFEST + js + ".js")
 
     # format a traceback
-    def trbk(self : Updater, e : Exception) -> str:
+    def trace(self : Updater, e : Exception) -> str:
         return "".join(traceback.format_exception(type(e), e, e.__traceback__))
 
     def fetch_gbfal_data(self : Updater) -> None:
@@ -757,7 +755,7 @@ class Updater():
                             self.add(k, ADD_BOSS)
                             self.modified = True
         except Exception as e:
-            self.tasks.print("Failed to fetch GBFAL data:\n", self.trbk(e))
+            self.tasks.print("Failed to fetch GBFAL data:\n", self.trace(e))
 
     def import_gbfal_lookup(self : Updater) -> None:
         try:
@@ -765,7 +763,7 @@ class Updater():
                 self.data["lookup"] = self.gbfal["lookup"]
                 self.modified = True
         except Exception as e:
-            self.tasks.print("Failed to import GBFAL lookup:\n", self.trbk(e))
+            self.tasks.print("Failed to import GBFAL lookup:\n", self.trace(e))
 
     ### Main #################################################################################################################
 
@@ -942,7 +940,7 @@ class Updater():
                 self.tasks.print("Updated", element_id, "for", index)
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trbk(e)}")
+            self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trace(e)}")
             return False
 
     # search for existing mypage arts
@@ -1212,7 +1210,7 @@ class Updater():
                 self.tasks.add(self.update_mypage, parameters=(element_id, "_st2"))
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trbk(e)}")
+            self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trace(e)}")
             return False
 
     # subroutine for update_character
@@ -1303,7 +1301,7 @@ class Updater():
             self.tasks.add(self.update_mypage, parameters=(element_id,))
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     async def update_weapon(self : Updater, element_id : str) -> bool:
@@ -1388,7 +1386,7 @@ class Updater():
                 self.tasks.print("Updated", element_id, "for index weapons")
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     async def update_enemy(self : Updater, element_id : str) -> bool:
@@ -1450,7 +1448,7 @@ class Updater():
                 self.tasks.print("Updated", element_id, "for index enemies")
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     # subroutine for update_enemy
@@ -1613,7 +1611,7 @@ class Updater():
             self.tasks.add(self.update_mypage, parameters=(element_id,))
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     async def update_partner_main_character(self : Updater, element_id : str) -> int:
@@ -1704,7 +1702,7 @@ class Updater():
                 self.tasks.print("Updated", element_id, "for index partners")
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trbk(e)}")
+            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     ### Others #################################################################################################################
@@ -1767,37 +1765,37 @@ class Updater():
         file_seen.add(identifier)
         
         p : Path
-        url : str
+        url_path : str
         match file_type:
             case "manifest":
                 p = Path("model/manifest", file + ".js")
-                url = JS + p.as_posix()
+                url_path = JS + p.as_posix()
                 if p.exists():
                     self.tasks.add(self.downloader, parameters=("cjs", file, file_seen, error_context))
             case "cjs":
                 p = Path("cjs", file + ".js")
-                url = JS + p.as_posix()
+                url_path = JS + p.as_posix()
             case "se":
                 p = Path("sound/se", file)
-                url = ENDPOINT + p.as_posix()
+                url_path = p.as_posix()
             case "voice":
                 p = Path("sound/voice", file)
-                url = ENDPOINT + p.as_posix()
+                url_path = p.as_posix()
             case "sprite":
                 p = Path("img/sp/cjs", file)
-                url = ENDPOINT + p.as_posix()
+                url_path = p.as_posix()
             case "weapon":
                 p = Path("img/sp/cjs", file + ".png")
-                url = ENDPOINT + p.as_posix()
+                url_path = p.as_posix()
             case "background":
                 if file.startswith("main_"):
                     p = Path("img/sp/guild/custom/bg", file + ".png")
                 else:
                     p = Path("img/sp/raid/bg", file + ".jpg")
-                url = ENDPOINT + p.as_posix()
+                url_path = p.as_posix()
             case "mypage_bg":
                 p = Path("img/sp/mypage/town", file, "bg.jpg")
-                url = ENDPOINT + p.as_posix()
+                url_path = p.as_posix()
             case _:
                 self.tasks.print("Unknown file type", file_type)
                 return
@@ -1808,7 +1806,7 @@ class Updater():
         err_count = 0
         while err_count < 5:
             try:
-                content : bytes = await self.get(url)
+                content : bytes = await self.get(url_path)
             except:
                 err_count += 1
                 continue
@@ -1868,6 +1866,30 @@ class Updater():
 
     ### Entry Point #################################################################################################################
 
+    # HTTP client factory
+    def init_http_client(self : Updater) -> httpx2.AsyncClient:
+        transport : httpx2.AsyncHTTPTransport = httpx2.AsyncHTTPTransport(
+            http2=True,
+            limits=httpx2.Limits(
+                max_connections=200,
+                max_keepalive_connections=40,
+                keepalive_expiry=30.0
+            ),
+            socket_options=[
+                (socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+            ]
+        )
+        return httpx2.AsyncClient(
+            transport=transport,
+            timeout=httpx2.Timeout(
+                connect=5.0,
+                read=30.0,
+                write=10.0,
+                pool=10.0
+            ),
+            headers={"User-Agent":BASE_USER_AGENT}
+        )
+
     # Start function
     async def start(self : Updater) -> None:
         self.tasks.print(f"GBFAP Updater v{VERSION}")
@@ -1894,24 +1916,7 @@ class Updater():
         settings.add_argument('-al', '--gbfal', help="import data.json from GBFAL.", action='store', nargs=1, type=str, metavar='PATH')
         args : argparse.Namespace = parser.parse_args()
         
-        # init HTTP client
-        async with (
-            ClientBuilder()
-            .runtime_multithreaded(True)
-            .user_agent(
-                BASE_USER_AGENT
-            )
-            .gzip(True)
-            .brotli(False)
-            .zstd(False)
-            .deflate(False)
-            .http2(True)
-            .pool_max_idle_per_host(1)
-            .max_connections(MAX_REQUEST)
-            .http2_prior_knowledge()
-            .http2_keep_alive_while_idle(False)
-            .build()
-        ) as self.client:
+        async with self.init_http_client() as self.client:
             # load self.data NOW
             self.load()
             # settings
