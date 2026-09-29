@@ -4,8 +4,9 @@ from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, UTC
 import asyncio
-import httpx2
+import httpcore2
 import socket
+import gzip
 import os
 import sys
 import re
@@ -18,9 +19,9 @@ import argparse
 from tqdm import tqdm
 
 ### CONSTANT
-VERSION = '5.22'
-CONCURRENT_TASKS = 90
-MAX_REQUEST = CONCURRENT_TASKS
+VERSION = '6.0'
+CONCURRENT_TASKS = 100
+MAX_REQUEST = 90
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36'
 SAVE_VERSION = 1
 # addition type
@@ -41,12 +42,12 @@ ADD_SHIELD = 13
 ADD_MANATURA = 14
 ADD_STORY1 = 15
 # CDN endpoints
-BASE_URL = httpx2.URL("https://prd-game-a-granbluefantasy.akamaized.net")
-JS = "/assets_en/js/"
+DOMAIN = "https://prd-game-a-granbluefantasy.akamaized.net"
+JS = DOMAIN + "/assets_en/js/"
 MANIFEST = JS + "model/manifest/"
 CJS = JS + "cjs/"
-IMG = "/assets_en/img/"
-SOUND = "/assets_en/sound/"
+IMG = DOMAIN + "/assets_en/img/"
+SOUND = DOMAIN + "/assets_en/sound/"
 VOICE = SOUND + "voice/"
 # MC classes
 CLASS = [
@@ -415,7 +416,7 @@ class TaskStatus():
 @dataclass(slots=True)
 class Updater():
     # other init
-    client : httpx2.AsyncClient|None
+    client : httpcore2.AsyncConnectionPool|None
     http_limit : asyncio.Semaphore
     tasks : TaskManager
     update_changelog : bool
@@ -586,26 +587,34 @@ class Updater():
         self.addition.add((element_id, element_type))
 
     # Generic GET request function
-    async def get(self : Updater, path : str) -> Any:
+    async def get(self : Updater, url : str|bytes|httpcore2.URL) -> Any:
         async with self.http_limit:
-            response = await self.client.get(
-                BASE_URL.copy_with(path=path),
-                headers={"Accept-Encoding":"gzip"}
-            )
-            if response.status_code != 200:
-                raise Exception(f"HTTP error {response.status_code}")
-            return response.read()
+            async with self.client.stream(
+                "GET",
+                url,
+                headers={
+                    "Accept-Encoding":"gzip",
+                    "User-Agent":BASE_USER_AGENT
+                }
+            ) as response:
+                if response.status != 200:
+                    raise Exception(f"HTTP error {response.status}")
+                is_gzip = False
+                for header, value in response.headers:
+                    if header == b'content-encoding' and b'gzip' in value:
+                        is_gzip = True
+                content : bytes = await response.aread()
+                if is_gzip:
+                    content = gzip.decompress(content)
+                return content
 
     # GBF HEAD request function
-    async def head(self : Updater, path : str) -> Any:
+    async def head(self : Updater, url : str|bytes|httpcore2.URL) -> Any:
         async with self.http_limit:
-            response = await self.client.head(
-                BASE_URL.copy_with(path=path),
-                headers={"Accept-Encoding":"gzip"}
-            )
-            if response.status_code != 200:
-                raise Exception(f"HTTP error {response.status_code}")
-        return response.headers
+            async with self.client.stream("HEAD", url) as response:
+                if response.status != 200:
+                    raise Exception(f"HTTP error {response.status}")
+                return response.headers
 
     async def head_manifest(self : Updater, js : str) -> None:
         await self.head(MANIFEST + js + ".js")
@@ -1867,27 +1876,15 @@ class Updater():
     ### Entry Point #################################################################################################################
 
     # HTTP client factory
-    def init_http_client(self : Updater) -> httpx2.AsyncClient:
-        transport : httpx2.AsyncHTTPTransport = httpx2.AsyncHTTPTransport(
+    def init_http_client(self : Updater) -> httpcore2.AsyncConnectionPool:
+        return httpcore2.AsyncConnectionPool(
             http2=True,
-            limits=httpx2.Limits(
-                max_connections=200,
-                max_keepalive_connections=40,
-                keepalive_expiry=30.0
-            ),
+            max_connections=200,
+            max_keepalive_connections=40,
+            keepalive_expiry=60.0,
             socket_options=[
                 (socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
             ]
-        )
-        return httpx2.AsyncClient(
-            transport=transport,
-            timeout=httpx2.Timeout(
-                connect=5.0,
-                read=30.0,
-                write=10.0,
-                pool=10.0
-            ),
-            headers={"User-Agent":BASE_USER_AGENT}
         )
 
     # Start function
