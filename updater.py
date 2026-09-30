@@ -425,6 +425,7 @@ class Updater():
     addition : set[tuple[str, int|str]]
     updated_elements : set[str]
     gbfal : dict[str, Any]|None
+    checking_classes : bool
     def __init__(self : Updater):
         # other init
         self.client = None # the http client
@@ -451,6 +452,7 @@ class Updater():
         self.addition = set() # new elements for changelog.json
         self.updated_elements = set() # set of elements ran through update_element()
         self.gbfal = None # storage for optional gbfal data
+        self.checking_classes = False # for check_classes()
 
     ### Utility #################################################################################################################
 
@@ -794,7 +796,7 @@ class Updater():
     ### Main #################################################################################################################
 
     # called by -run
-    async def run(self : Updater) -> None:
+    def run(self : Updater) -> None:
         # classes
         self.tasks.add(self.check_classes)
         
@@ -828,13 +830,11 @@ class Updater():
                 prefix : str = str(main) + str(sub)
                 for i in range(10):
                     self.tasks.add(self.update_element, parameters=(ts, 'enemies', prefix))
-        # start the tasks
-        await self.tasks.start()
 
     ### Update #################################################################################################################
 
     # Attempt to update all given element ids
-    async def update_all(self : Updater, elements : list[str]) -> None:
+    def update_all(self : Updater, elements : list[str]) -> None:
         element_id : str
         for element_id in elements:
             if len(element_id) >= 10:
@@ -855,7 +855,6 @@ class Updater():
                 self.tasks.add(self.update_enemy, parameters=(element_id,))
             elif len(element_id) == 6:
                 self.tasks.add(self.update_class, parameters=(element_id,))
-        await self.tasks.start()
 
     # run subroutine
     async def update_element(self : Updater, ts : TaskStatus, target : str, extra : str = "") -> None:
@@ -1490,11 +1489,13 @@ class Updater():
 
     # routine to check for new classes
     async def check_classes(self : Updater) -> None:
+        if self.checking_classes:
+            return
+        self.checking_classes = True
         keys = list(CLASS_LIST.keys())
         for element_id in keys:
             if element_id not in self.data["job"]:
                 self.tasks.add(self.update_class, parameters=(element_id,), priority=0)
-        await self.tasks.start()
 
     async def update_class(self : Updater, element_id : str) -> int:
         try:
@@ -1962,17 +1963,7 @@ class Updater():
                     self.tasks.print("GBFAL data couldn't be loaded")
                     self.tasks.print(e)
                 run_help = False
-            # run
-            if args.run:
-                self.tasks.print("Searching for new elements...")
-                await self.run()
-            elif args.update is not None and len(args.update) > 0:
-                self.tasks.print("Updating", len(args.update), "element(s)...")
-                await self.update_all(args.update)
-            elif args.classes:
-                self.tasks.print("Updating new classes...")
-                await self.check_classes()
-            elif args.download is not None:
+            if args.download is not None:
                 self.tasks.print("ONLY USE THIS COMMAND IF YOU NEED TO HOST THE ASSETS")
                 self.tasks.print("Are you sure that you want to download the assets of all elements?")
                 self.tasks.print("It will take time and a lot of disk space.")
@@ -1980,8 +1971,23 @@ class Updater():
                     await self.download(set(args.download))
                 else:
                     self.tasks.print("Operation aborted...")
-            elif run_help:
+                return
+            # run
+            if args.run:
+                self.tasks.print("Searching for new elements...")
+                self.run()
+                run_help = False
+            if args.update is not None and len(args.update) > 0:
+                self.tasks.print("Updating", len(args.update), "element(s)...")
+                self.update_all(args.update)
+                run_help = False
+            if args.classes:
+                self.tasks.print("Updating new classes...")
+                await self.check_classes()
+                run_help = False
+            if run_help:
                 parser.print_help()
+            await self.tasks.start()
             if self.gbfal is not None:
                 self.import_gbfal_lookup()
             if self.modified:
