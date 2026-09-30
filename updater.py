@@ -589,35 +589,52 @@ class Updater():
     # Generic GET request function
     async def get(self : Updater, url : str|bytes|httpcore2.URL) -> Any:
         async with self.http_limit:
-            async with self.client.stream(
-                "GET",
-                url,
-                headers={
-                    "Accept-Encoding":"gzip",
-                    "User-Agent":BASE_USER_AGENT
-                }
-            ) as response:
-                if response.status != 200:
-                    raise Exception(f"HTTP error {response.status}")
-                is_gzip = False
-                for header, value in response.headers:
-                    if header == b'content-encoding' and b'gzip' in value:
-                        is_gzip = True
-                content : bytes = await response.aread()
-                if is_gzip:
-                    content = gzip.decompress(content)
-                return content
+            while True:
+                try:
+                    async with self.client.stream(
+                        "GET",
+                        url,
+                        headers={
+                            "Accept-Encoding":"gzip",
+                            "User-Agent":BASE_USER_AGENT
+                        }
+                    ) as response:
+                        if response.status != 200:
+                            return None
+                        is_gzip = False
+                        for header, value in response.headers:
+                            if header == b'content-encoding' and b'gzip' in value:
+                                is_gzip = True
+                        content : bytes = await response.aread()
+                        if is_gzip:
+                            content = gzip.decompress(content)
+                        return content
+                except httpcore2.RemoteProtocolError:
+                    await asyncio.sleep(0.2)
+                except Exception as e:
+                    self.tasks.print(f"The following exception occurred in get():\nAt: {url}\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__)))
+                    return None
 
     # GBF HEAD request function
-    async def head(self : Updater, url : str|bytes|httpcore2.URL) -> Any:
+    async def head(self : Updater, url : str|bytes|httpcore2.URL) -> tuple[bool, list]:
         async with self.http_limit:
-            async with self.client.stream("HEAD", url) as response:
-                if response.status != 200:
-                    raise Exception(f"HTTP error {response.status}")
-                return response.headers
+            while True:
+                try:
+                    async with self.client.stream("HEAD", url) as response:
+                        return (
+                            response.status == 200,
+                            response.headers
+                        )
+                except httpcore2.RemoteProtocolError:
+                    await asyncio.sleep(0.2)
+                except Exception as e:
+                    self.tasks.print(f"The following exception occurred in head():\nAt: {url}\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__)))
+                    return (False, [])
+                
 
     async def head_manifest(self : Updater, js : str) -> None:
-        await self.head(MANIFEST + js + ".js")
+        if not (await self.head(MANIFEST + js + ".js"))[0]:
+            raise Exception()
 
     # format a traceback
     def trace(self : Updater, e : Exception) -> str:
@@ -976,10 +993,9 @@ class Updater():
         return suffixes
 
     async def get_mypage_list_sub(self : Updater, element_id : str, suffix : str) -> str|None:
-        try:
-            await self.head(IMG + f"sp/assets/npc/my/{element_id}{suffix}.png")
+        if (await self.head(IMG + f"sp/assets/npc/my/{element_id}{suffix}.png"))[0]:
             return suffix
-        except:
+        else:
             return None
 
     # custom sort for the version sorting of characters
@@ -1016,19 +1032,15 @@ class Updater():
             if is_partner and element_id.startswith("389"):
                 return await self.update_partner_main_character(element_id)
             is_skin : bool = element_id.startswith("37")
-            try:
-                if is_partner:
-                    await self.head(IMG + f"/sp/assets/npc/raid_normal/{element_id}_01.jpg")
-                else:
-                    await self.head(IMG + f"/sp/assets/npc/m/{element_id}_01.jpg")
-            except:
-                return False
+            if is_partner:
+                if not (await self.head(IMG + f"/sp/assets/npc/raid_normal/{element_id}_01.jpg"))[0]:
+                    return False
+            else:
+                if not (await self.head(IMG + f"/sp/assets/npc/m/{element_id}_01.jpg"))[0]:
+                    return False
             if not is_partner and not is_skin and style == "":
-                try:
-                    await self.head(IMG + f"/sp/assets/npc/m/{element_id}_01_st2.jpg")
+                if (await self.head(IMG + f"/sp/assets/npc/m/{element_id}_01_st2.jpg"))[0]:
                     self.tasks.add(self.update_character, parameters=(element_id, "_st2"))
-                except:
-                    pass
             tid = ID_SUBSTITUTE.get(element_id, element_id) # fix for bobobo skin
             versions = {}
             genders = {}
@@ -1246,9 +1258,8 @@ class Updater():
             character_data['s'] = element_id
             call_found = set()
             for uncap in ("_04", "_03", "_02", "_01"):
-                try:
-                    await self.head(IMG + "/sp/assets/summon/m/" + element_id + uncap.replace('_01', '') + ".jpg") # try to guess uncap level based on existing portrait
-                except:
+                # try to guess uncap level based on existing portrait
+                if not (await self.head(IMG + "/sp/assets/summon/m/" + element_id + uncap.replace('_01', '') + ".jpg"))[0]:
                     if uncap != '_01':
                         continue
                     else:
@@ -1318,9 +1329,7 @@ class Updater():
             if element_id in self.updated_elements:
                 return False
             self.updated_elements.add(element_id)
-            try:
-                await self.head(IMG + f"/sp/assets/weapon/m/{element_id}.jpg")
-            except:
+            if not (await self.head(IMG + f"/sp/assets/weapon/m/{element_id}.jpg"))[0]:
                 return False
             # containers
             mc_cjs = CLASS[(int(element_id) // 100000) % 10]
@@ -1404,9 +1413,7 @@ class Updater():
                 return False
             self.updated_elements.add(element_id)
             # Check if exists
-            try:
-                await self.head(IMG + f"/sp/assets/enemy/s/{element_id}.png")
-            except:
+            if not (await self.head(IMG + f"/sp/assets/enemy/s/{element_id}.png"))[0]:
                 return False
             try: # base cjs
                 fn = "enemy_" + element_id
@@ -1480,9 +1487,7 @@ class Updater():
         try:
             if element_id not in CLASS_LIST:
                 return False
-            try:
-                await self.head(IMG + "/sp/assets/leader/m/" + element_id.split('_')[0] + "_01.jpg")
-            except:
+            if not (await self.head(IMG + "/sp/assets/leader/m/" + element_id.split('_')[0] + "_01.jpg"))[0]:
                 return False
             wid = None
             colors = []
@@ -1625,9 +1630,7 @@ class Updater():
 
     async def update_partner_main_character(self : Updater, element_id : str) -> int:
         try:
-            try:
-                await self.head(IMG + f"/sp/assets/npc/raid_normal/{element_id}_01_0.jpg")
-            except:
+            if not (await self.head(IMG + f"/sp/assets/npc/raid_normal/{element_id}_01_0.jpg"))[0]:
                 return False
             try:
                 mortal = None
