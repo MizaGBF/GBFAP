@@ -1025,7 +1025,9 @@
 "3040675000":{"v":[["0★","npc_3040675000_01","mortal_A","phit_3040675000",["nsp_3040675000_01_s2"]],["4★","npc_3040675000_02","mortal_A","phit_3040675000_02",["nsp_3040675000_02_s2"]]],"ab":["ab_3040675000_01","ab_3040675000_02","ab_all_3040675000_01","ab_all_3040675000_03"]},
 "3040674000":{"v":[["0★","npc_3040674000_01","mortal_A","phit_3040674000",["nsp_3040674000_01_s2"]],["4★","npc_3040674000_02","mortal_A","phit_3040674000_02",["nsp_3040674000_02_s2"]]],"ab":["ab_3040674000_01","ab_3040674000_02","ab_3040674000_03","ab_3040674000_04","ab_3040674000_05","ab_all_3040674000_02","ab_all_3040674000_03"]},
 "3040677000":{"v":[["0★","npc_3040677000_01","mortal_A","phit_3040677000",["nsp_3040677000_01_s2"]],["4★","npc_3040677000_02","mortal_A","phit_3040677000_02",["nsp_3040677000_02_s2"]]],"ab":["ab_3040677000_01","ab_3040677000_02","ab_3040677000_03","ab_all_3040677000_01","ab_all_3040677000_02"]},
-"3040676000":{"v":[["0★","npc_3040676000_01","mortal_A","phit_3040676000",["nsp_3040676000_01_s2"]],["4★","npc_3040676000_02","mortal_A","phit_3040676000_02",["nsp_3040676000_02_s2"]]],"ab":["ab_all_3040676000_01"]}
+"3040676000":{"v":[["0★","npc_3040676000_01","mortal_A","phit_3040676000",["nsp_3040676000_01_s2"]],["4★","npc_3040676000_02","mortal_A","phit_3040676000_02",["nsp_3040676000_02_s2"]]],"ab":["ab_all_3040676000_01"]},
+"3040678000":{"v":[["0★","npc_3040678000_01","mortal_A","phit_3040678000",["nsp_3040678000_01_s2"]],["4★","npc_3040678000_02","mortal_A","phit_3040678000_02",["nsp_3040678000_02_s2"]]],"ab":[]},
+"3040679000":{"v":[["0★","npc_3040679000_01","mortal_A","phit_3040679000",["nsp_3040679000_01_s2"]],["4★","npc_3040679000_02","mortal_A","phit_3040679000_02",["nsp_3040679000_02_s2"]]],"ab":[]}
 },
 "partners":
 {
@@ -4570,7 +4572,9 @@
 "1040919000":{"w":["1040919000","1040919000"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040919000",["sp_1040919000_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040919000",["sp_1040919000_1_s2"]]]},
 "1040123100":{"w":["1040123100","1040123100"],"v":[["Gran","gzk_kn_0_01","mortal_A","phit_1040123100",["sp_1040123100_0_s2"]],["Djeeta","gzk_kn_1_01","mortal_A","phit_1040123100",["sp_1040123100_1_s2"]]]},
 "1040029800":{"w":["1040029800","1040029800"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029800",["sp_1040029800_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029800",["sp_1040029800_1_s2"]]]},
-"1040519100":{"w":["1040519100","1040519100"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040519100",["sp_1040519100_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040519100",["sp_1040519100_1_s2"]]]}
+"1040519100":{"w":["1040519100","1040519100"],"v":[["Gran","rlc_gu_0_01","mortal_A","phit_1040519100",["sp_1040519100_0_s2"]],["Djeeta","rlc_gu_1_01","mortal_A","phit_1040519100",["sp_1040519100_1_s2"]]]},
+"1040221700":{"w":["1040221700","1040221700"],"v":[["Gran","aps_sp_0_01","mortal_A","phit_1040221700",["sp_1040221700_0_s2"]],["Djeeta","aps_sp_1_01","mortal_A","phit_1040221700",["sp_1040221700_1_s2"]]]},
+"1040320500":{"w":["1040320500","1040320500"],"v":[["Gran","bsk_ax_0_01","mortal_A","phit_1040320500",["sp_1040320500_0_s2"]],["Djeeta","bsk_ax_1_01","mortal_A","phit_1040320500",["sp_1040320500_1_s2"]]]}
 },
 "enemies":
 {
@@ -20580,7 +20584,12 @@
 "9102152":"/f other-boss /e null /n armonia animata",
 "9103493":"/f other-boss /e null /n the wind walker",
 "1040123100":"/w Fienddagger_of_Prosperity_Verboten /e fire /t dagger /a ssr /n fienddagger of prosperity verboten /c odious /y 禁栄の魔刃 2026-09-18",
-"1040029800":"/w Karmasword_of_Prosperity_Verboten /e fire /t sabre /a ssr /n karmasword of prosperity verboten /c odious /y 禁栄の業剣 2026-09-18"
+"1040029800":"/w Karmasword_of_Prosperity_Verboten /e fire /t sabre /a ssr /n karmasword of prosperity verboten /c odious /y 禁栄の業剣 2026-09-18",
+"1040519100":"/w Anti-Asteroid_Beam_Cannon /e water /t gun /a ssr /n anti-asteroid beam cannon /y 小惑星破砕ビームキャノン 2026-09-28",
+"3040679000":"/w Alba /e water /a ssr /n alba /b draph /s female /t attack /p spear /y アルバ kana asumi 阿澄佳奈 2026-09-30",
+"3040678000":"/w Vaseraga_(Grand) /e earth /a ssr /n vaseraga /c grand /b draph /s male /t attack /p axe /y バザラガ fumihiko tachiki 立木文彦 2026-09-30 /1 /2",
+"1040320500":"/w Painkiller /e earth /t axe /a ssr /n painkiller /c grand /y 2026-09-30",
+"1040221700":"/w Silver_Vine /e water /t spear /a ssr /n silver vine /y 2026-09-30"
 },
 "mypage":
 {
@@ -20617,7 +20626,8 @@
 "3040190000":{"v":[["1","mypage_3040190000_01",null,null,[]],["2","mypage_3040190000_02",null,null,[]],["3","mypage_3040190000_03",null,null,[]]]},
 "3040212000":{"v":[["1","mypage_3040212000_01",null,null,[]],["2","mypage_3040212000_02",null,null,[]],["3","mypage_3040212000_03",null,null,[]]]},
 "3040196000":{"v":[["1","mypage_3040196000_01",null,null,[]],["2","mypage_3040196000_02",null,null,[]],["3","mypage_3040196000_03",null,null,[]]]},
-"3040674000":{"v":[["1","mypage_3040674000_01",null,null,[]],["2","mypage_3040674000_02",null,null,[]]]}
+"3040674000":{"v":[["1","mypage_3040674000_01",null,null,[]],["2","mypage_3040674000_02",null,null,[]]]},
+"3040678000":{"v":[["1","mypage_3040678000_01",null,null,[]],["2","mypage_3040678000_02",null,null,[]]]}
 },
 "styles":
 {
