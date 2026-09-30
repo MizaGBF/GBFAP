@@ -1149,18 +1149,31 @@ class Updater():
             abilities : list[str] = []
             for s in range(1, 15): # single target skills
                 try:
-                    f = "ab_" + tid + "_" + str(s).zfill(2)
+                    f = f"ab_{tid}_{s:02}"
                     await self.head_manifest(f)
                     abilities.append(f)
                 except:
-                    pass
+                    if s < 10:
+                        try:
+                            f = f"ab_{tid}_{s}"
+                            await self.head_manifest(f)
+                            abilities.append(f)
+                        except:
+                            pass
             for s in range(1, 15): # AOE skills
                 try:
-                    f = "ab_all_" + tid + "_" + str(s).zfill(2)
+                    f = f"ab_all_{tid}_{s:02}"
                     await self.head_manifest(f)
                     abilities.append(f)
                 except:
-                    pass
+                    if s < 10:
+                        try:
+                            f = f"ab_all_{tid}_{s}"
+                            await self.head_manifest(f)
+                            abilities.append(f)
+                        except:
+                            pass
+                        
             name_table = {}
             for vs in versions: # now add all versions to tab
                 name = ""
@@ -1674,14 +1687,24 @@ class Updater():
                     await self.head_manifest(fn)
                     abilities.append(fn)
                 except:
-                    pass
+                    try:
+                        fn = f"ab_{element_id}_{s}"
+                        await self.head_manifest(fn)
+                        abilities.append(fn)
+                    except:
+                        pass
             for s in range(1, 10): # AOE skills
                 try:
                     fn = f"ab_all_{element_id}_{s:02}"
                     await self.head_manifest(fn)
                     abilities.append(fn)
                 except:
-                    pass
+                    try:
+                        fn = f"ab_all_{element_id}_{s}"
+                        await self.head_manifest(fn)
+                        abilities.append(fn)
+                    except:
+                        pass
             character_data = {}
             character_data['v'] = []
             character_data['ab'] = abilities
