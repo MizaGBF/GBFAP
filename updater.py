@@ -660,7 +660,7 @@ class Updater():
             # class import
             count : int = 0
             for k, jd in self.gbfal["job"].items():
-                if k not in CLASS_LIST and k not in self.data["job"]:
+                if k not in CLASS_LIST and k not in self.data["job"] and isinstance(self.data["job"][k], list):
                     CLASS_LIST[k] = self.gbfal['job'][k][6] # add mh
                     for x, v in self.gbfal['job_wpn'].items():
                         if v == k:

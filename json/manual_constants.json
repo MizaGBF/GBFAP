@@ -492,7 +492,8 @@
         "360303": ["mu3_gu"],
         "100501": ["fio_sw", "fio_ax"],
         "190501": ["lno_sp", "lno_ax"],
-        "130501": ["wio_wa", "wio_mc"]
+        "130501": ["wio_wa", "wio_mc"],
+        "170501": ["rno_bw", "rno_gu"]
     },
     "CLASS_WEAPON_LIST" : {
         "310001": "1040009100",
