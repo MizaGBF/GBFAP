@@ -20612,8 +20612,11 @@
 "9101783":"/f other-boss /e null /n zebuth",
 "9103383":"/f other-boss /e null /n divinity of chaos",
 "9103393":"/f other-boss /e null /n crevasse of chaos",
-"9103403":"/f other-boss /x beelzebub /e null /n the one true king",
-"170501":"/w Ranger_Origin /x main character /n ranger origin /m class /y レンジャー・オリジン 2026-10-14"
+"9103403":"/f other-boss /e null /n beelzebub /1 /2",
+"170501":"/w Ranger_Origin /x main character /n ranger origin /m class /y レンジャー・オリジン 2026-10-14",
+"3994628000":"/$",
+"3994629000":"/$",
+"3994630000":"/$"
 },
 "mypage":
 {
