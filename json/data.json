@@ -7485,7 +7485,12 @@
 "4301113":{"v":[["","enemy_4301113",null,"ehit_4301113",["esp_4301113_01","esp_4301113_02","esp_4301113_03","esp_4301113_04"]]]},
 "9102152":{"v":[["","enemy_9102152",null,"phit_0000000000",[]]]},
 "9103493":{"v":[["","enemy_9103493",null,"phit_0000000000",[]]]},
-"8105123":{"v":[["","enemy_8105123",null,"phit_0000000000",[]]]}
+"8105123":{"v":[["","enemy_8105123",null,"phit_0000000000",[]]]},
+"9101783":{"v":[["","enemy_9101783",null,"ehit_9101783",["esp_9101783_01","esp_9101783_02_all","esp_9101783_03_all"]]]},
+"9103393":{"v":[["","enemy_9103393",null,"ehit_9103393",["esp_9103393_01","esp_9103393_02","esp_9103393_03"]]]},
+"9103403":{"v":[["","enemy_9103403",null,"phit_0000000000",["esp_9103403_01_all","esp_9103403_02_all","esp_9103403_03_all","esp_9103403_04_all","esp_9103403_05_all"]]]},
+"9103383":{"v":[["","enemy_9103383",null,"ehit_9103383",["esp_9103383_01","esp_9103383_02"]]]},
+"8104572":{"v":[["","enemy_8104572",null,"phit_0000000000",["esp_8104572_01","esp_8104572_02_all","esp_8104572_03_all"]]]}
 },
 "skins":
 {
@@ -7863,7 +7868,8 @@
 "100501":{"w":["1010000000","1010000000","1010000000","1010000000"],"v":[["Gran","fio_sw_0_01","mortal_A","phit_sw_0001",[]],["Djeeta","fio_sw_1_01","mortal_A","phit_sw_0001",[]],["Gran v1","fio_sw_0_80","mortal_A","phit_sw_0001",[]],["Djeeta v1","fio_sw_1_80","mortal_A","phit_sw_0001",[]]],"ab":[],"u":["sp_1040028800_0_s2","sp_1040028800_1_s2","sp_1040028800_0_s2","sp_1040028800_1_s2"]},
 "190501":{"w":["1010200000","1010200000","1010200000","1010200000"],"v":[["Gran","lno_sp_0_01","mortal_A","phit_sp_0001",[]],["Djeeta","lno_sp_1_01","mortal_A","phit_sp_0001",[]],["Gran v1","lno_sp_0_80","mortal_A","phit_sp_0001",[]],["Djeeta v1","lno_sp_1_80","mortal_A","phit_sp_0001",[]]],"ab":[]},
 "130501":{"w":["1010400000","1010400000","1010400000","1010400000"],"v":[["Gran","wio_wa_0_01","mortal_A","phit_wa_0001",[]],["Djeeta","wio_wa_1_01","mortal_A","phit_wa_0001",[]],["Gran v1","wio_wa_0_80","mortal_A","phit_wa_0001",[]],["Djeeta v1","wio_wa_1_80","mortal_A","phit_wa_0001",[]]],"ab":[]},
-"170501":{"w":["1010700000","1010700000","1010700000","1010700000"],"v":[["Gran","rno_bw_0_01","mortal_A","phit_bw_0001",[]],["Djeeta","rno_bw_1_01","mortal_A","phit_bw_0001",[]],["Gran v1","rno_bw_0_80","mortal_A","phit_bw_0001",[]],["Djeeta v1","rno_bw_1_80","mortal_A","phit_bw_0001",[]]],"ab":[]}
+"170501":{"w":["1010700000","1010700000","1010700000","1010700000"],"v":[["Gran","rno_bw_0_01","mortal_A","phit_bw_0001",[]],["Djeeta","rno_bw_1_01","mortal_A","phit_bw_0001",[]],["Gran v1","rno_bw_0_80","mortal_A","phit_bw_0001",[]],["Djeeta v1","rno_bw_1_80","mortal_A","phit_bw_0001",[]]],"ab":[]},
+"371001":{"v":[["Gran","blz_me_0_01","mortal_B","phit_1040622300",["sp_1040622300_0_s2"]],["Djeeta","blz_me_1_01","mortal_B","phit_1040622300",["sp_1040622300_1_s2"]]],"ab":[]}
 },
 "background":
 {
@@ -8701,7 +8707,8 @@
 "event_569":[["event_569"]],
 "common_093":[["common_093"]],
 "event_572":[["event_572"]],
-"event_573":[["event_573"]]
+"event_573":[["event_573"]],
+"event_568":[["event_568"]]
 },
 "mypage_bg":
 {
@@ -20594,7 +20601,19 @@
 "3994621000":"/n fraux /c evokers /b erune /s female /y フラウ azumi asakura 浅倉杏美 /2",
 "3994623000":"/n nier /c evokers /b erune /s female /y ニーア noriko shitaya 下屋 則子 /1",
 "3994626000":"/n estarriola /c evokers /b harvin /s male /y エスタリオラ chō チョー",
-"3994627000":"/n nier /c evokers /b erune /s female /y ニーア noriko shitaya 下屋 則子 /1"
+"3994627000":"/n nier /c evokers /b erune /s female /y ニーア noriko shitaya 下屋 則子 /1",
+"3994600000":"/n beelzebub /b unknown /s male /y ベルゼバブ katsuyuki konishi 小西克幸 /! /!! /1 /2",
+"3994633000":"/n beelzebub /b unknown /s male /y ベルゼバブ katsuyuki konishi 小西克幸 /1 /2",
+"3994634000":"/n gran /b human /s male /y グラン /1 /2",
+"3994635000":"/n gran /b human /s male /y グラン /1 /2",
+"3994636000":"/n djeeta /b human /s female /y ジータ /1 /2",
+"3994637000":"/n djeeta /b human /s female /y ジータ /1 /2",
+"8104572":"/f primal-boss /x berserk precipian entities /e light /n embryo of chaos",
+"9101783":"/f other-boss /e null /n zebuth",
+"9103383":"/f other-boss /e null /n divinity of chaos",
+"9103393":"/f other-boss /e null /n crevasse of chaos",
+"9103403":"/f other-boss /x beelzebub /e null /n the one true king",
+"170501":"/w Ranger_Origin /x main character /n ranger origin /m class /y レンジャー・オリジン 2026-10-14"
 },
 "mypage":
 {
