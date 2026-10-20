@@ -1522,7 +1522,7 @@
 "2040452000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040452000_01_attack"]]],"s":"2040452000"},
 "2040451000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040451000_01_attack"]]],"s":"2040451000"},
 "2040453000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040453000_01_attack"]]],"s":"2040453000"},
-"2040454000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040454000_01_attack"]]],"s":"2040454000"},
+"2040454000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040454000_01_attack"]],["4★","sdw_bw_0_01","",null,["summon_2040454000_02_attack"]]],"s":"2040454000"},
 "2040455000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040455000_01_attack"]]],"s":"2040455000"},
 "2040456000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040456000_01_attack"]]],"s":"2040456000"},
 "2040457000":{"v":[["3★","sdw_bw_0_01","",null,["summon_2040457000_01_attack"]]],"s":"2040457000"},
@@ -4580,7 +4580,9 @@
 "1040320500":{"w":["1040320500","1040320500"],"v":[["Gran","bsk_ax_0_01","mortal_A","phit_1040320500",["sp_1040320500_0_s2"]],["Djeeta","bsk_ax_1_01","mortal_A","phit_1040320500",["sp_1040320500_1_s2"]]]},
 "1040919100":{"w":["1040919100","1040919100"],"v":[["Gran","kng_kt_0_01","mortal_A","phit_1040919100",["sp_1040919100_0_s2"]],["Djeeta","kng_kt_1_01","mortal_A","phit_1040919100",["sp_1040919100_1_s2"]]]},
 "1040818800":{"w":["1040818800","1040818800"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040818800",["sp_1040818800_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040818800",["sp_1040818800_1_s2"]]]},
-"1040622400":{"w":["1040622400","1040622400"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622400",["sp_1040622400_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622400",["sp_1040622400_1_s2"]]]}
+"1040622400":{"w":["1040622400","1040622400"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622400",["sp_1040622400_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622400",["sp_1040622400_1_s2"]]]},
+"1040715600":{"w":["1040715600","1040715600"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715600",["sp_1040715600_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715600",["sp_1040715600_1_s2"]]]},
+"1040622500":{"w":["1040622500","1040622500"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622500",["sp_1040622500_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622500",["sp_1040622500_1_s2"]]]}
 },
 "enemies":
 {
@@ -7496,7 +7498,13 @@
 "9103393":{"v":[["","enemy_9103393",null,"ehit_9103393",["esp_9103393_01","esp_9103393_02","esp_9103393_03"]]]},
 "9103403":{"v":[["","enemy_9103403",null,"phit_0000000000",["esp_9103403_01_all","esp_9103403_02_all","esp_9103403_03_all","esp_9103403_04_all","esp_9103403_05_all"]]]},
 "9103383":{"v":[["","enemy_9103383",null,"ehit_9103383",["esp_9103383_01","esp_9103383_02"]]]},
-"8104572":{"v":[["","enemy_8104572",null,"phit_0000000000",["esp_8104572_01","esp_8104572_02_all","esp_8104572_03_all"]]]}
+"8104572":{"v":[["","enemy_8104572",null,"phit_0000000000",["esp_8104572_01","esp_8104572_02_all","esp_8104572_03_all"]]]},
+"4301123":{"v":[["","enemy_4301123",null,"phit_0000000000",[]]],"ra":["raid_appear_4301123"]},
+"4301143":{"v":[["","enemy_4301143",null,"ehit_4301143",["esp_4301143_01","esp_4301143_02","esp_4301143_03"]]],"ra":["raid_appear_4301143"]},
+"4301133":{"v":[["","enemy_4301133",null,"ehit_4301133",["esp_4301133_01","esp_4301133_02","esp_4301133_03"]]],"ra":["raid_appear_4301133"]},
+"9103503":{"v":[["","enemy_9103503",null,"ehit_9103503",["esp_9103503_01","esp_9103503_02","esp_9103503_03","esp_9103503_04"]]],"ra":["raid_appear_9103503"]},
+"9103483":{"v":[["","enemy_9103483",null,"phit_0000000000",[]]],"ra":["raid_appear_9103483"]},
+"9103513":{"v":[["","enemy_9103513",null,"phit_0000000000",[]]]}
 },
 "skins":
 {
@@ -8715,7 +8723,8 @@
 "common_093":[["common_093"]],
 "event_572":[["event_572"]],
 "event_573":[["event_573"]],
-"event_568":[["event_568"]]
+"event_568":[["event_568"]],
+"common_094":[["common_094"]]
 },
 "mypage_bg":
 {
@@ -13264,7 +13273,7 @@
 "4301013":"/f machine-boss /e light /n miss heaty the bedazzled",
 "4301023":"/f machine-boss /e light /n archipelago annihiloid",
 "4301033":"/f machine-boss /e water /n tetragod",
-"4301043":"/f machine-boss /e dark /n titanium taskmaster feat. chief",
+"4301043":"/f machine-boss /x arx moven /e dark /n titanium taskmaster feat. chief",
 "4301053":"/f machine-boss /e dark /n titanium taskmaster feat. chief",
 "4301063":"/f machine-boss /x archipelago annihiloid /e fire /n destructive frame",
 "4301073":"/f machine-boss /e fire /n leotron",
@@ -20629,11 +20638,17 @@
 "3994631000":"/n randall /b human /s male /y ランドル wataru hatano 羽多野渉",
 "3040681000":"/w Azusa_(Halloween) /e fire /a ssr /n azusa /c halloween /b draph /s female /t attack /p katana /y アズサ asami seto 瀬戸麻沙美 2026-10-19",
 "3040680000":"/w Ewiyar_(Halloween) /e dark /a ssr /n ewiyar /c halloween /b unknown /s other /t special /p melee /y イーウィヤ rie hikisaka 引坂理絵 2026-10-19",
-"3040682000":"/w Randall_(Halloween) /e light /a ssr /n randall /c halloween /b human /s male /t attack /p melee /y アズサ wataru hatano 羽多野渉 2026-10-19",
-"1040818800":"/w Ewiyar-Pocus /e dark /t harp /a ssr /n ewiyar-pocus /y 2026-10-19",
-"1040622400":"/w Fugitive's_Claw /e light /t melee /a ssr /n fugitive's claw /y 2026-10-19",
-"1040919100":"/w Kumogirimaru /e fire /t katana /a ssr /n kumogirimaru /y 2026-10-19",
-"3710263000":"/w Alexiel /x alexiel /k guising ward /n alexiel /y 2026-10-19"
+"3040682000":"/w Randall_(Halloween) /e light /a ssr /n randall /c halloween /b human /s male /t attack /p melee /y ランドル wataru hatano 羽多野渉 2026-10-19",
+"1040818800":"/w Ewiyar-Pocus /e dark /t harp /a ssr /n ewiyar-pocus /y イーウィヤ・ポーカス 2026-10-19",
+"1040622400":"/w Fugitive's_Claw /e light /t melee /a ssr /n fugitive's claw /y フュージティヴ・クロウ 2026-10-19",
+"1040919100":"/w Kumogirimaru /e fire /t katana /a ssr /n kumogirimaru /y 蜘蛛切丸 2026-10-19",
+"3710263000":"/w Alexiel /x alexiel /k guising ward /n alexiel /y 2026-10-19",
+"4301123":"/f machine-boss /x ruby machina /e earth /n corpus volans",
+"4301133":"/f machine-boss /x montague guard /e earth /n ferrum grave",
+"4301143":"/f machine-boss /e earth /n arx moven",
+"9103483":"/f other-boss /x agastia abomination battleship /e earth /n ultimus atrox",
+"9103503":"/f other-boss /e dark /n zamalvoch",
+"9103513":"/f other-boss /e dark /n zamalvoch"
 },
 "mypage":
 {
