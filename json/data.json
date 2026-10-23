@@ -446,7 +446,7 @@
 "3040178000":{"v":[["0★","npc_3040178000_01","mortal_A","phit_3040178000",["nsp_3040178000_01"]],["4★","npc_3040178000_02","mortal_A","phit_3040178000",["nsp_3040178000_02"]]],"ab":["ab_3040178000_01","ab_3040178000_02","ab_all_3040178000_01"]},
 "3040179000":{"v":[["0★","npc_3040179000_01","mortal_A","phit_3040179000",["nsp_3040179000_01"]],["4★","npc_3040179000_02","mortal_A","phit_3040179000_02",["nsp_3040179000_02"]]],"ab":["ab_3040179000_01","ab_3040179000_02"]},
 "3030193000":{"v":[["0★","npc_3030193000_01","mortal_A","phit_3030193000",["nsp_3030193000_01"]],["4★","npc_3030193000_02","mortal_A","phit_3030193000",["nsp_3030193000_02"]]],"ab":["ab_3030193000_01","ab_all_3030193000_02"]},
-"3040180000":{"v":[["0★","npc_3040180000_01","mortal_A","phit_3040180000",["nsp_3040180000_01_s2"]],["4★","npc_3040180000_02","mortal_A","phit_3040180000",["nsp_3040180000_02_s2"]]],"ab":["ab_3040180000_01","ab_all_3040180000_01","ab_all_3040180000_02"]},
+"3040180000":{"v":[["0★","npc_3040180000_01","mortal_A","phit_3040180000",["nsp_3040180000_01_s2"]],["4★","npc_3040180000_02","mortal_A","phit_3040180000",["nsp_3040180000_02_s2"]],["5★","npc_3040180000_03","mortal_A","phit_3040180000_03",["nsp_3040180000_03_s2"]]],"ab":["ab_3040180000_01","ab_3040180000_02","ab_3040180000_03","ab_3040180000_04","ab_3040180000_05","ab_all_3040180000_01","ab_all_3040180000_02"]},
 "3030195000":{"v":[["0★","npc_3030195000_01","mortal_A","phit_sw_0015",["nsp_3030195000_01"]],["4★","npc_3030195000_02","mortal_A","phit_sw_0015",["nsp_3030195000_02"]]],"ab":[]},
 "3030194000":{"v":[["0★","npc_3030194000_01","mortal_A","phit_3030194000",["nsp_3030194000_01","nsp_3030194000_01_b","nsp_3030194000_01_c"]],["4★","npc_3030194000_02","mortal_A","phit_3030194000",["nsp_3030194000_02","nsp_3030194000_02_b","nsp_3030194000_02_c"]]],"ab":["ab_3030194000_01","ab_3030194000_02","ab_3030194000_03","ab_3030194000_04","ab_3030194000_05","ab_3030194000_06","ab_all_3030194000_07","ab_all_3030194000_08","ab_all_3030194000_09","ab_all_3030194000_10","ab_all_3030194000_11","ab_all_3030194000_12","ab_all_3030194000_13"]},
 "3030196000":{"v":[["0★","npc_3030196000_01","mortal_A","phit_3030196000",["nsp_3030196000_01"]],["4★","npc_3030196000_02","mortal_A","phit_3030196000",["nsp_3030196000_02"]]],"ab":["ab_3030196000_01"]},
@@ -13059,7 +13059,7 @@
 "4100633":"/f golem-boss /e wind /n joya",
 "4100643":"/f golem-boss /e wind /n joya",
 "4100652":"/f golem-boss /e dark /n pollux",
-"4100663":"/f golem-boss /e earth /n chimera golem /c collab",
+"4100663":"/f golem-boss /e earth /n chimera golem /c collab /% /n ferrum agile",
 "4100673":"/f golem-boss /e fire /n nalhe great wall",
 "4100683":"/f golem-boss /e fire /n nalhe great wall",
 "4100693":"/f golem-boss /e fire /n nalhe great wall",
@@ -13263,7 +13263,7 @@
 "4300923":"/f machine-boss /e light /n nautilus nemo /c collab",
 "4300933":"/f machine-boss /x cendrillon /e dark /n drenched cendrillon",
 "4300943":"/f machine-boss /x cendrillon /e dark /n poppet master cendrillon",
-"4300952":"/f machine-boss /e earth /n battle beast wrecky",
+"4300952":"/f machine-boss /e earth /n battle beast wrecky /% /n lacerta currens",
 "4300961":"/f machine-boss /e fire /n disturbed guardian",
 "4300963":"/f machine-boss /e fire /n disturbed guardian",
 "4300971":"/f machine-boss /e fire /n disturbed guardian",
@@ -20648,7 +20648,11 @@
 "4301143":"/f machine-boss /e earth /n arx moven",
 "9103483":"/f other-boss /x agastia abomination battleship /e earth /n ultimus atrox",
 "9103503":"/f other-boss /e dark /n zamalvoch",
-"9103513":"/f other-boss /e dark /n zamalvoch"
+"9103513":"/f other-boss /e dark /n zamalvoch",
+"3994638000":"/n tsubasa /b human /s male /y aツバサ yuichi nakamura 中村悠一",
+"3994639000":"/n tsubasa /b human /s male /y aツバサ yuichi nakamura 中村悠一",
+"1040715600":"/w Derangebow_of_Sanctity_Verboten /e dark /t bow /a ssr /n derangebow of sanctity verboten /c odious /y 禁聖の狂弓 2026-10-20",
+"1040622500":"/w Fiendclaw_of_Sanctity_Verboten /e dark /t melee /a ssr /n fiendclaw of sanctity verboten /c odious /y 禁聖の魔腕 2026-10-20"
 },
 "mypage":
 {
