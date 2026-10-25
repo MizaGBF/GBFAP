@@ -535,7 +535,7 @@ function player_start_end()
 			lookup:true,
 			related:true,
 			link:true,
-			extra_links:[["Assets for " + last_id, "../GBFAL/assets/icon.png", "../GBFAL/?id=" + gbfal_prefix + last_id]]
+			extra_links:[["Assets for " + last_id, "../GBFAL/assets/webp/icon.webp", "../GBFAL/?id=" + gbfal_prefix + last_id]]
 		}
 	);
 	if("mypage" in index && last_id in index["mypage"])
@@ -565,7 +565,7 @@ function player_start_end()
 					};
 				}
 			}
-		}).src = "../GBFML/assets/ui/alt.png";
+		}).src = "../GBFML/assets/webp/alt.webp";
 	}
 	
 	update_next_frame(() => {
