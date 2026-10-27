@@ -17,9 +17,20 @@ import traceback
 import signal
 import argparse
 from tqdm import tqdm
+# Replacing print to ensure it plays nicely with tqdm
+import inspect
+__old_print__ = print
+def __new_print__(*args, **kwargs):
+    # if tqdm.write raises error, use builtin print
+    try:
+        tqdm.write(*args, **kwargs)
+    except:
+        __old_print__(*args, ** kwargs)
+# replace print with __new_print__
+inspect.builtins.print = __new_print__
 
 ### CONSTANT
-VERSION = '6.0'
+VERSION = '6.1'
 CONCURRENT_TASKS = 100
 MAX_REQUEST = 90
 BASE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36'
@@ -139,7 +150,6 @@ class TaskManager():
     total : int
     finished : int
     updated : int
-    print_flag : bool
     pbar : tqdm|None
     
     def __init__(self : TaskManager, updater : Updater) -> None:
@@ -153,7 +163,6 @@ class TaskManager():
         self.total = 0
         self.finished = 0
         self.updated = 0
-        self.print_flag = False
         self.pbar = None
 
     # add a task to one queue
@@ -196,7 +205,7 @@ class TaskManager():
                 await asyncio.sleep(120)
                 now : float = time.perf_counter()
                 if now - self.last_save_time >= 3600:
-                    self.print("Autosaving...")
+                    print("Autosaving...")
                     self.updater.save()
                     self.updater.save_resume()
                     self.last_save_time = now
@@ -240,8 +249,8 @@ class TaskManager():
                     # execute
                     await task.awaitable(*task.parameters)
                 except Exception as e:
-                    self.print(f"The following exception occured for {self.format_task_info(task.awaitable, task.parameters)}")
-                    self.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+                    print(f"The following exception occured for {self.format_task_info(task.awaitable, task.parameters)}")
+                    print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
                 finally:
                     self.finished += 1
                     self.updated += 1
@@ -284,7 +293,7 @@ class TaskManager():
             self.pbar.close()
             self.pbar = None
             self.is_running = False
-            self.print("Complete")
+            print("Complete")
 
     # start to run queued tasks
     async def start(self : TaskManager) -> bool:
@@ -293,14 +302,6 @@ class TaskManager():
         if self.total > 0:
             await self.run()
         return True
-
-    # print whatever you want, to use instead of print to handle the \r
-    def print(self : TaskManager, *args) -> None:
-        if self.pbar is not None:
-            self.pbar.write(" ".join(map(str, args)))
-            self.pbar.refresh()
-        else:
-            print(*args)
 
     # called when CTRL+C is used
     def interrupt(self : TaskManager, *args) -> None:
@@ -472,20 +473,20 @@ class Updater():
                 if k in data:
                     self.data[k] = data[k]
         except OSError as e:
-            self.tasks.print(e)
+            print(e)
             if input("Continue anyway? (type 'y' to continue):").lower() != 'y':
                 os._exit(0)
         except Exception as e:
-            self.tasks.print("The following error occured while loading data.json:")
-            self.tasks.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
-            self.tasks.print(e)
+            print("The following error occured while loading data.json:")
+            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+            print(e)
             os._exit(0)
 
     # make older data.json compatible with newer versions
     def retrocompatibility(self : Updater, data : dict[str, Any]) -> dict[str, Any]:
         version = data.get("version", 0)
         if version == 0:
-            self.tasks.print("This version is unsupported and might not work properly")
+            print("This version is unsupported and might not work properly")
         data["version"] = SAVE_VERSION
         return data
 
@@ -578,12 +579,12 @@ class Updater():
                 with open('json/changelog.json', mode='w', encoding='utf-8') as outfile: # the timestamp is upated below
                     json.dump({'timestamp':int(datetime.now(timezone.utc).timestamp()*1000), 'new':new, 'stat':stat, 'issues':issues, 'help':help}, outfile, indent=2, separators=(',', ':'), ensure_ascii=False)
                 if self.update_changelog:
-                    self.tasks.print("data.json and changelog.json updated")
+                    print("data.json and changelog.json updated")
                 else:
-                    self.tasks.print("data.json updated")
+                    print("data.json updated")
         except Exception as e:
-            self.tasks.print(e)
-            self.tasks.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+            print(e)
+            print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
 
     def add(self : Updater, element_id : str, element_type : int|str) -> None:
         self.addition.add((element_id, element_type))
@@ -614,7 +615,7 @@ class Updater():
                 except httpcore2.RemoteProtocolError:
                     await asyncio.sleep(0.2)
                 except Exception as e:
-                    self.tasks.print(f"The following exception occurred in get():\nAt: {url}\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__)))
+                    print(f"The following exception occurred in get():\nAt: {url}\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__)))
                     return None
 
     # GBF HEAD request function
@@ -630,7 +631,7 @@ class Updater():
                 except httpcore2.RemoteProtocolError:
                     await asyncio.sleep(0.2)
                 except Exception as e:
-                    self.tasks.print(f"The following exception occurred in head():\nAt: {url}\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__)))
+                    print(f"The following exception occurred in head():\nAt: {url}\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__)))
                     return (False, [])
                 
 
@@ -652,11 +653,11 @@ class Updater():
                     bg_modified = True
             if bg_modified:
                 self.modified = True
-                self.tasks.print("New backgrounds imported from GBFAL")
+                print("New backgrounds imported from GBFAL")
             if len(self.data["mypage_bg"]) != len(self.gbfal["mypage_bg"]):
                 self.data["mypage_bg"] = self.gbfal["mypage_bg"]
                 self.modified = True
-                self.tasks.print("New mypage backgrounds imported from GBFAL")
+                print("New mypage backgrounds imported from GBFAL")
             # class import
             count : int = 0
             for k, jd in self.gbfal["job"].items():
@@ -672,9 +673,9 @@ class Updater():
                     # mypage section
                     if len(jd[13]) > 0 and k not in self.data["mypage"]:
                         self.tasks.add(self.update_mypage, parameters=(k,))
-                        self.tasks.print("New mypage animation found in GBFAL:", k)
+                        print("New mypage animation found in GBFAL:", k)
             if count > 0:
-                self.tasks.print("Found", count, "new classes in GBFAL")
+                print("Found", count, "new classes in GBFAL")
             # uncap check
             table : dict[str, int] = {}
             count = 0
@@ -697,7 +698,7 @@ class Updater():
                     # mypage section
                     if len(v[9]) > 0 and k not in self.data["mypage"]:
                         self.tasks.add(self.update_mypage, parameters=(k,))
-                        self.tasks.print("New mypage animation found in GBFAL:", k)
+                        print("New mypage animation found in GBFAL:", k)
             for k, v in self.gbfal['summons'].items(): # do the same for summons
                 if isinstance(v, list):
                     max_uncap = 0
@@ -713,7 +714,7 @@ class Updater():
                     # mypage section
                     if len(v[3]) > 0 and k not in self.data["mypage"]:
                         self.tasks.add(self.update_mypage, parameters=(k,))
-                        self.tasks.print("New mypage animation found in GBFAL:", k)
+                        print("New mypage animation found in GBFAL:", k)
             for t in ("characters", "summons"):
                 for k, v in self.data[t].items(): # now go over our items and our uncap table and comapre
                     if k in table:
@@ -756,7 +757,7 @@ class Updater():
                             else: # failsafe
                                 continue
             if count > 0:
-                self.tasks.print(count, "possible uncap/style(s) found in GBFAL")
+                print(count, "possible uncap/style(s) found in GBFAL")
             # enemy appear
             for k in self.data["enemies"]:
                 if k in self.gbfal["enemies"]:
@@ -783,7 +784,7 @@ class Updater():
                             self.add(k, ADD_BOSS)
                             self.modified = True
         except Exception as e:
-            self.tasks.print("Failed to fetch GBFAL data:\n", self.trace(e))
+            print("Failed to fetch GBFAL data:\n", self.trace(e))
 
     def import_gbfal_lookup(self : Updater) -> None:
         try:
@@ -791,7 +792,7 @@ class Updater():
                 self.data["lookup"] = self.gbfal["lookup"]
                 self.modified = True
         except Exception as e:
-            self.tasks.print("Failed to import GBFAL lookup:\n", self.trace(e))
+            print("Failed to import GBFAL lookup:\n", self.trace(e))
 
     ### Main #################################################################################################################
 
@@ -921,7 +922,7 @@ class Updater():
                         suffixes = await self.get_mypage_list(element_id, style)
                         add_type = ADD_CHAR
                     case _:
-                        self.tasks.print("Unsupported ID " + element_id + " for update_mypage")
+                        print("Unsupported ID " + element_id + " for update_mypage")
                         return False
             elif len(element_id) == 6: # classes
                 suffixes = []
@@ -930,7 +931,7 @@ class Updater():
                     suffixes.append(f"_{ci}_{g}_01")
                 add_type = ADD_JOB
             else:
-                self.tasks.print("Unsupported ID " + element_id + " for update_mypage")
+                print("Unsupported ID " + element_id + " for update_mypage")
                 return False
             character_data = {"v":[]}
             for uncap in suffixes:
@@ -962,10 +963,10 @@ class Updater():
                 self.modified = True
                 if add_type is not None:
                     self.add(element_id, add_type)
-                self.tasks.print("Updated", element_id, "for", index)
+                print("Updated", element_id, "for", index)
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trace(e)}")
+            print(f"Exception for id: {element_id}, with style: {style}\n{self.trace(e)}")
             return False
 
     # search for existing mypage arts
@@ -1232,18 +1233,18 @@ class Updater():
                     self.data[target][element_id] = character_data
                     self.modified = True
                     self.add(element_id, ADD_CHAR if target != "partners" else ADD_PARTNER)
-                    self.tasks.print("Updated", element_id, "for index", target)
+                    print("Updated", element_id, "for index", target)
                 self.tasks.add(self.update_mypage, parameters=(element_id,))
             else:
                 if str(character_data) != str(self.data["styles"].get(element_id, None)):
                     self.data["styles"][element_id] = character_data
                     self.modified = True
                     self.add(element_id, ADD_CHAR)
-                    self.tasks.print("Updated", element_id, "for styles")
+                    print("Updated", element_id, "for styles")
                 self.tasks.add(self.update_mypage, parameters=(element_id, "_st2"))
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}, with style: {style}\n{self.trace(e)}")
+            print(f"Exception for id: {element_id}, with style: {style}\n{self.trace(e)}")
             return False
 
     # subroutine for update_character
@@ -1329,11 +1330,11 @@ class Updater():
                 self.data["summons"][element_id] = character_data
                 self.modified = True
                 self.add(element_id, ADD_SUMM)
-                self.tasks.print("Updated", element_id, "for index summons")
+                print("Updated", element_id, "for index summons")
             self.tasks.add(self.update_mypage, parameters=(element_id,))
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
+            print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     async def update_weapon(self : Updater, element_id : str) -> bool:
@@ -1413,10 +1414,10 @@ class Updater():
                 self.data["weapons"][element_id] = character_data
                 self.modified = True
                 self.add(element_id, ADD_WEAP)
-                self.tasks.print("Updated", element_id, "for index weapons")
+                print("Updated", element_id, "for index weapons")
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
+            print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     async def update_enemy(self : Updater, element_id : str) -> bool:
@@ -1473,10 +1474,10 @@ class Updater():
                 self.data["enemies"][element_id] = character_data
                 self.modified = True
                 self.add(element_id, ADD_BOSS)
-                self.tasks.print("Updated", element_id, "for index enemies")
+                print("Updated", element_id, "for index enemies")
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
+            print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     # subroutine for update_enemy
@@ -1618,7 +1619,7 @@ class Updater():
                                         raise Exception()
                                     await self.head_manifest(sp)
                                 except:
-                                    self.tasks.print("Warning:", sp, "not found for", element_id)
+                                    print("Warning:", sp, "not found for", element_id)
                                     sp = None
                     tmp = [('Gran' if i == 0 else 'Djeeta') + var, c.replace('_0_', f'_{i}_'), mortal, phit, [] if sp is None else [sp]] # name, cjs, mortal, phit, sp
                     character_data['v'].append(tmp)
@@ -1635,11 +1636,11 @@ class Updater():
                 self.data["job"][element_id] = character_data
                 self.modified = True
                 self.add(element_id, ADD_JOB)
-                self.tasks.print("Updated", element_id, "for index job")
+                print("Updated", element_id, "for index job")
             self.tasks.add(self.update_mypage, parameters=(element_id,))
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
+            print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     async def update_partner_main_character(self : Updater, element_id : str) -> int:
@@ -1680,7 +1681,7 @@ class Updater():
                 except:
                     pass
             if sp is None:
-                self.tasks.print("Warning:", "special not found for", element_id)
+                print("Warning:", "special not found for", element_id)
             abilities = []
             for s in range(1, 10): # single target skills
                 try:
@@ -1728,23 +1729,23 @@ class Updater():
                                     raise Exception()
                                 await self.head_manifest(sp)
                             except:
-                                self.tasks.print("Warning:", sp, "not found for", element_id)
+                                print("Warning:", sp, "not found for", element_id)
                                 sp = None
                 character_data['v'].append([('Gran' if i == 0 else 'Djeeta'), cjs.replace('_0_', f'_{i}_'), mortal, phit, [] if sp is None else [sp]]) # name, cjs, mortal, phit, sp
             if str(character_data) != str(self.data["partners"].get(element_id, None)):
                 self.data["partners"][element_id] = character_data
                 self.modified = True
                 self.add(element_id, ADD_PARTNER)
-                self.tasks.print("Updated", element_id, "for index partners")
+                print("Updated", element_id, "for index partners")
             return True
         except Exception as e:
-            self.tasks.print(f"Exception for id: {element_id}\n{self.trace(e)}")
+            print(f"Exception for id: {element_id}\n{self.trace(e)}")
             return False
 
     ### Others #################################################################################################################
 
     def fixsummon(self : Updater) -> None:
-        self.tasks.print("Updating summons base classes...")
+        print("Updating summons base classes...")
         done : bool = False
         for k in self.data["summons"]:
             for i in range(len(self.data["summons"][k]["v"])):
@@ -1753,7 +1754,7 @@ class Updater():
                     self.modified = True
                     done = True
         if done:
-            self.tasks.print("Summons base classes have been updated")
+            print("Summons base classes have been updated")
 
     def list_spritesheets(self : Updater, manifest : bytes) -> list|None:
         try:
@@ -1833,7 +1834,7 @@ class Updater():
                 p = Path("img/sp/mypage/town", file, "bg.jpg")
                 url_path = p.as_posix()
             case _:
-                self.tasks.print("Unknown file type", file_type)
+                print("Unknown file type", file_type)
                 return
         if p.exists():
             return
@@ -1853,7 +1854,7 @@ class Updater():
                     # parse manifest
                     spritesheets = self.list_spritesheets(content)
                     if spritesheets is None:
-                        self.tasks.print("Failed to parse spritesheets from", p.as_posix(), "in", error_context)
+                        print("Failed to parse spritesheets from", p.as_posix(), "in", error_context)
                     else:
                         for surl in spritesheets:
                             self.tasks.add(self.downloader, parameters=("sprite", surl, file_seen, file))
@@ -1864,20 +1865,20 @@ class Updater():
                         if len(s) == 2:
                             self.tasks.add(self.downloader, parameters=(s[0], s[1], file_seen, file))
                         else:
-                            self.tasks.print("Warning, skipped the following potential sound:", a, "in", error_context)
+                            print("Warning, skipped the following potential sound:", a, "in", error_context)
             with p.open(mode="wb") as f:
                 f.write(content)
             break
         if err_count == 5:
             if file_type in ("background"):
                 return
-            self.tasks.print("Failed to download", p.as_posix(), "in", error_context)
+            print("Failed to download", p.as_posix(), "in", error_context)
 
     async def download(self : Updater, targets : set[str]) -> None:
         if len(targets) == 0:
-            self.tasks.print("Downloading all assets...")
+            print("Downloading all assets...")
         else:
-            self.tasks.print("Downloading assets for", len(targets), "element(s)...")
+            print("Downloading assets for", len(targets), "element(s)...")
         file_seen : set[str] = set()
         for t in ("characters", "partners", "summons", "weapons", "enemies", "skins", "job", "mypage", "styles"):
             for element_id, data in self.data[t].items():
@@ -1916,7 +1917,7 @@ class Updater():
 
     # Start function
     async def start(self : Updater) -> None:
-        self.tasks.print(f"GBFAP Updater v{VERSION}")
+        print(f"GBFAP Updater v{VERSION}")
         # set Ctrl+C
         try: # unix
             asyncio.get_event_loop().add_signal_handler(signal.SIGINT, self.tasks.interrupt)
@@ -1957,32 +1958,32 @@ class Updater():
                     else:
                         with open(args.gbfal[0], mode="r", encoding="utf-8") as f:
                             self.gbfal = json.load(f)
-                    self.tasks.print("GBFAL data is loaded from", args.gbfal[0])
+                    print("GBFAL data is loaded from", args.gbfal[0])
                     self.fetch_gbfal_data()
                 except Exception as e:
-                    self.tasks.print("GBFAL data couldn't be loaded")
-                    self.tasks.print(e)
+                    print("GBFAL data couldn't be loaded")
+                    print(e)
                 run_help = False
             if args.download is not None:
-                self.tasks.print("ONLY USE THIS COMMAND IF YOU NEED TO HOST THE ASSETS")
-                self.tasks.print("Are you sure that you want to download the assets of all elements?")
-                self.tasks.print("It will take time and a lot of disk space.")
+                print("ONLY USE THIS COMMAND IF YOU NEED TO HOST THE ASSETS")
+                print("Are you sure that you want to download the assets of all elements?")
+                print("It will take time and a lot of disk space.")
                 if input("Type 'yes' to continue:").lower() == 'yes':
                     await self.download(set(args.download))
                 else:
-                    self.tasks.print("Operation aborted...")
+                    print("Operation aborted...")
                 return
             # run
             if args.run:
-                self.tasks.print("Searching for new elements...")
+                print("Searching for new elements...")
                 self.run()
                 run_help = False
             if args.update is not None and len(args.update) > 0:
-                self.tasks.print("Updating", len(args.update), "element(s)...")
+                print("Updating", len(args.update), "element(s)...")
                 self.update_all(args.update)
                 run_help = False
             if args.classes:
-                self.tasks.print("Updating new classes...")
+                print("Updating new classes...")
                 await self.check_classes()
                 run_help = False
             if run_help:
