@@ -18,7 +18,7 @@ import signal
 import argparse
 from tqdm import tqdm
 # Replacing print to ensure it plays nicely with tqdm
-import inspect
+import builtins
 __old_print__ = print
 def __new_print__(*args, **kwargs):
     # if tqdm.write raises error, use builtin print
@@ -27,7 +27,7 @@ def __new_print__(*args, **kwargs):
     except:
         __old_print__(*args, **kwargs)
 # replace print with __new_print__
-inspect.builtins.print = __new_print__
+builtins.print = __new_print__
 
 ### CONSTANT
 VERSION = '6.1'
@@ -113,7 +113,13 @@ NO_CHARGE_ATTACK = set(NO_CHARGE_ATTACK)
 
 # Additional tweaks to handle task bar progress
 class BetterTqdm(tqdm):
+    def __init__(self : BetterTqdm, *args, **kwargs) -> None:
+        self.pause_toggle : bool = False
+        super().__init__(*args, **kwargs)
+    
     def display(self : BetterTqdm, *args, **kwargs) -> bool:
+        if self.pause_toggle:
+            return
         res = super().display(*args, **kwargs)
         if self.total:
             sys.stderr.write(f"\u001b]9;4;1;{100 * self.n / self.total:.0f}\u001b\\")
@@ -123,12 +129,11 @@ class BetterTqdm(tqdm):
         return res
 
     def pause(self : BetterTqdm) -> None:
-        if self.disable:
-            self.disable = False
+        if self.pause_toggle:
+            self.pause_toggle = False
             self.refresh()
         else:
-            self.disable = True
-            self.clear()
+            self.pause_toggle = True
             sys.stderr.write(f"\u001b]9;4;4;{100 * self.n / self.total:.0f}\u001b\\")
             sys.stderr.flush()
 
@@ -249,7 +254,7 @@ class TaskManager():
                     # execute
                     await task.awaitable(*task.parameters)
                 except Exception as e:
-                    print(f"The following exception occured for {self.format_task_info(task.awaitable, task.parameters)}")
+                    print(f"The following exception occurred for {self.format_task_info(task.awaitable, task.parameters)}")
                     print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
                 finally:
                     self.finished += 1
@@ -280,6 +285,7 @@ class TaskManager():
             unit_divisor=1000,
             mininterval=2,
             dynamic_ncols=True,
+            file=sys.stdout,
             bar_format='{percentage:3.1f}%|\u001b[32m{bar}\u001b[0m{r_bar}'
         )
         try:
@@ -309,7 +315,7 @@ class TaskManager():
             return
         if self.pbar is not None:
             self.pbar.pause()
-        print("\nProcess PAUSED")
+        print("Process PAUSED")
         print(f"{self.finished} / {self.total} Tasks completed")
         if self.updater.modified:
             print("Pending Data is waiting to be saved")
@@ -477,7 +483,7 @@ class Updater():
             if input("Continue anyway? (type 'y' to continue):").lower() != 'y':
                 os._exit(0)
         except Exception as e:
-            print("The following error occured while loading data.json:")
+            print("The following error occurred while loading data.json:")
             print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
             print(e)
             os._exit(0)
