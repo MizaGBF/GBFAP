@@ -4582,7 +4582,8 @@
 "1040818800":{"w":["1040818800","1040818800"],"v":[["Gran","els_mc_0_01","mortal_A","phit_1040818800",["sp_1040818800_0_s2"]],["Djeeta","els_mc_1_01","mortal_A","phit_1040818800",["sp_1040818800_1_s2"]]]},
 "1040622400":{"w":["1040622400","1040622400"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622400",["sp_1040622400_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622400",["sp_1040622400_1_s2"]]]},
 "1040715600":{"w":["1040715600","1040715600"],"v":[["Gran","rbn_bw_0_01","mortal_A","phit_1040715600",["sp_1040715600_0_s2"]],["Djeeta","rbn_bw_1_01","mortal_A","phit_1040715600",["sp_1040715600_1_s2"]]]},
-"1040622500":{"w":["1040622500","1040622500"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622500",["sp_1040622500_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622500",["sp_1040622500_1_s2"]]]}
+"1040622500":{"w":["1040622500","1040622500"],"v":[["Gran","ogr_me_0_01","mortal_A","phit_1040622500",["sp_1040622500_0_s2"]],["Djeeta","ogr_me_1_01","mortal_A","phit_1040622500",["sp_1040622500_1_s2"]]]},
+"1040029900":{"w":["1040029900","1040029900"],"v":[["Gran","csr_sw_0_01","mortal_A","phit_1040029900",["sp_1040029900_0_s2"]],["Djeeta","csr_sw_1_01","mortal_A","phit_1040029900",["sp_1040029900_1_s2"]]]}
 },
 "enemies":
 {
@@ -5756,7 +5757,7 @@
 "6200633":{"v":[["","enemy_6200633",null,"phit_0000000000",[]]]},
 "6200642":{"v":[["","enemy_6200642",null,"phit_0000000000",["esp_6200642_01"]]]},
 "6200593":{"v":[["","enemy_6200593",null,"phit_0000000000",[]]]},
-"6200612":{"v":[["","enemy_6200612",null,"phit_0000000000",["esp_6200612_01"]]]},
+"6200612":{"v":[["","enemy_6200612",null,"phit_0000000000",["esp_6200612_01"]]],"ra":["raid_appear_6200612"]},
 "7100123":{"v":[["","enemy_7100123",null,"phit_0000000000",[]]]},
 "7100132":{"v":[["","enemy_7100132",null,"phit_0000000000",[]]]},
 "6100993":{"v":[["","enemy_6100993",null,"phit_0000000000",[]]]},
@@ -7504,7 +7505,9 @@
 "4301133":{"v":[["","enemy_4301133",null,"ehit_4301133",["esp_4301133_01","esp_4301133_02","esp_4301133_03"]]],"ra":["raid_appear_4301133"]},
 "9103503":{"v":[["","enemy_9103503",null,"ehit_9103503",["esp_9103503_01","esp_9103503_02","esp_9103503_03","esp_9103503_04"]]],"ra":["raid_appear_9103503"]},
 "9103483":{"v":[["","enemy_9103483",null,"phit_0000000000",[]]],"ra":["raid_appear_9103483"]},
-"9103513":{"v":[["","enemy_9103513",null,"phit_0000000000",[]]]}
+"9103513":{"v":[["","enemy_9103513",null,"phit_0000000000",[]]]},
+"8105083":{"v":[["","enemy_8105083",null,"ehit_8105083",["esp_8105083_01","esp_8105083_02","esp_8105083_03"]]],"ra":["raid_appear_8105083"]},
+"8105093":{"v":[["","enemy_8105093",null,"phit_0000000000",["esp_8105093_04_all","esp_8105093_05_all"]]]}
 },
 "skins":
 {
@@ -8724,7 +8727,9 @@
 "event_572":[["event_572"]],
 "event_573":[["event_573"]],
 "event_568":[["event_568"]],
-"common_094":[["common_094"]]
+"common_094":[["common_094"]],
+"event_574":[["event_574","event_574_a","event_574_b","event_574_c"]],
+"event_575":[["event_575","event_575_a","event_575_b","event_575_c"]]
 },
 "mypage_bg":
 {
@@ -10502,7 +10507,7 @@
 "3992166000":"/n great saunameister of daybreak agielba /b draph /s male /y 暁の熱波師 kōji ishii 石井康嗣 /! /!!",
 "3992167000":"/n eahta /c eternals /b draph /s male /y オクトー banjō ginga 銀河万丈 /! /!!",
 "3992168000":"/n sho /b human /s male /y ショウ kishō taniyama 谷山紀章",
-"3992169000":"/n tsubasa /b human /s male /y aツバサ yuichi nakamura 中村悠一",
+"3992169000":"/n tsubasa /b human /s male /y ツバサ yuichi nakamura 中村悠一",
 "3992170000":"/n yung rintaro /b harvin /s male /y 舎弟のリンタロウ daisuke sakaguchi 阪口大助 /!",
 "3992171000":"/n killa taiga /b draph /s male /y 鬼ゾリのタイガ taiten kusunoki 楠大典",
 "3992172000":"/n vyrn /b unknown /s other /y ビィ rie kugimiya 釘宮理恵 /1 /2",
@@ -11444,7 +11449,7 @@
 "3993176000":"/n aliza /b draph /s female /y アリーザ natsumi takamori 高森奈津美",
 "3993177000":"/n ayer /b human /s male /y アイル kensho ono 小野賢章",
 "3993178000":"/n hazen /b human /s male /y ヘイゼン kenji hamada 浜田賢二",
-"3993179000":"/n tsubasa /b human /s male /y aツバサ yuichi nakamura 中村悠一",
+"3993179000":"/n tsubasa /b human /s male /y ツバサ yuichi nakamura 中村悠一",
 "3993180000":"/n killa taiga /b draph /s male /y 鬼ゾリのタイガ taiten kusunoki 楠大典",
 "3993181000":"/n yung rintaro /b harvin /s male /y 舎弟のリンタロウ daisuke sakaguchi 阪口大助",
 "3993182000":"/n gran /b human /s male /y グラン /1 /2",
@@ -13642,7 +13647,7 @@
 "6200593":"/f people-boss /e earth /n ruffian",
 "6200602":"/f people-boss /e wind /n ruffian",
 "6200603":"/f people-boss /e wind /n ruffian",
-"6200612":"/f people-boss /e light /n don juannabe",
+"6200612":"/f people-boss /e light /n don juannabe /% /n uncivilized swindler",
 "6200622":"/f people-boss /e dark /n bandit",
 "6200632":"/f people-boss /e fire /n ruffian",
 "6200633":"/f people-boss /e fire /n slave merchant",
@@ -20649,10 +20654,26 @@
 "9103483":"/f other-boss /x agastia abomination battleship /e earth /n ultimus atrox",
 "9103503":"/f other-boss /e dark /n zamalvoch",
 "9103513":"/f other-boss /e dark /n zamalvoch",
-"3994638000":"/n tsubasa /b human /s male /y aツバサ yuichi nakamura 中村悠一",
-"3994639000":"/n tsubasa /b human /s male /y aツバサ yuichi nakamura 中村悠一",
+"3994638000":"/n tsubasa /b human /s male /y ツバサ yuichi nakamura 中村悠一",
+"3994639000":"/n tsubasa /b human /s male /y ツバサ yuichi nakamura 中村悠一",
 "1040715600":"/w Derangebow_of_Sanctity_Verboten /e dark /t bow /a ssr /n derangebow of sanctity verboten /c odious /y 禁聖の狂弓 2026-10-20",
-"1040622500":"/w Fiendclaw_of_Sanctity_Verboten /e dark /t melee /a ssr /n fiendclaw of sanctity verboten /c odious /y 禁聖の魔腕 2026-10-20"
+"1040622500":"/w Fiendclaw_of_Sanctity_Verboten /e dark /t melee /a ssr /n fiendclaw of sanctity verboten /c odious /y 禁聖の魔腕 2026-10-20",
+"3994640000":"/x bahamut /n id /b human /s male /y イド kenjiro tsuda 津田健次郎 /1 /2",
+"3994641000":"/n id /b human /s male /y イド kenjiro tsuda 津田健次郎 /1 /2",
+"3994642000":"/n id /b human /s male /y イド kenjiro tsuda 津田健次郎 /1 /2",
+"3994643000":"/n id /b human /s male /y イド kenjiro tsuda 津田健次郎 /1 /2",
+"3994644000":"/n gallanza /b draph /s male /y ガランツァ koichi yamadera 山寺宏一 /2",
+"3994645000":"/n maglielle /b harvin /s female /y マギラフリラ saori hayami 早見沙織 /2",
+"3994646000":"/n rolan /b unknown /s male /y ローラン hiroshi kamiya 神谷浩史 /2",
+"3994647000":"/n cadel /b human /s male /y カデル mari hino 日野まり",
+"3994648000":"/x cadel /n primal beast cynthesis /b primal /y シンセシス",
+"3994649000":"/x cadel /n primal beast cynthesis /b primal /y シンセシス",
+"3994650000":"/x bahamut /n bahamut versa",
+"3994654000":"/n seox /c eternals /b erune /s male /y シス nobuyuki hiyama 檜山修之 /1",
+"3994655000":"/n rolan /b unknown /s male /y ローラン hiroshi kamiya 神谷浩史 /2",
+"3994656000":"/n rolan /b unknown /s male /y ローラン hiroshi kamiya 神谷浩史 /2",
+"8105083":"/f primal-boss /e light /n primal beast cynthesis",
+"8105093":"/f primal-boss /e light /n primal beast cynthesis"
 },
 "mypage":
 {
