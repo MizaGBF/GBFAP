@@ -1,6 +1,6 @@
 window.images = window.images || {}; // images storage
 window.lib = window.lib || {}; // javascript storage
-
+var TEST_T = null;
 class Loader
 {
 	constructor()
@@ -15,8 +15,9 @@ class Loader
 		this.manifest_cache = {};
 	}
 	
-	load_animations() // starting points
+	load_animations() // starting point
 	{
+		TEST_T = performance.now();
 		let manifest_list = [];
 		for(const animation of player.get_animations()) // get a list of all manifests
 		{
@@ -31,7 +32,7 @@ class Loader
 		}
 	}
 	
-	load_manifests(file_list)
+	async load_manifests(file_list)
 	{
 		let to_load = file_list.concat([]);
 		
@@ -43,136 +44,153 @@ class Loader
 		var file_count = to_load.length * 2; // manifest + cjs
 		var file_loaded = 0;
 		
-		// CJS file
-		// Each manifest has an equivalent animation in the cjs folder
-		var cjs_deferred = new $.Deferred();
-		var load_queue = new createjs.LoadQueue(false, Game.jsUri + "/", true);
-		load_queue.setMaxConnections(40);
-		
-		// set events
-		load_queue.on("complete", () => {
-			cjs_deferred.resolve();
-		});
-		
-		load_queue.on("fileload", (ev) => {
-			if(ev.item)
+		// helper to load scripts using tags
+		const load_script = (src) => {
+			return new Promise((resolve, reject) => {
+				const script = document.createElement('script');
+				script.src = src;
+				script.async = true;
+				script.onload = () => resolve(script);
+				script.onerror = (err) => reject(err);
+				document.head.appendChild(script);
+			});
+		};
+
+		// helper to load manifests via RequireJS
+		const load_manifest = (file) => {
+			return new Promise((resolve, reject) => {
+				var manifest_path = Game.xjsUri + "/model/manifest/" + file + ".js";
+				require(
+					[manifest_path],
+					(module) => {
+						// add to cache
+						loader.manifest_cache[manifest_path] = module.prototype.defaults.manifest;
+						resolve(module.prototype.defaults.manifest);
+					},
+					() => { // in case of error
+						console.error("Error loading manifest " + manifest_path);
+						reject(manifest_path);
+					}
+				);
+			});
+		};
+
+		let spritesheets = [];
+
+		// load CJS scripts concurrently
+		const cjs_promises = to_load.map(async (file) => {
+			var path = "cjs/" + file;
+			var src = Game.jsUri + "/" + path + ".js";
+			try
 			{
-				var id = ev.item.id;
-				if(id)
+				await load_script(src);
+				var file_name = file;
+				// store in window.lib
+				if(window.lib[file_name])
 				{
-					var file_name = id.split("/").pop();
-					// store in window.lib
 					window.lib[file_name].prototype.playFunc = (callback) => {
 						createjs.Tween.get().wait(1).call(callback);
 					};
-					// set loading
-					player.loading_draw_progress_bar(file_loaded++, file_count, "scripts");
 				}
+				file_loaded++;
+				player.loading_draw_progress_bar(
+					file_loaded,
+					file_count,
+					"scripts"
+				);
+			} catch(err) {
+				console.error("Failed to load CJS script: " + src, err);
+				error_flag = true;
+				throw err;
 			}
 		});
 
-		load_queue.on("error", (ev) => {
-			console.error("Failed to load CJS", ev);
-			cjs_deferred.reject();
-			error_flag = true;
+		// load manifest files concurrently
+		const manifest_promises = to_load.map(async (file) => {
+			try
+			{
+				const manifest_data = await load_manifest(file);
+				file_loaded++;
+				player.loading_draw_progress_bar(
+					file_loaded,
+					file_count,
+					"scripts"
+				);
+				return manifest_data;
+			} catch(err) {
+				error_flag = true;
+				throw err;
+			}
 		});
-		
-		// make list of cjs files to load
-		var cjs = to_load.map((file) => {
-			var path = "cjs/" + file;
-			return {
-				id: path,
-				src: path + ".js",
-				type: createjs.Types.JAVASCRIPT,
-				cache: true,
-			};
-		});
-		// start the download
-		load_queue.loadManifest(cjs);
-		
-		// Manifest files
-		// Those files define the spritesheets and such
-		var manifest_deferred = new $.Deferred();
-		var spritesheets = []; // will contain the list of spritesheets to download
-		// a simple counter to check if we have downloaded everything
-		var total_files = to_load.length;
-		var loaded = 0;
-		
-		for(const file of to_load)
+
+		try
 		{
-			if(manifest_deferred.state() == "rejected")
-				break;
-			var manifest_path = Game.xjsUri + "/model/manifest/" + file + ".js";
-			// use require to set the manifest as intended
-			require(
-				[manifest_path],
-				(module) => {
-					// add to cache
-					loader.manifest_cache[manifest_path] = module.prototype.defaults.manifest;
-					// add the spritesheets
-					spritesheets = spritesheets.concat(loader.manifest_cache[manifest_path]);
-					// increase counter
-					loaded++;
-					if(loaded == total_files) // if done
-					{
-						manifest_deferred.resolve(); // resolve the deferred
-					}
-					// set loading
-					player.loading_draw_progress_bar(file_loaded++, file_count, "scripts");
-				},
-				() => { // in case of error
-					console.error("Error loading manifest " + manifest_path);
-					loaded = total_files; // terminate early
-					manifest_deferred.reject();
+			// wait for both to finish loading
+			const promise_results = await Promise.allSettled([...cjs_promises, ...manifest_promises]);
+			for(const res of promise_results)
+			{
+				if(res.status === 'rejected')
+				{
 					error_flag = true;
 				}
-			);
-		}
-		// wait for both deferred to end
-		$.when(cjs_deferred, manifest_deferred).always(() => {
-			if(error_flag)
-			{
-				player.loading_draw_text("An error occured.");
-				return;
 			}
-			// hot fix the main character weapon
-			// we replace the "weapon.png" files by "WEAPON_ID.png"
-			const first_anim = player.get_animations()[0];
-			if(first_anim.type == AnimationType.MC && first_anim.weapon)
+			// extract spritesheet manifests
+			const manifest_results = promise_results.slice(to_load.length);
+			for(const res of manifest_results)
 			{
-				// only do it for the first weapon
-				let is_melee = first_anim.cjs.includes("_me_");
-				for(let i = 0; i < spritesheets.length; ++i)
+				if(res.status === 'fulfilled' && res.value)
 				{
-					if(spritesheets[i].type === createjs.Types.IMAGE)
+					spritesheets = spritesheets.concat(res.value);
+				}
+			}
+		} catch(err) {
+			error_flag = true;
+		}
+
+		if(error_flag)
+		{
+			player.loading_draw_text("An error occured.");
+			return;
+		}
+
+		// hot fix the main character weapon
+		// we replace the "weapon.png" files by "WEAPON_ID.png"
+		const first_anim = player.get_animations()[0];
+		if(first_anim.type == AnimationType.MC && first_anim.weapon)
+		{
+			// only do it for the first weapon
+			let is_melee = first_anim.cjs.includes("_me_");
+			for(let i = 0; i < spritesheets.length; ++i)
+			{
+				if(spritesheets[i].type === createjs.Types.IMAGE)
+				{
+					if(is_melee)
 					{
-						if(is_melee)
+						switch(spritesheets[i].id)
 						{
-							switch(spritesheets[i].id)
-							{
-								case "weapon_l":
-									spritesheets[i].src = Game.imgUri + "/sp/cjs/" + first_anim.weapon + "_1.png";
-									break;
-								case "weapon_r":
-									spritesheets[i].src = Game.imgUri + "/sp/cjs/" + first_anim.weapon + "_2.png";
-									break;
-							}
+							case "weapon_l":
+								spritesheets[i].src = Game.imgUri + "/sp/cjs/" + first_anim.weapon + "_1.png";
+								break;
+							case "weapon_r":
+								spritesheets[i].src = Game.imgUri + "/sp/cjs/" + first_anim.weapon + "_2.png";
+								break;
 						}
-						else if(spritesheets[i].id == "weapon")
-						{
-							spritesheets[i].src = Game.imgUri + "/sp/cjs/" + first_anim.weapon + ".png";
-						}
+					}
+					else if(spritesheets[i].id == "weapon")
+					{
+						spritesheets[i].src = Game.imgUri + "/sp/cjs/" + first_anim.weapon + ".png";
 					}
 				}
 			}
-			// loader the spritesheets
-			loader.load_spritesheets(spritesheets);
-		});
+		}
+		// load the spritesheets
+		this.load_spritesheets(spritesheets);
 	}
 	
 	load_spritesheets(spritesheets)
 	{
-		let to_load = []; // list all files to load
+		let to_load = [];
+		// list all files to load
 		for(const file of spritesheets)
 		{
 			let file_id = file.id ?? null;
@@ -311,53 +329,64 @@ class Loader
 		}
 		else
 		{
-			// make deferred and download queue
-			var queue_deferred = new $.Deferred();
-			// 3rd parameter is the cross origin, we set it to true (Anonymous) if game_config isn't local
-			var load_queue = new createjs.LoadQueue(false, "", config.use_game_config != "local");
-			load_queue.setMaxConnections(40);
-			load_queue.maintainScriptOrder = false;
-			// to keep track of the progress
 			const total = to_load.length;
-			var count = 0;
+			let count = 0;
 		
-			// set events
-			load_queue.on("complete", () => {
-				queue_deferred.resolve();
-			});
-			
-			load_queue.on("fileload", (ev) => {
-				if(ev.item)
-				{
-					player.loading_draw_progress_bar(count++, total, "spritesheets");
-					var id = ev.item.id;
-					if(id && ev.item.type === createjs.Types.IMAGE)
+			// helper to load images via Promises
+			const loadImage = (file) => {
+				return new Promise((resolve) => {
+					const img = new Image();
+					if(config.use_game_config != "local")
 					{
-						window.images[id] = ev.result;
+						img.crossOrigin = "Anonymous";
+					}
+					// keep in constant for scope longevity
+					const srcUrl = file.src;
+					img.onload = () => {
+						player.loading_draw_progress_bar(
+							count++,
+							total,
+							"spritesheets"
+						);
+						resolve({id: file.id, img});
+						// reset to not interfer with player.set_texture
+						img.onload = null;
+						img.onerror = null;
+					};
+
+					img.onerror = (ev) => {
+						console.error("Failed to download spritesheet", srcUrl, ev);
+						player.loading_draw_progress_bar(
+							count++,
+							total,
+							"spritesheets"
+						);
+						resolve(null);
+						// reset to not interfer with player.set_texture
+						img.onload = null;
+						img.onerror = null;
+					};
+
+					img.src = srcUrl;
+				});
+			};
+
+			// download all spritesheets concurrently
+			Promise.all(to_load.map(file => loadImage(file))).then((results) => {
+				for(const res of results)
+				{
+					if(res && res.id)
+					{
+						window.images[res.id] = res.img;
 					}
 				}
-			});
-
-			load_queue.on("error", (ev) => {
-				if(ev && ev.srcElement)
-				{
-					console.error("Failed to download spritesheet", ev.srcElement.src);
-				}
-				// still increase the count
-				player.loading_draw_progress_bar(count++, total, "spritesheets");
-				// don't reject, others might still download just fine
-			});
-			
-			// start download
-			load_queue.loadManifest(to_load, true, "./img/");
-			
-			queue_deferred.always(() => {
 				// add extra versions
 				for(const [dupe, orig] of Object.entries(weapon_dupe_table))
 				{
 					window.images[dupe] = window.images[orig];
 				}
 				player.start_animation();
+				console.log(performance.now() - TEST_T);
 			});
 		}
 	}
