@@ -1,6 +1,6 @@
 window.images = window.images || {}; // images storage
 window.lib = window.lib || {}; // javascript storage
-var TEST_T = null;
+
 class Loader
 {
 	constructor()
@@ -17,7 +17,6 @@ class Loader
 	
 	load_animations() // starting point
 	{
-		TEST_T = performance.now();
 		let manifest_list = [];
 		for(const animation of player.get_animations()) // get a list of all manifests
 		{
@@ -386,7 +385,6 @@ class Loader
 					window.images[dupe] = window.images[orig];
 				}
 				player.start_animation();
-				console.log(performance.now() - TEST_T);
 			});
 		}
 	}
