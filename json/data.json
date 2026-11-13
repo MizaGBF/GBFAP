@@ -7512,7 +7512,11 @@
 "9103483":{"v":[["","enemy_9103483",null,"phit_0000000000",[]]],"ra":["raid_appear_9103483"]},
 "9103513":{"v":[["","enemy_9103513",null,"phit_0000000000",[]]]},
 "8105083":{"v":[["","enemy_8105083",null,"ehit_8105083",["esp_8105083_01","esp_8105083_02","esp_8105083_03"]]],"ra":["raid_appear_8105083"]},
-"8105093":{"v":[["","enemy_8105093",null,"phit_0000000000",["esp_8105093_04_all","esp_8105093_05_all"]]]}
+"8105093":{"v":[["","enemy_8105093",null,"phit_0000000000",["esp_8105093_04_all","esp_8105093_05_all"]]]},
+"2200953":{"v":[["","enemy_2200953",null,"phit_0000000000",[]]],"ra":["raid_appear_2200953"]},
+"2200943":{"v":[["","enemy_2200943",null,"phit_0000000000",[]]],"ra":["raid_appear_2200943"]},
+"2200963":{"v":[["","enemy_2200963",null,"phit_0000000000",[]]],"ra":["raid_appear_2200963"]},
+"9103573":{"v":[["","enemy_9103573",null,"ehit_9103573",["esp_9103573_01","esp_9103573_02","esp_9103573_03"]]],"ra":["raid_appear_9103573"]}
 },
 "skins":
 {
@@ -20686,7 +20690,11 @@
 "2040463000":"/w Poppet_Hareloom /e dark /a ssr /n poppet hareloom /c acies /y ポペットバニット 2026-10-31",
 "1040519200":"/w Escorting_Arms /e wind /t gun /a ssr /n escorting arms /y エスコートアームズ 2026-10-31",
 "1040030000":"/w Ragnarok /e dark /t sabre /a ssr /n ragnarok /c grand /y ラグナロク 2026-10-31",
-"3994652000":"/$ /! /!!"
+"3994652000":"/n cruenta aranea /! /!!",
+"2200943":"/f insect-boss /x six-eyed butterfly /e water /n arcana papilio",
+"2200953":"/f insect-boss /x queen bee /e water /n fascina apis",
+"2200963":"/f insect-boss /x madam malmosquito /e water /n ferox culex",
+"9103573":"/f other-boss /e water /n cruenta aranea"
 },
 "mypage":
 {
