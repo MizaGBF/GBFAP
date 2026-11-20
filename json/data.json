@@ -7520,7 +7520,8 @@
 "2200953":{"v":[["","enemy_2200953",null,"phit_0000000000",[]]],"ra":["raid_appear_2200953"]},
 "2200943":{"v":[["","enemy_2200943",null,"phit_0000000000",[]]],"ra":["raid_appear_2200943"]},
 "2200963":{"v":[["","enemy_2200963",null,"phit_0000000000",[]]],"ra":["raid_appear_2200963"]},
-"9103573":{"v":[["","enemy_9103573",null,"ehit_9103573",["esp_9103573_01","esp_9103573_02","esp_9103573_03"]]],"ra":["raid_appear_9103573"]}
+"9103573":{"v":[["","enemy_9103573",null,"ehit_9103573",["esp_9103573_01","esp_9103573_02","esp_9103573_03"]]],"ra":["raid_appear_9103573"]},
+"8105243":{"v":[["","enemy_8105243",null,"ehit_8105243",["esp_8105243_01","esp_8105243_02","esp_8105243_03"]]],"ra":["raid_appear_8105243"]}
 },
 "skins":
 {
@@ -17554,7 +17555,7 @@
 "1040216100":"/w Flamelance:_Accendo /e fire /t spear /a ssr /n flamelance: accendo /y 火尖鎗 2021-04-19",
 "1040511600":"/w Flamma_Orbis /e light /t gun /a ssr /n flamma orbis /c xeno /y フラマ・オルビス 2019-08-22",
 "1030202600":"/w Flare_Glaive /e fire /t spear /a sr /n flare glaive /y フレアグレイブ 2014-11-14",
-"1040026000":"/w Fleuret_de_Diamant /e dark /t sabre /a ssr /n fleuret de diamant /y ディアマントフルレ 2024-03-31",
+"1040026000":"/w Reflet_de_Diamant /e dark /t sabre /a ssr /n reflet de diamant /y ディアマントフルレ 2024-03-31",
 "1030006700":"/w Floaty_Sword /e water /t sabre /a sr /n floaty sword /y フロートソード 2017-07-31",
 "1040100800":"/w Flohrenberk /e fire /t dagger /a ssr /n flohrenberk /c beast /y フローレンベルク 2015-04-16",
 "1030403900":"/w Flower_Crown /e wind /t staff /a sr /n flower crown /y フラワークラウン 2015-10-31",
@@ -20704,7 +20705,9 @@
 "3040685000":"/w Ayer_(Fire) /e fire /a ssr /n ayer /b human /s male /t attack /p melee /y アイル kensho ono 小野賢章 2026-11-16",
 "3040686000":"/w Farrah_(SSR) /e water /a ssr /n farrah /b human /s female /t defense /p sabre /y ファラ mariya ise 伊瀬茉莉也 2026-11-16",
 "1040622600":"/w Ignition_Bandages /e fire /t melee /a ssr /n ignition bandages /y 2026-11-16",
-"1040030100":"/w Sword_of_Resolve /e water /t sabre /a ssr /n sword of resolve /y 2026-11-16"
+"1040030100":"/w Sword_of_Resolve /e water /t sabre /a ssr /n sword of resolve /y 2026-11-16",
+"3994653000":"/n demeter /! /!!",
+"8105243":"/f primal-boss /e light /n demeter"
 },
 "mypage":
 {
