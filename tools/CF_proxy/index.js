@@ -8,7 +8,6 @@ export default {
 		// filter methods
 		if(!is_preflight && request.method !== "GET")
 		{
-			console.log(`${request.method} | Status: BAD METHOD`);
 			return new Response(
 				"404 Not Found",
 				{
@@ -22,7 +21,6 @@ export default {
 		const target_url = original_url.pathname.substring(1) + original_url.search;
 		if(!target_url.startsWith("https://prd-game-a-granbluefantasy.akamaized.net/"))
 		{
-			console.log(`${request.method} | ${target_url} | Status: BAD TARGET`);
 			return new Response(
 				"404 Not Found",
 				{
@@ -34,7 +32,6 @@ export default {
 		const origin = request.headers.get("Origin");
 		if(origin == null || origin != valid_origin)
 		{
-			console.log(`${request.method} | ${target_url} | From: ${origin} | Status: BAD ORIGIN | UA: ${request.headers.get("User-Agent")}`);
 			return new Response(
 				"404 Not Found",
 				{
@@ -96,7 +93,6 @@ export default {
 		}
 		if(!has_ua) // reject requests without user-agent
 		{
-			console.log(`${request.method} | ${target_url} | From: ${origin} | Status: NO USER AGENT`);
 			return new Response(
 				"404 Not Found",
 				{
@@ -158,7 +154,6 @@ export default {
 			}
 			return final_response;
 		} catch (err) {
-			console.log(`${request.method} | ${target_url} | From: ${origin} | Status: ERROR | ${err}`);
 			return new Response(
 				"404 Not Found",
 				{

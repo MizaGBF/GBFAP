@@ -2,10 +2,5 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "gbfccp",
   "main": "index.js",
-  "compatibility_date": "2026-04-25",
-  "observability": {
-    "logs": {
-      "enabled": true
-    }
-  }
+  "compatibility_date": "2026-04-25"
 }
